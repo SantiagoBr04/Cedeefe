@@ -1,0 +1,133 @@
+/* ================================
+   Container principal
+================================ */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* impede os blobs de passarem da tela */
+}
+
+/* ================================
+   Área de login
+================================ */
+.cont-login {
+  margin-left: 50px; /* deixa espaço caso a sidebar esteja fechada */
+  display: flex;
+  justify-content: center; /* centraliza horizontal */
+  align-items: center;     /* centraliza vertical */
+  height: 100vh;           /* ocupa a altura da tela */
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.login {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  border: solid 2px rgb(255, 156, 156);
+  width: 350px;
+  height: 355px;
+  flex-shrink: 0; /* impede encolhimento em telas pequenas */
+}
+
+.titulo-form {
+  margin-bottom: 5px;
+}
+
+.form-group {
+  padding: 10px;
+}
+
+.recuperar {
+  font-size: 14px;
+  padding: 14px;
+}
+
+/* ================================
+   Botão principal (Entrar)
+================================ */
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+  width: 150px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto; /* centraliza dentro do form */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+  transition: all 0.2s ease-in-out;
+}
+
+/* ================================
+   Sidebar e efeitos colaterais
+================================ */
+.sidebar.expandido {
+  width: 270px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* empurra o login quando a sidebar abre */
+.sidebar.expandido ~ .cont-login {
+  margin-left: 250px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ================================
+   Blobs decorativos (fundo)
+================================ */
+.blob-verde {
+  position: absolute;
+  bottom: -105px;  /* posiciona fora da tela e sobrepõe */
+  left: 50px;
+  width: 35vw;     /* largura relativa à tela */
+  z-index: -1;     /* fica atrás do conteúdo */
+  transition: all 0.3s ease-in-out;
+}
+
+.blob-rosa {
+  position: absolute;
+  top: -50px;
+  right: -80px;
+  width: 35vw;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+}
+
+/* blobs se movem quando sidebar abre */
+.sidebar.expandido ~ .blob-verde {
+  left: 250px;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar.expandido ~ .blob-rosa {
+  right: -185px;
+  transition: all 0.4s ease-in-out;
+}
+
+/* ================================
+   Inputs
+================================ */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff7ca3; /* cor personalizada da caixinha */
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+input[type="password"] {
+  width: 150px;
+  vertical-align: middle;
+}
+
+input[type="email"] {
+  width: 157px;
+  vertical-align: middle;
+}
