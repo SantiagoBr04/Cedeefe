@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cedeefe</title>
+
+    <!-- Ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Ícones Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="pagInicial.css">
+</head>
+<body>
+
+    <!-- Menu fixo superior -->
+    <div class="menu">
+        <!-- Logo + botão do menu -->
+        <div class="logo_content">
+            <!-- Botão que abre/fecha sidebar -->
+            <span class="material-symbols-outlined" id="btn-menu">menu</span>
+
+            <!-- Nome/logo do site -->
+            <div class="logo">
+                <div class="logo_name"><a href="index.html" class="logo_name">Cedeefe</a></div>
+            </div>
+        </div>
+
+        <!-- Ícone do usuário (lado direito do menu) -->
+        <a href="login.html">
+            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
+        </a>
+    </div>
+
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <ul class="nav_list">
+            <!-- Item: Página inicial -->
+            <li class="item-menu">
+                <a href="#">
+                    <span class="material-symbols-outlined">home</span>
+                    <span class="txt-link">Página inicial</span>
+                </a>
+            </li>
+
+            <!-- Item: Dicas de Estudo -->
+            <li class="item-menu">
+                <a href="#">
+                    <span class="material-symbols-outlined">school</span>
+                    <span class="txt-link">Dicas de Estudo</span>
+                </a>
+            </li>
+
+            <!-- Item: Roadmap -->
+            <li class="item-menu">
+                <a href="#">
+                    <span class="material-symbols-outlined">timeline</span>
+                    <span class="txt-link">Roadmap</span>
+                </a>
+            </li>
+
+            <!-- Item: Banco de Questões -->
+            <li class="item-menu">
+                <a href="#">
+                    <span class="material-symbols-outlined">quiz</span>
+                    <span class="txt-link">Banco de Questões</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Essa página index vai ser provisória, pretendo mudar o layout e colocar um videozinho. 
+     Acho que faz sentido colocar uma mais simples para emular aquele sentimento de site funcionando e tudo mais -->
+
+     <div class="forma">
+         <div class="texto">
+                <h2>Domine Português e Matemática de um jeito fácil e organizado!</h2>
+                <p>Navegue pelo nosso mapa de estudos e descubra o caminho certo para aprender de forma simples e eficiente. <br>
+                Chega de conteúdos soltos—tudo o que você precisa, bem estruturado e acessível!</p>
+          
+          <button class="botao" type="submit">Crie sua conta!</button>
+        </div>
+        <img src="imagens/imgPgInicial.png" class="imagem">   
+        
+        
+     </div>
+           
+
+
+
+
+    <!-- Script JS (abre/fecha sidebar) -->
+    <script src="sidebar.js"></script>
+</body>
+</html>

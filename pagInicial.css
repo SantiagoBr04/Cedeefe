@@ -1,0 +1,61 @@
+
+.forma{
+width: 1200px;
+height: 500px;
+flex-shrink: 0;
+border-radius: 88px;
+background: #e9ffd3;
+margin-left: 220px;
+margin-top: 120px;
+z-index: -1;
+display: flex;
+gap:45px;
+padding: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.sidebar.expandido ~ .forma {
+  width: 1000px;
+  transition: all 0.3s ease-in-out;
+  margin-right: -20px;
+  margin-left: 400px;
+}
+
+.imagem{
+width: 450px;
+height: 450px;
+flex-shrink: 0;
+aspect-ratio: 1/1;
+}
+
+.texto{
+margin-left: 100px;
+margin-top: 90px;
+}
+
+.texto p{
+    margin-top: 30px;
+    text-align: justify;
+}
+
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+  width: 155px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto; /* centraliza dentro do form */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: center;
+  margin-top: 30px;
+  margin-left:0px;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+  transition: all 0.2s ease-in-out;
+}

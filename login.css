@@ -32,7 +32,8 @@
 }
 
 .titulo-form {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  text-align: center; /* centraliza o texto do h2 */
 }
 
 .form-group {
@@ -50,14 +51,15 @@
 .botao {
   background-color: #ffcad4;
   border-radius: 75px;
-  width: 150px;
-  height: 40px;
+  width: 125px;
+  height: 35px;
   border: none;
   font-size: 16px;
   display: block;
   margin: 0 auto; /* centraliza dentro do form */
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  position: center;
 }
 
 .botao:hover {
@@ -120,6 +122,7 @@ input[type="checkbox"] {
   accent-color: #ff7ca3; /* cor personalizada da caixinha */
   cursor: pointer;
   vertical-align: middle;
+  font-size: 14px;
 }
 
 input[type="password"] {
