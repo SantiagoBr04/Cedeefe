@@ -1,11 +1,14 @@
 /* ================================
    Container principal
 ================================ */
-.container {
+.container-fluid {
   position: relative;
-  width: 100%;
-  height: 100%;
   overflow: hidden; /* impede os blobs de passarem da tela */
+  width: 100%;
+  height:100%;
+  display: flex;
+  margin-left: 180px;
+  transition: margin-left 0.3s ease-in-out;
 }
 
 /* ================================
@@ -43,6 +46,11 @@
 .recuperar {
   font-size: 14px;
   padding: 14px;
+}
+
+.recuperar a{
+  color: #000000;
+  text-decoration: none;
 }
 
 /* ================================
@@ -87,7 +95,7 @@
 .blob-verde {
   position: absolute;
   bottom: -105px;  /* posiciona fora da tela e sobrepõe */
-  left: 50px;
+  left: 0px;
   width: 35vw;     /* largura relativa à tela */
   z-index: -1;     /* fica atrás do conteúdo */
   transition: all 0.3s ease-in-out;
@@ -102,16 +110,16 @@
   transition: all 0.4s ease-in-out;
 }
 
-/* blobs se movem quando sidebar abre */
+/* blobs se movem quando sidebar abre 
 .sidebar.expandido ~ .blob-verde {
-  left: 250px;
+  left: 200px;
   transition: all 0.3s ease-in-out;
 }
 
 .sidebar.expandido ~ .blob-rosa {
-  right: -185px;
+  right: -280px;
   transition: all 0.4s ease-in-out;
-}
+} 
 
 /* ================================
    Inputs
