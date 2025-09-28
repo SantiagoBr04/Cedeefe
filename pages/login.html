@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
+     <!-- Responsividade em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe</title>
+    <title>Cedeefe</title> <!-- Título da aba do navegador -->
 
     <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-    <!-- Ícones Material Symbols -->
+    <!-- Ícones Material Symbols (Google) -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- CSS externo -->
-    <link rel="stylesheet" href="estilos/sidebar.css">
-    <link rel="stylesheet" href="estilos/criarLista.css">
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/login.css">
 </head>
 <body>
+        <div class="container-fluid"></div>
 
     <!-- Menu fixo superior -->
     <div class="menu">
-        <!-- Logo + botão do menu -->
-        <div class="logo_content">
-            <!-- Botão que abre/fecha sidebar -->
-            <span class="material-symbols-outlined" id="btn-menu">menu</span>
 
+        <!-- Logo -->
+        <div class="logo_content">
             <!-- Nome/logo do site -->
             <div class="logo">
                 <div class="logo_name"><a href="index.html" class="logo_name">Cedeefe</a></div>
@@ -45,7 +45,7 @@
 
             <!-- Página inicial -->
             <li class="item-menu">
-                <a class="linkItens" href="#">
+                <a class="linkItens" href="../index.html">
                     <span class="material-symbols-outlined">home</span>
                     <span class="txt-link">Página inicial</span>
                 </a>
@@ -74,7 +74,7 @@
                     <span class="txt-link">Banco de Questões</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Criar lista</a></li>
+                    <li><a class="dropdown-item" href="criarLista.html">Criar lista</a></li>
                     <li><a class="dropdown-item" href="#">Minhas listas</a></li>
                     <li><a class="dropdown-item" href="#">Criar simulados</a></li>
                     <li><a class="dropdown-item" href="#">Meus simulado</a></li>
@@ -84,15 +84,51 @@
     </div>
 
 
-    <!-- Imagens decorativas (blobs no fundo) -->
-    <img src="imagens/blobVerde.svg" alt="blob Verde" class="blob-verde">
+<div class="pagLogin">
+
+    <!-- blobs -->
+    <img src="../imagens/blobVerde.svg" alt="blob Verde" class="blob-verde">
+    <img src="../imagens/blobRosa.svg" alt="blob rosa" class="blob-rosa">
+
+    <!-- Formulário de Login -->
+    <div class="cont-login">
+        <form class="login" action="" method="post">
+            <h2 class="titulo-form">Login</h2>
+            
+            <!-- Campo de email -->
+            <div class="form-group">
+                <label for="email">Email:  </label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Campo de senha -->
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Checkbox "lembrar-me"-->
+            <div class="form-group">
+                <label for="lembrar-senha">Lembrar-me</label>
+                <input type="checkbox" id="lembrar-senha" name="lembrar-senha">
+            </div>
+            
+            <!-- Botão de login -->
+            <button class="botao" type="submit">Entrar</button>
+
+            <!-- Links para recuperação de senha e criação de conta -->
+            <p class="recuperar">
+                Esqueceu sua senha? <a href="#"> Clique aqui!</a><br>
+                Não tem uma conta? <a href="#"> Criar conta</a>
+            </p>
+        </form>
+    </div>
+    </div>
+</div>
 
 
 
-    <!-- Seu JS da sidebar -->
-    <script src="sidebar.js"></script>
-
-    <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

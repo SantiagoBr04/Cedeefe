@@ -15,17 +15,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- CSS externo -->
-    <link rel="stylesheet" href="sidebar.css">
-    <link rel="stylesheet" href="estilos/pagInicial.css">
+    <link rel="stylesheet" href="./estilos/sidebar.css">
+    <link rel="stylesheet" href="./estilos/pagInicial.css">
 </head>
 <body>
 
-    <!-- Menu fixo superior -->
+        <!-- Menu fixo superior -->
     <div class="menu">
-        <!-- Logo + botão do menu -->
+        <!-- Logo  -->
         <div class="logo_content">
-            <!-- Botão que abre/fecha sidebar -->
-            <span class="material-symbols-outlined" id="btn-menu">menu</span>
 
             <!-- Nome/logo do site -->
             <div class="logo">
@@ -45,7 +43,7 @@
 
             <!-- Página inicial -->
             <li class="item-menu">
-                <a class="linkItens" href="#">
+                <a class="linkItens" href="index.html">
                     <span class="material-symbols-outlined">home</span>
                     <span class="txt-link">Página inicial</span>
                 </a>
@@ -74,7 +72,7 @@
                     <span class="txt-link">Banco de Questões</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Criar lista</a></li>
+                    <li><a class="dropdown-item" href="pages/criarLista.html">Criar lista</a></li>
                     <li><a class="dropdown-item" href="#">Minhas listas</a></li>
                     <li><a class="dropdown-item" href="#">Criar simulados</a></li>
                     <li><a class="dropdown-item" href="#">Meus simulado</a></li>
@@ -93,7 +91,8 @@
                     <p>Navegue pelo nosso mapa de estudos e descubra o caminho certo para aprender de forma simples e eficiente. <br>
                     Chega de conteúdos soltos—tudo o que você precisa, bem estruturado e acessível!</p>
             
-            <a href="#" class="btn"> Crie sua conta!</a>
+            <!-- Botão de login -->
+            <button class="botao" type="submit">Entrar</button>
             </div>
             <img src="imagens/imgPgInicial.png" class="imagem">   
         </div>
@@ -102,8 +101,6 @@
 
 
 
-    <!-- Script JS (abre/fecha sidebar) -->
-    <script src="sidebar.js"></script>
 
     <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

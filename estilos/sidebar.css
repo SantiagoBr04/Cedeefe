@@ -1,219 +1,172 @@
-
 /* Importação da fonte Poppins do Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap");
 
-/* Reset básico */
+/* ESTILOS BÁSICOS */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
 }
 
-/* Configuração base do body */
 body {
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* --------------------
-   SIDEBAR
--------------------- */
+/*  SIDEBAR  */
 .sidebar {
-    position: fixed;
-    top: 60px;              
-    left: 0;
-    height: 100%;
-    width: 70px;             
-    overflow: hidden;
-    background: #FDFDFD;
-    padding: 6px 14px;
-    box-shadow: 2px 0px 0px 0px #0000001a;
-    transition: all 0.4s ease-in-out;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: 100%;
+  width: 270px;
+  overflow: hidden;
+  background: #fdfdfd;
+  padding: 6px 14px;
+  box-shadow: 2px 0px 0px 0px #0000001a;
 }
 
-/* Sidebar expandida */
-.sidebar.expandido {
-    width: 270px;
-    transition: all 0.3s ease-in-out;
-}
-
-/* --------------------
-   MENU SUPERIOR
--------------------- */
+/* MENU SUPERIOR */
 .menu {
-    width: 100%;
-    height: 60px;
-    background-color: #FDFDFD;
-    box-shadow: 0px 2px 0px 0px #0000001a;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+  width: 100%;
+  height: 60px;
+  background-color: #fdfdfd;
+  box-shadow: 0px 2px 0px 0px #0000001a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 
-    display: flex;           
-    align-items: center;       
-    justify-content: space-between;
-    padding: 0 15px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
 }
 
-/* --------------------
-   LOGO E BOTÃO MENU
--------------------- */
+/* LOGO E BOTÃO MENU */
 .sidebar .logo_content {
-    color: black;
-    display: flex;
-    height: 50px;
-    width: 100%;
-    align-items: center;
+  color: black;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-items: center;
 }
 
 .logo_content .logo i {
-    font-size: 28px;
-    margin-right: 5px;
+  font-size: 28px;
+  margin-right: 5px;
 }
 
 .logo_content .logo .logo_name {
-    font-size: 20px;
-    font-weight: 400;
-    cursor:click;
-    color: black;
-    text-decoration: none;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+  margin-left: 10px;
 }
 
-/* --------------------
-   LISTA DA SIDEBAR
--------------------- */
-.sidebar ul {
-    margin-top: 20px;
-}
-
-.sidebar ul li {
-    position: relative;
-    height: 50px;
-    width: 100%;
-    margin: 10px -20px;
-    line-height: 50px;
-}
-
-.sidebar ul li .linkItens{
-    color: black;
-    display: flex;
-    align-items: center;
-    border-radius: 12px;
-    padding: 6px 02px;
-    text-decoration: none;
-}
-
-/* Texto escondido quando colapsada */
-.sidebar ul li .linkItens .txt-link {
-    opacity: 0;
-    pointer-events: none;  
-    white-space: nowrap;   
-    margin-left: 5px;   
-    transition: all 0.3s ease;
-    transition-delay: 0.18s;
-}
-
-/* Texto escondido quando colapsada */
-.sidebar ul li .dropdown-toggle .txt-link {
-    opacity: 0;
-    pointer-events: none;  
-    white-space: nowrap;      
-    transition: all 0.3s ease;
-    transition-delay: 0.18s;
-}
-
-/* Texto aparece quando expandida */
-.sidebar.expandido ul li .dropdown-toggle .txt-link {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* Texto aparece quando expandida */
-.sidebar.expandido ul li .linkItens .txt-link {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* Ícones da sidebar */
-.sidebar ul li .linkItens .material-symbols-outlined {
-    height: 40px;
-    min-width: 40px;
-    text-align: left;
-    padding-right: 10px;
-    padding-left: 0px;
-    line-height: 40px;
-    font-size: 24px;
-}
-
-/* Hover dos itens */
-.sidebar ul li .linkItens:hover {
-    background: #e1e1e15c;
-    transition: all 0.5s ease;
-}
-
-/* Sem hover quando está colapsada */
-.sidebar:not(.expandido) ul li .linkItens:hover {
-    background: none;
-    cursor: default;
-}
-
-/* --------------------
-   ÍCONES DO MENU
--------------------- */
-.logo_content .material-symbols-outlined .linkItens{
-    font-size: 28px;
-    margin: 13px;
-    cursor: pointer;
+/*  ÍCONES DO MENU */
+.logo_content .material-symbols-outlined {
+  font-size: 28px;
+  margin: 13px;
+  cursor: pointer;
 }
 
 .logo_content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Ícone do usuário */
 a #btn-user {
-    cursor: pointer;
-    font-size: 28px;
-    margin-right: 5px;
-    margin-top: 5px;
-    color: black;
+  cursor: pointer;
+  font-size: 28px;
+  margin-right: 5px;
+  margin-top: 5px;
+  color: black;
 }
 
-.dropdown-toggle{
-color: black;
-text-decoration: none;
-padding: 12px 12px 0px 5px;
+/* LISTA DA SIDEBAR  */
+.sidebar ul {
+  margin-top: 20px;
 }
 
-.dropdown-toggle .txt-link{
-margin-left: 10px;
+.sidebar ul li {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin: 10px -20px;
+  line-height: 50px;
 }
 
-.dropdown-item{
-    font-size: 14px;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    margin-top: -20px;
-    padding-left: 65px;
-
+.sidebar ul li .linkItens {
+  color: black;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 6px 02px;
+  text-decoration: none;
 }
 
-.dropdown-item:hover{
-    color:#8e8989;
-    background-color:#00000000;
-    transition: all 0.3s ease-in-out;
+/* Ícones da sidebar */
+.sidebar ul li .linkItens .material-symbols-outlined {
+  height: 40px;
+  min-width: 40px;
+  text-align: left;
+  padding-right: 10px;
+  padding-left: 0px;
+  line-height: 40px;
+  font-size: 24px;
 }
 
-.dropdown-menu{
-    background-color: #FDFDFD;
-    border: #FDFDFD; 
-    top:0px;}
+.linkItens {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 5px 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.linkItens:hover {
+  background: #d2d2d241;
+}
+
+
+/* DROPDOWN BANCO DE QUESTÕES */
+.dropdown-toggle {
+  color: black;
+  text-decoration: none;
+  padding: 12px 12px 0px 5px;
+}
+
+.dropdown-toggle .txt-link {
+  margin-left: 10px;
+}
+
+.dropdown-item {
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  margin-top: -20px;
+  padding-left: 65px;
+}
+
+.dropdown-item:hover {
+  color: #8e8989;
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu {
+  background-color: #fdfdfd;
+  border: #fdfdfd;
+  top: 0px;
+}

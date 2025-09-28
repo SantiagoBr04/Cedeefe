@@ -1,27 +1,26 @@
-/* ================================
-   Container principal
-================================ */
+
+
+/* CONTAINER PRINCIPAL */
 .container-fluid {
   position: relative;
-  overflow: hidden; /* impede os blobs de passarem da tela */
   width: 100%;
-  height:100%;
+  height: 100%;
   display: flex;
   margin-left: 180px;
   transition: margin-left 0.3s ease-in-out;
 }
 
-/* ================================
-   Área de login
-================================ */
+
+/* ÁREA DE LOGIN*/
 .cont-login {
-  margin-left: 50px; /* deixa espaço caso a sidebar esteja fechada */
+  margin-left: 250px;
   display: flex;
-  justify-content: center; /* centraliza horizontal */
-  align-items: center;     /* centraliza vertical */
-  height: 100vh;           /* ocupa a altura da tela */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
+  margin-top: 20px;
 }
 
 .login {
@@ -30,32 +29,54 @@
   border-radius: 15px;
   border: solid 2px rgb(255, 156, 156);
   width: 350px;
-  height: 355px;
-  flex-shrink: 0; /* impede encolhimento em telas pequenas */
+  height: 425px;
+  flex-shrink: 0;
 }
 
 .titulo-form {
   margin-bottom: 15px;
-  text-align: center; /* centraliza o texto do h2 */
+  text-align: center;
 }
 
 .form-group {
   padding: 10px;
+  margin-top: 5px;
 }
 
 .recuperar {
   font-size: 14px;
   padding: 14px;
+  margin-top: 5px;
 }
 
-.recuperar a{
-  color: #000000;
+.recuperar a {
   text-decoration: none;
 }
 
-/* ================================
-   Botão principal (Entrar)
-================================ */
+/* INPUTS */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff7ca3;
+  cursor: pointer;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+input[type="password"] {
+  width: 250px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+input[type="email"] {
+  width: 257px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+
+/* BOTÃO ENTRAR */
 .botao {
   background-color: #ffcad4;
   border-radius: 75px;
@@ -64,10 +85,10 @@
   border: none;
   font-size: 16px;
   display: block;
-  margin: 0 auto; /* centraliza dentro do form */
+  margin: 0 auto;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  position: center;
+  margin-top: 5px;
 }
 
 .botao:hover {
@@ -75,70 +96,28 @@
   transition: all 0.2s ease-in-out;
 }
 
-/* ================================
-   Sidebar e efeitos colaterais
-================================ */
-.sidebar.expandido {
-  width: 270px;
-  transition: all 0.3s ease-in-out;
-}
 
-/* empurra o login quando a sidebar abre */
-.sidebar.expandido ~ .cont-login {
-  margin-left: 250px;
-  transition: all 0.3s ease-in-out;
-}
 
-/* ================================
-   Blobs decorativos (fundo)
-================================ */
+/* BLOBS */
 .blob-verde {
   position: absolute;
-  bottom: -105px;  /* posiciona fora da tela e sobrepõe */
-  left: 0px;
-  width: 35vw;     /* largura relativa à tela */
-  z-index: -1;     /* fica atrás do conteúdo */
+  bottom: -30px; 
+  margin-left: 270px;
+  width: 35vw; 
+  height: 100vh;
+  z-index: -1;
   transition: all 0.3s ease-in-out;
+  overflow: hidden;
 }
 
 .blob-rosa {
   position: absolute;
-  top: -50px;
+  top: 30px;
   right: -80px;
   width: 35vw;
+  height: 100vh;
   z-index: -1;
   transition: all 0.4s ease-in-out;
+  overflow: hidden;
 }
 
-/* blobs se movem quando sidebar abre 
-.sidebar.expandido ~ .blob-verde {
-  left: 200px;
-  transition: all 0.3s ease-in-out;
-}
-
-.sidebar.expandido ~ .blob-rosa {
-  right: -280px;
-  transition: all 0.4s ease-in-out;
-} 
-
-/* ================================
-   Inputs
-================================ */
-input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #ff7ca3; /* cor personalizada da caixinha */
-  cursor: pointer;
-  vertical-align: middle;
-  font-size: 14px;
-}
-
-input[type="password"] {
-  width: 150px;
-  vertical-align: middle;
-}
-
-input[type="email"] {
-  width: 157px;
-  vertical-align: middle;
-}

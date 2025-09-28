@@ -1,71 +1,63 @@
-.container{
+/*ESTILOS BASICOS*/
+.container {
   width: 1650px;
-  height:1020px;
+  height: 1020px;
   display: flex;
   position: relative;
-  margin-left: 180px;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-
-.forma{
-width: 1000px;
-height: 500px;
-flex-shrink: 0;
-border-radius: 88px;
-background: #e9ffd3;
-margin-top: 120px;
-margin-left: 105px;
-z-index: -1;
-display: flex;
-gap:45px;
-padding: 30px;
-transition: all 0.3s ease-in-out;
-}
-
-
-.sidebar.expandido ~ .container {
   margin-left: 270px;
-  transition: all 0.3s ease-in-out;
 }
 
-.imagem{
-width: 450px;
-height: 450px;
-flex-shrink: 0;
-aspect-ratio: 1/1;
-margin-right: 15px;
+/*RETANGULO DO FUNDO - POSICIONAMENTO ETC*/
+.forma {
+  width: 1000px;
+  height: 500px;
+  flex-shrink: 0;
+  border-radius: 88px;
+  background: #e9ffd3;
+  margin-top: 120px;
+  margin-left: 105px;
+  display: flex;
+  gap: 45px;
+  padding: 30px;
 }
 
-.texto h2{
-font-size: 25px;
-margin-left: 20px;
-margin-top: 75px;
-text-align: left;
+/*ITENS DENTRO DA FORMA*/
+.imagem {
+  width: 450px;
+  height: 450px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  margin-right: 15px;
 }
 
-.texto p{
-    margin-top: 20px;
-    margin-left: 25px;
-    text-align: justify;
+.texto h2 {
+  font-size: 25px;
+  margin-left: 20px;
+  margin-top: 75px;
+  text-align: left;
 }
 
-.btn {
+.texto p {
+  margin-top: 20px;
+  margin-left: 25px;
+  text-align: justify;
+}
+
+/* BOTÃO HYPERLINK */
+.botao {
   background-color: #ffcad4;
   border-radius: 75px;
-  width: 155px;
-  height: 40px;
+  width: 125px;
+  height: 35px;
   border: none;
   font-size: 16px;
   display: block;
-  margin: 30px auto 0px 20px; /* centraliza dentro do form */
+  margin: 0px auto auto 20px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  color: black;
 }
 
-.btn:hover {
+.botao:hover {
   background-color: #ffb8c5;
   transition: all 0.2s ease-in-out;
-} 
+}
