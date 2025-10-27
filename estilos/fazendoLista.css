@@ -22,7 +22,7 @@ body {
 }
 
 /*ESTILOS DAS ALTERNATIVAS*/
-.alternativas {
+.alternativa {
 
   margin-top: 12px;
   padding: 12px;
@@ -44,16 +44,16 @@ body {
   line-height: 1.4;
 }
 /*ESTILOS ALTERNATIVOS DAS ALTERNATIVAS :P*/
-.alternativas.selecionada {
+.alternativa.selecionada {
   background-color: #ddd;
 }
 
-.alternativas.errada{
+.alternativa.errada{
   background-color: #ff8f8fbc;
   border: 1px solid #ff8f8fdd;
 }
 
-.alternativas.correta{
+.alternativa.correta{
   background-color: #e1ffb6c4;
   border: 1px solid #bfe090;
 }
@@ -126,3 +126,17 @@ max-width: 100%;
   transition: all 0.2s ease-in-out;
 }
 
+.btnPassar{
+  text-align: right;
+  cursor: pointer;
+  transition: 3s ease-in-out;
+  color:black
+}
+
+#proxQuest:hover{
+  color:#919190
+}
+
+#antesQuest:hover{
+  color:#919190
+}
