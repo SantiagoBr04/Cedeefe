@@ -1,6 +1,6 @@
 // Importa o Router para poder criar rotas, o controller e o middleware nescessario também
 import { Router } from 'express';
-import simuladoController from '../controllers/simuladoController.js';
+import listaController from '../controllers/listaController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 // Cria o objeto router com a configuração padrão do expressa para receber requisições HTTP
@@ -11,10 +11,10 @@ const router = new Router();
 router.use(authMiddleware);
 
 // Rota para gerar um novo simulado com base nos critérios do usuário
-router.post('/gerar', simuladoController.gerarSimulado);
+router.post('/gerar', listaController.gerarLista);
 
 // Rota para receber as respostas, corrigir e salvar no histórico
-router.post('/corrigir', simuladoController.corrigirSimulado);
+router.post('/corrigir', listaController.corrigirLista);
 
 // Export default para exportar o valor principal do arquivo.
 export default router;

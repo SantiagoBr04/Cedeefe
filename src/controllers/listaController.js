@@ -2,10 +2,10 @@
 import pool from '../config/db.js';
 
 // Cria o objeto simuladoController
-const simuladoController = {
+const listaController = {
 
   // Cria o metodo para gerar um simulado
-  gerarSimulado: async (req, res) => {
+  gerarLista: async (req, res) => {
     try {
       // Receber os criterios
       const { quantidade, disciplinas } = req.body; // ex: { "quantidade": 20, "disciplinas": [1, 5] }
@@ -54,7 +54,7 @@ const simuladoController = {
   },
 
   // Método de corrigir o simulado, tecnicamente ele salva também
-  corrigirSimulado: async (req, res) => {
+  corrigirLista: async (req, res) => {
     try {
       // Recebe os dados
       const { userId } = req;
@@ -120,4 +120,4 @@ const simuladoController = {
 };
 
 // Export default para exportar o valor principal do arquivo.
-export default simuladoController;
+export default listaController;

@@ -6,8 +6,9 @@ import cors from 'cors';
 
 // Importa as rotas que existem
 import userRoutes from './routes/userRoutes.js'; 
-import simuladoRoutes from './routes/simuladoRoutes.js';
+import listaRoutes from './routes/listaRoutes.js';
 import questaoRoutes from './routes/questaoRoutes.js';
+import disciplinaRoutes from './routes/disciplinaRoutes.js';
 
 // Define o app como o express
 const app = express();
@@ -18,8 +19,9 @@ app.use(express.json()); // Para o express entender requisições com corpo em J
 
 // Diz ao Express para usar a rota certa para qualquer endereço que comece com /api/nome da rota
 app.use('/api/users', userRoutes); 
-app.use('/api/simulados', simuladoRoutes);
+app.use('/api/listas', listaRoutes);
 app.use('/api/questoes', questaoRoutes);
+app.use('/api/disciplinas', disciplinaRoutes);
 
 // Define a porta do servidor (Vai pegar o primeiro valor que aparecer, então se tiver um no process ali, vai ser aquele ali,
 // Porém, ali só vem valor quando se hospeda o server)
