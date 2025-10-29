@@ -59,20 +59,10 @@ document.querySelector('.criarLista').addEventListener('submit', async function(
 
   // Captura os valores dos campos do formulário
   const quantidade = document.querySelector('.nQuest').value;
-  const disciplinaSelecionada = document.querySelector('select[name="disciplina"]').value;
+  const disciplinaCod = document.querySelector('#disciplina-select').value; 
 
-  // Aqui é provisorio, tenho que fazer a logica para pegar as disciplinas que tem e colocar
-  // automaticamente, ao inves de colocar aqui
-  const disciplinasCod = {
-      matematica: 1,
-      portugues: 2,
-      geografia: 3,
-      // Outros codigos conforme Banco de dados
-  };
-  const disciplinaCod = disciplinasCod[disciplinaSelecionada];
-
-  // Validação básica
-  if (!quantidade || !disciplinaCod) {
+  // Verifica se a disciplina não ta com codigo nulo
+  if (!quantidade || disciplinaCod === '') {
     alert('Por favor, preencha a quantidade de questões e a disciplina.');
     return;
   }
