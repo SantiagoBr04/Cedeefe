@@ -4,11 +4,11 @@ import pool from '../config/db.js';
 // Cria o objeto simuladoController
 const listaController = {
 
-  // Cria o metodo para gerar um simulado
+  // Cria o metodo para gerar uma lista de questões
   gerarLista: async (req, res) => {
     try {
       // Receber os criterios
-      const { quantidade, disciplinas } = req.body; // ex: { "quantidade": 20, "disciplinas": [1, 5] }
+      const { quantidade, disciplinas, } = req.body; // ex: { "quantidade": 20, "disciplinas": [1, 5] }
 
       // Verifica se os dados obrigatorios estão de acordo, tecnicamente não precisava, pois em teoria
       // é impossivel o aluno colocar um número menor ou igual a zero por exemplo, mas é bom né
@@ -21,7 +21,7 @@ const listaController = {
       // O ORDER BY RAND faz com que pegue de forma aleatoria, eu quero de forma aleatoria, mas queria que fosse 
       // uma materia primeira, depois outra, dessa forma ta tudo misturado, mas isso eu arrumo depois
       const sql = `
-        SELECT cod, descricao, alternativas, imagem, explicacao, tema, disciplina_cod 
+        SELECT cod, descricao, autor, ano, explicacao, imagem_url, disciplina_cod, tema_cod
         FROM questoes 
         WHERE disciplina_cod IN (?) 
         ORDER BY RAND() 
@@ -36,16 +36,34 @@ const listaController = {
         return res.status(404).json({ error: `Não foram encontradas ${quantidade} questões para os critérios selecionados. Foram encontradas apenas ${questoes.length}.` });
       }
 
-      // Prepara a resposta sem gabarito para enviar, o .map mapeia o array questões, e executa a arrow function
-      // com q de parametro, o ...restoDaQuestão é onde tudo acontece, os ... é um operador que pega o resto do array
-      // tirando o que está citado anteriormente, nesse caso o gabarito, e coloca dentro de q, depois o return
-      const questoesSemGabarito = questoes.map(q => {
-        const { gabarito, ...restoDaQuestao } = q; // Pega o resto do objeto, menos o gabarito
-        return restoDaQuestao;
+      // Prepara a resposta sem gabarito para enviar 
+      const codigosDasQuestoes = questoes.map(q => q.cod);
+
+      // Busca todas as alternativas para essas questões de uma só vez
+      const [alternativas] = await pool.query(
+        'SELECT cod, questao_cod, texto FROM alternativas WHERE questao_cod IN (?)',
+        [codigosDasQuestoes]
+      );
+
+      // Agrupa as alternativas por questão para facilitar o acesso
+      const alternativasPorQuestao = alternativas.reduce((acc, alt) => {
+        if (!acc[alt.questao_cod]) {
+          acc[alt.questao_cod] = [];
+        }
+        acc[alt.questao_cod].push(alt);
+        return acc;
+      }, {});
+
+      // Adiciona as alternativas a cada questão
+      const questoesComAlternativas = questoes.map(q => {
+        return {
+          ...q,
+          alternativas: alternativasPorQuestao[q.cod] || []
+        };
       });
 
-      // Manda as resposta sem gabarito
-      res.status(200).json(questoesSemGabarito);
+      // Manda as questões com suas alternativas
+      res.status(200).json(questoesComAlternativas);
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
       console.error('Erro ao gerar simulado:', error);

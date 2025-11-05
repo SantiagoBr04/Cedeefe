@@ -23,17 +23,15 @@ if (!simulado || simulado.length === 0) {
     // Mostra o enunciado
     questaoElement.innerText = questao.descricao; // descricao é o enunciado basicamente
 
-    // Limpa as alternativas antigas
+     // Limpa as alternativas antigas
     alternativasElement.innerHTML = '';
 
-    // Cria as alternativas
-    // O backend envia um JSON. Precisa 'parsear' de volta para um objeto.
-    const alternativasObjeto = JSON.parse(questao.alternativas);
-    for (const [letra, texto] of Object.entries(alternativasObjeto)) {
+    // Cria as alternativas, que agora vêm como um array de objetos
+    questao.alternativas.forEach(alt => {
       const div = document.createElement('div');
       div.classList.add('alternativa');
-      div.innerText = texto;
-      div.dataset.letra = letra; // Guarda a letra ('a', 'b', 'c') no elemento
+      div.innerText = alt.texto;
+      div.dataset.cod = alt.cod; // Guarda o código da alternativa no elemento
 
       // Adiciona evento de clique
       div.addEventListener('click', () => {
@@ -48,18 +46,71 @@ if (!simulado || simulado.length === 0) {
       });
 
       alternativasElement.appendChild(div);
-    }
+    },
+  );
     
     // Habilita os botões de seleção novamente
     document.querySelectorAll('.alternativa').forEach(a => a.style.pointerEvents = 'auto');
     jaVerificado.delete(questaoAtual); // Permite verificar novamente ao carregar
   }
 
-  // Botão verificar resposta (a lógica de correção final será no backend)
-  document.getElementById('submit').addEventListener('click', () => {
-    // A parte de correção por questão ainda tem que ser feita, mas ela meio ue vai ser 
-    // só visual, a correção mesmo so vai vir no final
-    alert('Funcionalidade de verificação final será implementada. Prossiga para a próxima questão.');
+  // Botão para verificar a resposta da questão atual
+  document.getElementById('submit').addEventListener('click', async () => {
+    const alternativaSelecionadaElement = respostasSelecionadas[questaoAtual];
+    
+    // Verifica se uma resposta foi selecionada
+    if (!alternativaSelecionadaElement) {
+      alert('Por favor, selecione uma alternativa antes de verificar.');
+      return;
+    }
+
+    // Impede que a mesma questão seja verificada várias vezes
+    if (jaVerificado.has(questaoAtual)) {
+      alert('Você já verificou esta questão.');
+      return;
+    }
+
+    const questao = simulado[questaoAtual];
+    const questaoCod = questao.cod;
+    const alternativaCod = parseInt(alternativaSelecionadaElement.dataset.cod);
+
+    try {
+      // Envia para uma nova rota de verificação no backend
+      const response = await fetch('http://localhost:3000/api/questoes/verificar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ questao_cod: questaoCod, alternativa_cod: alternativaCod })
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao comunicar com o servidor.');
+      }
+
+      const resultado = await response.json(); // Espera-se { correta: boolean, alternativaCorretaCod: int }
+
+      // Marca que esta questão foi verificada
+      jaVerificado.add(questaoAtual);
+
+      // Desabilita o clique em todas as alternativas
+      document.querySelectorAll('.alternativa').forEach(a => {
+        a.style.pointerEvents = 'none';
+      });
+
+      // Aplica o estilo de incorreta na alternativa que o usuário selecionou
+      if (!resultado.correta) {
+        alternativaSelecionadaElement.classList.add('incorreta');
+      }
+
+      // Encontra e destaca a alternativa correta
+      const alternativaCorretaElement = document.querySelector(`.alternativa[data-cod="${resultado.alternativaCorretaCod}"]`);
+      if (alternativaCorretaElement) {
+        alternativaCorretaElement.classList.add('correta');
+      }
+
+    } catch (error) {
+      console.error('Erro ao verificar resposta:', error);
+      alert('Não foi possível verificar a resposta. Tente novamente.');
+    }
   });
 
   document.getElementById('proxQuest').addEventListener('click', () => {

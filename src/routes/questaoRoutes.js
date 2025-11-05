@@ -24,5 +24,7 @@ router.delete(
   questaoController.deleteQuestao
 );
 
+router.post('/verificar', questaoController.verificarQuestao)
+
 // Export default para exportar o valor principal do arquivo.
 export default router;

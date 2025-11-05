@@ -10,7 +10,7 @@ const userController = {
   register: async (req, res) => {
     try {
       // Pega os dados do corpo da requisição
-      const {login, senha, adm, data_nasc, motivo, escola, genero, endereco, estado_civil} = req.body;
+      const {login, senha, adm, data_nasc, motivo, escola} = req.body;
 
       // Validação básica (verificar se os dados vieram)
       if (!login || !senha) {
@@ -29,8 +29,8 @@ const userController = {
 
       // Inserir o novo usuário no banco de dados
       const [result] = await pool.query(
-        'INSERT INTO usuario (login, senha, adm, data_nasc, motivo, escola, genero, endereco, estado_civil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [login, hashedPassword, adm, data_nasc, motivo, escola, genero, endereco, estado_civil]
+        'INSERT INTO usuario (login, senha, adm, data_nasc, motivo, escola) VALUES (?, ?, ?, ?, ?, ?)',
+        [login, hashedPassword, adm, data_nasc, motivo, escola]
       );
 
       // 5. Enviar uma resposta de sucesso
