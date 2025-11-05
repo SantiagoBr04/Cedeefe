@@ -12,6 +12,8 @@ if (!simulado || simulado.length === 0) {
   // Seleciona os elementos da página
   const questaoElement = document.querySelector('.enunciadoQuest');
   const alternativasElement = document.querySelector('.alternativas');
+  const contadorElement = document.getElementById('contador-questoes');
+  const imgElement = document.getElementById('img-questao');
   let questaoAtual = 0;
   let respostasSelecionadas = {}; // Objeto para guardar as respostas do usuário
   let jaVerificado = new Set(); // Conjunto para saber quais questões já foram verificadas
@@ -19,6 +21,21 @@ if (!simulado || simulado.length === 0) {
   // Função para carregar a questão (meio obvio)
   function carregarQuestao() {
     const questao = simulado[questaoAtual];
+
+    // Atualiza o contador de questões
+    if (contadorElement) {
+      contadorElement.innerText = `${questaoAtual + 1}/${simulado.length}`;
+    }
+
+    if (imgElement) {
+      if (questao.imagem_url) {
+        imgElement.src = questao.imagem_url;
+        imgElement.style.display = 'block'; // Mostra o elemento da imagem
+      } else {
+        imgElement.src = '';
+        imgElement.style.display = 'none'; // Esconde se não houver imagem
+      }
+    }
 
     // Mostra o enunciado
     questaoElement.innerText = questao.descricao; // descricao é o enunciado basicamente
@@ -98,7 +115,7 @@ if (!simulado || simulado.length === 0) {
 
       // Aplica o estilo de incorreta na alternativa que o usuário selecionou
       if (!resultado.correta) {
-        alternativaSelecionadaElement.classList.add('incorreta');
+        alternativaSelecionadaElement.classList.add('errada');
       }
 
       // Encontra e destaca a alternativa correta
@@ -120,7 +137,6 @@ if (!simulado || simulado.length === 0) {
     } else {
       // Quando chegar na última questão, sera enviado para a correção final
       alert("Você chegou ao final da lista!");
-      // Futuramente, sera chamado a rota /api/simulados/corrigir
     }
   });
 

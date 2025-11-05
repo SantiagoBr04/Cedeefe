@@ -1,0 +1,100 @@
+.content {
+    margin-top: 400px;
+    margin-bottom: 300px;
+    margin-right: 350px; 
+    padding: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    font-size: 16px;
+}
+
+.form-container {
+  max-width: 800px; /* Limita a largura do formulário */
+  margin: 0 auto; /* Centraliza o formulário na área de conteúdo */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.form-container h2 {
+  margin-top: 0;
+}
+
+.add-question-form .form-label {
+  display: block; /* Coloca o rótulo em sua própria linha */
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.add-question-form .form-input,
+.add-question-form .form-textarea,
+.add-question-form .form-select {
+  width: 100%; /* Faz os campos ocuparem a largura total */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.add-question-form .form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.alternatives-section h4 {
+  margin-top: 20px;
+}
+
+.alternative-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.alternative-item input[type="radio"] {
+  margin-right: 10px;
+}
+
+.alternative-item .form-input {
+  flex-grow: 1; /* Faz o input da alternativa crescer */
+}
+
+.button-group {
+  margin-top: 10px;
+}
+
+.button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.button-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.button-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.message-box {
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+.message-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.message-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}

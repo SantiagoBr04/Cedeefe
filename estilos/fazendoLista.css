@@ -133,6 +133,12 @@ max-width: 100%;
   color:black
 }
 
+.contador{
+  text-align: left;
+  margin-top: -25px;
+  color:black
+}
+
 #proxQuest:hover{
   color:#919190
 }
