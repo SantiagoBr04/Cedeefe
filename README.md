@@ -1,0 +1,1 @@
+Plataforma de estudos para auxílio na prova de ingresso no técnico integrado ao ensino médio do IFC - Karen e Santiago

@@ -1,0 +1,123 @@
+
+
+/* CONTAINER PRINCIPAL */
+.container-fluid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-left: 180px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+
+/* ÁREA DE LOGIN*/
+.cont-login {
+  margin-left: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+.login {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  border: solid 2px rgb(255, 156, 156);
+  width: 350px;
+  height: 425px;
+  flex-shrink: 0;
+}
+
+.titulo-form {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.form-group {
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.recuperar {
+  font-size: 14px;
+  padding: 14px;
+  margin-top: 5px;
+}
+
+.recuperar a {
+  text-decoration: none;
+}
+
+/* INPUTS */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff7ca3;
+  cursor: pointer;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+input[type="password"] {
+  width: 250px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+input[type="email"] {
+  width: 257px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+
+/* BOTÃO ENTRAR */
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+  width: 125px;
+  height: 35px;
+  border: none;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 5px;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+/* BLOBS */
+.blob-verde {
+  position: absolute;
+  bottom: -30px; 
+  margin-left: 270px;
+  width: 35vw; 
+  height: 100vh;
+  z-index: -1;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.blob-rosa {
+  position: absolute;
+  top: 30px;
+  right: -80px;
+  width: 35vw;
+  height: 100vh;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+}
+

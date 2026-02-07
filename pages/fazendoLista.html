@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cedeefe</title>
+
+    <!-- Ícones do Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Ícones Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../estilos/sidebar.css" />
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../estilos/fazendoLista.css" />
+  </head>
+  <body>
+    <!-- Menu fixo superior -->
+    <div class="menu">
+      <!-- Logo -->
+      <div class="logo_content">
+        <!-- Nome/logo do site -->
+        <div class="logo">
+          <div class="logo_name">
+            <a href="../index.html" class="logo_name">Cedeefe</a>
+          </div>
+        </div>
+        </div>
+
+      <!-- Ícone do usuário (lado direito do menu) -->
+      <a href="login.html">
+        <span class="material-symbols-outlined" id="btn-user">account_circle</span>
+      </a>
+    </div>
+
+    <!-- Barra lateral -->
+    <div class="sidebar">
+      <ul class="nav_list">
+        <!-- Página inicial -->
+        <li class="item-menu">
+          <a class="linkItens" href="../index.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="txt-link">Página inicial</span>
+          </a>
+        </li>
+
+        <!-- Dicas de Estudo -->
+        <li class="item-menu">
+          <a class="linkItens" href="#">
+            <span class="material-symbols-outlined">school</span>
+            <span class="txt-link">Dicas de Estudo</span>
+          </a>
+        </li>
+
+        <!-- Roadmap -->
+        <li class="item-menu">
+          <a class="linkItens" href="#">
+            <span class="material-symbols-outlined">timeline</span>
+            <span class="txt-link">Roadmap</span>
+          </a>
+        </li>
+
+        <!-- Banco de Questões com dropdown -->
+        <li class="item-menu dropdown">
+          <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-symbols-outlined me-2">quiz</span>
+            <span class="txt-link">Banco de Questões</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="criarLista.html">Criar lista</a>
+            </li>
+            <li><a class="dropdown-item" href="#">Minhas listas</a></li>
+            <li><a class="dropdown-item" href="#">Criar simulados</a></li>
+            <li><a class="dropdown-item" href="#">Meus simulado</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+     <div class="content">
+      <div class="btnPassar">
+        <span class="material-symbols-outlined" id="antesQuest">chevron_left</span>
+        <span class="material-symbols-outlined" id="proxQuest">chevron_right</span>
+      </div>
+      <!--Aqui vai ter o numero da questão,a instituição autora, ano e talvez tema da questão-->
+      <!--<h2 class="infoQuests">1 - IFF 2018 Semelhança de Triângulos</h2>-->
+
+        <!--Essa div vai ter: a imagem(se tiver) e a descrição da questão/enunciado-->
+        <div class="contQuest">
+          <!--<img src="../imagens/exempQuest.png" class="imgQuest">-->
+          <p class="enunciadoQuest"></p>
+        </div>
+
+        <div class="alternativas"> </div>
+        <button class="botao" id="submit">Verificar resposta</button>
+    </div>
+
+    <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/fazendolista.js"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+/*ESTILOS BASICOS*/
+.container {
+  width: 1650px;
+  height: 1020px;
+  display: flex;
+  position: relative;
+  margin-left: 270px;
+}
+
+/*RETANGULO DO FUNDO - POSICIONAMENTO ETC*/
+.forma {
+  width: 1000px;
+  height: 500px;
+  flex-shrink: 0;
+  border-radius: 88px;
+  background: #e9ffd3;
+  margin-top: 120px;
+  margin-left: 105px;
+  display: flex;
+  gap: 45px;
+  padding: 30px;
+}
+
+/*ITENS DENTRO DA FORMA*/
+.imagem {
+  width: 450px;
+  height: 450px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  margin-right: 15px;
+}
+
+.texto h2 {
+  font-size: 25px;
+  margin-left: 20px;
+  margin-top: 75px;
+  text-align: left;
+}
+
+.texto p {
+  margin-top: 20px;
+  margin-left: 25px;
+  text-align: justify;
+}
+
+/* BOTÃO HYPERLINK */
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+  width: 125px;
+  height: 35px;
+  border: none;
+  font-size: 16px;
+  display: block;
+  margin: 0px auto auto 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+  transition: all 0.2s ease-in-out;
+}

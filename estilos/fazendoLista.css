@@ -1,0 +1,142 @@
+/*ESTILOS PADRÃO*/
+
+body {
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  min-height: 100vh;       
+  margin: 0;              
+}
+
+.content {
+  padding: 20px;
+  margin-top: 80px;
+  margin-left: 250px;
+  margin-bottom: 50px;
+  border: 2px solid #ffc7c77a;
+  border-radius: 15px;
+  width: 60%;
+  height: 100%;        
+  max-width: 800px;   
+  box-sizing: border-box;
+}
+
+/*ESTILOS DAS ALTERNATIVAS*/
+.alternativa {
+
+  margin-top: 12px;
+  padding: 12px;
+             
+  justify-content: left;   
+  align-items: center;       
+  width: 100%;
+  height: 15%;
+  font-size: 1rem;
+  text-align: left; 
+  
+  display: block;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  line-height: 1.4;
+}
+/*ESTILOS ALTERNATIVOS DAS ALTERNATIVAS :P*/
+.alternativa.selecionada {
+  background-color: #ddd;
+}
+
+.alternativa.errada{
+  background-color: #ff8f8fbc;
+  border: 1px solid #ff8f8fdd;
+}
+
+.alternativa.correta{
+  background-color: #e1ffb6c4;
+  border: 1px solid #bfe090;
+}
+
+
+/*ENUNCIADO*/
+.enunciadoQuest{
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word; 
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+/*INFORMAÇÕES EXTRAS*/
+.infoQuests{
+  background-color:rgb(223, 255, 205);
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  display:inline-block;
+  font-size: 20px;
+}
+
+/*ESTILO DA IMAGEM*/
+.imgQuest{
+aspect-ratio: 1/1;
+position: center;
+display: block;       
+margin: 10px auto;       
+max-width: 100%;      
+height: auto; 
+padding: 10px;
+max-width: 100%;
+}
+
+/*ENUNCIADO DA QUESTÃO*/
+.contQuest{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: justify;
+  align-items: stretch;
+  width: 90%;     
+  max-width: 800px; 
+  margin: auto;
+  padding: 20px;
+  background: transparent;
+}
+
+
+/* BOTÃO DE VERIFICAÇÃO */
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+  width: 175px;
+  height: 20%;
+  border: none;
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 15px;
+  padding: 5px;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+  transition: all 0.2s ease-in-out;
+}
+
+.btnPassar{
+  text-align: right;
+  cursor: pointer;
+  transition: 3s ease-in-out;
+  color:black
+}
+
+#proxQuest:hover{
+  color:#919190
+}
+
+#antesQuest:hover{
+  color:#919190
+}

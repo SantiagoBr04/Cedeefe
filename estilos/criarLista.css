@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* CONTEÚDO PRINCIPAL*/
+.content {
+  margin-right: 350px; 
+  padding: 20px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+  font-size: 16px;
+}
+
+/* FORMLÁRIO LOGIN */
+form {
+  background: #ffffff00;
+  border-radius: 15px;
+  padding: 30px;
+  width: 450px; 
+  margin-left: 250px;
+  margin-top: 20px;
+}
+
+form .item {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.titulo-form {
+  margin-bottom: 20px;
+  margin-left: 75px;
+  text-align: center;
+  font-family: Comfortaa;
+  font-size: 25px;
+}
+
+/* BOTÃO */
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+  width: 125px;
+  height: 35px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto 0px 80px; 
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+}
+
+/* INPUTS E SELECTS */
+/*Configuração de estilo das textareas*/
+input.nome, textarea.descricao, .nQuest, .conteudo {
+  width: 100%;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 2px solid #ffb8c584;
+  background-color: #ffb8c54d;
+  padding: 6px 10px;
+}
+
+textarea.descricao {
+  resize: none;
+  height: 105px;
+}
+
+/* LAYOUT ROW*/
+ #itensformulario {
+  width: 100%;
+  margin-left: 50px;
+}
+
+
+/* BLOB E GATINHO */
+.blob-verde {
+  position: absolute;
+  bottom: -70px;
+  right: -600px;
+  z-index: -1;
+}
+
+.gatinho {
+  position: fixed;
+  top: 200px;
+  right: 100px;
+  width: 300px;
+}

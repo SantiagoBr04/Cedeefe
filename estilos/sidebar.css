@@ -1,0 +1,172 @@
+/* Importação da fonte Poppins do Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap");
+
+/* ESTILOS BÁSICOS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/*  SIDEBAR  */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: 100%;
+  width: 270px;
+  overflow: hidden;
+  background: #fdfdfd;
+  padding: 6px 14px;
+  box-shadow: 2px 0px 0px 0px #0000001a;
+}
+
+/* MENU SUPERIOR */
+.menu {
+  width: 100%;
+  height: 60px;
+  background-color: #fdfdfd;
+  box-shadow: 0px 2px 0px 0px #0000001a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+/* LOGO E BOTÃO MENU */
+.sidebar .logo_content {
+  color: black;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+}
+
+.logo_content .logo i {
+  font-size: 28px;
+  margin-right: 5px;
+}
+
+.logo_content .logo .logo_name {
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+/*  ÍCONES DO MENU */
+.logo_content .material-symbols-outlined {
+  font-size: 28px;
+  margin: 13px;
+  cursor: pointer;
+}
+
+.logo_content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Ícone do usuário */
+a #btn-user {
+  cursor: pointer;
+  font-size: 28px;
+  margin-right: 5px;
+  margin-top: 5px;
+  color: black;
+}
+
+/* LISTA DA SIDEBAR  */
+.sidebar ul {
+  margin-top: 20px;
+}
+
+.sidebar ul li {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin: 10px -20px;
+  line-height: 50px;
+}
+
+.sidebar ul li .linkItens {
+  color: black;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 6px 02px;
+  text-decoration: none;
+}
+
+/* Ícones da sidebar */
+.sidebar ul li .linkItens .material-symbols-outlined {
+  height: 40px;
+  min-width: 40px;
+  text-align: left;
+  padding-right: 10px;
+  padding-left: 0px;
+  line-height: 40px;
+  font-size: 24px;
+}
+
+.linkItens {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 5px 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.linkItens:hover {
+  background: #d2d2d241;
+}
+
+
+/* DROPDOWN BANCO DE QUESTÕES */
+.dropdown-toggle {
+  color: black;
+  text-decoration: none;
+  padding: 12px 12px 0px 5px;
+}
+
+.dropdown-toggle .txt-link {
+  margin-left: 10px;
+}
+
+.dropdown-item {
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  margin-top: -20px;
+  padding-left: 65px;
+}
+
+.dropdown-item:hover {
+  color: #8e8989;
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu {
+  background-color: #fdfdfd;
+  border: #fdfdfd;
+  top: 0px;
+}
