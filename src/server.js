@@ -3,8 +3,12 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
-
+import path from 'path';
 import db from './models/index.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Importa as rotas que existem
 import userRoutes from './routes/userRoutes.js'; 
@@ -24,6 +28,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/listas', listaRoutes);
 app.use('/api/questoes', questaoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
+app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 // Define a porta do servidor (Vai pegar o primeiro valor que aparecer, então se tiver um no process ali, vai ser aquele ali,
 // Porém, ali só vem valor quando se hospeda o server)

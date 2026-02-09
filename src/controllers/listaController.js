@@ -1,5 +1,3 @@
-// Importa o pool de conexões do BD
-// import pool from '../config/db.js';
 import db from '../models/index.js'
 
 // Cria o objeto simuladoController
@@ -18,7 +16,7 @@ const listaController = {
       }
 
       const questoes = await db.Questao.findAll({
-        attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod'], 
+        attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod', 'autor', 'ano'], 
         where: { disciplina_cod: disciplinas },
         order: db.sequelize.random(),
         limit: parseInt(quantidade),
@@ -52,73 +50,6 @@ const listaController = {
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
       console.error('Erro ao gerar simulado:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
-    }
-  },
-
-  // Método de corrigir o simulado, tecnicamente ele salva também
-  corrigirLista: async (req, res) => {
-    try {
-      // Formato esperado: [ { questao_cod: 10, alternativa_selecionada_id: 55 }, ... ]
-      const { respostas } = req.body;
-
-      if (!respostas || !Array.isArray(respostas) || respostas.length === 0) {
-        return res.status(400).json({ error: 'Envie as respostas.' });
-      }
-
-      let acertos = 0;
-      const detalhamento = [];
-
-      for (const item of respostas) {
-        
-        // 1. Busca a alternativa no banco
-        const alternativa = await db.Alternativa.findByPk(item.alternativa_selecionada_id);
-
-        // Verifica se a alternativa existe
-        if (!alternativa) {
-          detalhamento.push({
-            questao_cod: item.questao_cod,
-            acertou: false,
-            mensagem: 'Alternativa não encontrada.'
-          });
-          continue;
-        }
-
-        // 2. A CORREÇÃO DE SEGURANÇA ESTÁ AQUI:
-        // Verifica se a alternativa enviada REALMENTE pertence à questão enviada
-        if (alternativa.questao_cod !== item.questao_cod) {
-             detalhamento.push({
-                questao_cod: item.questao_cod,
-                acertou: false,
-                mensagem: 'A alternativa enviada não pertence a esta questão.'
-             });
-             continue; // Pula para a próxima, conta como erro
-        }
-
-        // 3. Verifica se é a correta
-        // O Sequelize pode retornar true/false (boolean) ou 1/0 (tinyint), o check abaixo cobre ambos
-        const acertou = alternativa.correta === true || alternativa.correta === 1;
-
-        if (acertou) {
-          acertos++;
-        }
-
-        detalhamento.push({
-          questao_cod: item.questao_cod,
-          acertou: acertou,
-          alternativa_marcada: item.alternativa_selecionada_id
-        });
-      }
-
-      return res.status(200).json({
-        total: respostas.length,
-        acertos,
-        nota: (acertos / respostas.length) * 10,
-        detalhes: detalhamento
-      });
-
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Erro interno.' });
     }
   }
 }

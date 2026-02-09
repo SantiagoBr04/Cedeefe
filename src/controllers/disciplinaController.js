@@ -1,4 +1,3 @@
-// import pool from '../config/db.js'; 
 import db from '../models/index.js';
 const { Disciplina } = db;
 
@@ -7,7 +6,7 @@ const disciplinaController = {
   // Método para buscar todas as disciplinas
   getAllDisciplinas: async (req, res) => {
     try {
-      const disciplinas = await Disciplina.findAll({
+      const disciplinas = await Disciplina.findAll({ 
         attributes: ['cod', 'descricao'],
         order: [
           ['descricao', 'ASC']

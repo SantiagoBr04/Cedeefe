@@ -1,4 +1,3 @@
-// Importa o pool de conexões do BD
 import db from '../models/index.js';
 const { Usuario } = db;
 
@@ -9,7 +8,6 @@ const adminMiddleware = async (req, res, next) => {
     const { userId } = req;
 
     // Busca o usuário no banco para verificar seu status de admin
-    //const [users] = await pool.query('SELECT adm FROM usuario WHERE cod = ?', [userId]);
     const user = await Usuario.findOne({
       where: { cod: userId},
       attributes: ['adm']

@@ -56,7 +56,14 @@ export default (sequelize, DataTypes) => {
             defaultValue: 0
         },
     }, {
-        tableName: 'usuario_estatisticas_por_area'
+        tableName: 'usuario_estatisticas_por_area',
+        indexes: [
+        {
+            unique: true, // Define que é uma chave única
+            name: 'uk_usuario_disciplina', // O nome da constraint 
+            fields: ['usuario_cod', 'disciplina_cod'] // As colunas que formam o par único
+        }
+        ]
     });
     
     Usuario_estatisticas_por_area.associate = (models) => {
@@ -72,14 +79,6 @@ export default (sequelize, DataTypes) => {
             as: 'disciplina_area'
         })
     }
-
-    indexes: [
-      {
-        unique: true, // Define que é uma chave única
-        name: 'uk_usuario_disciplina', // O nome da constraint 
-        fields: ['usuario_cod', 'disciplina_cod'] // As colunas que formam o par único
-      }
-    ]
 
     return Usuario_estatisticas_por_area
 }

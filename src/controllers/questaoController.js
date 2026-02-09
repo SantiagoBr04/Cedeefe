@@ -1,18 +1,25 @@
-// Importa o pool de conexões do BD
-// import pool from '../config/db.js';
 import db from '../models/index.js';
+import fs from 'fs';
+import path from 'path';
 
 // Cria o objeto controller que vai ser exportado
 const questaoController = {
   
   // Cria o metodo addQuestão, assincrono e recebe a requisião e a resposta
   addQuestao: async (req, res) => {
-    // Tente, um codigo que pode dar errado, mas se der não quebra toda a exucução do site
+    const t = await db.sequelize.transaction();
+    
+  // Lógica da Imagem: Verifica se o Multer processou algum arquivo
+    let nomeArquivoImagem = null;
+    if (req.file) {
+      nomeArquivoImagem = req.file.filename; // Pega o nome gerado pelo Multer
+    }
+
     try {
       // Recebe todos os dados da questão do corpo da requisição
       const {
         descricao,
-        alternativas,     
+        alternativas: alternativasString,     
         disciplina_cod,
         explicacao,
         autor,
@@ -20,6 +27,20 @@ const questaoController = {
         imagem_url,
         tema_cod
       } = req.body;
+
+      // Conversão das Alternativas 
+      // Como o FormData envia objetos como string, precisamos converter de volta
+      let alternativas;
+      try {
+        // Se vier como string (pelo FormData), faz o parse. 
+        // Se por acaso vier como objeto, usa direto.
+        alternativas = typeof alternativasString === 'string' 
+          ? JSON.parse(alternativasString) 
+          : alternativasString;
+      } catch (e) {
+        await t.rollback();
+        return res.status(400).json({ error: "Formato das alternativas inválido." });
+      }
 
       // Validação dos dados essenciais
       if (!descricao || !alternativas || !disciplina_cod) {
@@ -33,9 +54,11 @@ const questaoController = {
         explicacao: explicacao || null,
         autor: autor || null,
         ano: ano || null,
-        imagem_url: imagem_url || null,
-        tema_cod: tema_cod || null
-      })
+        tema_cod: tema_cod || null,
+        // Aqui usamos o nome do arquivo capturado lá em cima no passo 1
+        // Se não tiver imagem, mantemos null ou usamos o que veio no body (caso seja um link externo)
+        imagem_url: nomeArquivoImagem || req.body.imagem_url || null 
+      }, { transaction: t }); // Passamos a transação 't'
 
       const alternativasFormatadas = alternativas.map(item => {
         return {
@@ -45,7 +68,9 @@ const questaoController = {
         }
       })
 
-      await db.Alternativa.bulkCreate(alternativasFormatadas);
+      await db.Alternativa.bulkCreate(alternativasFormatadas, { transaction: t });
+
+      await t.commit(); // Confirma as alterações no banco
 
       const questaoCompleta = await db.Questao.findByPk(novaQuestao.cod, {
         include: [{ model: db.Alternativa, as: 'alternativas' }]
@@ -62,30 +87,38 @@ const questaoController = {
   // Metodo para deletar questões
   deleteQuestao: async (req, res) => {
     try {
-      // Pega o código na url, que vem no item params da requisição, então
-      // se o cod for 15, vai excluir a questão com cod 15
       const { cod } = req.params;
 
-      // Verifica se a questão existe
-      const questoes = await db.Questao.findOne({
-        where: {cod: cod},
-        attributes: [cod]
-      })
-      // const [questoes] = await pool.query('SELECT cod FROM questoes WHERE cod = ?', [cod]);
-      if (questoes.length === 0) {
-        return res.status(404).json({ error: 'Questão não encontrada com o código fornecido.' });
+      // Buscamos a questão primeiro para saber se ela tem imagem
+      const questao = await db.Questao.findByPk(cod);
+
+      if (!questao) {
+        return res.status(404).json({ error: 'Questão não encontrada.' });
       }
 
-      // Executa a exclusão da questão de fato
-      await db.Questao.destroy({
-        where: {cod: cod}
-      })
-      //await pool.query('DELETE FROM questoes WHERE cod = ?', [cod]);
+      // Se tiver imagem, apagamos o arquivo físico
+      if (questao.imagem_url) {
+        // Monta o caminho completo: Pasta do projeto + uploads + nome da imagem
+        const caminhoArquivo = path.resolve('uploads', questao.imagem_url);
+        
+        // Função do Node que deleta arquivos
+        fs.unlink(caminhoArquivo, (erro) => {
+            if (erro) {
+                // Se der erro ao apagar a imagem (ex: arquivo já não existia), 
+                // apenas logamos o aviso, mas não paramos o processo.
+                console.error("Erro ao apagar imagem física:", erro);
+            } else {
+                console.log("Imagem física apagada com sucesso!");
+            }
+        });
+      }
 
-      // Envia a resposta de sucesso
-      res.status(200).json({ message: `Questão com código ${cod} foi deletada com sucesso.` });
+      // Agora apagamos do banco de dados
+      await questao.destroy();
 
-    } catch (error) { // 
+      res.status(200).json({ message: `Questão ${cod} e sua imagem, caso tivesse, foram deletadas.` });
+
+    } catch (error) { 
       console.error('Erro ao deletar questão:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
     }

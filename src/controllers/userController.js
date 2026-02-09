@@ -1,8 +1,7 @@
-// Importa o pool de conexões, o bcrypt para criptografar a senha e o jwt para usar o token
 import db from '../models/index.js'; // Importa o db do Sequelize
 import { Op } from 'sequelize'; // Importa operadores para comparações (necessário no update)
-import bcrypt from 'bcryptjs';     
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'; // Para criptografia  
+import jwt from 'jsonwebtoken'; // Para usar tokens
 
 // Cria o objeto userContoller
 const userController = {
@@ -18,11 +17,10 @@ const userController = {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
       }
 
-      // Verificar se o e-mail já existe no banco
-      // Sequelize: findOne substitui o SELECT com LIMIT 1
-      const existingUser = await db.Usuario.findOne({ where: { login: login } });
+      // Verificar se o email já existe no banco
+      const existingUser = await db.Usuario.findOne({ where: { login: login } }); // Procura um em que o email dado seja igual ao do banco
       
-      if (existingUser) {
+      if (existingUser) { //Se ja existe, da erro
         return res.status(409).json({ error: 'Este e-mail já está em uso.' });
       }
 
@@ -31,8 +29,7 @@ const userController = {
       const hashedPassword = await bcrypt.hash(senha, salt); // Criptografa
 
       // Inserir o novo usuário no banco de dados
-      // Sequelize: create substitui o INSERT INTO
-      const newUser = await db.Usuario.create({
+      const newUser = await db.Usuario.create({ 
           login, 
           senha: hashedPassword, 
           adm, 
@@ -44,7 +41,7 @@ const userController = {
           estado_civil
       });
 
-      // 5. Enviar uma resposta de sucesso
+      // Enviar uma resposta de sucesso
       res.status(201).json({ 
         message: 'Usuário cadastrado com sucesso!', 
         userId: newUser.cod // Sequelize retorna o objeto criado com o ID
@@ -68,16 +65,14 @@ const userController = {
       }
 
       // Buscar o usuário pelo e-mail no banco
-      // Sequelize: findOne retorna um objeto ou null
       const user = await db.Usuario.findOne({ where: { login: login } });
       
-      // Se não encontrar o usuário, a senha está errada (não informar qual dos dois por segurança)
+      // Se não encontrar o usuário ou a senha está errada (não informar qual dos dois por segurança)
       if (!user) {
         return res.status(401).json({ error: 'Credenciais inválidas.' }); 
       }
 
       // Comparar a senha enviada com a senha criptografada no banco
-      // Sequelize: acessamos user.senha direto do objeto
       const isPasswordCorrect = await bcrypt.compare(senha, user.senha);
 
       // Compara a senha pra ver se está certa
@@ -109,7 +104,6 @@ const userController = {
   getProfile: async (req, res) => {
     try {
       // Pega o cod e o login onde o cod for igual ao da req
-      // Sequelize: findByPk busca pela chave primária
       const user = await db.Usuario.findByPk(req.userId, {
           attributes: ['cod', 'login'] // Seleciona apenas colunas específicas
       });
@@ -145,7 +139,7 @@ const userController = {
       // Lógica para atualizar os dados do perfil (LOGIN/EMAIL)
       if (login) {
         // Verifica se o novo 'login' (email) já está sendo usado por outro usuário
-        // Sequelize: Usamos Op.ne (Not Equal) para verificar se ID é diferente
+        // Sequelize: Usa Op.ne (Not Equal) para verificar se ID é diferente
         const existingUser = await db.Usuario.findOne({
             where: {
                 login: login,
@@ -212,8 +206,6 @@ const userController = {
       if (!user) {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
-
-      // Pega só a senha, e descarta os metadados (Sequelize já traz limpo)
       
       // Analisa se a senha ta certa
       const isPasswordCorrect = await bcrypt.compare(senha, user.senha);
@@ -224,7 +216,6 @@ const userController = {
       }
 
       // Se chegou até aqui, todos os dados foram prenchidos, portanto vai deletar o usuário
-      // Sequelize: destroy remove o registro
       await db.Usuario.destroy({ where: { cod: userId } });
 
       // Da a mensagem de sucesso

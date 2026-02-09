@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Questão - Cedeefe</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/adicionarQuestao.css">
+</head>
+<body>
+
+    <div class="menu">
+        <div class="logo_content">
+            <div class="logo">
+                <div class="logo_name"><a href="../index.html" class="logo_name">Cedeefe</a></div>
+            </div>
+        </div>
+        <a href="login.html"><span class="material-symbols-outlined" id="btn-user">account_circle</span></a>
+    </div>
+
+     <div class="sidebar">
+      <ul class="nav_list">
+        <!-- Página inicial -->
+        <li class="item-menu">
+          <a class="linkItens" href="../index.html">
+            <span class="material-symbols-outlined">home</span>
+            <span class="txt-link">Página inicial</span>
+          </a>
+        </li>
+
+        <!-- Dicas de Estudo -->
+        <li class="item-menu">
+          <a class="linkItens" href="#">
+            <span class="material-symbols-outlined">school</span>
+            <span class="txt-link">Dicas de Estudo</span>
+          </a>
+        </li>
+
+        <!-- Roadmap -->
+        <li class="item-menu">
+          <a class="linkItens" href="#">
+            <span class="material-symbols-outlined">timeline</span>
+            <span class="txt-link">Roadmap</span>
+          </a>
+        </li>
+
+        <!-- Banco de Questões com dropdown -->
+        <li class="item-menu dropdown">
+          <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-symbols-outlined me-2">quiz</span>
+            <span class="txt-link">Banco de Questões</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="criarLista.html">Criar lista</a>
+            </li>
+            <li><a class="dropdown-item" href="#">Minhas listas</a></li>
+            <li><a class="dropdown-item" href="#">Criar simulados</a></li>
+            <li><a class="dropdown-item" href="#">Meus simulado</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+        <h2>Adicionar Nova Questão</h2>
+        
+        <form id="form-add-questao" class="form-container">
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="disciplina-select" class="form-label">Disciplina</label>
+                    <select id="disciplina-select" class="form-select" required>
+                        <option value="">Carregando...</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="tema-input" class="form-label">Código do Tema (Opcional)</label>
+                    <input type="number" id="tema-input" class="form-control" placeholder="Ex: 1">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <label for="autor-input" class="form-label">Instituição / Autor</label>
+                    <input type="text" id="autor-input" class="form-control" placeholder="Ex: IFF, ENEM, OBMEP...">
+                </div>
+                <div class="col-md-4">
+                    <label for="ano-input" class="form-label">Ano</label>
+                    <input type="number" id="ano-input" class="form-control" placeholder="Ex: 2024">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="enunciado" class="form-label">Enunciado da Questão</label>
+                <textarea id="enunciado" class="form-control" rows="4" required placeholder="Digite o texto da questão aqui..."></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="input-imagem" class="form-label">Imagem de Apoio (Opcional)</label>
+                <input type="file" id="input-imagem" class="form-control" accept="image/*">
+                <div class="form-text">Formatos aceitos: PNG, JPG, JPEG.</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="explicacao" class="form-label">Explicação / Gabarito Comentado</label>
+                <textarea id="explicacao" class="form-control" rows="3" placeholder="Explique por que a resposta correta é a correta (aparecerá após o aluno responder)."></textarea>
+            </div>
+
+            <hr>
+
+            <h4>Alternativas</h4>
+            <p class="text-muted">Marque a bolinha na alternativa correta.</p>
+            
+            <div id="container-alternativas">
+                <div class="grupo-alternativa input-group mb-2">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="0" aria-label="Alternativa correta" required>
+                    </div>
+                    <input type="text" class="form-control input-texto" placeholder="Alternativa A" required>
+                </div>
+
+                <div class="grupo-alternativa input-group mb-2">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="1">
+                    </div>
+                    <input type="text" class="form-control input-texto" placeholder="Alternativa B" required>
+                </div>
+
+                <div class="grupo-alternativa input-group mb-2">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="2">
+                    </div>
+                    <input type="text" class="form-control input-texto" placeholder="Alternativa C">
+                </div>
+
+                <div class="grupo-alternativa input-group mb-2">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="3">
+                    </div>
+                    <input type="text" class="form-control input-texto" placeholder="Alternativa D">
+                </div>
+
+                <div class="grupo-alternativa input-group mb-2">
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="4">
+                    </div>
+                    <input type="text" class="form-control input-texto" placeholder="Alternativa E">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-salvar mt-3">Salvar Questão</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/adicionarQuestao.js"></script>
+</body>
+</html>

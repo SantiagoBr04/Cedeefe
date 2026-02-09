@@ -13,8 +13,5 @@ router.use(authMiddleware);
 // Rota para gerar um novo simulado com base nos critérios do usuário
 router.post('/gerar', listaController.gerarLista);
 
-// Rota para receber as respostas, corrigir e salvar no histórico
-router.post('/corrigir', listaController.corrigirLista);
-
 // Export default para exportar o valor principal do arquivo.
 export default router;
