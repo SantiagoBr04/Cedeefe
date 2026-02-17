@@ -3,6 +3,12 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
+import path from 'path';
+import db from './models/index.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Importa as rotas que existem
 import userRoutes from './routes/userRoutes.js'; 
@@ -22,12 +28,37 @@ app.use('/api/users', userRoutes);
 app.use('/api/listas', listaRoutes);
 app.use('/api/questoes', questaoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
+app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 // Define a porta do servidor (Vai pegar o primeiro valor que aparecer, então se tiver um no process ali, vai ser aquele ali,
 // Porém, ali só vem valor quando se hospeda o server)
 const PORT = process.env.PORT || 3000;
 
-// Liga o servidor na porta que ele estiver
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+const RECONSTRUIR_BANCO = false;
+
+db.sequelize.sync({force: RECONSTRUIR_BANCO})
+  .then(async() => {
+    console.log("Banco de dados conectado e sincronizado com sucesso!");
+
+    if (RECONSTRUIR_BANCO) {
+      console.log("Inserindo disciplinas padrões...");
+      
+      // Traduzindo seus INSERTs para Sequelize:
+      await db.Disciplina.bulkCreate([
+        { descricao: 'Português' },
+        { descricao: 'Matemática' },
+        { descricao: 'Ciências da Natureza' },
+        { descricao: 'Ciências Humanas' }
+      ]);
+      
+      console.log("Disciplinas inseridas com sucesso!");
+    }
+    // Só liga o server se o banco de dados estiver sincronizado corretamente
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    // Se der erro no banco (senha errada, banco fora do ar), o servidor avisa e não sobe "quebrado"
+    console.error("Erro fatal ao conectar no banco de dados:", err);
+  });

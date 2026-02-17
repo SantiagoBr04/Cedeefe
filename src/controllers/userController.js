@@ -1,7 +1,7 @@
-// Importa o pool de conexões, o bcrypt para criptografar a senha e o jwt para usar o token
-import pool from '../config/db.js'; 
-import bcrypt from 'bcryptjs';     
-import jwt from 'jsonwebtoken';
+import db from '../models/index.js'; // Importa o db do Sequelize
+import { Op } from 'sequelize'; // Importa operadores para comparações (necessário no update)
+import bcrypt from 'bcryptjs'; // Para criptografia  
+import jwt from 'jsonwebtoken'; // Para usar tokens
 
 // Cria o objeto userContoller
 const userController = {
@@ -17,9 +17,10 @@ const userController = {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
       }
 
-      // Verificar se o e-mail já existe no banco
-      const [existingUser] = await pool.query('SELECT cod FROM usuario WHERE login = ?', [login]);
-      if (existingUser.length > 0) {
+      // Verificar se o email já existe no banco
+      const existingUser = await db.Usuario.findOne({ where: { login: login } }); // Procura um em que o email dado seja igual ao do banco
+      
+      if (existingUser) { //Se ja existe, da erro
         return res.status(409).json({ error: 'Este e-mail já está em uso.' });
       }
 
@@ -28,15 +29,22 @@ const userController = {
       const hashedPassword = await bcrypt.hash(senha, salt); // Criptografa
 
       // Inserir o novo usuário no banco de dados
-      const [result] = await pool.query(
-        'INSERT INTO usuario (login, senha, adm, data_nasc, motivo, escola, genero, endereco, estado_civil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [login, hashedPassword, adm, data_nasc, motivo, escola, genero, endereco, estado_civil]
-      );
+      const newUser = await db.Usuario.create({ 
+          login, 
+          senha: hashedPassword, 
+          adm, 
+          data_nasc, 
+          motivo, 
+          escola, 
+          genero, 
+          endereco, 
+          estado_civil
+      });
 
-      // 5. Enviar uma resposta de sucesso
+      // Enviar uma resposta de sucesso
       res.status(201).json({ 
         message: 'Usuário cadastrado com sucesso!', 
-        userId: result.insertId 
+        userId: newUser.cod // Sequelize retorna o objeto criado com o ID
       });
 
     } catch (error) {
@@ -57,15 +65,12 @@ const userController = {
       }
 
       // Buscar o usuário pelo e-mail no banco
-      const [users] = await pool.query('SELECT * FROM usuario WHERE login = ?', [login]);
+      const user = await db.Usuario.findOne({ where: { login: login } });
       
-      // Se não encontrar o usuário, a senha está errada (não informar qual dos dois por segurança)
-      if (users.length === 0) {
+      // Se não encontrar o usuário ou a senha está errada (não informar qual dos dois por segurança)
+      if (!user) {
         return res.status(401).json({ error: 'Credenciais inválidas.' }); 
       }
-
-      // Pega o dado do login, o email, e não os metadados, por isso [0]
-      const user = users[0];
 
       // Comparar a senha enviada com a senha criptografada no banco
       const isPasswordCorrect = await bcrypt.compare(senha, user.senha);
@@ -99,18 +104,17 @@ const userController = {
   getProfile: async (req, res) => {
     try {
       // Pega o cod e o login onde o cod for igual ao da req
-      const [users] = await pool.query(
-        'SELECT cod, login FROM usuario WHERE cod = ?',
-        [req.userId]
-      );
+      const user = await db.Usuario.findByPk(req.userId, {
+          attributes: ['cod', 'login'] // Seleciona apenas colunas específicas
+      });
 
       // Compara se o cod existe (ele não pode ser igual a 0)
-      if (users.length === 0) {
+      if (!user) {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
       
       // Devolve o cod do usuário
-      res.status(200).json(users[0]);
+      res.status(200).json(user);
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
       console.error('Erro ao buscar perfil:', error);
@@ -122,7 +126,7 @@ const userController = {
   updateProfile: async (req, res) => {
     try {
       // Pega o ID do usuário do token (anexado pelo middleware)
-      const { userId } = req;
+      const { userId } = req; // Supondo que venha do middleware de auth
 
       // Pega os dados que o usuário pode querer alterar
       const { login, oldPassword, newPassword } = req.body;
@@ -135,25 +139,27 @@ const userController = {
       // Lógica para atualizar os dados do perfil (LOGIN/EMAIL)
       if (login) {
         // Verifica se o novo 'login' (email) já está sendo usado por outro usuário
-        const [existingUser] = await pool.query(
-          'SELECT cod FROM usuario WHERE login = ? AND cod != ?',
-          [login, userId]
-        );
+        // Sequelize: Usa Op.ne (Not Equal) para verificar se ID é diferente
+        const existingUser = await db.Usuario.findOne({
+            where: {
+                login: login,
+                cod: { [Op.ne]: userId } // login igual E cod diferente do meu
+            }
+        });
 
         // Se o cod existir, vai ser maior que 1, portanto vai dar erro aqui
-        if (existingUser.length > 0) {
+        if (existingUser) {
           return res.status(409).json({ error: 'Este e-mail já está em uso por outra conta.' });
         }
 
         // Atualiza o login no banco de dados
-        await pool.query('UPDATE usuario SET login = ? WHERE cod = ?', [login, userId]);
+        await db.Usuario.update({ login: login }, { where: { cod: userId } });
       }
 
       // Lógia para atualizar a senha
       if (newPassword && oldPassword) {
         // Busca o usuário no banco para pegar a senha atual
-        const [users] = await pool.query('SELECT senha FROM usuario WHERE cod = ?', [userId]);
-        const user = users[0];
+        const user = await db.Usuario.findByPk(userId, { attributes: ['senha'] });
 
         // Compara a "senha antiga" enviada com a que está no banco
         const isPasswordCorrect = await bcrypt.compare(oldPassword, user.senha);
@@ -166,7 +172,8 @@ const userController = {
         const hashedNewPassword = await bcrypt.hash(newPassword, salt);
 
         // Atualiza a senha no banco de dados
-        await pool.query('UPDATE usuario SET senha = ? WHERE cod = ?', [hashedNewPassword, userId]);
+        await db.Usuario.update({ senha: hashedNewPassword }, { where: { cod: userId } });
+
       } else if (newPassword && !oldPassword) {
           return res.status(400).json({ error: 'Para definir uma nova senha, a senha antiga é obrigatória.'});
       }
@@ -185,7 +192,6 @@ const userController = {
     try{
       // Pega os userId e a senha
       const { userId } = req;
-
       const { senha } = req.body;
 
       // Verifica se colocou a senha
@@ -194,16 +200,13 @@ const userController = {
       }
 
       // Pega senha
-      const [users] = await pool.query('SELECT senha FROM usuario WHERE cod = ?', [userId]);
+      const user = await db.Usuario.findByPk(userId, { attributes: ['senha'] });
 
       // Verifica se veio alguma coisa quando o BD tentou pegar a senha
-      if (users.length === 0) {
+      if (!user) {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
-
-      // Pega só a senha, e descarta os metadados
-      const user = users[0];
-
+      
       // Analisa se a senha ta certa
       const isPasswordCorrect = await bcrypt.compare(senha, user.senha);
 
@@ -213,7 +216,7 @@ const userController = {
       }
 
       // Se chegou até aqui, todos os dados foram prenchidos, portanto vai deletar o usuário
-      await pool.query('DELETE FROM usuario WHERE cod = ?', [userId]);
+      await db.Usuario.destroy({ where: { cod: userId } });
 
       // Da a mensagem de sucesso
       res.status(200).json({ message: 'Conta deletada com sucesso.' });

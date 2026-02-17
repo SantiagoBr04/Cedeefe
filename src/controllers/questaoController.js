@@ -1,56 +1,82 @@
-// Importa o pool de conexões do BD
-import pool from '../config/db.js';
+import db from '../models/index.js';
+import fs from 'fs';
+import path from 'path';
 
 // Cria o objeto controller que vai ser exportado
 const questaoController = {
   
   // Cria o metodo addQuestão, assincrono e recebe a requisião e a resposta
   addQuestao: async (req, res) => {
-    // Tente, um codigo que pode dar errado, mas se der não quebra toda a exucução do site
+    const t = await db.sequelize.transaction();
+    
+  // Lógica da Imagem: Verifica se o Multer processou algum arquivo
+    let nomeArquivoImagem = null;
+    if (req.file) {
+      nomeArquivoImagem = req.file.filename; // Pega o nome gerado pelo Multer
+    }
+
     try {
       // Recebe todos os dados da questão do corpo da requisição
       const {
         descricao,
-        alternativas, 
-        gabarito,     
+        alternativas: alternativasString,     
         disciplina_cod,
         explicacao,
         autor,
         ano,
-        imagem,
-        tema
+        imagem_url,
+        tema_cod
       } = req.body;
 
+      // Conversão das Alternativas 
+      // Como o FormData envia objetos como string, precisamos converter de volta
+      let alternativas;
+      try {
+        // Se vier como string (pelo FormData), faz o parse. 
+        // Se por acaso vier como objeto, usa direto.
+        alternativas = typeof alternativasString === 'string' 
+          ? JSON.parse(alternativasString) 
+          : alternativasString;
+      } catch (e) {
+        await t.rollback();
+        return res.status(400).json({ error: "Formato das alternativas inválido." });
+      }
+
       // Validação dos dados essenciais
-      if (!descricao || !alternativas || !gabarito || !disciplina_cod) {
+      if (!descricao || !alternativas || !disciplina_cod) {
         return res.status(400).json({ error: 'Descrição, alternativas, gabarito e disciplina são obrigatórios.' });
       }
 
-      // Código para inserir a questão no BD, não executado nessa linha, é na próxima
-      const sql = `
-        INSERT INTO questoes 
-        (descricao, alternativas, gabarito, disciplina_cod, explicacao, autor, ano, imagem, tema) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-      
-      // Executa o código para inserir questões no BD, com seus respectivos valores
-      const [result] = await pool.query(sql, [
-        descricao,
-        JSON.stringify(alternativas), // Garante que o objeto seja salvo como uma string JSON
-        gabarito,
-        disciplina_cod,
-        explicacao || null, // Usa o valor ou NULL se não for fornecido, pois não é obrigatorio
-        autor || null,
-        ano || null,
-        imagem || null,
-        tema || null
-      ]);
+      // Cria o comando para adicionar a questão
+      const novaQuestao = await db.Questao.create({
+        descricao: descricao,
+        disciplina_cod: disciplina_cod,
+        explicacao: explicacao || null,
+        autor: autor || null,
+        ano: ano || null,
+        tema_cod: tema_cod || null,
+        // Aqui usamos o nome do arquivo capturado lá em cima no passo 1
+        // Se não tiver imagem, mantemos null ou usamos o que veio no body (caso seja um link externo)
+        imagem_url: nomeArquivoImagem || req.body.imagem_url || null 
+      }, { transaction: t }); // Passamos a transação 't'
 
-      // Envia uma resposta de sucesso
-      res.status(201).json({ 
-        message: 'Questão adicionada com sucesso!',
-        questaoId: result.insertId 
-      });
+      const alternativasFormatadas = alternativas.map(item => {
+        return {
+          texto: item.texto,
+          correta: item.correta,
+          questao_cod: novaQuestao.cod
+        }
+      })
+
+      await db.Alternativa.bulkCreate(alternativasFormatadas, { transaction: t });
+
+      await t.commit(); // Confirma as alterações no banco
+
+      const questaoCompleta = await db.Questao.findByPk(novaQuestao.cod, {
+        include: [{ model: db.Alternativa, as: 'alternativas' }]
+      })
+
+      res.status(201).json(questaoCompleta);
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
       console.error('Erro ao adicionar questão:', error);
@@ -61,23 +87,38 @@ const questaoController = {
   // Metodo para deletar questões
   deleteQuestao: async (req, res) => {
     try {
-      // Pega o código na url, que vem no item params da requisição, então
-      // se o cod for 15, vai excluir a questão com cod 15
       const { cod } = req.params;
 
-      // Verifica se a questão existe
-      const [questoes] = await pool.query('SELECT cod FROM questoes WHERE cod = ?', [cod]);
-      if (questoes.length === 0) {
-        return res.status(404).json({ error: 'Questão não encontrada com o código fornecido.' });
+      // Buscamos a questão primeiro para saber se ela tem imagem
+      const questao = await db.Questao.findByPk(cod);
+
+      if (!questao) {
+        return res.status(404).json({ error: 'Questão não encontrada.' });
       }
 
-      // Executa a exclusão da questão de fato
-      await pool.query('DELETE FROM questoes WHERE cod = ?', [cod]);
+      // Se tiver imagem, apagamos o arquivo físico
+      if (questao.imagem_url) {
+        // Monta o caminho completo: Pasta do projeto + uploads + nome da imagem
+        const caminhoArquivo = path.resolve('uploads', questao.imagem_url);
+        
+        // Função do Node que deleta arquivos
+        fs.unlink(caminhoArquivo, (erro) => {
+            if (erro) {
+                // Se der erro ao apagar a imagem (ex: arquivo já não existia), 
+                // apenas logamos o aviso, mas não paramos o processo.
+                console.error("Erro ao apagar imagem física:", erro);
+            } else {
+                console.log("Imagem física apagada com sucesso!");
+            }
+        });
+      }
 
-      // Envia a resposta de sucesso
-      res.status(200).json({ message: `Questão com código ${cod} foi deletada com sucesso.` });
+      // Agora apagamos do banco de dados
+      await questao.destroy();
 
-    } catch (error) { // 
+      res.status(200).json({ message: `Questão ${cod} e sua imagem, caso tivesse, foram deletadas.` });
+
+    } catch (error) { 
       console.error('Erro ao deletar questão:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
     }

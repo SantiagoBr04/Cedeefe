@@ -54,62 +54,61 @@ document.addEventListener('DOMContentLoaded', carregarDisciplinas);
 
 // Adiciona um ouvinte ao formulário para pegar o envio
 document.querySelector('.criarLista').addEventListener('submit', async function(event) {
-  // Previne o comportamento padrão do formulário (que é recarregar a página)
   event.preventDefault();
 
-  // Captura os valores dos campos do formulário
+  const nome = document.querySelector('.nome').value;
+  const descricao = document.querySelector('.descricao').value;
   const quantidade = document.querySelector('.nQuest').value;
   const disciplinaCod = document.querySelector('#disciplina-select').value; 
 
-  // Verifica se a disciplina não ta com codigo nulo
   if (!quantidade || disciplinaCod === '') {
     alert('Por favor, preencha a quantidade de questões e a disciplina.');
     return;
   }
 
-  // Monta o corpo da requisição para a API
   const corpoRequisicao = {
-    quantidade: parseInt(quantidade), // Garante que é um número
-    disciplinas: [disciplinaCod]      // A API espera um array de códigos
+    nome: nome, 
+    descricao: descricao, 
+    disciplina_cod: disciplinaCod,
+    quantidade: parseInt(quantidade), 
+    disciplinas: [disciplinaCod]     
   };
 
   try {
-    // Faz a chamada para a API usando fetch() (modo padrão para chamar API)
-    // O usuario tem que estar logado, para enviar o token
-    const token = localStorage.getItem('jwt_token'); // Exemplo de como pegar o token
+    const token = localStorage.getItem('jwt_token'); 
 
     if (!token) {
         alert('Você precisa estar logado para criar uma lista!');
-        // Redireciona para a página de login
         window.location.href = 'login.html';
         return;
     }
 
-    // Vai enviar os dados para a API
+    // Faz a chamada para a API
     const resposta = await fetch('http://localhost:3000/api/listas/gerar', {
-      method: 'POST', // Determina o metodo da chamada
+      method: 'POST', 
       headers: {
-        'Content-Type': 'application/json', // Diz o tipo de dado, JSON nesse caso
-        'Authorization': `Bearer ${token}` // Envia o token para o authMiddleware
+        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${token}` 
       },
-      body: JSON.stringify(corpoRequisicao) // Converte os dados para JSON, que é padrão
+      body: JSON.stringify(corpoRequisicao) 
     });
 
-    const questoesGeradas = await resposta.json(); // Espera a resposta e guarda na variavel
+    const resultado = await resposta.json(); 
 
-    // Verifica se a resposta da API foi um erro
     if (!resposta.ok) {
-      // Usa a mensagem de erro que o backend enviou
-      throw new Error(questoesGeradas.error || 'Erro ao gerar a lista de questões.');
+      throw new Error(resultado.error || 'Erro ao gerar a lista de questões.');
     }
+    
+    // Salva o ID da atividade (para usar depois se precisar)
+    localStorage.setItem('atividadeAtualID', resultado.atividade_cod); //
 
-    // Se tudo deu certo, salva as questões no localStorage
-    localStorage.setItem('listaDeQuestoes', JSON.stringify(questoesGeradas));
+    // Salva APENAS o array de questões na chave que o fazendoLista.js espera
+    localStorage.setItem('listaDeQuestoes', JSON.stringify(resultado.questoes)); //
 
-    // Redireciona o usuário para a página de fazer a lista
+    // Redireciona
     window.location.href = 'fazendoLista.html';
 
-  } catch (error) { // Catch, serve para se o try der erro
+  } catch (error) { 
     console.error('Falha na requisição:', error);
     alert(error.message);
   }

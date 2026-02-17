@@ -1,5 +1,5 @@
-// Importa o pool de conexões do BD
-import pool from '../config/db.js';
+import db from '../models/index.js';
+const { Usuario } = db;
 
 // Cria o middleware para verificar se é admin
 const adminMiddleware = async (req, res, next) => {
@@ -8,18 +8,18 @@ const adminMiddleware = async (req, res, next) => {
     const { userId } = req;
 
     // Busca o usuário no banco para verificar seu status de admin
-    const [users] = await pool.query('SELECT adm FROM usuario WHERE cod = ?', [userId]);
+    const user = await Usuario.findOne({
+      where: { cod: userId},
+      attributes: ['adm']
+    })
 
     // Verifica se o usuário existe
-    if (users.length === 0) {
+    if (!user) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
-    // Elimina os metadados da resposta que o BD deu
-    const user = users[0];
-
     // Verifica se o campo 'adm' é igual a 1
-    if (user.adm !== 1) {
+    if (!user.adm) {
       // O usuário está logado, mas não tem permissão.
       return res.status(403).json({ error: 'Acesso negado. Requer permissão de administrador.' });
     }

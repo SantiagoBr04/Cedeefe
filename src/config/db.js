@@ -1,22 +1,18 @@
-// Importa o mysql2
-import mysql from 'mysql2/promise'; 
+import { Sequelize } from 'sequelize';
+import 'dotenv/config'; // Garante que as variáveis do .env sejam lidas neste arquivo
 
-// Importa o 'dotenv/config' para que ele execute sua configuração.
-import 'dotenv/config';
+const sequelize = new Sequelize(
+    process.env.DB_DATABASE, 
+    process.env.DB_USER, 
+    process.env.DB_PASSWORD, 
+    {
+        dialect: 'mysql',
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT || 3306, 
+        
+        timezone: '-03:00', // Força o fuso horário do Brasil 
+        logging: false      // Define como 'false' para não poluir 0 terminal com logs de SQL puro
+    }
+);
 
-// Apenas para registro no console
-console.log('Criando pool de conexões...');
-
-// Usando sistema de pool, que é para mais de uma conexão por vez, cria o link com o BD
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
-
-// Export default para exportar o valor principal do arquivo.
-export default pool;
+export default sequelize;

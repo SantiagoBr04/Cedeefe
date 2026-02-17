@@ -4,6 +4,8 @@ import questaoController from '../controllers/questaoController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import adminMiddleware from '../middlewares/adminMiddleware.js'; 
 
+import upload from '../config/multer.js';
+
 // Cria o objeto router com a configuração padrão do expressa para receber requisições HTTP
 const router = new Router();
 
@@ -13,6 +15,7 @@ router.post(
   '/', 
   authMiddleware, 
   adminMiddleware, 
+  upload.single('imagem'), // Middleware do multer entra aqui
   questaoController.addQuestao
 );
 
