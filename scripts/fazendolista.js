@@ -13,9 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Seleciona os elementos da página
   const cabecalhoElement = document.getElementById('cabecalho-questao');
-  const contQuest = document.querySelector('.contQuest'); 
   const questaoElement = document.querySelector('.enunciadoQuest');
   const alternativasElement = document.querySelector('.alternativas');
+  const btnVerificar = document.getElementById('submit');
+  btnExplicacao = document.getElementById('btn-explicacao');
+  const boxExplicacao = document.getElementById('box-explicacao');
   
   let questaoAtual = 0;
   let respostasSelecionadas = {}; 
@@ -23,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Função para carregar a questão
   function carregarQuestao() {
+
+    btnExplicacao.style.display = "none"; // Esconde botão explicação
+    boxExplicacao.style.display = "none"; // Esconde caixa texto
+    
     // Pega os dados da questão atual 
     const questao = simulado[questaoAtual];
 
@@ -120,10 +126,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Event Listeners dos botões
-  document.getElementById('submit').addEventListener('click', () => {
-    alert('Funcionalidade de verificação final será implementada. Prossiga para a próxima questão.');
+  btnVerificar.addEventListener('click', () => {
+    // Verifica se o usuário selecionou algo
+    if (!respostasSelecionadas[questaoAtual]) {
+        alert("Selecione uma alternativa antes de verificar!");
+        return;
+    }
+
+    // 2. Bloqueia para não poder mudar a resposta depois de verificar
+    if (jaVerificado.has(questaoAtual)) return; 
+    jaVerificado.add(questaoAtual); // Marca como verificada
+
+    // 3. Pega os dados
+    const divSelecionada = respostasSelecionadas[questaoAtual];
+    const indexSelecionado = divSelecionada.dataset.chave; // Lembra que salvamos o index aqui?
+    const questao = simulado[questaoAtual];
+    
+    // Converte alternativas se necessário
+    let alternativas = (typeof questao.alternativas === 'string') 
+        ? JSON.parse(questao.alternativas) 
+        : questao.alternativas;
+
+    // 4. Acha qual é a correta nos dados
+    // O backend envia 'correta: true' ou 'correta: 1'
+    let indexCorreto = -1;
+    alternativas.forEach((alt, index) => {
+        if (alt.correta === true || alt.correta === 1) {
+            indexCorreto = index;
+        }
+    });
+
+    // 5. PINTA AS ALTERNATIVAS (Feedback Visual)
+    const todasDivs = document.querySelectorAll('.alternativa');
+    
+    // Pinta a CORRETA de verde (sempre mostra qual era a certa)
+    if (indexCorreto !== -1 && todasDivs[indexCorreto]) {
+        todasDivs[indexCorreto].classList.add('correta');
+    }
+
+    // Se o usuário errou, pinta a dele de vermelha
+    if (parseInt(indexSelecionado) !== indexCorreto) {
+        divSelecionada.classList.add('errada');
+    }
+
+    // 6. LÓGICA DA EXPLICAÇÃO
+    // Só mostra o botão SE tiver explicação cadastrada no banco
+    if (questao.explicacao && questao.explicacao.trim() !== "") {
+        btnExplicacao.style.display = "inline-block"; // Mostra o botão preto
+        boxExplicacao.innerText = questao.explicacao; // Coloca o texto na caixa
+    }
+    
+    // Desabilita cliques nas alternativas
+    todasDivs.forEach(div => div.style.pointerEvents = 'none');
   });
 
+  // Lógica do Botão EXPLICAÇÃO (Mostrar/Esconder)
+  btnExplicacao.addEventListener('click', () => {
+      if (boxExplicacao.style.display === "none" || boxExplicacao.style.display === "") {
+          boxExplicacao.style.display = "block";
+          btnExplicacao.innerHTML = '<span class="material-symbols-outlined" style="vertical-align: middle; font-size: 18px;">visibility_off</span> Esconder Explicação';
+      } else {
+          boxExplicacao.style.display = "none";
+          btnExplicacao.innerHTML = '<span class="material-symbols-outlined" style="vertical-align: middle; font-size: 18px;">lightbulb</span> Ver Explicação';
+      }
+  });
+  
   const btnProx = document.getElementById('proxQuest');
   if(btnProx) {
       btnProx.addEventListener('click', () => {

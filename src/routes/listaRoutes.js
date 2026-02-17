@@ -13,5 +13,8 @@ router.use(authMiddleware);
 // Rota para gerar um novo simulado com base nos critérios do usuário
 router.post('/gerar', listaController.gerarLista);
 
+// Rota para retomar uma lista pelo ID
+router.get('/:id', authMiddleware, listaController.retomarLista);
+
 // Export default para exportar o valor principal do arquivo.
 export default router;

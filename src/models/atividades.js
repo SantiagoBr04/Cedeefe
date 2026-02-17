@@ -19,6 +19,18 @@ export default (sequelize, DataTypes) => {
         nome: {
             type: DataTypes.STRING(100),
         },
+        descricao: {
+            type: DataTypes.STRING(255), 
+            allowNull: true
+        },
+        disciplina_cod: { 
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'disciplina',
+                key: 'cod'
+            }
+        },
         status: {
             type: DataTypes.ENUM('em_andamento', 'finalizada'),
             allowNull: false,
@@ -44,7 +56,12 @@ export default (sequelize, DataTypes) => {
             foreignKey: 'atividade_cod',
             as: 'registroDasQuestoes'
         })
-    
+        
+        Atividade.belongsTo(models.Disciplina, {
+            foreignKey: 'disciplina_cod',
+            as: 'disciplina'
+        });
+
         Atividade.hasMany(models.Historico_resultados, {
             foreignKey: 'atividade_cod',
             as: 'HistoricoResultados'
