@@ -16,5 +16,11 @@ router.post('/gerar', listaController.gerarLista);
 // Rota para retomar uma lista pelo ID
 router.get('/:id', authMiddleware, listaController.retomarLista);
 
+// Rota para registrar resposta e atualizar as estatísticas em tempo real de acertos/erros
+router.post('/responder', listaController.responderQuestao);
+
+// Rota para finalizar uma atividade computando as estatísticas no perfil
+router.post('/:id/finalizar', listaController.finalizarLista);
+
 // Export default para exportar o valor principal do arquivo.
 export default router;

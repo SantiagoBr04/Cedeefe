@@ -41,6 +41,11 @@ const userController = {
           estado_civil
       });
 
+      // Inicializar as estatísticas do usuário (tudo zerado por padrão)
+      await db.Usuario_estatisticas_gerais.create({
+          usuario_cod: newUser.cod
+      });
+
       // Enviar uma resposta de sucesso
       res.status(201).json({ 
         message: 'Usuário cadastrado com sucesso!', 

@@ -20,6 +20,7 @@
   - /api/listas
   - /api/questoes
   - /api/disciplinas
+  - /api/estatisticas
 - Os models são factories do Sequelize carregadas em src/models/index.js, depois associadas via método associate de cada model.
 - O frontend é estático em HTML/CSS/JS:
   - pages/ for HTML pages
@@ -39,6 +40,7 @@
 - Alterar sequelize sync para force true pode apagar/recriar tabelas.
 - Scripts do frontend usam URLs fixas de localhost para a API; altere com cuidado se o ambiente mudar.
 - Arquivos enviados são expostos por /imagens mapeado para uploads/ em src/server.js.
+- A tabela usuario_estatisticas_gerais atua como cache e deve ser criada (inicializada com 0) logo na criação de uma nova conta de usuário para evitar `null pointers` em rotas de desempenho.
 
 ## Referências Principais
 - README.md para contexto do projeto

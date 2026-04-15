@@ -497,6 +497,118 @@ Status: 500
 
 ---
 
+## 5. Estatísticas Gerais
+
+### Endpoint e Método
+GET /api/estatisticas/gerais
+
+### Descrição
+Retorna as estatísticas consolidadas de desempenho do usuário logado (questões respondidas, acertos, erros, etc). A linha correspondente do banco é criada ao registrar o usuário.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+{
+  "cod": 1,
+  "usuario_cod": 12,
+  "total_questoes_respondidas": 50,
+  "total_acertos": 35,
+  "total_erros": 15,
+  "aproveitamento_geral": "70.00",
+  "total_listas_finalizadas": 3,
+  "createdAt": "2023-01-01T00:00:00.000Z",
+  "updatedAt": "2023-01-01T00:00:00.000Z"
+}
+```
+
+### Exemplo de Resposta (Erro)
+Status: 404
+
+```json
+{
+  "error": "Estatísticas não encontradas para este usuário."
+}
+```
+
+---
+
+## 6. Ações em Listas/Simulados
+
+### Endpoint e Método
+POST /api/listas/responder
+
+### Descrição
+Registra a resposta dada pelo usuário em uma questão de uma lista em andamento e atualiza as estatísticas gerais de acertos e erros em tempo real (apenas na primeira vez que a questão é respondida).
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Body (JSON):
+  - atividade_cod (number, obrigatório)
+  - questao_cod (number, obrigatório)
+  - alternativa_cod (number, obrigatório)
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+{
+  "message": "Resposta registrada e estatísticas atualizadas!",
+  "correta": true
+}
+```
+
+### Exemplo de Resposta (Erro)
+Status: 403
+
+```json
+{
+  "error": "Acesso negado. Esta atividade não pertence a você."
+}
+```
+
+---
+
+### Endpoint e Método
+POST /api/listas/:id/finalizar
+
+### Descrição
+Encerra a lista em andamento e computa a visualização no histórico, incrementando também as estatísticas de fechamento de listas no perfil.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Path params:
+  - id (number, obrigatório) — ID numérico correspondente à atividade/lista
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+{
+  "message": "Lista finalizada com sucesso!",
+  "pontuacao": 8.5,
+  "acertos": 17,
+  "total": 20
+}
+```
+
+### Exemplo de Resposta (Erro)
+Status: 400
+
+```json
+{
+  "error": "Atividade sem questões não pode ser finalizada."
+}
+```
+
+---
+
 ## Observações Importantes
 - Algumas rotas retornam 401, 403, 404 e 409 em casos específicos (token inválido, falta de permissão, recurso não encontrado, conflito de cadastro).
 - Os exemplos de erro com 400 mostrados acima seguem o formato solicitado e representam cenários comuns de validação.
