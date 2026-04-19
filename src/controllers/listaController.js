@@ -1,4 +1,5 @@
 import db from '../models/index.js'
+import { Op } from 'sequelize';
 
 // Cria o objeto simuladoController
 const listaController = {
@@ -155,8 +156,23 @@ const listaController = {
         return res.status(404).json({ error: 'Questão não encontrada nesta atividade.' });
       }
 
-      // Verifica se já havia uma resposta ativa
-      const jaRespondida = !!atividade_questoes.alternativa_selecionada_cod;
+      // Verifica se já havia uma resposta ativa na ATIVIDADE ATUAL (para não quebrar a lógica visual, se houver)
+      const jaRespondidaNaAtividade = !!atividade_questoes.alternativa_selecionada_cod;
+
+      // Verifica se a questão já foi respondida alguma vez na vida por esse usuário (Globalmente)
+      // "o que conta é a primeira" resposta no sistema como um todo.
+      const jaRespondidaGlobal = await db.Atividade_questoes.count({
+        include: [{
+          model: db.Atividade,
+          as: 'atividade',
+          where: { usuario_cod }
+        }],
+        where: {
+          questao_cod,
+          alternativa_selecionada_cod: { [Op.ne]: null }
+        },
+        transaction: t
+      }) > 0;
 
       // Obtém a nova alternativa
       const alternativaAtual = await db.Alternativa.findByPk(alternativa_cod, {
@@ -175,8 +191,9 @@ const listaController = {
         { where: { atividade_cod, questao_cod }, transaction: t }
       );
 
-      // Atualiza as estatísticas gerais do usuário apenas se for a primeira vez
-      if (!jaRespondida) {
+      // Atualiza as estatísticas gerais e por área do usuário SE for a primeira vez global
+      if (!jaRespondidaGlobal) {
+        // --- ESTATÍSTICAS GERAIS ---
         const estatisticas = await db.Usuario_estatisticas_gerais.findOne({
           where: { usuario_cod },
           transaction: t
@@ -207,6 +224,55 @@ const listaController = {
               aproveitamento_geral: aproveitamento
             },
             { where: { usuario_cod }, transaction: t }
+          );
+        }
+
+        // --- ESTATÍSTICAS POR ÁREA ---
+        const questao = await db.Questao.findByPk(questao_cod, { attributes: ['disciplina_cod'], transaction: t });
+        
+        if (questao && questao.disciplina_cod) {
+          let [estatisticasArea, created] = await db.Usuario_estatisticas_por_area.findOrCreate({
+            where: { 
+              usuario_cod: usuario_cod, 
+              disciplina_cod: questao.disciplina_cod 
+            },
+            defaults: {
+              total_questoes_respondidas: 0,
+              total_acertos: 0,
+              total_erros: 0,
+              aproveitamento_area: 0
+            },
+            transaction: t
+          });
+
+          let areaTotalAcertos = estatisticasArea.total_acertos;
+          let areaTotalErros = estatisticasArea.total_erros;
+          let areaTotalRespondidas = estatisticasArea.total_questoes_respondidas;
+
+          areaTotalRespondidas += 1;
+
+          if (respostaAtualCorreta) {
+            areaTotalAcertos += 1;
+          } else {
+            areaTotalErros += 1;
+          }
+
+          const aproveitamentoArea = areaTotalRespondidas > 0 ? (areaTotalAcertos / areaTotalRespondidas) * 100 : 0;
+
+          await db.Usuario_estatisticas_por_area.update(
+            {
+              total_questoes_respondidas: areaTotalRespondidas,
+              total_acertos: areaTotalAcertos,
+              total_erros: areaTotalErros,
+              aproveitamento_area: aproveitamentoArea
+            },
+            { 
+              where: { 
+                usuario_cod: usuario_cod, 
+                disciplina_cod: questao.disciplina_cod 
+              }, 
+              transaction: t 
+            }
           );
         }
       }

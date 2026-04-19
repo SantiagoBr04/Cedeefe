@@ -46,6 +46,20 @@ const userController = {
           usuario_cod: newUser.cod
       });
 
+      // Inicializa as estatísticas por área para todas as disciplinas atuais
+      const disciplinas = await db.Disciplina.findAll();
+      if (disciplinas.length > 0) {
+        const statsPorArea = disciplinas.map(disciplina => ({
+          usuario_cod: newUser.cod,
+          disciplina_cod: disciplina.cod,
+          total_questoes_respondidas: 0,
+          total_erros: 0,
+          total_acertos: 0,
+          aproveitamento_area: 0
+        }));
+        await db.Usuario_estatisticas_por_area.bulkCreate(statsPorArea);
+      }
+
       // Enviar uma resposta de sucesso
       res.status(201).json({ 
         message: 'Usuário cadastrado com sucesso!', 

@@ -44,17 +44,7 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.DECIMAL(5,2),
             allowNull: false,
             defaultValue: 0.00
-        },
-        questoes_respondidas_lista: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
-        },
-        questoes_respondidas_simulado: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
-        },
+        }
     }, {
         tableName: 'usuario_estatisticas_por_area',
         indexes: [

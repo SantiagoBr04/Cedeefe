@@ -537,13 +537,72 @@ Status: 404
 
 ---
 
-## 6. Ações em Listas/Simulados
+## 6. Estatísticas por Área
+
+### Endpoint e Método
+GET /api/estatisticas/por-area
+
+### Descrição
+Retorna as estatísticas de desempenho do usuário logado divididas por disciplina (Matemática, Português, etc). As categorias são criadas ou conferidas automaticamente via Fallback na chamada da requisição, cobrindo o aluno em caso de matérias recém-adicionadas.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+[
+  {
+    "cod": 1,
+    "usuario_cod": 12,
+    "disciplina_cod": 2,
+    "total_questoes_respondidas": 10,
+    "total_erros": 2,
+    "total_acertos": 8,
+    "aproveitamento_area": "80.00",
+    "createdAt": "2026-04-15T00:00:00.000Z",
+    "updatedAt": "2026-04-15T00:00:00.000Z",
+    "disciplina_area": {
+      "descricao": "Matemática"
+    }
+  },
+  {
+    "cod": 2,
+    "usuario_cod": 12,
+    "disciplina_cod": 1,
+    "total_questoes_respondidas": 0,
+    "total_erros": 0,
+    "total_acertos": 0,
+    "aproveitamento_area": "0.00",
+    "createdAt": "2026-04-15T00:00:00.000Z",
+    "updatedAt": "2026-04-15T00:00:00.000Z",
+    "disciplina_area": {
+      "descricao": "Português"
+    }
+  }
+]
+```
+
+### Exemplo de Resposta (Erro)
+Status: 500
+
+```json
+{
+  "error": "Erro interno no servidor ao buscar as estatísticas por área."
+}
+```
+
+---
+
+## 7. Ações em Listas
 
 ### Endpoint e Método
 POST /api/listas/responder
 
 ### Descrição
-Registra a resposta dada pelo usuário em uma questão de uma lista em andamento e atualiza as estatísticas gerais de acertos e erros em tempo real (apenas na primeira vez que a questão é respondida).
+Registra a resposta dada pelo usuário em uma questão de uma lista em andamento e atualiza as estatísticas (gerais e por área) de acertos e erros em tempo real (apenas se for a *primeira vez global* que a questão é respondida).
 
 ### Parâmetros
 - Headers:

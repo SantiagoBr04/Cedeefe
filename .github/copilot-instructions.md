@@ -40,7 +40,8 @@
 - Alterar sequelize sync para force true pode apagar/recriar tabelas.
 - Scripts do frontend usam URLs fixas de localhost para a API; altere com cuidado se o ambiente mudar.
 - Arquivos enviados são expostos por /imagens mapeado para uploads/ em src/server.js.
-- A tabela usuario_estatisticas_gerais atua como cache e deve ser criada (inicializada com 0) logo na criação de uma nova conta de usuário para evitar `null pointers` em rotas de desempenho.
+- A tabela usuario_estatisticas_gerais atua como cache e deve ser criada (inicializada com 0) logo na criação de uma nova conta de usuário para evitar `null pointers` em rotas de desempenho. O mesmo princípio se aplica para usuario_estatisticas_por_area, que é preenchida no registro ou via lógica de fallback (`estatisticasController.js`) caso existam matérias não rastreadas para aquele usuário.
+  - O projeto não utiliza mais a métrica de "simulados" no cálculo de estatísticas por área, portanto não tente inserir colunas com esse prefixo, foque apenas em estatísticas de área restritas a primeira resposta global registrada.
 
 ## Referências Principais
 - README.md para contexto do projeto
