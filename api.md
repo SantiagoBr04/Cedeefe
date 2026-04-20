@@ -668,6 +668,156 @@ Status: 400
 
 ---
 
+## 8. Temas
+
+### Endpoint e Método
+GET /api/temas/disciplina/:disciplina_cod
+
+### Descrição
+Retorna todos os temas vinculados a uma disciplina específica. Qualquer usuário logado pode acessar.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Path params:
+  - disciplina_cod (number, obrigatório)
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+[
+  { "cod": 1, "descricao": "Geometria", "disciplina_cod": 1, "createdAt": "...", "updatedAt": "..." }
+]
+```
+
+### Exemplo de Resposta (Erro)
+Status: 500
+
+```json
+{
+  "error": "Erro ao buscar temas."
+}
+```
+
+---
+
+### Endpoint e Método
+POST /api/temas
+
+### Descrição
+Cria um novo tema vinculado a uma disciplina submetida. Impede duplicações nominais exatas dentro da mesma disciplina. Rota protegida e exclusiva para administrador.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Body (JSON):
+  - descricao (string, obrigatório)
+  - disciplina_cod (number, obrigatório)
+
+### Exemplo de Resposta (Sucesso)
+Status: 201
+
+```json
+{
+  "message": "Tema adicionado com sucesso!",
+  "tema": {
+    "cod": 3,
+    "descricao": "Termodinâmica",
+    "disciplina_cod": 4,
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+}
+```
+
+### Exemplo de Resposta (Erro)
+Status: 409
+
+```json
+{
+  "error": "Já existe um tema com esse nome nesta disciplina."
+}
+```
+
+Status: 404
+
+```json
+{
+  "error": "Disciplina informada não foi encontrada."
+}
+```
+
+---
+
+### Endpoint e Método
+PUT /api/temas/:cod
+
+### Descrição
+Edita a descrição e/ou a disciplina atrelada de um tema existente. Checa previamente por duplicidade nominal contra a disciplina alvo. Rota protegida e exclusiva para administrador.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Path params:
+  - cod (number, obrigatório)
+- Body (JSON):
+  - descricao (string, opcional)
+  - disciplina_cod (number, opcional)
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+{
+  "message": "Tema atualizado com sucesso!",
+  "tema": { "cod": 3, "descricao": "Física Moderna", "disciplina_cod": 4 }
+}
+```
+
+### Exemplo de Resposta (Erro)
+Status: 409
+
+```json
+{
+  "error": "Já existe outro tema com este nome nesta disciplina."
+}
+```
+
+---
+
+### Endpoint e Método
+DELETE /api/temas/:cod
+
+### Descrição
+Exclui logicamente o tema pelo seu código primário. Rota protegida e exclusiva para administrador.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Path params:
+  - cod (number, obrigatório)
+
+### Exemplo de Resposta (Sucesso)
+Status: 200
+
+```json
+{
+  "message": "Tema excluído com sucesso."
+}
+```
+
+### Exemplo de Resposta (Erro)
+Status: 404
+
+```json
+{
+  "error": "Tema não encontrado."
+}
+```
+
+---
+
 ## Observações Importantes
 - Algumas rotas retornam 401, 403, 404 e 409 em casos específicos (token inválido, falta de permissão, recurso não encontrado, conflito de cadastro).
 - Os exemplos de erro com 400 mostrados acima seguem o formato solicitado e representam cenários comuns de validação.

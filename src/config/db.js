@@ -6,9 +6,9 @@ const sequelize = new Sequelize(
     process.env.DB_USER, 
     process.env.DB_PASSWORD, 
     {
-        dialect: 'mysql',
+        dialect: 'postgres',
         host: process.env.DB_HOST,
-        port: process.env.DB_PORT || 3306, 
+        port: process.env.DB_PORT || 5432, 
         
         timezone: '-03:00', // Força o fuso horário do Brasil 
         logging: false      // Define como 'false' para não poluir 0 terminal com logs de SQL puro

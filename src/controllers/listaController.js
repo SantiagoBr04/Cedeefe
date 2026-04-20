@@ -146,6 +146,10 @@ const listaController = {
         return res.status(403).json({ error: 'Acesso negado. Esta atividade não pertence a você.' });
       }
 
+      if (atividade.status === 'finalizada') {
+        return res.status(400).json({ error: 'Não é possível alterar respostas de uma atividade já finalizada.' });
+      }
+
       // Encontra o registro de Atividade_questoes
       const atividade_questoes = await db.Atividade_questoes.findOne({
         where: { atividade_cod, questao_cod },
@@ -306,6 +310,10 @@ const listaController = {
 
       if (atividade.usuario_cod !== usuario_cod) {
         return res.status(403).json({ error: 'Acesso negado. Esta atividade não pertence a você.' });
+      }
+
+      if (atividade.status === 'finalizada') {
+        return res.status(400).json({ error: 'Esta atividade já foi finalizada.' });
       }
 
       // Calcula a pontuação (acertos / total * 10)

@@ -16,6 +16,7 @@ import listaRoutes from './routes/listaRoutes.js';
 import questaoRoutes from './routes/questaoRoutes.js';
 import disciplinaRoutes from './routes/disciplinaRoutes.js';
 import estatisticasRoutes from './routes/estatisticasRoutes.js';
+import temaRoutes from './routes/temaRoutes.js';
 
 // Define o app como o express
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/listas', listaRoutes);
 app.use('/api/questoes', questaoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 app.use('/api/estatisticas', estatisticasRoutes);
+app.use('/api/temas', temaRoutes);
 app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 // Define a porta do servidor (Vai pegar o primeiro valor que aparecer, então se tiver um no process ali, vai ser aquele ali,
@@ -42,19 +44,6 @@ db.sequelize.sync({force: RECONSTRUIR_BANCO})
   .then(async() => {
     console.log("Banco de dados conectado e sincronizado com sucesso!");
 
-    if (RECONSTRUIR_BANCO) {
-      console.log("Inserindo disciplinas padrões...");
-      
-      // Traduzindo seus INSERTs para Sequelize:
-      await db.Disciplina.bulkCreate([
-        { descricao: 'Português' },
-        { descricao: 'Matemática' },
-        { descricao: 'Ciências da Natureza' },
-        { descricao: 'Ciências Humanas' }
-      ]);
-      
-      console.log("Disciplinas inseridas com sucesso!");
-    }
     // Só liga o server se o banco de dados estiver sincronizado corretamente
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
