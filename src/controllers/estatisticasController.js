@@ -12,7 +12,14 @@ const estatisticasController = {
       });
 
       if (!estatisticas) {
-        return res.status(404).json({ error: 'Estatísticas não encontradas para este usuário.' });
+        // Criar estatística zerada como fallback para evitar null pointers
+        estatisticas = await db.Usuario_estatisticas_gerais.create({
+            usuario_cod: usuarioCod,
+            total_questoes_respondidas: 0,
+            total_acertos: 0,
+            total_erros: 0,
+            aproveitamento_geral: 0
+        });
       }
 
       res.status(200).json(estatisticas);
@@ -81,6 +88,35 @@ const estatisticasController = {
     } catch (error) {
       console.error('Erro ao buscar estatísticas por área:', error);
       res.status(500).json({ error: 'Erro interno no servidor ao buscar as estatísticas por área.' });
+    }
+  },
+
+  // Pega o log de resoluções de flashcards agrupados por dia (para o mapa de calor)
+  getHeatmapFlashcards: async (req, res) => {
+    try {
+      const usuarioCod = req.userId;
+
+      // Pega o ano atual para limitar o envio de dados que não seriam renderizados
+      const anoAtual = new Date().getFullYear();
+
+      // Buscando os registros do usuário
+      // Como o campo é DATEONLY ou string YYYY-MM-DD, a ordenação e filtros são diretos
+      const historico = await db.HistoricoRevisaoFlashcard.findAll({
+        where: { usuario_cod: usuarioCod },
+        order: [['data_revisao', 'ASC']],
+        attributes: ['data_revisao', 'cartoes_resolvidos']
+      });
+
+      // Se quiser filtrar apenas do ano atual depois:
+      const dadosFiltradosAnoAtual = historico.filter(registro => {
+         return registro.data_revisao.toString().includes(anoAtual.toString());
+      });
+
+      return res.status(200).json(dadosFiltradosAnoAtual);
+
+    } catch (error) {
+      console.error('Erro ao buscar heatmap de flashcards:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor ao consolidar o heatmap.' });
     }
   }
 };

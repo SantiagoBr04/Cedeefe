@@ -105,6 +105,11 @@ const listaController = {
 
           if (!atividade) return res.status(404).json({ error: "Lista não encontrada" });
 
+          // Verifica se a Atividade pertence ao usuário requistante (IDOR protection)
+          if (atividade.usuario_cod !== req.userId) {
+              return res.status(403).json({ error: 'Acesso negado. Esta atividade não pertence a você.' });
+          }
+
           const questoesFormatadas = atividade.registroDasQuestoes.map(r => r.questao);
 
           res.json({

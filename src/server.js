@@ -17,6 +17,8 @@ import questaoRoutes from './routes/questaoRoutes.js';
 import disciplinaRoutes from './routes/disciplinaRoutes.js';
 import estatisticasRoutes from './routes/estatisticasRoutes.js';
 import temaRoutes from './routes/temaRoutes.js';
+import baralhoRoutes from './routes/baralhoRoutes.js';
+import cartaoRoutes from './routes/cartaoRoutes.js';
 
 // Define o app como o express
 const app = express();
@@ -32,6 +34,8 @@ app.use('/api/questoes', questaoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 app.use('/api/estatisticas', estatisticasRoutes);
 app.use('/api/temas', temaRoutes);
+app.use('/api/baralhos', baralhoRoutes);
+app.use('/api/cartoes', cartaoRoutes);
 app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 // Define a porta do servidor (Vai pegar o primeiro valor que aparecer, então se tiver um no process ali, vai ser aquele ali,
