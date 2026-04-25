@@ -1,0 +1,162 @@
+/* ===== HEADER ===== */
+.header {
+    margin: 80px 240px 80px 300px;
+    padding: 20px;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: linear-gradient(to right, #FFD8DF, #ff91a5db);
+}
+
+.header h1 {
+    font-size: 20px;
+    margin: 0 0 0 20px;
+}
+
+.header h2 {
+    font-size: 15px;
+    margin: 0 0 0 20px;
+}
+
+.icone svg {
+    width: 75px;
+    height: 75px;
+    color: #ff849a;
+    transform: rotate(20deg);
+    margin-right: 20px;
+}
+
+
+/* ===== CARDS DE DISCIPLINA ===== */
+.acessoMateria {
+    margin: 0 240px 200px 300px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+
+    justify-items: center;
+}
+
+.linkPagina {
+    text-decoration: none;
+    color: inherit;
+}
+
+.disciplina {
+    width: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #FFD8DF;
+    transition: 0.3s;
+}
+
+/* hover (melhora UX) */
+.disciplina:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* área do ícone */
+.icone-container {
+    height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ícone */
+.icone2 {
+    font-size: 95px;
+    color: #ff849a;
+}
+
+/* faixa verde */
+.nome-disciplina {
+    background: #cef6b0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.nome-disciplina h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+
+/* ===== TIMELINE ===== */
+.timeline {
+    position: relative;
+    margin-left: 100px;
+}
+
+/* linha vertical */
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 60px;
+    top: 20px;
+    height: calc(100% - 40px);
+    width: 10px;
+
+    background: #FFDFE5;
+    border-radius: 10px;
+    margin-left:200px;
+}
+
+/* módulo */
+.modulo {
+    position: relative;
+    margin-bottom: 50px;
+    margin: 80px 240px 80px 300px;
+}
+
+/* bolinha */
+.numero {
+    position: absolute;
+    margin-left:-55px;
+    top: 20px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    background: #FFAEBD;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+/* conteúdo */
+.conteudo {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 20px;
+    border-radius: 15px;
+
+    background: #FFDFE5;
+    border: solid 2px #ffc8d2;
+}
+
+.conteudo h3 {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 10px;
+
+    background: #f3b6bf;
+}
+
+.conteudo ul {
+    margin-top: 10px;
+}

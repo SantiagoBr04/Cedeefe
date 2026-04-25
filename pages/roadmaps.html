@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
-     <!-- Responsividade em dispositivos móveis -->
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe</title> <!-- Título da aba do navegador -->
+    <title>Cedeefe</title>
 
     <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-    <!-- Ícones Material Symbols (Google) -->
+    <!-- Ícones Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS externo -->
     <link rel="stylesheet" href="../estilos/sidebar.css">
-    <link rel="stylesheet" href="../estilos/login.css">
+    <link rel="stylesheet" href="../estilos/roadmaps.css">
 </head>
 <body>
- 
-
 
     <!-- Menu fixo superior -->
     <div class="menu">
@@ -64,7 +61,7 @@
 
             <!-- Roadmap -->
             <li class="item-menu">
-                <a class="linkItens" href="roadmaps.html">
+                <a class="linkItens" href="#">
                     <span class="material-symbols-outlined">timeline</span>
                     <span class="txt-link">Roadmap</span>
                 </a>
@@ -84,7 +81,7 @@
                 </ul>
             </li>
 
-                        <hr>
+            <hr>
 
             <!-- Perfil do aluno -->
             <li class="item-menu">
@@ -121,51 +118,106 @@
         </ul>
     </div>
 
-<div class="container-fluid">
+    <div class="header">
+        <div>
+            <h1>Roadmaps</h1>
+            <h2>Veja aqui o caminho para cada máteria.</h2>
+        </div>
 
-    <!-- blobs -->
-    <img src="../imagens/blobVerde.svg" alt="blob Verde" class="blob-verde">
-    <img src="../imagens/blobRosa.svg" alt="blob rosa" class="blob-rosa">
-
-    <!-- Formulário de Login -->
-    <div class="cont-login">
-        <form class="login" action="" method="post">
-            <h2 class="titulo-form">Login</h2>
-            
-            <!-- Campo de email -->
-            <div class="form-group">
-                <label for="email">Email:  </label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <!-- Campo de senha -->
-            <div class="form-group">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <!-- Checkbox "lembrar-me"-->
-            <div class="form-group">
-                <label for="lembrar-senha">Lembrar-me</label>
-                <input type="checkbox" id="lembrar-senha" name="lembrar-senha">
-            </div>
-            
-            <!-- Botão de login -->
-            <button class="botao" type="submit">Entrar</button>
-
-            <!-- Links para recuperação de senha e criação de conta -->
-            <p class="recuperar">
-                Esqueceu sua senha? <a href="#"> Clique aqui!</a><br>
-                Não tem uma conta? <a href="#"> Criar conta</a>
-            </p>
-        </form>
+        <span class="icone">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8"/>
+                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+            </svg>
+        </span>
     </div>
-</div>
 
-<!-- Seu JS da sidebar -->
-<script src="../scripts/sidebar.js"></script>
+    <div class="acessoMateria">
 
-<!-- Bootstrap JS -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <a href="roadmapMat.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">calculate</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>Matemática</h1>
+                </div>
+            </div>
+        </a>
+
+        <a href="roadmapPort.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">book_3</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>Português</h1>
+                </div>
+            </div>
+        </a>
+
+        <a href="roadmapHist.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">history_edu</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>História</h1>
+                </div>
+            </div>
+        </a>
+
+        <a href="roadmapGeo.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">globe</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>Geografia</h1>
+                </div>
+            </div>
+        </a>
+
+        <a href="roadmapQui.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">experiment</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>Química</h1>
+                </div>
+            </div>
+        </a>
+
+        <a href="roadmapBio.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">microbiology</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>Biologia</h1>
+                </div>
+            </div>
+        </a>
+
+        <a href="roadmapFis.html" class="linkPagina">
+            <div class="disciplina">
+                <div class="icone-container">
+                    <span class="material-symbols-outlined icone2">planet</span>
+                </div>
+                <div class="nome-disciplina">
+                    <h1>Física</h1>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- Seu JS da sidebar -->
+    <script src="../scripts/sidebar.js"></script>
+
+    <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

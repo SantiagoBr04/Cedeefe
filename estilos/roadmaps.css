@@ -1,0 +1,99 @@
+.header{
+    margin-left:300px;
+    margin-right:240px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: linear-gradient(to right, #FFD8DF, #ff91a5db);
+}
+
+.header h1 {
+  font-size: 20px;
+  margin-left: 20px;
+  top: 60px;
+  text-align: left;
+  margin-top: 0px;
+}
+
+.header h2 {
+  font-size: 15px;
+  margin-left: 20px;
+  text-align: left;
+  margin-bottom: 0px;
+}
+
+.icone{
+    position: flex;
+}
+
+.icone svg {
+    width: 75px;
+    height: 75px;
+    color: #ff849a;
+    transform: rotate(20deg);
+    margin-right: 20px;
+}
+
+.disciplina {
+    width: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+
+    background: #FFD8DF;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* área rosa (ícone) */
+.icone-container {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ícone grande */
+.icone2 {
+    font-size: 95px; /* controla o tamanho REAL */
+    color: #ff849a;
+}
+
+/* faixa verde */
+.nome-disciplina {
+    background: #cef6b0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* texto */
+.nome-disciplina h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.linkPagina{
+    text-decoration: none;
+    color: inherit;
+}
+
+.acessoMateria {
+    margin-left: 300px;
+    margin-right: 240px;
+    /*REMOVER ESSE MARGIN BOTTOM DEPOIS!! SÓ PARA DAR ESPAÇO NO PARTE DE BAIXO*/
+    margin-bottom: 200px;
+
+    display: grid;
+
+    /* 3 colunas → vai gerar automaticamente 3 linhas com 7 itens */
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px; /* espaço entre os cards */
+
+    justify-items: center; /* centraliza cada card */
+}

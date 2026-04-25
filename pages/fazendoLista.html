@@ -30,67 +30,104 @@
     <link rel="stylesheet" href="../estilos/fazendoLista.css" />
   </head>
   <body>
+
+
     <!-- Menu fixo superior -->
     <div class="menu">
-      <!-- Logo -->
-      <div class="logo_content">
-        <!-- Nome/logo do site -->
-        <div class="logo">
-          <div class="logo_name">
-            <a href="../index.html" class="logo_name">Cedeefe</a>
-          </div>
-        </div>
+        <!-- Logo + botão do menu -->
+        <div class="logo_content">
+            <!-- Botão que abre/fecha sidebar -->
+            <span class="material-symbols-outlined" id="btn-menu">menu</span>
+
+            <!-- Nome/logo do site -->
+            <div class="logo">
+                <div class="logo_name"><a href="../index.html" class="logo_name">Cedeefe</a></div>
+            </div>
         </div>
 
-      <!-- Ícone do usuário (lado direito do menu) -->
-      <a href="login.html">
-        <span class="material-symbols-outlined" id="btn-user">account_circle</span>
-      </a>
+        <!-- Ícone do usuário (lado direito do menu) -->
+        <a href="login.html">
+            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
+        </a>
     </div>
 
     <!-- Barra lateral -->
     <div class="sidebar">
-      <ul class="nav_list">
-        <!-- Página inicial -->
-        <li class="item-menu">
-          <a class="linkItens" href="../index.html">
-            <span class="material-symbols-outlined">home</span>
-            <span class="txt-link">Página inicial</span>
-          </a>
-        </li>
+       <ul class="nav_list">
 
-        <!-- Dicas de Estudo -->
-        <li class="item-menu">
-          <a class="linkItens" href="#">
-            <span class="material-symbols-outlined">school</span>
-            <span class="txt-link">Dicas de Estudo</span>
-          </a>
-        </li>
-
-        <!-- Roadmap -->
-        <li class="item-menu">
-          <a class="linkItens" href="#">
-            <span class="material-symbols-outlined">timeline</span>
-            <span class="txt-link">Roadmap</span>
-          </a>
-        </li>
-
-        <!-- Banco de Questões com dropdown -->
-        <li class="item-menu dropdown">
-          <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="material-symbols-outlined me-2">quiz</span>
-            <span class="txt-link">Banco de Questões</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="criarLista.html">Criar lista</a>
+            <!-- Página inicial -->
+            <li class="item-menu">
+                <a class="linkItens" href="../index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    <span class="txt-link">Página inicial</span>
+                </a>
             </li>
-            <li><a class="dropdown-item" href="#">Minhas listas</a></li>
-            <li><a class="dropdown-item" href="#">Criar simulados</a></li>
-            <li><a class="dropdown-item" href="#">Meus simulado</a></li>
-          </ul>
-        </li>
-      </ul>
+
+            <!-- Dicas de Estudo -->
+            <li class="item-menu">
+                <a class="linkItens" href="#">
+                    <span class="material-symbols-outlined">school</span>
+                    <span class="txt-link">Dicas de Estudo</span>
+                </a>
+            </li>
+
+            <!-- Roadmap -->
+            <li class="item-menu">
+                <a class="linkItens" href="roadmaps.html">
+                    <span class="material-symbols-outlined">timeline</span>
+                    <span class="txt-link">Roadmap</span>
+                </a>
+            </li>
+
+            <!-- Banco de Questões com dropdown -->
+            <li class="item-menu dropdown">
+                <a class="dropdown-toggle linkItens d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="material-symbols-outlined me-2">quiz</span>
+                    <span class="txt-link">Banco de Questões</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="criarLista.html">Criar lista</a></li>
+                    <li><a class="dropdown-item" href="verListas.html">Minhas listas</a></li>
+                    <li><a class="dropdown-item" href="criarSimulado.html">Criar simulados</a></li>
+                    <li><a class="dropdown-item" href="fazendoLista.html">Meus simulados</a></li>
+                </ul>
+            </li>
+
+                        <hr>
+
+            <!-- Perfil do aluno -->
+            <li class="item-menu">
+                <a class="linkItens" href="perfilAluno.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">Perfil do Aluno</span>
+                </a>
+            </li>
+
+            <!-- Desempenho -->
+            <li class="item-menu">
+                <a class="linkItens" href="desempenho.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">Desempenho</span>
+                </a>
+            </li>
+
+            <!-- Listar usuários -->
+            <li class="item-menu">
+                <a class="linkItens" href="listarUsuarios.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">listar Usuários</span>
+                </a>
+            </li>
+
+            <!-- Criar conta -->
+            <li class="item-menu">
+                <a class="linkItens" href="criarConta.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">Criar Conta</span>
+                </a>
+            </li>
+
+        </ul>
     </div>
 
      <div class="content">

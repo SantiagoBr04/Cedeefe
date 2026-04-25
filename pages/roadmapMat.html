@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cedeefe</title>
+
+    <!-- Ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Ícones Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/roadmapsDisc.css">
+</head>
+<body>
+
+    <!-- Menu fixo superior -->
+    <div class="menu">
+        <!-- Logo + botão do menu -->
+        <div class="logo_content">
+            <!-- Botão que abre/fecha sidebar -->
+            <span class="material-symbols-outlined" id="btn-menu">menu</span>
+
+            <!-- Nome/logo do site -->
+            <div class="logo">
+                <div class="logo_name"><a href="../index.html" class="logo_name">Cedeefe</a></div>
+            </div>
+        </div>
+
+        <!-- Ícone do usuário (lado direito do menu) -->
+        <a href="login.html">
+            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
+        </a>
+    </div>
+
+    <!-- Barra lateral -->
+    <div class="sidebar">
+       <ul class="nav_list">
+
+            <!-- Página inicial -->
+            <li class="item-menu">
+                <a class="linkItens" href="../index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    <span class="txt-link">Página inicial</span>
+                </a>
+            </li>
+
+            <!-- Dicas de Estudo -->
+            <li class="item-menu">
+                <a class="linkItens" href="#">
+                    <span class="material-symbols-outlined">school</span>
+                    <span class="txt-link">Dicas de Estudo</span>
+                </a>
+            </li>
+
+            <!-- Roadmap -->
+            <li class="item-menu">
+                <a class="linkItens" href="roadmaps.html">
+                    <span class="material-symbols-outlined">timeline</span>
+                    <span class="txt-link">Roadmap</span>
+                </a>
+            </li>
+
+            <!-- Banco de Questões com dropdown -->
+            <li class="item-menu dropdown">
+                <a class="dropdown-toggle linkItens d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="material-symbols-outlined me-2">quiz</span>
+                    <span class="txt-link">Banco de Questões</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="criarLista.html">Criar lista</a></li>
+                    <li><a class="dropdown-item" href="verListas.html">Minhas listas</a></li>
+                    <li><a class="dropdown-item" href="criarSimulado.html">Criar simulados</a></li>
+                    <li><a class="dropdown-item" href="fazendoLista.html">Meus simulados</a></li>
+                </ul>
+            </li>
+
+            <hr>
+
+            <!-- Perfil do aluno -->
+            <li class="item-menu">
+                <a class="linkItens" href="perfilAluno.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">Perfil do Aluno</span>
+                </a>
+            </li>
+
+            <!-- Desempenho -->
+            <li class="item-menu">
+                <a class="linkItens" href="desempenho.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">Desempenho</span>
+                </a>
+            </li>
+
+            <!-- Listar usuários -->
+            <li class="item-menu">
+                <a class="linkItens" href="listarUsuarios.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">listar Usuários</span>
+                </a>
+            </li>
+
+            <!-- Criar conta -->
+            <li class="item-menu">
+                <a class="linkItens" href="criarConta.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">Criar Conta</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+        <div class="header">
+        <div>
+            <h1>Roadmaps</h1>
+            <h2>Estude matemática com mais clareza.</h2>
+        </div>
+
+        <span class="icone">
+           <span class="material-symbols-outlined icone2">calculate</span>
+        </span>
+    </div>
+
+            
+    <div class="timeline">
+
+      <div class="modulo">
+            <div class="numero">1</div>
+
+            <div class="conteudo">
+                <h3>Conjuntos Numéricos</h3>
+                <ul>
+                    <label><input type="checkbox"> Números naturais e inteiros</label> <br>
+                    <label><input type="checkbox"> Divisibilidade</label> <br>
+                    <label><input type="checkbox"> MMC e MDC</label> <br>
+                    <label><input type="checkbox"> Decomposição em fatores primos</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">2</div>
+
+            <div class="conteudo">
+                <h3>Números Racionais</h3>
+                <ul>
+                    <label><input type="checkbox"> Frações</label> <br>
+                    <label><input type="checkbox"> Representação decimal</label> <br>
+                    <label><input type="checkbox"> Notação científica</label> <br>
+                    <label><input type="checkbox"> Razões e proporções</label> <br>
+                    <label><input type="checkbox"> Regra de três</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">3</div>
+
+            <div class="conteudo">
+                <h3>Porcentagem e Juros</h3>
+                <ul>
+                    <label><input type="checkbox"> Porcentagem</label> <br>
+                    <label><input type="checkbox"> Juros</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">4</div>
+
+            <div class="conteudo">
+                <h3>Números Reais e Operações</h3>
+                <ul>
+                    <label><input type="checkbox"> Soma, subtração, produto e quociente</label> <br>
+                    <label><input type="checkbox"> Potenciação</label> <br>
+                    <label><input type="checkbox"> Radiciação</label> <br>
+                    <label><input type="checkbox"> Propriedades</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">5</div>
+
+            <div class="conteudo">
+                <h3>Expressões Numéricas</h3>
+                <ul>
+                    <label><input type="checkbox"> Simplificação de expressões</label> <br>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">6</div>
+
+            <div class="conteudo">
+                <h3>Desigualdades</h3>
+                <ul>
+                    <label><input type="checkbox"> Desigualdades</label> <br>
+                    <label><input type="checkbox"> Intervalos</label> <br>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">7</div>
+
+            <div class="conteudo">
+                <h3>Álgebra</h3>
+                <ul>
+                    <label><input type="checkbox"> Expressões algébricas</label> <br>
+                    <label><input type="checkbox"> Monômios e polinômios</label> <br>
+                    <label><input type="checkbox"> Grau</label> <br> 
+                    <label><input type="checkbox"> Operações com polinômios</label> <br>
+                    <label><input type="checkbox"> Produtos notáveis</label> <br>
+                    <label><input type="checkbox"> Fatoração</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">8</div>
+
+            <div class="conteudo">
+                <h3>Equações</h3>
+                <ul>
+                    <label><input type="checkbox"> Equações do 1º grau</label> <br>
+                    <label><input type="checkbox"> Sistemas de equações</label> <br>
+                    <label><input type="checkbox"> Equações do 2º grau</label> <br>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">9</div>
+
+            <div class="conteudo">
+                <h3>Grandezas e Medidas</h3>
+                <ul>
+                    <label><input type="checkbox"> Comprimento</label> <br>
+                    <label><input type="checkbox"> Área</label> <br>
+                    <label><input type="checkbox"> Perímetro</label> <br>
+                    <label><input type="checkbox"> Volume</label> <br>
+                    <label><input type="checkbox"> Capacidade</label> <br>
+                    <label><input type="checkbox"> Tempo</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">10</div>
+
+            <div class="conteudo">
+                <h3>Geometria</h3>
+                <ul>
+                    <label><input type="checkbox"> Ângulos</label> <br>
+                    <label><input type="checkbox"> Áreas e perímetros de figuras planas</label> <br>
+                    <label><input type="checkbox"> Volume de sólidos</label> <br>
+                    <label><input type="checkbox"> Relações métricas no triângulo retângulo</label>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modulo">
+            <div class="numero">11</div>
+
+            <div class="conteudo">
+                <h3>Probabilidade e Estatística</h3>
+                <ul>
+                    <label><input type="checkbox"> Tabelas e gráficos</label> <br>
+                    <label><input type="checkbox"> Estimativa de probabilidade</label> <br>
+                    <label><input type="checkbox"> Frequência de ocorrências</label> <br>
+                    <label><input type="checkbox"> Princípio multiplicativo</label>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Seu JS da sidebar -->
+    <script src="../scripts/sidebar.js"></script>
+
+    <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

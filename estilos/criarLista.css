@@ -17,7 +17,7 @@ form {
   border-radius: 15px;
   padding: 30px;
   width: 450px; 
-  margin-left: 250px;
+  margin-left: 220px;
   margin-top: 20px;
 }
 
@@ -79,7 +79,7 @@ textarea.descricao {
 .blob-verde {
   position: absolute;
   bottom: -70px;
-  right: -600px;
+  right: -550px;
   z-index: -1;
 }
 
@@ -87,5 +87,5 @@ textarea.descricao {
   position: fixed;
   top: 200px;
   right: 100px;
-  width: 300px;
+  width: 350px;
 }
