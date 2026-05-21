@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cedeefe</title>
+
+    <!-- Ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Ícones Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../../estilos/sidebar.css">
+    <link rel="stylesheet" href="../../estilos/roadmapsDisc.css">
+</head>
+<body>
+
+     <!-- SIDEBARRRR -->
+    <div id="sidebar-container"></div>
+
+        <div class="header">
+        <div>
+            <h1>Roadmaps</h1>
+            <h2>Estude física com mais clareza.</h2>
+        </div>
+
+        <span class="icone">
+           <span class="material-symbols-outlined icone2">planet</span>
+        </span>
+    </div>
+
+<div class="timeline">
+
+    <!-- Módulo 1 -->
+    <div class="modulo">
+        <div class="numero">1</div>
+        <div class="conteudo">
+            <h3>Energia</h3>
+            <ul>
+                <label><input type="checkbox"> Fontes e tipos de energia</label> <br>
+                <label><input type="checkbox"> Transformação de energia</label> <br>
+                <label><input type="checkbox"> Conservação de energia</label>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Módulo 2 -->
+    <div class="modulo">
+        <div class="numero">2</div>
+        <div class="conteudo">
+            <h3>Termodinâmica</h3>
+            <ul>
+                <label><input type="checkbox"> Formas de propagação do calor</label> <br>
+                <label><input type="checkbox"> Equilíbrio térmico</label> <br>
+                <label><input type="checkbox"> Máquinas térmicas</label>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Módulo 3 -->
+    <div class="modulo">
+        <div class="numero">3</div>
+        <div class="conteudo">
+            <h3>Eletricidade</h3>
+            <ul>
+                <label><input type="checkbox"> Consumo de energia elétrica</label> <br>
+                <label><input type="checkbox"> Circuitos elétricos</label> <br>
+                <label><input type="checkbox"> Uso consciente de energia</label>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Módulo 4 -->
+    <div class="modulo">
+        <div class="numero">4</div>
+        <div class="conteudo">
+            <h3>Física Ambiental</h3>
+            <ul>
+                <label><input type="checkbox"> Efeito estufa</label> <br>
+                <label><input type="checkbox"> Aquecimento global (causas, consequências e mitigação)</label>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Módulo 5 -->
+    <div class="modulo">
+        <div class="numero">5</div>
+        <div class="conteudo">
+            <h3>Astronomia</h3>
+            <ul>
+                <label><input type="checkbox"> Sistema Solar</label> <br>
+                <label><input type="checkbox"> Terra e Lua</label> <br>
+                <label><input type="checkbox"> Ordem de grandeza astronômica</label> <br>
+                <label><input type="checkbox"> Evolução estelar</label>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+    <!-- Seu JS da sidebar -->
+    <script src="../../scripts/loadSidebar.js"></script>
+    <script src="../../scripts/sidebar.js"></script>
+
+    <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
