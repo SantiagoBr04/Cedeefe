@@ -26,13 +26,13 @@ body {
 -------------------- */
 .sidebar {
     position: fixed;
-    top: 60px;              
+    top: 50px;              
     left: 0;
     height: 100%;
     width: 70px;             
     overflow: hidden;
     background: #FDFDFD;
-    padding: 6px 14px;
+    padding: 6px 10px;
     box-shadow: 2px 0px 0px 0px #0000001a;
     transition: all 0.4s ease-in-out;
     z-index: 999;

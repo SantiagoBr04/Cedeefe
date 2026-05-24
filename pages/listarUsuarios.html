@@ -1,47 +1,79 @@
-        
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Lista de Usuários</title>
-        </head>
-        <body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
+     <!-- Responsividade em dispositivos móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cedeefe</title> <!-- Título da aba do navegador -->
 
-        <h1> Lista de Usuários </h1>
+    <!-- Ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Tipo</th>
-                        <th>Ações</th>
-                    </tr>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-                    <tr> 
-                        <select id="tipoUsuario">
-                            <option value="todos">todos</option>
-                            <option value="estudante">estudante</option>
-                            <option value="administrador">administrador</option>
-                        </select>
-                    </tr>
-                </thead>
+     <!-- Ícones Material Symbols (Google) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-                <tbody>
-                    <tr>
-                        <td>Fulana Silva</td>
-                        <td>silvafulana@yahoo.com</td>
-                        <td>estudante</td>
-                        <td> <button>Ver Usuário</button> </td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/verLista.css">
+</head>
+<body>
+ 
+    <!-- SIDEBARRRR -->
+    <div id="sidebar-container"></div>
+
+    <div class="content">
+
+        <div class="header">
+            <h1>Lista de Usuários</h1>
+            <!--<button type="submit" class="btn btn-outline-secondary"> <i class="bi bi-search"></i> Buscar</button>!-->
+
+            <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar usuário..." aria-label="Search"/>
+            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+
+            <button type="button" class="btn btn-outline-secondary"> <i class="bi bi-person-plus-fill"></i></button>
         </div>
 
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Cod</th>
+            <th scope="col">Nome</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td scope="row">001</td>
+                <td>Fulana Silva</td>
+                <td>silvafulana@yahoo.com</td>
+                <td>estudante</td>
+                <td>
+                        <button type="button" class="btn btn-outline-secondary rosa"> <i class="bi bi-trash3"></i>  </button>
+                        <button type="button" class="btn btn-outline-secondary"> <i class="bi bi-person-lines-fill"></i> </button>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+
+<!-- Seu JS da sidebar -->
+<script src="../scripts/loadSidebar.js"></script>
+<script src="../scripts/sidebar.js"></script>
+
+<!-- Bootstrap JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-        
-        
+
+
         

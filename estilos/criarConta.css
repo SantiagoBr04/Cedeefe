@@ -1,0 +1,91 @@
+body {
+  overflow-x: hidden;
+}
+
+.content {
+  margin-right: 350px;
+  padding: 40px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  min-height: 100vh;
+
+  font-size: 16px;
+}
+
+.blob-rosa {
+  position: absolute;
+  right: 0;
+  z-index: -1; 
+  top: 30px;
+
+
+  width: 65vw;
+  height: 100vh;
+
+  z-index: -11;
+  transition: all 0.4s ease-in-out;
+}
+
+.livro {
+  position: absolute;
+  right: 40px;
+
+  transform: translateY(50%);
+
+  width: 400px;
+  height: auto;
+
+  z-index: -10;
+}
+
+.criarConta {
+  background: #fff;
+
+  padding: 30px;
+
+  border-radius: 15px;
+  border: solid 2px rgb(255, 156, 156);
+
+  margin-left: -50px;
+  margin-top: 80px;
+
+  width: 380px;
+  max-width: 90vw;
+
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.botao {
+  background-color: #ffcad4;
+  border-radius: 75px;
+
+  width: 125px;
+  height: 35px;
+
+  border: none;
+  font-size: 16px;
+
+  display: block;
+  margin: 10px auto 0;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.botao:hover {
+  background-color: #ffb8c5;
+}
+
+#etapa2, #etapa3{
+    display: none;
+}
+
+.login {
+  width: 100%;
+}

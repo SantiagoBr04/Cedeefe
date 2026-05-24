@@ -14,7 +14,7 @@
   justify-content: center;
   align-items: center;
 
-  height: 100vh;
+  min-height: 100vh;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
 }
@@ -25,14 +25,14 @@
 
 
 
-.login {
+.cont-login {
   background: #fff;
   padding: 30px;
   border-radius: 15px;
   border: solid 2px rgb(255, 156, 156);
   left:0px;
   width: 350px;
-  height: 425px;
+  height: auto;
 
   display: flex;
   flex-direction: column;
@@ -123,12 +123,12 @@ input[type="checkbox"] {
 
 .blob-rosa {
   position: absolute;
-  top: 30px;
-  right: -80px;
+  top: 0;
+  right: -60px;
 
   width: 35vw;
   height: 100vh;
 
-  z-index: -1;
+  z-index: -10;
   transition: all 0.4s ease-in-out;
 }
