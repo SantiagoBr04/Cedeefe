@@ -29,12 +29,12 @@
 
             <!-- Nome/logo do site -->
             <div class="logo">
-                <div class="logo_name"><a href="../index.html" class="logo_name">Cedeefe</a></div>
+                <div class="logo_name"><a href="index.html" class="logo_name">Cedeefe</a></div>
             </div>
         </div>
 
         <!-- Ícone do usuário (lado direito do menu) -->
-        <a href="login.html">
+        <a href="pages/login.html">
             <span class="material-symbols-outlined" id="btn-user">account_circle</span>
         </a>
     </div>
@@ -45,7 +45,7 @@
 
             <!-- Página inicial -->
             <li class="item-menu">
-                <a class="linkItens" href="../index.html">
+                <a class="linkItens" href="index.html">
                     <span class="material-symbols-outlined">home</span>
                     <span class="txt-link">Página inicial</span>
                 </a>
@@ -61,7 +61,7 @@
 
             <!-- Roadmap -->
             <li class="item-menu">
-                <a class="linkItens" href="/pages/roadmaps/roadmaps.html">
+                <a class="linkItens" href="pages/roadmaps.html">
                     <span class="material-symbols-outlined">timeline</span>
                     <span class="txt-link">Roadmap</span>
                 </a>
@@ -70,7 +70,7 @@
             <!-- Banco de Questões com dropdown -->
             <li class="item-menu dropdown">
                 <a class="dropdown-toggle linkItens d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="material-symbols-outlined me-2">quiz</span>
+                    <span class="material-symbols-outlined me">quiz</span>
                     <span class="txt-link">Banco de Questões</span>
                 </a>
                 <ul class="dropdown-menu">
@@ -80,7 +80,6 @@
                     <li><a class="dropdown-item" href="pages/fazendoLista.html">Meus simulados</a></li>
                 </ul>
             </li>
-
 
             <hr>
 
@@ -119,7 +118,6 @@
         </ul>
     </div>
 
-
     <!-- Essa página index vai ser provisória, pretendo mudar o layout e colocar um videozinho. 
      Acho que faz sentido colocar uma mais simples para emular aquele sentimento de site funcionando e tudo mais -->
 
@@ -144,6 +142,13 @@
     <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/sidebar.js"></script>
-    <script src="scripts/loadSidebar.js"></script>
+    <script>
+        // Inicializa funcionalidade manual da sidebar quando fixo
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof iniciarSidebar === "function") {
+                iniciarSidebar();
+            }
+        });
+    </script>
 </body>
 </html>

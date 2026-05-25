@@ -31,6 +31,11 @@
   - estilos/ for per-page CSS
   - scripts/ for page-level JavaScript using fetch
 
+## Frontend (Estrutura e Padrões)
+- **HTML:** O projeto utiliza páginas estáticas (HTML5). Componentes compartilhados (como sidebar e header) não possuem injeção de template dinâmica e têm sua estrutura replicada manualmente nas páginas (`pages/` e `index.html`). O layout baseia-se bastante no aninhamento de `<div>`s e classes contextuais.
+- **CSS:** As folhas de estilo ficam em `estilos/`. Mantenha a separação entre CSS global (ex: `sidebar.css` incluso em todas as páginas) e CSS específico de cada página (ex: `login.css`). O Flexbox é a base das disposições estruturais na interface; Grid não é tão evidenciado nas páginas principais. Evite introduzir variáveis de ambiente (`var(--minha-cor)`), mantendo o padrão já definido base de hexadeximais ou RGB. Ícones são obtidos externamente via FontAwesome, Bootstrap Icons ou Material Symbols, e tipografia via Google Fonts (Poppins).
+- **PADRONIZAÇÃO:** Use a sidebar e navbar exatamente como ta, mesmo icones, exatamente igual, a não ser que seja requerido que mudanças nelas. Use também o padrão de cores usando no resto do site (rosa e verde, verificar os tons exatos quando for mexer com cor).
+
 ## Convenções
 - Use ES Modules em todo o projeto (import/export), conforme package.json type module.
 - Mantenha tableName explícito nas definições de model do Sequelize para evitar problemas de nomenclatura/pluralização.

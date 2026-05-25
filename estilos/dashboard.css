@@ -1,0 +1,131 @@
+/* Ajustes da main container base */
+.dashboard-main {
+    margin-top: 60px;
+    margin-left: 240px; /* Base side bar margin, considering sidebar.css */
+    transition: all 0.3s ease;
+}
+
+/* Quando a sidebar recolhe (ajuste dependendo do JS do sidebar) */
+.sidebar:not(.active) ~ .dashboard-main {
+    margin-left: 78px;
+}
+
+.placeholder-img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.news-caption {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.chart-container {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+
+/* Perfil Card */
+.profile-img-container img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+/* Heatmap Grid */
+.heatmap-grid {
+    display: grid;
+    /* Grid de semanas, cada semana é uma coluna (ex 26 semanas horizontais) e 7 dias vertical */
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column;
+    gap: 4px;
+    overflow-x: auto; /* scroll horizontal se apertado */
+    padding-bottom: 5px;
+}
+
+.heatmap-cell {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    background-color: #ebedf0; /* level 0 empty */
+}
+
+/* Níveis do Heatmap (baseado no Github) */
+.lvl-0 { background-color: #2b2b2b; } /* Fundo preto como pedido */
+.lvl-1 { background-color: #0e4429; }
+.lvl-2 { background-color: #006d32; }
+.lvl-3 { background-color: #26a641; }
+.lvl-4 { background-color: #39d353; }
+
+/* Legenda do heatmap */
+.heatmap-legend .heatmap-cell {
+    display: inline-block;
+}
+
+/* Card customizado que cresce para parear aos charts */
+.calendar-card {
+    min-height: 350px;
+}
+
+/* Calendário Miniatura */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day-header {
+    font-weight: bold;
+    color: #666;
+    font-size: 0.9em;
+    padding-bottom: 5px;
+}
+
+.calendar-day {
+    padding: 8px 0;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    position: relative; /* para as bolinhas de marcador */
+}
+
+.calendar-day:hover {
+    background: #f0f0f0;
+}
+
+.calendar-day.inactive {
+    color: #ccc;
+}
+
+.calendar-day.today {
+    background-color: #e6f3ff;
+    font-weight: bold;
+}
+
+.calendar-marker-simulado::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #dc3545; /* danger */
+}
+
+.calendar-marker-lista::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #0d6efd; /* primary */
+}
