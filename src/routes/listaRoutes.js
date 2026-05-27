@@ -10,6 +10,12 @@ const router = new Router();
 // Em vez de adicionar o middleware em cada uma, pode ser usado assim:
 router.use(authMiddleware);
 
+// Rota para buscar todas as listas do usuario logado
+router.get('/', listaController.listarListas);
+
+// Rota para deletar uma lista
+router.delete('/:id', listaController.deletarLista);
+
 // Rota para gerar um novo simulado com base nos critérios do usuário
 router.post('/gerar', listaController.gerarLista);
 

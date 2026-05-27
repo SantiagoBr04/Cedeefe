@@ -15,6 +15,10 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
+        nome_completo: {
+            type: DataTypes.STRING(100),
+            allowNull: false
+        },
         adm: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

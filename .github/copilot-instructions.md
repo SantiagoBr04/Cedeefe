@@ -13,6 +13,7 @@
 - PORT é opcional (padrão: 3000).
 - O backend executa sequelize sync na inicialização a partir de src/server.js.
 - Mantenha RECONSTRUIR_BANCO como false, a menos que você queira intencionalmente recriar (dropar e refazer as tabelas) o seu banco de dados. Para popular, utilize o atalho de script descrito em Build e Execução.
+- Na verificação e obtenção de tokens de sessão do frontend, sempre utilize a chave `jwt_token` no localStorage ou sessionStorage para enviar o Bearer Token, evitando o uso de "token" genérico.
 
 ## Arquitetura
 - O backend fica em src/ e segue o fluxo route -> controller -> model.

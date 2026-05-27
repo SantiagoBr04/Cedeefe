@@ -393,6 +393,72 @@ const listaController = {
     }
   },
 
+  listarListas: async (req, res) => {
+    try {
+      const usuario_cod = req.userId;
+
+      // Busca todas as atividades do tipo lista do usuário logado
+      const listas = await db.Atividade.findAll({
+        where: {
+          usuario_cod: usuario_cod, // Acesso restrito
+          tipo: 'lista'
+        },
+        include: [
+          {
+            model: db.Atividade_questoes,
+            as: 'registroDasQuestoes',
+            attributes: ['questao_cod']
+          }
+        ],
+        order: [['data_criacao', 'DESC']]
+      });
+
+      // Mapeia os dados para evitar trafego de tabelas e retornos gigantes pro frontend
+      const listasFormatadas = listas.map(lista => {
+        return {
+          cod: lista.cod,
+          nome: lista.nome,
+          status: lista.status,
+          data_criacao: lista.data_criacao,
+          quantidade_questoes: lista.registroDasQuestoes ? lista.registroDasQuestoes.length : 0
+        };
+      });
+
+      res.status(200).json(listasFormatadas);
+
+    } catch (error) {
+      console.error('Erro ao listar listas:', error);
+      res.status(500).json({ error: 'Erro interno no servidor ao buscar listas.' });
+    }
+  },
+
+  deletarLista: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const usuario_cod = req.userId;
+
+      const lista = await db.Atividade.findByPk(id);
+
+      if (!lista) {
+        return res.status(404).json({ error: 'Lista não encontrada.' });
+      }
+
+      // Proteção de IDOR: garante que a lista a ser delatada é de fato do usuário da requisição
+      if (lista.usuario_cod !== usuario_cod) {
+        return res.status(403).json({ error: 'Acesso negado. Esta atividade não pertence a você.' });
+      }
+
+      // Deleta a lista inteira (o cascade das dependencias configurada apaga o restante dos vinculos e histórico)
+      await lista.destroy();
+
+      res.status(200).json({ message: 'Lista deletada com sucesso.' });
+
+    } catch (error) {
+      console.error('Erro ao deletar lista:', error);
+      res.status(500).json({ error: 'Erro interno no servidor ao deletar lista.' });
+    }
+  }
+
 };
 
 // Export default para exportar o valor principal do arquivo.

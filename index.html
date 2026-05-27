@@ -34,7 +34,7 @@
         </div>
 
         <!-- Ícone do usuário (lado direito do menu) -->
-        <a href="pages/login.html">
+        <a href="pages/login.html" id="btn-user-link">
             <span class="material-symbols-outlined" id="btn-user">account_circle</span>
         </a>
     </div>
@@ -147,6 +147,15 @@
         document.addEventListener("DOMContentLoaded", () => {
             if (typeof iniciarSidebar === "function") {
                 iniciarSidebar();
+            }
+
+            // Verifica se o usuário está logado e altera o link do perfil
+            const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+            if (token) {
+                const btnUserLink = document.getElementById("btn-user-link");
+                if (btnUserLink) {
+                    btnUserLink.href = "pages/perfilAluno.html";
+                }
             }
         });
     </script>

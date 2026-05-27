@@ -10,35 +10,46 @@ const userController = {
   register: async (req, res) => {
     try {
       // Pega os dados do corpo da requisição
-      const {login, senha, adm, data_nasc, motivo, escola, genero, endereco, estado_civil} = req.body;
+      const { nomeCompleto, dataNascimento, genero, escola, motivacao, email, password, adm } = req.body;
+      
+      const login = email;
+      const senha = password;
+      const motivo = motivacao;
+      const data_nasc = dataNascimento;
 
-      // Validação básica (verificar se os dados vieram)
-      if (!login || !senha) {
-        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+      // Validação básica (verificar se os dados obrigatórios vieram)
+      if (!login || !senha || !nomeCompleto || !data_nasc || !genero) {
+        return res.status(400).json({ error: 'Os campos obrigatórios não foram preenchidos.' });
       }
 
       // Verificar se o email já existe no banco
-      const existingUser = await db.Usuario.findOne({ where: { login: login } }); // Procura um em que o email dado seja igual ao do banco
+      const existingUser = await db.Usuario.findOne({ where: { login: login } }); 
       
       if (existingUser) { //Se ja existe, da erro
         return res.status(409).json({ error: 'Este e-mail já está em uso.' });
       }
 
+      // Buscar ou criar o código do gênero fornecido
+      let genero_cod = null;
+      if (genero) {
+        const [generoRecord] = await db.Genero.findOrCreate({ where: { descricao: genero } });
+        genero_cod = generoRecord.cod;
+      }
+
       // Criptografar a senha 
-      const salt = await bcrypt.genSalt(10); // Gera um "tempero" para a senha
+      const salt = await bcrypt.genSalt(10); // Gera um tempero para a senha
       const hashedPassword = await bcrypt.hash(senha, salt); // Criptografa
 
       // Inserir o novo usuário no banco de dados
       const newUser = await db.Usuario.create({ 
           login, 
+          nome_completo: nomeCompleto,
           senha: hashedPassword, 
-          adm, 
+          adm: adm || false, 
           data_nasc, 
           motivo, 
           escola, 
-          genero, 
-          endereco, 
-          estado_civil
+          genero_cod 
       });
 
       // Inicializar as estatísticas do usuário (tudo zerado por padrão)

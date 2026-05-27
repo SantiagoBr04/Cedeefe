@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
             allowNull: false
         },
         descricao: {
-            type: DataTypes.STRING(13),
+            type: DataTypes.STRING(30),
             allowNull: false
         }
     }, {

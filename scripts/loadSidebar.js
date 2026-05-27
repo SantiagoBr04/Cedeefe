@@ -3,5 +3,13 @@ fetch("../componentes/sidebar.html")
     .then(data => {
         document.getElementById("sidebar-container").innerHTML = data;
 
-        iniciarSidebar()
+        iniciarSidebar();
+
+        const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+        if (token) {
+            const btnUserLink = document.getElementById("btn-user-link");
+            if (btnUserLink) {
+                btnUserLink.href = "perfilAluno.html";
+            }
+        }
     });  

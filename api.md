@@ -18,25 +18,31 @@ Authorization: Bearer <seu_jwt_token>
 POST /api/users/register
 
 ### Descrição
-Cria um novo usuário no sistema com senha criptografada.
+Cria um novo usuário no sistema com as estatísticas zeradas e senha criptografada. O status de administrador (`adm`) é definido internamente como `false` por padrões de segurança e qualquer envio desse campo será ignorado.
 
 ### Parâmetros
 - Body (JSON):
-  - login (string, obrigatório)
-  - senha (string, obrigatório)
-  - adm (boolean, opcional)
-  - data_nasc (string, opcional)
-  - motivo (string, opcional)
+  - email (string, obrigatório) - Mapeado internamente como `login`
+  - password (string, obrigatório) - Mapeado internamente como `senha`
+  - nomeCompleto (string, obrigatório)
+  - dataNascimento (string, YYYY-MM-DD, obrigatório)
+  - genero (string, obrigatório)
   - escola (string, opcional)
-  - genero (string, opcional)
-  - endereco (string, opcional)
-  - estado_civil (string, opcional)
+  - motivacao (string, opcional)
 
 ### Respostas (Sucesso)
-Status: 201
+Status: 201 Created
+```json
+{
+  "message": "Usuário cadastrado com sucesso!",
+  "userId": 1
+}
+```
 
 ### Respostas (Erro)
-Status: 400 ou 500
+- Status: 400 Bad Request (Caso falte algum campo obrigatório, como email, password, etc)
+- Status: 409 Conflict (Caso o e-mail informado já esteja atrelado à outra conta)
+- Status: 500 Internal Server Error
 ---
 
 ### Endpoint e Método
@@ -117,6 +123,53 @@ Status: 400 ou 500
 ---
 
 ## 2. Listas
+
+### Endpoint e Método
+GET /api/listas
+
+### Descrição
+Retorna todas as listas de questões vinculadas ao usuário logado, trazendo dados resumidos (nome, data de criação, status e quantidade de questões).
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+
+### Respostas (Sucesso)
+Status: 200
+```json
+[
+  {
+    "cod": 1,
+    "nome": "Lista de Exercícios - 01/01/2026",
+    "status": "em_andamento",
+    "data_criacao": "2026-01-01T12:00:00.000Z",
+    "quantidade_questoes": 10
+  }
+]
+```
+
+### Respostas (Erro)
+Status: 500
+---
+
+### Endpoint e Método
+DELETE /api/listas/:id
+
+### Descrição
+Deleta uma lista de questões (inteira, com suas dependências de atividades) pertencente ao usuário logado.
+
+### Parâmetros
+- Headers:
+  - Authorization: Bearer <token> (obrigatório)
+- Path params:
+  - id (number, obrigatório)
+
+### Respostas (Sucesso)
+Status: 200
+
+### Respostas (Erro)
+Status: 403, 404 ou 500
+---
 
 ### Endpoint e Método
 POST /api/listas/gerar
@@ -415,7 +468,8 @@ Status: 404
 - Algumas rotas retornam 401, 403, 404 e 409 em casos específicos (token inválido, falta de permissão, recurso não encontrado, conflito de cadastro).
 - Os exemplos de erro com 400 mostrados acima seguem o formato solicitado e representam cenários comuns de validação.
 - Para rotas protegidas, sem token válido a API retorna erro de autenticação.
-
+
+
 ## 9. Baralhos (Flashcards)
 
 ### Endpoint e Método
