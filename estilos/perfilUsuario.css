@@ -1,0 +1,45 @@
+.content{
+  margin-left: 350px; 
+  margin-right:300px;
+  padding: 20px;
+  height: 100vh; 
+  font-size: 16px;
+  margin-left: 220px;
+  margin-top: 80px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    margin-left: 250px; 
+}
+
+.dados-usuario {
+width: 100%;
+max-width: 600px;
+margin-left: 250px; 
+}
+
+.btn-rosa{
+    border: 1px solid #ffcad4;;
+    background-color: #ff9caed8;
+}
+.btn-verde{
+    background-color: #e9ffd3;
+    border: 1px solid #e9ffd3;
+    color: black;
+}
+
+.btn-rosa:hover{
+    background-color: #ff9cae;
+    border: 1px solid #ffb8c5;
+}
+
+
+
+.btn-verde:hover{
+    background-color: #aeed74af;
+    border: 1px solid #cafa9b2b;
+}

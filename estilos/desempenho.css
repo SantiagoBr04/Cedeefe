@@ -1,0 +1,12 @@
+.content {
+  margin-right: 350px;
+  padding: 40px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  min-height: 100vh;
+
+  font-size: 16px;
+}
