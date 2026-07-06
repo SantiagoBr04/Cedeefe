@@ -19,142 +19,128 @@
     <link rel="stylesheet" href="../estilos/sidebar.css">
     <link rel="stylesheet" href="../estilos/perfilUsuario.css">
 </head>
-<body class="bg-light">
+<body class="perfil-body">
  
     <!-- SIDEBARRRR -->
     <div id="sidebar-container"></div>
 
-    <div class="content">
-                <!--
-                    oie, aqui é o perfil do usuário, onde ele pode alterar seus dados pessoais, como nome, data de nascimento, gênero e escola. 
-                    Além disso, ele pode visualizar seu email (que não pode ser alterado) e tem a opção de alterar sua senha.
-
-                    as áreas ali com os dados, devem ter os que ja sao do usuario e ficar ali como se fosse um formulário pre respondido 
-                    - tipo no ferretto, posso mandar print se necessário
-
-                    para a alteração de senha vou fazer que nem o ferretto, quando clicar no botão de alterar senha, 
-                    vai abrir um modal com os campos para a nova senha e confirmação da nova senha.
-                -->
-
-            <div class="header">
+    <main class="content">
+        <section class="perfil-cabecalho">
+            <div class="perfil-avatar" id="perfilAvatar">A</div>
+            <div class="perfil-cabecalho-texto">
+                <p class="perfil-selo">Conta do aluno</p>
                 <h1>Dados da Conta</h1>
+                <p>Atualize seus dados, troque a senha e gerencie sua conta em um só lugar.</p>
             </div>
+            <div class="perfil-acoes-topo">
+                <label class="btn btn-rosa btn-foto" for="fotoPerfil">
+                    <i class="bi bi-camera-fill"></i>
+                    Trocar foto
+                </label>
+                <input type="file" id="fotoPerfil" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+            </div>
+        </section>
 
-                <div class="dados-usuario">
-                    <!-- Nome -->
-                    <div class="mb-3">
-                        <label for="nomeCompleto" class="form-label">Nome completo</label>
-                        <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required>
-                    </div>
+        <form id="formPerfil" class="perfil-grid">
+            <section class="perfil-card">
+                <h2>Informações pessoais</h2>
 
-                    <!-- Data de nascimento -->
-                    <div class="mb-3">
-                        <label for="dataNascimento" class="form-label">Data de nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
-                    </div>
-
-                    <!-- Gênero -->
-                    <div class="mb-3">
-                        <label class="form-label d-block">Gênero</label>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="masc" value="Masculino">
-                            <label class="form-check-label" for="masc">
-                                Masculino
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="fem" value="Feminino">
-                            <label class="form-check-label" for="fem">
-                                Feminino
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="nb" value="Não-binário">
-                            <label class="form-check-label" for="nb">
-                                Não-binário
-                            </label>
-                        </div>
-                        
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="nd" value="Prefiro não declarar">
-                            <label class="form-check-label" for="nd">
-                                Prefiro não declarar
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Escola -->
-                    <div class="mb-3">
-                        <label for="escola" class="form-label">Escola</label>
-                        <input type="text" class="form-control" id="escola" name="escola">
-                    </div>
-
-                     <div class="mb-3">
-                        <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-
-                        <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-secondary mb-3" id="alterarSenhaBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                               <i class="bi bi-lock-fill"></i>Alterar senha
-                                </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title fs-5" id="staticBackdropLabel">Alterar senha</h2>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="mb-3">
-                                                <label for="senhaAtual" class="form-label">Senha atual</label>
-                                                <input type="password" class="form-control" id="senhaAtual" name="senhaAtual" required>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="novaSenha" class="form-label">Nova senha</label>
-                                                <input type="password" class="form-control" id="novaSenha" name="novaSenha" required>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="confirmarSenha" class="form-label">Confirmar nova senha</label>
-                                                <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-rosa" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-verde">salvar</button>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-
-
-
-
-
-                    <!--
-                    <button type="button" class="btn btn-secondary mb-3" id="alterarSenhaBtn"><i class="bi bi-lock-fill"></i>   Alterar senha</button>-->
-
-                    <!-- Cancelar-->
-                    <button type="button" class="btn btn-rosa mb-3" id="cancelarBtn">Cancelar</button>
-                    <!-- Salvar-->
-                    <button type="button" class="btn btn-verde mb-3" id="salvarBtn">Salvar</button>
+                <div class="mb-3">
+                    <label for="nomeCompleto" class="form-label">Nome completo</label>
+                    <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required>
                 </div>
 
-    </div>
+                <div class="mb-3">
+                    <label for="dataNascimento" class="form-label">Data de nascimento</label>
+                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">Gênero</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="genero" id="masc" value="Masculino"><label class="form-check-label" for="masc">Masculino</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="genero" id="fem" value="Feminino"><label class="form-check-label" for="fem">Feminino</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="genero" id="nb" value="Não-binário"><label class="form-check-label" for="nb">Não-binário</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="genero" id="nd" value="Prefiro não declarar"><label class="form-check-label" for="nd">Prefiro não declarar</label></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="escola" class="form-label">Escola</label>
+                    <input type="text" class="form-control" id="escola" name="escola">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="motivacao" class="form-label">Motivação</label>
+                    <textarea class="form-control" id="motivacao" name="motivacao" rows="3" maxlength="180"></textarea>
+                </div>
+            </section>
+
+            <section class="perfil-card">
+                <h2>Segurança</h2>
+
+                <p class="perfil-texto-secundario">Use esta área para atualizar sua senha e remover sua conta com confirmação.</p>
+
+                <button type="button" class="btn btn-secondary mb-3 w-100" id="alterarSenhaBtn" data-bs-toggle="modal" data-bs-target="#modalSenha">
+                    <i class="bi bi-lock-fill"></i> Alterar senha
+                </button>
+
+                <div class="perfil-exclusao">
+                    <h3>Excluir conta</h3>
+                    <p>Essa ação remove seus dados e não pode ser desfeita.</p>
+                    <label for="senhaExclusao" class="form-label">Senha atual para confirmar</label>
+                    <input type="password" class="form-control mb-3" id="senhaExclusao" name="senhaExclusao">
+                    <button type="button" class="btn btn-danger w-100" id="excluirContaBtn">Excluir conta</button>
+                </div>
+            </section>
+
+            <section class="perfil-card perfil-card-acoes">
+                <button type="button" class="btn btn-rosa" id="cancelarBtn">Cancelar</button>
+                <button type="submit" class="btn btn-verde" id="salvarBtn">Salvar alterações</button>
+            </section>
+        </form>
+
+        <div class="modal fade" id="modalSenha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalSenhaLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="modalSenhaLabel">Alterar senha</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formSenha">
+                            <div class="mb-3">
+                                <label for="senhaAtual" class="form-label">Senha atual</label>
+                                <input type="password" class="form-control" id="senhaAtual" name="senhaAtual" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="novaSenha" class="form-label">Nova senha</label>
+                                <input type="password" class="form-control" id="novaSenha" name="novaSenha" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirmarSenha" class="form-label">Confirmar nova senha</label>
+                                <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-rosa" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-verde" id="salvarSenhaBtn">Salvar senha</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
 <!-- Seu JS da sidebar -->
 <script src="../scripts/loadSidebar.js"></script>
 <script src="../scripts/sidebar.js"></script>
-<script src="../scripts/modal.js"></script>
+<script src="../scripts/perfilUsuario.js"></script>
 
 <!-- Bootstrap JS -->
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,45 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desempenho</title>
+    <title>Cedeefe - Desempenho</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/desempenho.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Meu desempenho</h1>
-    </header>
-    
-    <div>
-        <h3>Questões Respondidas</h3>
-        <p>29</p>
-    </div>
+    <div id="sidebar-container"></div>
 
+    <main class="desempenho-main">
+        <div class="container-fluid px-4 py-4">
+            <div class="d-flex align-items-center justify-content-between mb-4 header-bloco">
+                <div>
+                    <h1 class="page-title mb-0">Minhas estatísticas</h1>
+                </div>
+            </div>
 
-    <div>
-        <!--Gráfico de pizza-->
-        <h3>Taxa de aproveitamento Geral</h3>
-        <p>72%</p>
-    </div>
+            <section class="top-grid">
+                <div class="cards-stack">
+                    <article class="stats-card stats-card-green">
+                        <span class="card-label">Questões respondidas</span>
+                        <strong id="total-questoes">0</strong>
+                        <small>Quantidade total de questões concluídas</small>
+                    </article>
 
-    <div>
-    <h3>Taxa de aproveitamento por Área</h3>
+                    <article class="stats-card stats-card-pink">
+                        <span class="card-label">Listas finalizadas</span>
+                        <strong id="total-listas">0</strong>
+                        <small>Volume de listas concluídas no sistema</small>
+                    </article>
+                </div>
 
-        <div>
-            <h3>Matemática</h3>
-            <p>Questões feitas</p> 
-            <p>22</p>
+                <article class="chart-card chart-card-wide">
+                    <div class="card-header-block">
+                        <span class="card-label">Aproveitamento geral</span>
+                        <h2>Acertos e erros</h2>
+                    </div>
+                    <div class="chart-wrap chart-wrap-large">
+                        <canvas id="geral-chart"></canvas>
+                    </div>
+                </article>
+            </section>
 
-            <p>Acertos</p>
-            <p>18</p>
+            <section class="areas-section">
+                <div class="areas-section__header">
+                    <p class="section-kicker mb-1">Média por área</p>
+                    <h2 class="areas-title mb-0">Aproveitamento por disciplina</h2>
+                </div>
 
-            <p>Erros</p>
-            <p>4</p>
-
-            <p>81%</p>
+                <div id="areas-container" class="areas-container">
+                    <div class="empty-state">Carregando estatísticas por área...</div>
+                </div>
+            </section>
         </div>
-    </div>
+    </main>
 
-
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/desempenho.js"></script>
 </body>
 </html>

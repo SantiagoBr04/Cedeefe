@@ -9,7 +9,7 @@ fetch("../componentes/sidebar.html")
         if (token) {
             const btnUserLink = document.getElementById("btn-user-link");
             if (btnUserLink) {
-                btnUserLink.href = "perfilAluno.html";
+                btnUserLink.href = "perfilUsuario.html";
             }
         }
     });  

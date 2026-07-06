@@ -85,9 +85,6 @@ PUT /api/users/profile
 
 ### Descrição
 Atualiza login e/ou senha do usuário autenticado.
-
-### Parâmetros
-- Headers:
   - Authorization: Bearer <token> (obrigatório)
 - Body (JSON):
   - login (string, opcional)
@@ -98,7 +95,6 @@ Atualiza login e/ou senha do usuário autenticado.
 Status: 200
 
 
-### Respostas (Erro)
 Status: 400 ou 500
 ---
 
@@ -119,7 +115,6 @@ Status: 200
 
 
 ### Respostas (Erro)
-Status: 400 ou 500
 ---
 
 ## 2. Listas
@@ -128,7 +123,6 @@ Status: 400 ou 500
 GET /api/listas
 
 ### Descrição
-Retorna todas as listas de questões vinculadas ao usuário logado, trazendo dados resumidos (nome, data de criação, status e quantidade de questões).
 
 ### Parâmetros
 - Headers:
@@ -152,7 +146,6 @@ Status: 200
 Status: 500
 ---
 
-### Endpoint e Método
 DELETE /api/listas/:id
 
 ### Descrição
@@ -161,9 +154,7 @@ Deleta uma lista de questões (inteira, com suas dependências de atividades) pe
 ### Parâmetros
 - Headers:
   - Authorization: Bearer <token> (obrigatório)
-- Path params:
   - id (number, obrigatório)
-
 ### Respostas (Sucesso)
 Status: 200
 
@@ -176,7 +167,6 @@ POST /api/listas/gerar
 
 ### Descrição
 Gera uma lista de questões aleatórias com base nos critérios enviados e cria uma atividade vinculada ao usuário logado.
-
 ### Parâmetros
 - Headers:
   - Authorization: Bearer <token> (obrigatório)
@@ -185,9 +175,7 @@ Gera uma lista de questões aleatórias com base nos critérios enviados e cria 
   - disciplinas (array de number, obrigatório)
   - nome (string, opcional)
   - descricao (string, opcional)
-  - disciplina_cod (number, obrigatório)
 
-### Respostas (Sucesso)
 Status: 200
 
 
@@ -200,7 +188,6 @@ GET /api/listas/:id
 
 ### Descrição
 Retoma uma lista já criada pelo ID da atividade.
-
 ### Parâmetros
 - Headers:
   - Authorization: Bearer <token> (obrigatório)
