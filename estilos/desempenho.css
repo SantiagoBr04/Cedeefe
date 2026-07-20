@@ -1,12 +1,269 @@
-.content {
-  margin-right: 350px;
-  padding: 40px 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-
+.desempenho-main {
+  margin-top: 60px;
+  margin-left: 70px;
   min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
 
-  font-size: 16px;
+.desempenho-main .container-fluid {
+  max-width: 980px;
+}
+
+.sidebar.expandido ~ .desempenho-main {
+  margin-left: 270px;
+}
+
+.header-bloco {
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.section-kicker {
+  color: #ff9cae;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.page-title,
+.areas-title {
+  font-weight: 500;
+  color: #262626;
+}
+
+.page-title {
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-subtitle {
+  color: #7b7b7b;
+  background: #ffffff;
+  border: 1px solid #f4d6dd;
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  box-shadow: 0 8px 18px rgba(255, 156, 174, 0.08);
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(300px, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.cards-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.stats-card,
+.chart-card,
+.area-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(30, 30, 30, 0.08);
+  border: 1px solid rgba(255, 184, 197, 0.35);
+}
+
+.stats-card {
+  min-height: 165px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stats-card strong {
+  font-size: clamp(2.1rem, 4vw, 3.3rem);
+  line-height: 1;
+  color: #1f1f1f;
+  margin: 0.5rem 0;
+}
+
+.stats-card small,
+.area-meta,
+.area-stats small {
+  color: #6f6f6f;
+}
+
+.card-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7b7b7b;
+}
+
+.stats-card-green {
+  background: #FFD8DF;
+}
+
+.stats-card-pink {
+  background: #FFD8DF;
+}
+
+.chart-card {
+  padding: 24px;
+  min-height: 320px;
+  background: #FFD8DF;
+}
+
+.chart-card-wide {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header-block h2 {
+  font-size: 1.2rem;
+  margin: 0.25rem 0 0;
+  color: #262626;
+}
+
+.chart-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.chart-wrap-large {
+  flex: 1;
+  min-height: 260px;
+}
+
+.chart-wrap-large canvas,
+.area-chart-wrap canvas {
+  width: 99% !important;
+  height: 99% !important;
+}
+
+.areas-section {
+  margin-top: 24px;
+  width: min(100%, 980px);
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(180deg, #FFD8DF 0%, #FFD8DF 100%);
+  border-radius: 30px;
+  padding: 24px;
+  box-shadow: 0 18px 40px rgba(255, 156, 174, 0.18);
+}
+
+.areas-section__header {
+  color: #fff;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.areas-container {
+  display: grid;
+  gap: 16px;
+}
+
+.area-card {
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
+  gap: 18px;
+  align-items: center;
+  background: #ffffff;
+}
+
+.area-card__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #262626;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.area-meta {
+  font-size: 1.02rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.area-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.area-metric {
+  background: #fff7f9;
+  border-radius: 16px;
+  padding: 12px;
+  border: 1px solid #ffd3de;
+}
+
+.area-metric strong {
+  display: block;
+  color: #1f1f1f;
+  font-size: 1.1rem;
+}
+
+.area-chart-wrap {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.area-chart-wrap canvas {
+  max-height: 170px;
+}
+
+.empty-state {
+  background: rgba(255, 255, 255, 0.88);
+  color: #6f6f6f;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+}
+
+@media (max-width: 991.98px) {
+  .desempenho-main {
+    margin-left: 70px;
+  }
+
+  .desempenho-main .container-fluid,
+  .areas-section {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .area-card {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 767.98px) {
+  .desempenho-main {
+    margin-left: 0;
+  }
+
+  .container-fluid {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .areas-section {
+    border-radius: 22px;
+    padding: 18px;
+  }
+
+  .area-metrics {
+    grid-template-columns: 1fr;
+  }
 }

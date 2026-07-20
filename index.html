@@ -85,7 +85,7 @@
 
             <!-- Perfil do aluno -->
             <li class="item-menu">
-                <a class="linkItens" href="pages/perfilAluno.html">
+                <a class="linkItens" href="pages/perfilUsuario.html">
                     <span class="material-symbols-outlined">developer_mode_tv</span>
                     <span class="txt-link">Perfil do Aluno</span>
                 </a>
@@ -104,6 +104,14 @@
                 <a class="linkItens" href="pages/listarUsuarios.html">
                     <span class="material-symbols-outlined">developer_mode_tv</span>
                     <span class="txt-link">listar Usuários</span>
+                </a>
+            </li>
+
+            <!-- Listar listas -->
+            <li class="item-menu">
+                <a class="linkItens" href="pages/listarListas.html">
+                    <span class="material-symbols-outlined">developer_mode_tv</span>
+                    <span class="txt-link">listar Listas</span>
                 </a>
             </li>
 
@@ -154,7 +162,7 @@
             if (token) {
                 const btnUserLink = document.getElementById("btn-user-link");
                 if (btnUserLink) {
-                    btnUserLink.href = "pages/perfilAluno.html";
+                    btnUserLink.href = "pages/perfilUsuario.html";
                 }
             }
         });

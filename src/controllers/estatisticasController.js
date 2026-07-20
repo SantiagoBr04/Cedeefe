@@ -7,7 +7,7 @@ const estatisticasController = {
       // O cod do usuário vem do token JWT via authMiddleware
       const usuarioCod = req.userId;
 
-      const estatisticas = await db.Usuario_estatisticas_gerais.findOne({
+      let estatisticas = await db.Usuario_estatisticas_gerais.findOne({
         where: { usuario_cod: usuarioCod }
       });
 
@@ -18,7 +18,8 @@ const estatisticasController = {
             total_questoes_respondidas: 0,
             total_acertos: 0,
             total_erros: 0,
-            aproveitamento_geral: 0
+            aproveitamento_geral: 0,
+            total_listas_finalizadas: 0
         });
       }
 

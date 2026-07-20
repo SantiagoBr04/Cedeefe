@@ -133,9 +133,14 @@ const userController = {
   // Método para pegar um usuário
   getProfile: async (req, res) => {
     try {
-      // Pega o cod e o login onde o cod for igual ao da req
+      // Pega os dados do usuário autenticado
       const user = await db.Usuario.findByPk(req.userId, {
-          attributes: ['cod', 'login'] // Seleciona apenas colunas específicas
+          attributes: ['cod', 'login', 'nome_completo', 'data_nasc', 'motivo', 'escola', 'genero_cod'],
+          include: [{
+            model: db.Genero,
+            as: 'genero',
+            attributes: ['descricao']
+          }]
       });
 
       // Compara se o cod existe (ele não pode ser igual a 0)
@@ -143,8 +148,16 @@ const userController = {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
       
-      // Devolve o cod do usuário
-      res.status(200).json(user);
+      // Normaliza a resposta para o frontend
+      res.status(200).json({
+        cod: user.cod,
+        login: user.login,
+        nomeCompleto: user.nome_completo,
+        dataNascimento: user.data_nasc,
+        motivacao: user.motivo,
+        escola: user.escola,
+        genero: user.genero?.descricao || null
+      });
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
       console.error('Erro ao buscar perfil:', error);
@@ -159,10 +172,10 @@ const userController = {
       const { userId } = req; // Supondo que venha do middleware de auth
 
       // Pega os dados que o usuário pode querer alterar
-      const { login, oldPassword, newPassword } = req.body;
+      const { login, nomeCompleto, dataNascimento, genero, escola, motivacao, oldPassword, newPassword } = req.body;
 
       // Se nenhum dado foi enviado para atualização, retorna um erro.
-      if (!login && !oldPassword && !newPassword) {
+      if (!login && !nomeCompleto && !dataNascimento && !genero && !escola && !motivacao && !oldPassword && !newPassword) {
         return res.status(400).json({ error: 'Nenhum dado fornecido para atualização.' });
       }
 
@@ -184,6 +197,40 @@ const userController = {
 
         // Atualiza o login no banco de dados
         await db.Usuario.update({ login: login }, { where: { cod: userId } });
+      }
+
+      const dadosAtualizacao = {};
+
+      if (nomeCompleto) {
+        dadosAtualizacao.nome_completo = nomeCompleto;
+      }
+
+      if (dataNascimento) {
+        dadosAtualizacao.data_nasc = dataNascimento;
+      }
+
+      if (escola !== undefined) {
+        dadosAtualizacao.escola = escola;
+      }
+
+      if (motivacao !== undefined) {
+        dadosAtualizacao.motivo = motivacao;
+      }
+
+      if (genero) {
+        const [generoRecord] = await db.Genero.findOrCreate({ where: { descricao: genero } });
+        dadosAtualizacao.genero_cod = generoRecord.cod;
+      }
+
+      if (login && !oldPassword && !newPassword) {
+        const usuarioAtual = await db.Usuario.findByPk(userId, { attributes: ['senha'] });
+        if (!usuarioAtual) {
+          return res.status(404).json({ error: 'Usuário não encontrado.' });
+        }
+      }
+
+      if (Object.keys(dadosAtualizacao).length > 0) {
+        await db.Usuario.update(dadosAtualizacao, { where: { cod: userId } });
       }
 
       // Lógia para atualizar a senha
