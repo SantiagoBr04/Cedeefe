@@ -1,0 +1,161 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CONTEÚDO */
+.content {
+    margin: 80px 240px 80px 300px;
+    padding: 20px;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header-title {
+    margin: 0;
+}
+
+/* AÇÕES DO HEADER */
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* BOTÕES */
+.verde:hover {
+    background-color: #afed74d4;
+    border-color: #cafa9b2b;
+    color: white;
+}
+
+.btn-create:hover {
+    background-color: #e9ecef;
+}
+
+/* CONTAINER DOS CARTÕES */
+.cartoes-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* CARD DE EDIÇÃO */
+.flashcard-container {
+    width: 100%;
+    background: white;
+    border: 1px solid #95959591;
+    border-radius: 15px;
+    padding: 20px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+/* HOVER LEVE */
+.flashcard-container:hover {
+    border-color: #7a7a7a;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* LABELS */
+.flashcard-container label {
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* INPUTS */
+.flashcard-container .form-control {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    transition: all 0.2s ease;
+}
+
+.flashcard-container .form-control:focus {
+    border-color: #7a7a7a;
+    box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.05);
+}
+
+.flashcard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.flashcard-number {
+    font-weight: 600;
+    color: #555;
+}
+
+/* MELHORA ESPAÇAMENTO INTERNO */
+.flashcard-body label {
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.flashcard-body .form-control {
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.rosa:hover{
+    background-color: #ff9cae;
+    border: 1px solid #ffb8c5;
+    color: white;
+}
+
+.cartoes-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 50% + 50% */
+    gap: 15px;
+}
+
+.campo-texto {
+    border-radius: 10px;
+    resize: vertical;
+    min-height: 80px;
+    font-size: 15px;
+}
+
+.fab-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+    border: none;
+
+    background-color: #afed74d4;
+    color: white;
+
+    font-size: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    z-index: 999;
+}
+
+.fab-button:hover {
+    transform: scale(1.1);
+    background-color: #aeff62d4;
+}

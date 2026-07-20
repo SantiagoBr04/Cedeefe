@@ -1,0 +1,78 @@
+*body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.content{
+    margin-left:300px;
+    margin-right:240px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header{
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.sub-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.status-finalizado {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-em-andamento {
+    background-color: #fff3cd; /* Amarelo claro */
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.status-iniciar {
+    background-color: #e2e3e5; /* Cinza claro */
+    color: #383d41;
+    border: 1px solid #d6d8db;
+}
+
+.status-finalizado,
+.status-em-andamento,
+.status-iniciar {
+    padding: 0.4rem 0.7rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+.rosa:hover{
+    background-color: #ff9cae;
+    border: 1px solid #ffb8c5;
+    color: white;
+}
+
+
+
+.verde:hover{
+    background-color: #afed74d4;
+    border: 1px solid #cafa9b2b;
+    color: white;
+}
+
+.instituto {
+    margin-bottom: 20px;
+    border:#95959591 1px solid;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+h4{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

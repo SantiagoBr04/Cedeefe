@@ -42,7 +42,7 @@ app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
 // Porém, ali só vem valor quando se hospeda o server)
 const PORT = process.env.PORT || 3000;
 
-const RECONSTRUIR_BANCO = false;
+const RECONSTRUIR_BANCO = true;
 
 db.sequelize.sync({force: RECONSTRUIR_BANCO})
   .then(async() => {

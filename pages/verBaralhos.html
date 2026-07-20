@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head> <meta charset="UTF-8"> 
+    <!-- Define a codificação UTF-8 --> 
+     <!-- Responsividade em dispositivos móveis --> 
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+      
+    <title>Cedeefe</title> 
+
+    <!-- Ícones do Bootstrap --> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> 
+
+    <!-- Ícones Material Symbols (Google) --> 
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/> 
+
+    <!-- Bootstrap --> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> 
+    
+    <!-- CSS externo --> 
+     <link rel="stylesheet" href="../estilos/sidebar.css"> 
+     <link rel="stylesheet" href="../estilos/verBaralhos.css"> 
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<div class="content">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1 class="header-title">Meus Flashcards</h1>
+
+        <div class="header-actions">
+            <button type="button" class="btn btn-outline-secondary">
+                <i class="bi bi-funnel"></i> Filtrar
+            </button>
+
+            <a href="criarBaralho.html">
+                <button type="button" class="btn btn-outline-secondary btn-create">
+                    <i class="bi bi-plus"></i> Criar baralho
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="baralhos">
+
+        <div class="flashcard-container">
+            <h4 class="flashcard-title">Pitágoras</h4>
+            <p class="flashcard-description">
+                Teorema de Pitágoras e aplicações básicas em geometria.
+            </p>
+
+            <div class="flashcard-info">
+                <span><i class="bi bi-card-heading"></i> 16 cartões</span>
+                <span><i class="bi bi-clock"></i> 2 dias atrás</span>
+            </div>
+        </div>
+
+        <div class="flashcard-container">
+            <h4 class="flashcard-title">Biologia</h4>
+            <p class="flashcard-description">
+                Citologia, organelas e funções celulares.
+            </p>
+
+            <div class="flashcard-info">
+                <span><i class="bi bi-card-heading"></i> 24 cartões</span>
+                <span><i class="bi bi-clock"></i> 1 dia atrás</span>
+            </div>
+        </div>
+
+        <div class="flashcard-container">
+            <h4 class="flashcard-title">História</h4>
+            <p class="flashcard-description">
+                Revoltas e processos históricos importantes.
+            </p>
+
+            <div class="flashcard-info">
+                <span><i class="bi bi-card-heading"></i> 18 cartões</span>
+                <span><i class="bi bi-clock"></i> hoje</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../scripts/loadSidebar.js"></script>
+<script src="../scripts/sidebar.js"></script>
+
+</body>
+</html>

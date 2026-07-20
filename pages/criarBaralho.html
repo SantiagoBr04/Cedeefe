@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
+     <!-- Responsividade em dispositivos móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cedeefe</title> <!-- Título da aba do navegador -->
+
+    <!-- Ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Ícones Material Symbols (Google) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/criarBaralho.css">
+</head>
+<body>
+ 
+    <!-- SIDEBARRRR -->
+    <div id="sidebar-container"></div>
+
+    <div class="content">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1 class="header-title">Pitágoras</h1>
+
+            <div class="header-actions">
+                <button type="button" class="btn btn-outline-secondary">
+                    <i class="bi bi-file-earmark-plus"></i> Importar cartões .cvs
+                </button>
+
+                <button type="button" class="btn btn-outline-secondary">
+                    <i class="bi bi-plus"></i> Adicionar cartões
+                </button>
+                
+                <button type="button" class="btn btn-outline-secondary verde">
+                    <i class="bi bi-check-lg"></i> Salvar alterações
+                </button>
+
+            </div>
+        </div>
+
+        <!-- FLASHCARDS -->
+        <div class="cartoes-wrapper">
+        <div class="flashcard-container">
+
+            <div class="flashcard-header">
+                <span class="flashcard-number">#1</span>
+
+                <button type="button" class="btn btn-sm btn-outline-secondary rosa">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+
+            <div class="flashcard-body">
+
+                <label class="form-label">Pergunta</label>
+                <textarea class="form-control campo-texto" rows="3" placeholder="Digite a pergunta"></textarea>
+
+                <label class="form-label">Resposta</label>
+                <textarea class="form-control campo-texto" rows="3" placeholder="Digite a resposta"></textarea>
+
+            </div>
+        </div>
+
+        <div class="flashcard-container">
+
+            <div class="flashcard-header">
+                <span class="flashcard-number">#2</span>
+
+                <button type="button" class="btn btn-sm btn-outline-secondary rosa">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+
+            <div class="flashcard-body">
+
+                <label class="form-label">Pergunta</label>
+                <textarea class="form-control campo-texto" rows="3" placeholder="Digite a pergunta"></textarea>
+
+                <label class="form-label">Resposta</label>
+                <textarea class="form-control campo-texto" rows="3" placeholder="Digite a resposta"></textarea>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <button class="fab-button" onclick="adicionarCard()">
+    <i class="bi bi-plus"></i>
+    </button>
+
+<!-- Seu JS da sidebar -->
+<script src="../scripts/loadSidebar.js"></script>
+<script src="../scripts/sidebar.js"></script>
+
+<!-- Bootstrap JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

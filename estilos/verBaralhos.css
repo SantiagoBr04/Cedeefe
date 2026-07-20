@@ -1,0 +1,79 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif !important
+}
+
+.content {
+    margin: 80px 240px 80px 300px;
+    padding: 20px;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sub-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* BOTÕES (hover simples) */
+.verde:hover {
+    background-color: #afed74d4;
+    border-color: #cafa9b2b;
+    color: white;
+}
+
+/* CONTAINER DOS CARDS */
+.baralhos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* CARD */
+.flashcard-container {
+    flex: 1 1 30%;
+    min-width: 250px;
+
+    background: white;
+    border: 1px solid #95959591;
+    border-radius: 15px;
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+/* HOVER */
+.flashcard-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: #7a7a7a;
+}
+
+/* TEXTO */
+.flashcard-container h4 {
+    margin: 0 0 10px 0;
+}
+
+.flashcard-container p {
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.flashcard-info{
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #666;
+}
