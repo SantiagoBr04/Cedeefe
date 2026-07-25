@@ -1,79 +1,331 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
 body {
     background-color: #f9f9f9;
-    font-family: 'Poppins', sans-serif !important
+    font-family: 'Poppins', sans-serif !important;
+    overflow-x: hidden;
 }
+
+
+/* =========================
+   CONTEÚDO
+========================= */
 
 .content {
-    margin: 80px 240px 80px 300px;
+    margin-top: 80px;
+    margin-left: 300px;
+    margin-right: 240px;
+    margin-bottom: 80px;
     padding: 20px;
+
+    transition: all 0.3s ease;
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+
+    gap: 20px;
+    margin-bottom: 25px;
+
+    flex-wrap: wrap;
 }
 
-.sub-header {
+.header-title {
+    margin: 0;
+}
+
+
+/* AÇÕES DO HEADER */
+
+.header-actions {
     display: flex;
-    gap: 10px;
     align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-/* BOTÕES (hover simples) */
+.header-actions a {
+    text-decoration: none;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.btn {
+    border-radius: 8px;
+}
+
+.btn-create:hover {
+    background-color: #e9ecef;
+}
+
 .verde:hover {
     background-color: #afed74d4;
     border-color: #cafa9b2b;
     color: white;
 }
 
-/* CONTAINER DOS CARDS */
+
+/* =========================
+   CONTAINER DOS BARALHOS
+========================= */
+
 .baralhos {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+
+    /* 3 cards por linha no desktop */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
     gap: 20px;
+
+    width: 100%;
 }
 
-/* CARD */
+
+/* =========================
+   CARD
+========================= */
+
 .flashcard-container {
-    flex: 1 1 30%;
-    min-width: 250px;
+    width: 100%;
+    min-width: 0;
 
     background: white;
+
     border: 1px solid #95959591;
     border-radius: 15px;
+
     padding: 25px;
 
     display: flex;
     flex-direction: column;
 
+    min-height: 190px;
+
     transition: all 0.2s ease-in-out;
+
     cursor: pointer;
 }
 
+
 /* HOVER */
+
 .flashcard-container:hover {
     transform: translateY(-5px);
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
     border-color: #7a7a7a;
 }
 
-/* TEXTO */
-.flashcard-container h4 {
+
+/* =========================
+   TEXTO DO CARD
+========================= */
+
+.flashcard-title {
     margin: 0 0 10px 0;
+
+    font-size: 1.25rem;
+    font-weight: 600;
+
+    color: #333;
 }
 
-.flashcard-container p {
+.flashcard-description {
     margin-bottom: 12px;
+
     color: #555;
+
+    line-height: 1.5;
 }
 
-.flashcard-info{
+
+/* =========================
+   INFORMAÇÕES
+========================= */
+
+.flashcard-info {
     margin-top: auto;
+
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
     font-size: 14px;
     color: #666;
+
+    flex-wrap: wrap;
+}
+
+.flashcard-info span {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+/* =========================
+   NOTEBOOK / TELAS MÉDIAS
+========================= */
+
+@media (max-width: 1200px) {
+
+    .content {
+        margin-left: 90px;
+        margin-right: 40px;
+    }
+
+    .baralhos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 991px) {
+
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+
+        margin-top: 70px;
+
+        padding: 20px;
+    }
+
+    .header {
+        align-items: flex-start;
+    }
+
+    .header-actions {
+        justify-content: flex-start;
+    }
+
+    .baralhos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 576px) {
+
+    .content {
+        margin: 0;
+
+        padding: 15px;
+
+        padding-top: 70px;
+    }
+
+    /* HEADER */
+
+    .header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+        margin-bottom: 20px;
+    }
+
+    .header-title {
+        font-size: 1.7rem;
+    }
+
+    /* BOTÕES */
+
+    .header-actions {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+    }
+
+    .header-actions .btn {
+        width: 100%;
+    }
+
+    /* CARDS */
+
+    .baralhos {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .flashcard-container {
+        padding: 20px;
+
+        min-height: 170px;
+    }
+
+    .flashcard-title {
+        font-size: 1.15rem;
+    }
+
+    .flashcard-description {
+        font-size: 14px;
+    }
+
+    .flashcard-info {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================
+   CELULAR PEQUENO
+========================= */
+
+@media (max-width: 400px) {
+
+    .content {
+        padding: 12px;
+        padding-top: 65px;
+    }
+
+    .header-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .flashcard-container {
+        padding: 18px;
+    }
+
+    .flashcard-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
 }

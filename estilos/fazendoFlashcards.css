@@ -1,0 +1,153 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CONTEÚDO */
+.content{
+    transition:.3s;
+
+    margin:80px auto 40px;
+    margin-left:290px;
+
+    max-width:900px;
+    padding:20px;
+}
+
+.topo-flashcards{
+    display:grid;
+    grid-template-columns:60px 1fr 60px;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.informacoes {
+    text-align: center;
+}
+
+.flashcard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.027);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+    min-height:350px;
+    padding:30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flashcard h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+
+}
+
+.flashcard-feedback{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.flashcard-feedback .btn{
+    flex:1;
+    max-width:220px;
+}
+
+
+.btn-rosa{
+    border: 1px solid #ffcad4;
+    background-color: #ffcad4;
+}
+
+.btn-rosa:hover{
+    background-color: #ff9cae;
+    border: 1px solid #ffb8c5;
+}
+
+.btn-verde{
+    background-color: #c6fe92d4;
+    border: 1px solid #e9ffd3;
+}
+
+.btn-verde:hover{
+    background-color: #97d75bd4;
+    border: 1px solid #cafa9b2b;
+}
+.btn-amarelo {
+    background-color: #ffe89c;
+    border: 1px solid #ffeeba;
+}
+
+.btn-amarelo:hover {
+    background-color: #ffd766;
+    border: 1px solid #ffe4a0;
+}
+
+.btnPassar{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+    transition:.2s;
+}
+
+.btnPassar:hover{
+    background:#ececec;
+}
+
+@media (max-width:991px){
+
+    .content{
+        margin-left:0;
+        margin-right:0;
+        max-width:700px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .content{
+        padding:15px;
+    }
+
+    .flashcard{
+        min-height:280px;
+        padding:20px;
+    }
+
+    .flashcard-feedback{
+        flex-direction:column;
+    }
+
+    .flashcard-feedback .btn{
+        max-width:100%;
+        width:100%;
+    }
+
+    .topo-flashcards{
+        grid-template-columns:45px 1fr 45px;
+    }
+
+    .informacoes h3{
+        font-size:1.3rem;
+    }
+
+}

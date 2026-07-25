@@ -6,17 +6,17 @@ body {
 
 .content {
     margin-top: 80px;
-    margin-left: 250px; /* Espaço da sidebar */
     padding: 30px;
+    margin-left: 250px;
     width: calc(100% - 250px);
 }
+
 
 .form-container {
     background-color: #fff;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border: 2px solid #ffc7c77a; /* Borda rosa suave do seu tema */
     max-width: 900px;
     margin: 0 auto;
 }
@@ -33,25 +33,6 @@ h4 {
     margin-bottom: 15px;
 }
 
-/* Estilo do botão de salvar */
-.btn-salvar {
-    background-color: #ffcad4; /* Rosa do tema */
-    color: #333;
-    font-weight: bold;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 1.1rem;
-    transition: all 0.3s;
-}
-
-.btn-salvar:hover {
-    background-color: #ffb8c5;
-    transform: translateY(-2px);
-}
-
 /* Ajuste nos inputs para ficarem mais bonitos */
 .form-control, .form-select {
     border-radius: 8px;
@@ -60,6 +41,124 @@ h4 {
 }
 
 .form-control:focus {
-    border-color: #ffcad4;
-    box-shadow: 0 0 0 0.2rem rgba(255, 202, 212, 0.25);
+    border-color:#e9ffd3;
+    box-shadow: 0 0 0 0.2rem #e9ffd3ac;
+}
+
+.grupo-alternativa{
+    cursor: pointer;
+}
+
+.btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-verde{
+    background-color: #c6fe92d4;
+    border: 1px solid #e9ffd3;
+}
+
+.btn-verde:hover{
+    background-color: #97d75bd4;
+    border: 1px solid #cafa9b2b;
+}
+
+/* ===========================
+   DESKTOP
+=========================== */
+
+.content{
+    margin-top: 80px;
+    margin-left: 270px;
+    padding: 30px;
+    width: calc(100% - 270px);
+}
+
+/* ===========================
+   NOTEBOOKS
+=========================== */
+
+@media (max-width:1200px){
+
+    .content{
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding:25px;
+    }
+
+}
+
+/* ===========================
+   TABLETS
+=========================== */
+
+@media (max-width:991px){
+
+    .content{
+        margin-left:0;
+        width:100%;
+        padding:20px;
+        margin-top:80px;
+    }
+
+    .form-container{
+        padding:25px;
+    }
+
+}
+
+/* ===========================
+   CELULARES
+=========================== */
+
+@media (max-width:576px){
+
+    .content{
+        padding:15px;
+    }
+
+    .form-container{
+        padding:18px;
+        border-radius:10px;
+    }
+
+    h2{
+        font-size:1.5rem;
+    }
+
+    h4{
+        font-size:1.1rem;
+    }
+
+    .btn{
+        width:100%;
+        padding:12px;
+    }
+
+    .row > div{
+        margin-bottom:15px;
+    }
+
+    .grupo-alternativa{
+        flex-wrap:nowrap;
+    }
+
+    .grupo-alternativa .input-group-text{
+        padding:8px;
+    }
+
+    .grupo-alternativa .form-control{
+        font-size:14px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .btn-verde{
+        width:100%;
+    }
+
 }

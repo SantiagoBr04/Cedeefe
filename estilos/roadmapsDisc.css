@@ -1,134 +1,125 @@
-/* ===== HEADER ===== */
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
 .header {
-    margin: 80px 240px 80px 300px;
+    margin: 80px 240px 50px 300px;
     padding: 20px;
+
     border-radius: 15px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    gap: 20px;
+
     background: linear-gradient(to right, #FFD8DF, #ff91a5db);
+
+    transition: all 0.3s ease;
 }
 
 .header h1 {
     font-size: 20px;
-    margin: 0 0 0 20px;
+
+    margin: 0 0 5px 20px;
 }
 
 .header h2 {
     font-size: 15px;
+
     margin: 0 0 0 20px;
 }
 
-.icone svg {
-    width: 75px;
-    height: 75px;
+.icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.icone2 {
+    font-size: 75px;
     color: #ff849a;
+
     transform: rotate(20deg);
+
     margin-right: 20px;
 }
 
 
-/* ===== CARDS DE DISCIPLINA ===== */
-.acessoMateria {
-    margin: 0 240px 200px 300px;
+/* =========================
+   TIMELINE
+========================= */
 
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-
-    justify-items: center;
-}
-
-.linkPagina {
-    text-decoration: none;
-    color: inherit;
-}
-
-.disciplina {
-    width: 200px;
-    border-radius: 15px;
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-
-    background: #FFD8DF;
-    transition: 0.3s;
-}
-
-/* hover (melhora UX) */
-.disciplina:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* área do ícone */
-.icone-container {
-    height: 150px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ícone */
-.icone2 {
-    font-size: 95px;
-    color: #ff849a;
-}
-
-/* faixa verde */
-.nome-disciplina {
-    background: #cef6b0;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.nome-disciplina h1 {
-    font-size: 18px;
-    margin: 0;
-}
-
-
-/* ===== TIMELINE ===== */
 .timeline {
     position: relative;
-    margin-left: 100px;
+
+    margin: 0 240px 80px 300px;
+
+    transition: all 0.3s ease;
 }
 
-/* linha vertical */
+
+/* LINHA VERTICAL */
+
 .timeline::before {
     content: "";
+
     position: absolute;
-    left: 60px;
+
+    left: 20px;
     top: 20px;
-    height: calc(100% - 40px);
+    bottom: 20px;
+
     width: 10px;
 
     background: #FFDFE5;
+
     border-radius: 10px;
-    margin-left:200px;
 }
 
-/* módulo */
+
+/* =========================
+   MÓDULO
+========================= */
+
 .modulo {
     position: relative;
+
     margin-bottom: 50px;
-    margin: 80px 240px 80px 300px;
+
+    padding-left: 70px;
 }
 
-/* bolinha */
+
+/* =========================
+   NÚMERO
+========================= */
+
 .numero {
     position: absolute;
-    margin-left:-55px;
+
+    left: 0;
     top: 20px;
 
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 
     border-radius: 50%;
+
     background: #FFAEBD;
 
     display: flex;
@@ -136,27 +127,296 @@
     justify-content: center;
 
     font-weight: bold;
+    font-size: 18px;
+
+    z-index: 2;
+
+    border: 4px solid #f9f9f9;
 }
 
-/* conteúdo */
+
+/* =========================
+   CONTEÚDO DO MÓDULO
+========================= */
+
 .conteudo {
-    margin-left: 40px;
-    margin-right: 40px;
+    width: 100%;
+
     padding: 20px;
+
     border-radius: 15px;
 
     background: #FFDFE5;
-    border: solid 2px #ffc8d2;
+
+    border: 2px solid #ffc8d2;
+
+    transition: all 0.2s ease-in-out;
 }
+
+.conteudo:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* TÍTULO */
 
 .conteudo h3 {
     display: inline-block;
+
     padding: 5px 15px;
+
+    margin: 0 0 10px 0;
+
     border-radius: 10px;
 
     background: #f3b6bf;
+
+    font-size: 20px;
 }
 
+
+/* =========================
+   LISTA
+========================= */
+
 .conteudo ul {
-    margin-top: 10px;
+    margin: 10px 0 0 0;
+
+    padding-left: 5px;
+
+    list-style: none;
 }
+
+.conteudo label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    cursor: pointer;
+
+    line-height: 1.4;
+}
+
+.conteudo input[type="checkbox"] {
+    margin-right: 8px;
+
+    cursor: pointer;
+
+    accent-color: #ff849a;
+}
+
+
+/* =========================
+   NOTEBOOK
+========================= */
+
+@media (max-width: 1200px) {
+
+    .header {
+        margin-left: 90px;
+        margin-right: 40px;
+    }
+
+    .timeline {
+        margin-left: 90px;
+        margin-right: 40px;
+    }
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 991px) {
+
+    .header {
+        margin: 70px 20px 40px 20px;
+
+        padding: 20px;
+
+        align-items: center;
+    }
+
+    .header h1,
+    .header h2 {
+        margin-left: 0;
+    }
+
+    .timeline {
+        margin: 0 20px 60px 20px;
+    }
+
+    .modulo {
+        padding-left: 65px;
+        margin-bottom: 35px;
+    }
+
+    .timeline::before {
+        left: 20px;
+    }
+
+    .numero {
+        left: 0;
+    }
+
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 576px) {
+
+    .header {
+        margin: 65px 15px 30px 15px;
+
+        padding: 18px;
+
+        flex-direction: row;
+
+        align-items: center;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .header h2 {
+        font-size: 13px;
+
+        line-height: 1.4;
+    }
+
+    .icone2 {
+        font-size: 55px;
+
+        margin-right: 5px;
+    }
+
+
+    /* TIMELINE */
+
+    .timeline {
+        margin: 0 15px 50px 15px;
+    }
+
+    .timeline::before {
+        left: 18px;
+
+        width: 7px;
+    }
+
+
+    /* MÓDULOS */
+
+    .modulo {
+        padding-left: 55px;
+
+        margin-bottom: 25px;
+    }
+
+
+    /* NÚMERO */
+
+    .numero {
+        width: 40px;
+        height: 40px;
+
+        top: 15px;
+
+        font-size: 15px;
+
+        border-width: 3px;
+    }
+
+
+    /* CONTEÚDO */
+
+    .conteudo {
+        padding: 15px;
+
+        border-radius: 12px;
+    }
+
+    .conteudo h3 {
+        font-size: 17px;
+
+        padding: 5px 10px;
+    }
+
+    .conteudo ul {
+        padding: 0;
+    }
+
+    .conteudo label {
+        font-size: 14px;
+
+        margin-bottom: 10px;
+    }
+
+}
+
+
+/* =========================
+   CELULAR PEQUENO
+========================= */
+
+@media (max-width: 400px) {
+
+    .header {
+        padding: 15px;
+
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .header h1 {
+        font-size: 17px;
+    }
+
+    .header h2 {
+        font-size: 12px;
+    }
+
+    .icone2 {
+        font-size: 45px;
+    }
+
+    .timeline {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .modulo {
+        padding-left: 48px;
+    }
+
+    .numero {
+        width: 36px;
+        height: 36px;
+
+        font-size: 14px;
+    }
+
+    .timeline::before {
+        left: 15px;
+        width: 6px;
+    }
+
+    .conteudo {
+        padding: 12px;
+    }
+
+    .conteudo h3 {
+        font-size: 16px;
+    }
+
+    .conteudo label {
+        font-size: 13px;
+    }
+
+}
+

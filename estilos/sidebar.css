@@ -240,3 +240,94 @@ margin-left: 10px;
     border: #FDFDFD; 
     top:0px;
 }
+
+
+/* ==========================
+   TABLETS E CELULARES
+========================== */
+
+@media (max-width: 991px) {
+
+    .sidebar{
+        top: 60px;
+        left: -270px;
+        width: 270px;
+        height: calc(100vh - 60px);
+        transition: left .3s ease;
+        z-index: 9999;
+    }
+
+    .sidebar.expandido{
+        left: 0;
+        width: 270px;
+    }
+
+    /* O texto sempre aparece no mobile */
+    .sidebar .txt-link{
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    /* Remove o efeito de sidebar estreita */
+    .sidebar .linkItens{
+        justify-content: flex-start;
+    }
+
+    /* Fundo escuro atrás da sidebar */
+    .overlay{
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background: rgba(0,0,0,.4);
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s;
+        z-index: 9998;
+    }
+
+    .overlay.ativo{
+        opacity: 1;
+        visibility: visible;
+    }
+
+}
+
+/* ==========================
+   CELULARES PEQUENOS
+========================== */
+
+@media (max-width: 576px){
+
+    .menu{
+        padding: 0 10px;
+    }
+
+    .logo_name{
+        font-size: 18px !important;
+    }
+
+    #btn-user{
+        font-size: 26px;
+    }
+
+    .sidebar{
+        width: 240px;
+        left: -240px;
+    }
+
+    .sidebar.expandido{
+        width: 240px;
+    }
+
+    .sidebar ul li .linkItens{
+        font-size: 15px;
+    }
+
+    .sidebar ul li .material-symbols-outlined{
+        font-size: 22px;
+    }
+
+}
+

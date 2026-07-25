@@ -23,23 +23,66 @@
  
     <!-- SIDEBARRRR -->
     <div id="sidebar-container"></div>
+<div class="content">
 
-    <div class="content">
+    <div class="topo-flashcards">
+
+      <div class="btnPassar">
+        <span class="material-symbols-outlined" id="antesQuest">chevron_left</span>
+      </div>
+
+        <div class="informacoes">
+            <h3>Geometria Analítica</h3>
+            <span>1/10</span>
+        </div>
+    
+      <div class="btnPassar">
+        <span class="material-symbols-outlined" id="proxQuest">chevron_right</span>
+      </div>
+
+    </div>
 
 
-    <div class="cartoes-wrapper">
-        <div class="flashcard-container">
+    <div class="flashcard-container">
 
-            <div class="flashcard-header">
-                
+        <div class="flashcard">
+
+            <!-- Pergunta do flashcard, virar para a resposta com um clique na carta ta-->
+
+            <div class="flashcard-pergunta">
+                <h5>Pergunta</h5>
+                <p>O que é Lorem Ipsum?</p>
             </div>
 
-            <div class="flashcard-feedback"></div>
+            <div class="flashcard-resposta">
+                <h5>Resposta</h5>
+                <p>Lorem Ipsum é simplesmente um texto fictício da indústria tipográfica e de impressão.</p>
+            </div>
+
         </div>
+
+        <div class="flashcard-feedback">
+
+            <button class="btn btn-rosa">
+                <i class="bi bi-x-circle"></i>
+                Difícil
+            </button>
+
+            <button class="btn btn-amarelo">
+                <i class="bi bi-dash-circle"></i>
+                Médio
+            </button>
+
+            <button class="btn btn-verde">
+                <i class="bi bi-check-circle"></i>
+                Fácil
+            </button>
+
         </div>
-    </div>
 
     </div>
+
+</div>
 
 <!-- Seu JS da sidebar -->
 <script src="../scripts/loadSidebar.js"></script>
