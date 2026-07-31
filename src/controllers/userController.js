@@ -2,16 +2,18 @@ import db from '../models/index.js'; // Importa o db do Sequelize
 import { Op } from 'sequelize'; // Importa operadores para comparações (necessário no update)
 import bcrypt from 'bcryptjs'; // Para criptografia  
 import jwt from 'jsonwebtoken'; // Para usar tokens
+import fs from 'fs/promises';
+import path from 'path';
 
 // Cria o objeto userContoller
 const userController = {
-  
+
   // Método para registrar um novo usuário
   register: async (req, res) => {
     try {
       // Pega os dados do corpo da requisição
       const { nomeCompleto, dataNascimento, genero, escola, motivacao, email, password, adm } = req.body;
-      
+
       const login = email;
       const senha = password;
       const motivo = motivacao;
@@ -23,8 +25,8 @@ const userController = {
       }
 
       // Verificar se o email já existe no banco
-      const existingUser = await db.Usuario.findOne({ where: { login: login } }); 
-      
+      const existingUser = await db.Usuario.findOne({ where: { login: login } });
+
       if (existingUser) { //Se ja existe, da erro
         return res.status(409).json({ error: 'Este e-mail já está em uso.' });
       }
@@ -41,20 +43,20 @@ const userController = {
       const hashedPassword = await bcrypt.hash(senha, salt); // Criptografa
 
       // Inserir o novo usuário no banco de dados
-      const newUser = await db.Usuario.create({ 
-          login, 
-          nome_completo: nomeCompleto,
-          senha: hashedPassword, 
-          adm: adm || false, 
-          data_nasc, 
-          motivo, 
-          escola, 
-          genero_cod 
+      const newUser = await db.Usuario.create({
+        login,
+        nome_completo: nomeCompleto,
+        senha: hashedPassword,
+        adm: adm || false,
+        data_nasc,
+        motivo,
+        escola,
+        genero_cod
       });
 
       // Inicializar as estatísticas do usuário (tudo zerado por padrão)
       await db.Usuario_estatisticas_gerais.create({
-          usuario_cod: newUser.cod
+        usuario_cod: newUser.cod
       });
 
       // Inicializa as estatísticas por área para todas as disciplinas atuais
@@ -72,8 +74,8 @@ const userController = {
       }
 
       // Enviar uma resposta de sucesso
-      res.status(201).json({ 
-        message: 'Usuário cadastrado com sucesso!', 
+      res.status(201).json({
+        message: 'Usuário cadastrado com sucesso!',
         userId: newUser.cod // Sequelize retorna o objeto criado com o ID
       });
 
@@ -96,10 +98,10 @@ const userController = {
 
       // Buscar o usuário pelo e-mail no banco
       const user = await db.Usuario.findOne({ where: { login: login } });
-      
+
       // Se não encontrar o usuário ou a senha está errada (não informar qual dos dois por segurança)
       if (!user) {
-        return res.status(401).json({ error: 'Credenciais inválidas.' }); 
+        return res.status(401).json({ error: 'Credenciais inválidas.' });
       }
 
       // Comparar a senha enviada com a senha criptografada no banco
@@ -135,19 +137,19 @@ const userController = {
     try {
       // Pega os dados do usuário autenticado
       const user = await db.Usuario.findByPk(req.userId, {
-          attributes: ['cod', 'login', 'nome_completo', 'data_nasc', 'motivo', 'escola', 'genero_cod'],
-          include: [{
-            model: db.Genero,
-            as: 'genero',
-            attributes: ['descricao']
-          }]
+        attributes: ['cod', 'login', 'nome_completo', 'data_nasc', 'motivo', 'escola', 'genero_cod', 'foto'],
+        include: [{
+          model: db.Genero,
+          as: 'genero',
+          attributes: ['descricao']
+        }]
       });
 
       // Compara se o cod existe (ele não pode ser igual a 0)
       if (!user) {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
-      
+
       // Normaliza a resposta para o frontend
       res.status(200).json({
         cod: user.cod,
@@ -156,7 +158,8 @@ const userController = {
         dataNascimento: user.data_nasc,
         motivacao: user.motivo,
         escola: user.escola,
-        genero: user.genero?.descricao || null
+        genero: user.genero?.descricao || null,
+        foto: user.foto || null,
       });
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
@@ -164,7 +167,7 @@ const userController = {
       res.status(500).json({ error: 'Erro interno no servidor.' });
     }
   },
-  
+
   // Método para atualizar um perfil
   updateProfile: async (req, res) => {
     try {
@@ -184,10 +187,10 @@ const userController = {
         // Verifica se o novo 'login' (email) já está sendo usado por outro usuário
         // Sequelize: Usa Op.ne (Not Equal) para verificar se ID é diferente
         const existingUser = await db.Usuario.findOne({
-            where: {
-                login: login,
-                cod: { [Op.ne]: userId } // login igual E cod diferente do meu
-            }
+          where: {
+            login: login,
+            cod: { [Op.ne]: userId } // login igual E cod diferente do meu
+          }
         });
 
         // Se o cod existir, vai ser maior que 1, portanto vai dar erro aqui
@@ -252,7 +255,7 @@ const userController = {
         await db.Usuario.update({ senha: hashedNewPassword }, { where: { cod: userId } });
 
       } else if (newPassword && !oldPassword) {
-          return res.status(400).json({ error: 'Para definir uma nova senha, a senha antiga é obrigatória.'});
+        return res.status(400).json({ error: 'Para definir uma nova senha, a senha antiga é obrigatória.' });
       }
 
       // Envia a resposta de sucesso
@@ -266,7 +269,7 @@ const userController = {
 
   // Método para deletar um perfil
   deleteProfile: async (req, res) => {
-    try{
+    try {
       // Pega os userId e a senha
       const { userId } = req;
       const { senha } = req.body;
@@ -283,7 +286,7 @@ const userController = {
       if (!user) {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
-      
+
       // Analisa se a senha ta certa
       const isPasswordCorrect = await bcrypt.compare(senha, user.senha);
 
@@ -302,9 +305,47 @@ const userController = {
       console.error('Erro ao deletar perfil:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
     }
-    }
+  },
 
-  };
+  // Método para atualizar a foto de perfil do usuário
+  updatePhoto: async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'Nenhum arquivo de foto foi enviado.' });
+      }
+
+      const user = await db.Usuario.findByPk(req.userId);
+      if (!user) {
+        return res.status(404).json({ error: 'Usuário não encontrado.' });
+      }
+
+      // Se o usuário já tiver uma foto salva anteriormente, remove do sistema de arquivos
+      if (user.foto) {
+        try {
+          const oldFileName = path.basename(user.foto);
+          const oldFilePath = path.join(process.cwd(), 'uploads', oldFileName);
+          await fs.unlink(oldFilePath);
+        } catch (unlinkError) {
+          console.error('Erro ao deletar foto de perfil antiga:', unlinkError);
+        }
+      }
+
+      const caminhoRelativo = `/imagens/${req.file.filename}`;
+      user.foto = caminhoRelativo;
+      await user.save();
+
+      res.status(200).json({
+        message: 'Foto de perfil atualizada com sucesso!',
+        foto: caminhoRelativo
+      });
+
+    } catch (error) {
+      console.error('Erro ao atualizar foto de perfil:', error);
+      res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  }
+
+};
 
 // Export default para exportar o valor principal do arquivo.
 export default userController;

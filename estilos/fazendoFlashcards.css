@@ -1,153 +1,235 @@
 body {
     background-color: #f9f9f9;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 /* CONTEÚDO */
-.content{
-    transition:.3s;
-
-    margin:80px auto 40px;
-    margin-left:290px;
-
-    max-width:900px;
-    padding:20px;
+.content {
+    transition: .3s;
+    margin: 80px auto 40px;
+    margin-left: 290px;
+    max-width: 900px;
+    padding: 20px;
 }
 
-.topo-flashcards{
-    display:grid;
-    grid-template-columns:60px 1fr 60px;
-    align-items:center;
-    margin-bottom:30px;
+.topo-flashcards {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
 .informacoes {
     text-align: center;
 }
 
+.informacoes h3 {
+    margin: 0;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.informacoes span {
+    font-size: 0.9rem;
+    color: #777;
+    font-weight: 500;
+}
+
+/* CARTA DE ESTUDO */
 .flashcard {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.027);
-    padding: 20px;
-    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 40px 30px;
+    margin-bottom: 25px;
     text-align: center;
     cursor: pointer;
-    min-height:350px;
-    padding:30px;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.flashcard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    border-color: #80C242;
 }
 
 .flashcard h5 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
-.flashcard-feedback{
-    display:flex;
-    gap:15px;
-    justify-content:center;
+.flashcard p {
+    font-size: 1.25rem;
+    color: #2c3e50;
+    line-height: 1.6;
+    margin: 0;
 }
 
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-right: 5px;
+.dica-virar {
+    position: absolute;
+    bottom: 15px;
+    font-size: 0.8rem;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.flashcard-feedback .btn{
-    flex:1;
-    max-width:220px;
+/* BOTÕES DE FEEDBACK */
+.flashcard-feedback {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
 }
 
-
-.btn-rosa{
-    border: 1px solid #ffcad4;
-    background-color: #ffcad4;
+.flashcard-feedback .btn {
+    flex: 1;
+    max-width: 180px;
+    padding: 12px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
 }
 
-.btn-rosa:hover{
-    background-color: #ff9cae;
-    border: 1px solid #ffb8c5;
+.btn-errei {
+    background-color: #fce8f0;
+    color: #c23672;
+    border: 1px solid #f8c0d5;
 }
 
-.btn-verde{
-    background-color: #c6fe92d4;
-    border: 1px solid #e9ffd3;
+.btn-errei:hover {
+    background-color: #c23672;
+    color: white;
 }
 
-.btn-verde:hover{
-    background-color: #97d75bd4;
-    border: 1px solid #cafa9b2b;
-}
-.btn-amarelo {
-    background-color: #ffe89c;
+.btn-dificil {
+    background-color: #fff3cd;
+    color: #856404;
     border: 1px solid #ffeeba;
 }
 
-.btn-amarelo:hover {
-    background-color: #ffd766;
-    border: 1px solid #ffe4a0;
+.btn-dificil:hover {
+    background-color: #e09b12;
+    color: white;
 }
 
-.btnPassar{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    width:45px;
-    height:45px;
-
-    border-radius:50%;
-    transition:.2s;
+.btn-medio {
+    background-color: #e6f7ff;
+    color: #006699;
+    border: 1px solid #b3e5ff;
 }
 
-.btnPassar:hover{
-    background:#ececec;
+.btn-medio:hover {
+    background-color: #0077b6;
+    color: white;
 }
 
-@media (max-width:991px){
-
-    .content{
-        margin-left:0;
-        margin-right:0;
-        max-width:700px;
-    }
-
+.btn-facil {
+    background-color: #eef7e5;
+    color: #538d24;
+    border: 1px solid #c8e6af;
 }
 
-@media (max-width:576px){
+.btn-facil:hover {
+    background-color: #80C242;
+    color: white;
+}
 
-    .content{
-        padding:15px;
+.btnPassar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.btnPassar:hover {
+    background: #80C242;
+    color: white;
+    border-color: #80C242;
+}
+
+/* COMPARAÇÃO DE PALAVRAS COLORIDAS */
+.word-badge {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.word-badge.exact-green {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.word-badge.similar-yellow {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.word-badge.wrong-red {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        padding: 15px;
     }
 
-    .flashcard{
-        min-height:280px;
-        padding:20px;
+    .flashcard {
+        min-height: 260px;
+        padding: 25px 15px;
     }
 
-    .flashcard-feedback{
-        flex-direction:column;
+    .flashcard-feedback {
+        flex-direction: column;
     }
 
-    .flashcard-feedback .btn{
-        max-width:100%;
-        width:100%;
+    .flashcard-feedback .btn {
+        max-width: 100%;
+        width: 100%;
     }
 
-    .topo-flashcards{
-        grid-template-columns:45px 1fr 45px;
+    .topo-flashcards {
+        grid-template-columns: 45px 1fr 45px;
     }
 
-    .informacoes h3{
-        font-size:1.3rem;
+    .informacoes h3 {
+        font-size: 1.2rem;
     }
-
 }

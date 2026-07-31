@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
-     <!-- Responsividade em dispositivos móveis -->
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe</title> <!-- Título da aba do navegador -->
+    <title>Ver Flashcards - Cedeefe</title>
 
     <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-    <!-- Ícones Material Symbols (Google) -->
+    <!-- Ícones Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-
-    <!-- Bootstrap -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- CSS externo -->
@@ -21,69 +18,74 @@
 </head>
 <body>
  
-    <!-- SIDEBARRRR -->
     <div id="sidebar-container"></div>
 
     <div class="content">
-
         <div class="editor-container">
-        <!-- HEADER -->
-        <div class="header">
-            <h1 class="header-title">Pitágoras</h1>
+            <!-- HEADER -->
+            <div class="header">
+                <div>
+                    <a href="verBaralhos.html" class="text-decoration-none text-muted small d-block mb-1">
+                        <i class="bi bi-arrow-left"></i> Voltar para Meus Flashcards
+                    </a>
+                    <h1 class="header-title" id="tituloBaralho">Carregando...</h1>
+                </div>
 
-            <div class="header-actions">
-                <button type="button" class="btn btn-outline-secondary">
-                    <i class="bi bi-plus"></i> Adicionar/editar cartões
-                </button>
-            
-                <button type="button" class="btn btn-outline-secondary verde">
-                    <i class="bi bi-play-fill"></i> Iniciar revisão
-                </button>
-            </div>
-        </div>
-
-        <!-- FLASHCARDS -->
-
-        <div class="cartoes-wrapper">
-        <div class="flashcard-container">
-
-            <div class="flashcard-header">
-                <h4>Lorem ipsum?</h4>
+                <div class="header-actions">
+                    <button type="button" class="btn btn-rosa" id="btnAdicionarCartao">
+                        <i class="bi bi-plus-lg"></i> Adicionar cartões
+                    </button>
+                
+                    <button type="button" class="btn btn-verde" id="btnIniciarRevisao">
+                        <i class="bi bi-play-fill"></i> Iniciar revisão
+                    </button>
+                </div>
             </div>
 
-            <div class="flashcard-body">
-                <p class="resposta-flashcard">Lorem ipsum</p>
-
+            <!-- LISTA DE FLASHCARDS -->
+            <div class="cartoes-wrapper" id="cartoesContainer">
+                <!-- Injetado dinamicamente via JS -->
             </div>
-        </div>
-
-                <div class="flashcard-container">
-
-            <div class="flashcard-header">
-                <h4>Lorem ipsum?</h4>
-            </div>
-
-            <div class="flashcard-body">
-                <p class="resposta-flashcard">Lorem ipsum</p>
-
-            </div>
-        </div>
-
-
-
-        </div>
         </div>
     </div>
 
-    <button class="fab-button" onclick="adicionarCard()">
-    <i class="bi bi-plus"></i>
-    </button>
+    <!-- MODAL: EDITAR CARTÃO -->
+    <div class="modal fade" id="modalEditarCartao" tabindex="-1" aria-labelledby="modalEditarCartaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarCartaoLabel">Editar Cartão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editCartaoId">
+                    <div class="mb-3">
+                        <label for="editFrenteInput" class="form-label fw-bold">Frente (Pergunta)</label>
+                        <textarea class="form-control" id="editFrenteInput" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editVersoInput" class="form-label fw-bold">Verso (Resposta)</label>
+                        <textarea class="form-control" id="editVersoInput" rows="3" required></textarea>
+                    </div>
+                    <div id="erroEditarCartao" class="text-danger mt-2" style="display: none;"></div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-danger" id="btnExcluirCartaoModal">
+                        <i class="bi bi-trash"></i> Excluir Cartão
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-verde" id="btnSalvarEdicaoCartao">Salvar Alterações</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- Seu JS da sidebar -->
-<script src="../scripts/loadSidebar.js"></script>
-<script src="../scripts/sidebar.js"></script>
-
-<!-- Bootstrap JS -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/verFlashcards.js"></script>
 </body>
 </html>

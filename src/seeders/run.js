@@ -31,7 +31,7 @@ async function runSeeders() {
             throw new Error("Disciplina de Matemática não encontrada. Abortando seeder de questões.");
         }
 
-        console.log("Inserindo 5 questões de Matemática com suas respectivas alternativas...");
+        console.log("Inserindo questões de Matemática com suas respectivas alternativas...");
         const questoesSeed = [
             {
                 descricao: "Se João tem 5 maçãs e come 2, com quantas maçãs João fica?",
@@ -97,6 +97,58 @@ async function runSeeders() {
                     { texto: "360°", correta: false },
                     { texto: "180°", correta: true },
                     { texto: "270°", correta: false }
+                ]
+            },
+            {
+                descricao: "Qual é a área de um quadrado cujo lado mede 6 cm?",
+                autor: "seeder do sistema 2",
+                ano: 2024,
+                explicacao: "A área de um quadrado é lado ao quadrado (L²). 6² = 36 cm².",
+                disciplina_cod: matematica.cod,
+                alternativas: [
+                    { texto: "12 cm²", correta: false },
+                    { texto: "36 cm²", correta: true },
+                    { texto: "24 cm²", correta: false },
+                    { texto: "18 cm²", correta: false }
+                ]
+            },
+            {
+                descricao: "Qual o valor da expressão: 2 + 3 × 4?",
+                autor: "seeder do sistema 2",
+                ano: 2024,
+                explicacao: "Pela ordem das operações, multiplica-se antes de somar. 3 × 4 = 12. Então, 2 + 12 = 14.",
+                disciplina_cod: matematica.cod,
+                alternativas: [
+                    { texto: "20", correta: false },
+                    { texto: "14", correta: true },
+                    { texto: "12", correta: false },
+                    { texto: "24", correta: false }
+                ]
+            },
+            {
+                descricao: "Quanto é 25% de 200?",
+                autor: "seeder do sistema 2",
+                ano: 2024,
+                explicacao: "25% é equivalente a 1/4. Dividindo 200 por 4, temos 50.",
+                disciplina_cod: matematica.cod,
+                alternativas: [
+                    { texto: "25", correta: false },
+                    { texto: "40", correta: false },
+                    { texto: "50", correta: true },
+                    { texto: "100", correta: false }
+                ]
+            },
+            {
+                descricao: "Se a velocidade de um carro é 80 km/h, qual a distância percorrida em 3 horas?",
+                autor: "seeder do sistema 2",
+                ano: 2024,
+                explicacao: "Distância = Velocidade × Tempo. 80 × 3 = 240 km.",
+                disciplina_cod: matematica.cod,
+                alternativas: [
+                    { texto: "160 km", correta: false },
+                    { texto: "240 km", correta: true },
+                    { texto: "320 km", correta: false },
+                    { texto: "200 km", correta: false }
                 ]
             }
         ];

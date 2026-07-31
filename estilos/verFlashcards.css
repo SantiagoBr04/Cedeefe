@@ -1,6 +1,6 @@
 body {
     background-color: #f9f9f9;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 /* ===========================
@@ -37,6 +37,8 @@ body {
 
 .header-title {
     margin: 0;
+    font-weight: 600;
+    color: #333;
 }
 
 .header-actions {
@@ -46,18 +48,34 @@ body {
 }
 
 /* ===========================
-   BOTÕES
+   BOTÕES CUSTOMIZADOS
 =========================== */
 
-.verde:hover {
-    background-color: #afed74d4;
-    border-color: #cafa9b2b;
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-verde {
+    background-color: #80C242;
+    color: white;
+    border: none;
+}
+
+.btn-verde:hover {
+    background-color: #69a730;
     color: white;
 }
 
-.rosa:hover {
-    background-color: #ff9cae;
-    border-color: #ffb8c5;
+.btn-rosa {
+    background-color: #c23672;
+    color: white;
+    border: none;
+}
+
+.btn-rosa:hover {
+    background-color: #a0285b;
     color: white;
 }
 
@@ -67,7 +85,7 @@ body {
 
 .cartoes-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 450px));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     justify-content: center;
     gap: 20px;
 }
@@ -78,95 +96,111 @@ body {
 
 .flashcard-container {
     width: 100%;
-    min-height: 220px;
+    min-height: 180px;
 
     background: #fff;
-    border: 1px solid #95959591;
+    border: 1px solid #e0e0e0;
     border-radius: 15px;
 
     padding: 20px;
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
-    transition: .2s ease-in-out;
+    cursor: pointer;
+    position: relative;
+
+    transition: all .25s ease-in-out;
 }
 
+/* HOVER COM DESTAQUE CLICÁVEL */
 .flashcard-container:hover {
-    border-color: #7a7a7a;
-    box-shadow: 0 3px 10px rgba(0,0,0,.06);
+    transform: translateY(-4px);
+    border-color: #c23672;
+    box-shadow: 0 8px 20px rgba(194, 54, 114, 0.12);
 }
-
-/* ===========================
-   CABEÇALHO DO CARD
-=========================== */
 
 .flashcard-header {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .flashcard-header h4 {
     margin: 0;
-    font-size: 1.15rem;
-    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
 }
 
-/* ===========================
-   CORPO
-=========================== */
+.edit-hint {
+    font-size: 0.8rem;
+    color: #c23672;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.flashcard-container:hover .edit-hint {
+    opacity: 1;
+}
+
+/* CORPO */
 
 .flashcard-body {
     flex: 1;
-
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    margin-top: 8px;
+}
 
-    text-align: center;
+.resposta-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .resposta-flashcard {
     margin: 0;
     color: #555;
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
-/* ===========================
-   BOTÃO FLUTUANTE
-=========================== */
-
-.fab-button {
-    position: fixed;
-
-    bottom: 25px;
-    right: 25px;
-
-    width: 60px;
-    height: 60px;
-
-    border: none;
-    border-radius: 50%;
-
-    background-color: #afed74d4;
-    color: white;
-
+/* FOOTER / TEMPO DE REVISÃO */
+.flashcard-footer-info {
+    margin-top: 12px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-
-    font-size: 28px;
-
-    cursor: pointer;
-
-    box-shadow: 0 6px 15px rgba(0,0,0,.2);
-
-    transition: .2s;
+    font-size: 0.85rem;
 }
 
-.fab-button:hover {
-    transform: scale(1.08);
-    background-color: #97d75bd4;
+.badge-revisar {
+    background-color: #eef7e5;
+    color: #538d24;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-revisar.pendente {
+    background-color: #fce8f0;
+    color: #c23672;
+}
+
+.badge-revisar.futuro {
+    background-color: #e6f7ff;
+    color: #006699;
 }
 
 /* ===========================
@@ -174,12 +208,10 @@ body {
 =========================== */
 
 @media (max-width:1200px){
-
     .content{
         margin-left:90px;
         margin-right:20px;
     }
-
 }
 
 /* ===========================
@@ -187,7 +219,6 @@ body {
 =========================== */
 
 @media (max-width:991px){
-
     .content{
         margin-left:0;
         margin-right:0;
@@ -206,11 +237,6 @@ body {
     .cartoes-wrapper{
         grid-template-columns:1fr;
     }
-
-    .flashcard-container{
-        max-width:100%;
-    }
-
 }
 
 /* ===========================
@@ -218,13 +244,12 @@ body {
 =========================== */
 
 @media (max-width:576px){
-
     .content{
         padding:15px;
     }
 
     .header-title{
-        font-size:1.8rem;
+        font-size:1.6rem;
     }
 
     .header-actions{
@@ -236,26 +261,4 @@ body {
     .header-actions .btn{
         width:100%;
     }
-
-    .flashcard-container{
-        min-height:180px;
-        padding:15px;
-    }
-
-    .flashcard-header h4{
-        font-size:1rem;
-    }
-
-    .resposta-flashcard{
-        font-size:.95rem;
-    }
-
-    .fab-button{
-        width:55px;
-        height:55px;
-        right:15px;
-        bottom:15px;
-        font-size:24px;
-    }
-
-}
+}

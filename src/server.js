@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Importa as rotas que existem
-import userRoutes from './routes/userRoutes.js'; 
+import userRoutes from './routes/userRoutes.js';
 import listaRoutes from './routes/listaRoutes.js';
 import questaoRoutes from './routes/questaoRoutes.js';
 import disciplinaRoutes from './routes/disciplinaRoutes.js';
@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json()); // Para o express entender requisições com corpo em JSON
 
 // Diz ao Express para usar a rota certa para qualquer endereço que comece com /api/nome da rota
-app.use('/api/users', userRoutes); 
+app.use('/api/users', userRoutes);
 app.use('/api/listas', listaRoutes);
 app.use('/api/questoes', questaoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
@@ -44,10 +44,10 @@ app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
 // Porém, ali só vem valor quando se hospeda o server)
 const PORT = process.env.PORT || 3000;
 
-const RECONSTRUIR_BANCO = true;
+const RECONSTRUIR_BANCO = false;
 
-db.sequelize.sync({force: RECONSTRUIR_BANCO})
-  .then(async() => {
+db.sequelize.sync({ force: RECONSTRUIR_BANCO })
+  .then(async () => {
     console.log("Banco de dados conectado e sincronizado com sucesso!");
 
     // Só liga o server se o banco de dados estiver sincronizado corretamente
