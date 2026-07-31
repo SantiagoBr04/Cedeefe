@@ -1,63 +1,180 @@
-/*ESTILOS BASICOS*/
+/* =========================
+   CONTAINER
+========================= */
+
 .container {
-  width: 1650px;
-  height: 1020px;
-  display: flex;
-  position: relative;
-  margin-left: 210px;
+    margin: 90px 40px 40px 300px;
+    padding: 20px;
+
+    width: auto;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-/*RETANGULO DO FUNDO - POSICIONAMENTO ETC*/
+/* =========================
+   CARD VERDE
+========================= */
+
 .forma {
-  width: 1000px;
-  height: 500px;
-  flex-shrink: 0;
-  border-radius: 88px;
-  background: #e9ffd3;
-  margin-top: 120px;
-  margin-left: 105px;
-  display: flex;
-  gap: 45px;
-  padding: 30px;
+    width: 100%;
+    max-width: 1100px;
+
+    background: #E9FFD3;
+    border-radius: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+
+    padding: 50px;
 }
 
-/*ITENS DENTRO DA FORMA*/
-.imagem {
-  width: 450px;
-  height: 450px;
-  flex-shrink: 0;
-  aspect-ratio: 1/1;
-  margin-right: 15px;
+/* =========================
+   TEXTO
+========================= */
+
+.texto {
+    flex: 1;
 }
 
 .texto h2 {
-  font-size: 25px;
-  margin-left: 20px;
-  margin-top: 75px;
-  text-align: left;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
 .texto p {
-  margin-top: 20px;
-  margin-left: 25px;
-  text-align: justify;
+    font-size: 1rem;
+    line-height: 1.7;
+    text-align: justify;
 }
 
-/* BOTÃO HYPERLINK */
+/* =========================
+   IMAGEM
+========================= */
+
+.imagem {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
 .botao {
-  background-color: #ffcad4;
-  border-radius: 75px;
-  width: 125px;
-  height: 35px;
-  border: none;
-  font-size: 16px;
-  display: block;
-  margin: 0px auto auto 20px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+    margin-top: 30px;
+    background: #FFCAD4;
+    border: none;
+    border-radius: 50px;
+
+    width: 140px;
+    height: 42px;
+
+    cursor: pointer;
+    transition: .2s;
 }
 
 .botao:hover {
-  background-color: #ffb8c5;
-  transition: all 0.2s ease-in-out;
+    background: #FFB8C5;
 }
+
+/* =========================
+   NOTEBOOKS
+========================= */
+
+@media (max-width: 1200px) {
+
+    .container {
+        padding-left: 90px;
+        padding-right: 30px;
+    }
+
+    .forma {
+        gap: 30px;
+        padding: 40px;
+    }
+
+    .imagem {
+        max-width: 340px;
+    }
+
+}
+
+/* =========================
+   TABLETS
+========================= */
+
+@media (max-width: 992px) {
+
+       .container {
+        margin: 90px 20px 20px 90px;
+    }
+
+    .forma {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 40px 30px;
+    }
+
+    .texto h2 {
+        font-size: 1.8rem;
+    }
+
+    .texto p {
+        text-align: center;
+    }
+
+    .botao {
+        margin: 30px auto 0;
+    }
+
+    .imagem {
+        max-width: 300px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 90px 15px 15px 15px;
+    }
+}
+
+/* =========================
+   CELULARES
+========================= */
+
+@media (max-width: 576px) {
+
+    .container {
+        padding: 100px 15px 20px;
+    }
+
+    .forma {
+        border-radius: 30px;
+        padding: 25px;
+    }
+
+    .texto h2 {
+        font-size: 1.5rem;
+    }
+
+    .texto p {
+        font-size: .95rem;
+    }
+
+    .imagem {
+        max-width: 220px;
+    }
+
+    .botao {
+        width: 100%;
+        max-width: 220px;
+    }
+
+}
+
+

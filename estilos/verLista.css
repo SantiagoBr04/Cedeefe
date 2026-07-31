@@ -1,85 +1,163 @@
-*body {
+body {
     background-color: #f9f9f9;
     font-family: 'Poppins', sans-serif !important;
+    overflow-x: hidden;
 }
 
-.content{
-    margin-left:300px;
-    margin-right:240px;
-    margin-top: 80px;
-    margin-bottom: 80px;
+/* ==========================
+   CONTEÚDO
+========================== */
+
+.content {
+    margin: 80px 240px 80px 300px;
     padding: 20px;
-    align-items: center;
-    justify-content: space-between;
 }
 
-.header{
+/* ==========================
+   CABEÇALHO
+========================== */
+
+.header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
 }
 
-/*.btn-rosa{
-    border: 1px solid #ffcad4;;
-    color: #7c3aed;
+.header h1 {
+    margin: 0;
 }
-.btn-verde{
-    background-color: #e9ffd3;
-    border: 1px solid #e9ffd3;
-    color: white;
-}*/
 
-.rosa:hover{
+/* ==========================
+   BOTÕES
+========================== */
+
+.rosa:hover {
     background-color: #ff9cae;
-    border: 1px solid #ffb8c5;
+    border-color: #ffb8c5;
     color: white;
 }
 
-
-
-.verde:hover{
+.verde:hover {
     background-color: #afed74d4;
-    border: 1px solid #cafa9b2b;
+    border-color: #afed74d4;
     color: white;
 }
 
+/* ==========================
+   TABELA
+========================== */
+
+.table {
+    background: transparent;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
 
 .table th,
 .table td {
-    vertical-align: middle;
-    align-items: center;
     text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    background-color: #f9f9f9 !important;
 }
 
 .table td:last-child,
 .table th:last-child {
-    text-align: center;
+    width: 140px;
 }
 
-/* Indicadores de status - tags ovais */
+/* ==========================
+   STATUS
+========================== */
+
 .status-badge {
     display: inline-block;
-    padding: 0.25em 0.8em;
-    font-size: 0.85em;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    font-size: .85rem;
     font-weight: 500;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 50rem;
 }
 
 .status-em-andamento {
-    background-color: #fff3cd; /* Amarelo clarinho */
+    background: #fff3cd;
     color: #856404;
     border: 1px solid #ffeeba;
 }
 
 .status-finalizada {
-    background-color: #d4edda; /* Verde clarinho */
+    background: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
 }
 
+/* ==========================
+   NOTEBOOK
+========================== */
 
+@media (max-width:1200px){
+
+    .content{
+        margin-left:90px;
+        margin-right:40px;
+    }
+
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width:991px){
+
+    .content{
+        margin:90px 20px 40px;
+        padding:0;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header .btn{
+        width:100%;
+    }
+
+    .table-responsive{
+        border-radius:15px;
+    }
+
+}
+
+/* ==========================
+   CELULAR
+========================== */
+
+@media (max-width:576px){
+
+    .content{
+        margin:80px 15px 20px;
+    }
+
+    .header h1{
+        font-size:1.8rem;
+    }
+
+    .table{
+        font-size:.9rem;
+    }
+
+    .table th,
+    .table td{
+        padding:.75rem;
+    }
+
+    .status-badge{
+        font-size:.75rem;
+        padding:.3rem .6rem;
+    }
+
+}

@@ -1,91 +1,250 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Poppins:wght@300;400;500;600;700&display=swap");
 
-/* CONTEÚDO PRINCIPAL*/
-.content {
-  margin-right: 350px; 
-  padding: 20px;
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  height: 100vh; 
-  font-size: 16px;
+html,
+body{
+    height:100%;
+    overflow-x:hidden;
+    font-family:"Poppins",sans-serif;
 }
 
-/* FORMLÁRIO LOGIN */
-form {
-  background: #ffffff00;
-  border-radius: 15px;
-  padding: 30px;
-  width: 450px; 
-  margin-left: 220px;
-  margin-top: 20px;
+/* ==========================
+   CONTEÚDO
+========================== */
+
+.content{
+
+    position:relative;
+
+    margin-left:80px;
+    padding: 20px;
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
 }
 
-form .item {
-  margin-top: 10px;
-  text-align: left;
+/* ==========================
+   FORMULÁRIO
+========================== */
+
+.criarLista{
+
+    width:450px;
+    max-width:100%;
+
+    padding:20px;
+
+    z-index:2;
+
 }
 
-.titulo-form {
-  margin-bottom: 20px;
-  margin-left: 75px;
-  text-align: center;
-  font-family: Comfortaa;
-  font-size: 25px;
+.titulo-form{
+
+    margin-bottom:15px;
+
+    text-align:center;
+
+    font-family:"Comfortaa",sans-serif;
+
+    font-size:28px;
+
 }
 
-/* BOTÃO */
-.botao {
-  background-color: #ffcad4;
-  border-radius: 75px;
-  width: 125px;
-  height: 35px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 20px auto 0px 80px; 
-  display: inline-block;
-  transition: all 0.2s ease-in-out;
+.item{
+
+    margin-bottom:10px;
+
+    text-align:left;
+
 }
 
-.botao:hover {
-  background-color: #ffb8c5;
+#itensformulario{
+
+    width:100%;
+
 }
 
-/* INPUTS E SELECTS */
-/*Configuração de estilo das textareas*/
-input.nome, textarea.descricao, .nQuest, .conteudo {
-  width: 100%;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 2px solid #ffb8c584;
-  background-color: #ffb8c54d;
-  padding: 6px 10px;
+/* ==========================
+   INPUTS
+========================== */
+
+input.nome,
+textarea.descricao,
+.nQuest,
+.conteudo{
+
+    width:100%;
+
+    border:2px solid #ffb8c584;
+
+    background:#ffb8c54d;
+
+    border-radius:8px;
+
+    padding:8px 10px;
+
+    font-size:14px;
+
 }
 
-textarea.descricao {
-  resize: none;
-  height: 105px;
+textarea.descricao{
+
+    resize:none;
+
+    min-height:110px;
+
 }
 
-/* LAYOUT ROW*/
- #itensformulario {
-  width: 100%;
-  margin-left: 50px;
+/* ==========================
+   BOTÃO
+========================== */
+
+.botao{
+
+    display:block;
+
+    margin:30px auto 0;
+
+    width:125px;
+    height:38px;
+
+    border:none;
+
+    border-radius:75px;
+
+    background:#ffcad4;
+
+    transition:.2s;
+
 }
 
+.botao:hover{
 
-/* BLOB E GATINHO */
-.blob-verde {
-  position: absolute;
-  bottom: -70px;
-  right: -550px;
-  z-index: -1;
+    background:#ffb8c5;
+
 }
 
-.gatinho {
-  position: fixed;
-  top: 200px;
-  right: 100px;
-  width: 350px;
+/* ==========================
+   DECORAÇÃO
+========================== */
+
+.blob-verde{
+
+    position:absolute;
+
+    right:-260px;
+    bottom:-120px;
+
+    width:42vw;
+
+    max-width:700px;
+
+    z-index:-2;
+
+    pointer-events:none;
+
+}
+
+.gatinho{
+
+    position:absolute;
+
+    right:70px;
+    bottom:70px;
+
+    width:320px;
+
+    z-index:-1;
+
+    pointer-events:none;
+
+}
+
+/* ==========================
+   NOTEBOOK
+========================== */
+
+@media (max-width:1200px){
+
+    .content{
+        margin-left:70px;
+        padding:25px;
+    }
+
+    .blob-verde{
+        width:50vw;
+        right:-240px;
+    }
+
+    .gatinho{
+        width:260px;
+        right:30px;
+    }
+
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width:991px){  
+
+    .content{
+        margin-left:0;
+        padding:30px 20px;
+    }
+
+    .criarLista{
+        width:420px;
+    }
+
+    .blob-verde{
+        width:70vw;
+        right:-280px;
+        bottom:-120px;
+        opacity:.15;
+    }
+
+    .gatinho{
+        display:none;
+    }
+
+}
+
+/* ==========================
+   CELULAR
+========================== */
+
+@media (max-width:576px){
+
+    .content{
+        padding:20px 15px;
+    }
+
+    .criarLista{
+        width:100%;
+        padding:15px;
+    }
+
+    .titulo-form{
+        font-size:24px;
+    }
+
+    .botao{
+        width:100%;
+        height:42px;
+    }
+
+    .blob-verde{
+        width:110vw;
+        right:-250px;
+        bottom:-180px;
+        opacity:.08;
+    }
+
 }

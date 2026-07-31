@@ -20,116 +20,13 @@
 </head>
 <body>
 
-        <!-- Menu fixo superior -->
-    <div class="menu">
-        <!-- Logo + botão do menu -->
-        <div class="logo_content">
-            <!-- Botão que abre/fecha sidebar -->
-            <span class="material-symbols-outlined" id="btn-menu">menu</span>
+    
+     <!-- SIDEBARRRR -->
+    <div id="sidebar-container"></div>
 
-            <!-- Nome/logo do site -->
-            <div class="logo">
-                <div class="logo_name"><a href="index.html" class="logo_name">Cedeefe</a></div>
-            </div>
-        </div>
+    <!-- PRECISO AJUSTAR O DESING DAS PÁGINAS QUE POSSUEM DESENHOS #DEMONHEDO! -->
 
-        <!-- Ícone do usuário (lado direito do menu) -->
-        <a href="pages/login.html" id="btn-user-link">
-            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
-        </a>
-    </div>
-
-    <!-- Barra lateral -->
-    <div class="sidebar">
-       <ul class="nav_list">
-
-            <!-- Página inicial -->
-            <li class="item-menu">
-                <a class="linkItens" href="index.html">
-                    <span class="material-symbols-outlined">home</span>
-                    <span class="txt-link">Página inicial</span>
-                </a>
-            </li>
-
-            <!-- Dicas de Estudo -->
-            <li class="item-menu">
-                <a class="linkItens" href="#">
-                    <span class="material-symbols-outlined">school</span>
-                    <span class="txt-link">Dicas de Estudo</span>
-                </a>
-            </li>
-
-            <!-- Roadmap -->
-            <li class="item-menu">
-                <a class="linkItens" href="pages/roadmaps.html">
-                    <span class="material-symbols-outlined">timeline</span>
-                    <span class="txt-link">Roadmap</span>
-                </a>
-            </li>
-
-            <!-- Banco de Questões com dropdown -->
-            <li class="item-menu dropdown">
-                <a class="dropdown-toggle linkItens d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="material-symbols-outlined me">quiz</span>
-                    <span class="txt-link">Banco de Questões</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="pages/criarLista.html">Criar lista</a></li>
-                    <li><a class="dropdown-item" href="pages/verListas.html">Minhas listas</a></li>
-                    <li><a class="dropdown-item" href="pages/criarSimulado.html">Criar simulados</a></li>
-                    <li><a class="dropdown-item" href="pages/fazendoLista.html">Meus simulados</a></li>
-                </ul>
-            </li>
-
-            <hr>
-
-            <!-- Perfil do aluno -->
-            <li class="item-menu">
-                <a class="linkItens" href="pages/perfilUsuario.html">
-                    <span class="material-symbols-outlined">developer_mode_tv</span>
-                    <span class="txt-link">Perfil do Aluno</span>
-                </a>
-            </li>
-
-            <!-- Desempenho -->
-            <li class="item-menu">
-                <a class="linkItens" href="pages/desempenho.html">
-                    <span class="material-symbols-outlined">developer_mode_tv</span>
-                    <span class="txt-link">Desempenho</span>
-                </a>
-            </li>
-
-            <!-- Listar usuários -->
-            <li class="item-menu">
-                <a class="linkItens" href="pages/listarUsuarios.html">
-                    <span class="material-symbols-outlined">developer_mode_tv</span>
-                    <span class="txt-link">listar Usuários</span>
-                </a>
-            </li>
-
-            <!-- Listar listas -->
-            <li class="item-menu">
-                <a class="linkItens" href="pages/listarListas.html">
-                    <span class="material-symbols-outlined">developer_mode_tv</span>
-                    <span class="txt-link">listar Listas</span>
-                </a>
-            </li>
-
-            <!-- Criar conta -->
-            <li class="item-menu">
-                <a class="linkItens" href="pages/criarConta.html">
-                    <span class="material-symbols-outlined">developer_mode_tv</span>
-                    <span class="txt-link">Criar Conta</span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Essa página index vai ser provisória, pretendo mudar o layout e colocar um videozinho. 
-     Acho que faz sentido colocar uma mais simples para emular aquele sentimento de site funcionando e tudo mais -->
-
-     <div class="container">
+     <div class="container-fluid">
         <div class="forma">
             <div class="texto">
                     <h2>Domine Português e Matemática de um jeito fácil e organizado!</h2>
@@ -149,23 +46,10 @@
 
     <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/sidebar.js"></script>
-    <script>
-        // Inicializa funcionalidade manual da sidebar quando fixo
-        document.addEventListener("DOMContentLoaded", () => {
-            if (typeof iniciarSidebar === "function") {
-                iniciarSidebar();
-            }
 
-            // Verifica se o usuário está logado e altera o link do perfil
-            const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
-            if (token) {
-                const btnUserLink = document.getElementById("btn-user-link");
-                if (btnUserLink) {
-                    btnUserLink.href = "pages/perfilUsuario.html";
-                }
-            }
-        });
-    </script>
+     <!-- Seu JS da sidebar -->
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+
 </body>
 </html>

@@ -14,17 +14,18 @@ async function carregarListas() {
         });
 
         if (!response.ok) {
-            throw new Error('Falha ao obter listas');
-        }
+           throw new Error('Falha ao obter listas');
+       }
 
         const listas = await response.json();
         renderizarTabela(listas);
 
-    } catch (error) {
-        console.error('Erro ao carregar listas:', error);
+   } catch (error) {
+       console.error('Erro ao carregar listas:', error);
         alert('Ocorreu um erro ao carregar as suas listas.');
     }
 }
+
 
 // Renderiza a tabela HTML com os dados
 function renderizarTabela(listas) {
@@ -111,3 +112,36 @@ async function confirmarExclusao(id) {
         }
     }
 }
+
+
+
+// mock de listas para teste do front
+//document.addEventListener('DOMContentLoaded', () => {
+
+//    const listas = [
+//        {
+//            cod: 1,
+//            nome: "Lista de Matemática",
+//            data_criacao: "2026-07-20",
+//            quantidade_questoes: 25,
+//            status: "em_andamento"
+//        },
+//        {
+//            cod: 2,
+//            nome: "Revisão Português",
+//            data_criacao: "2026-07-15",
+//            quantidade_questoes: 40,
+//            status: "finalizada"
+//        },
+//        {
+//            cod: 3,
+//            nome: "Simulado IFC",
+//            data_criacao: "2026-07-10",
+//            quantidade_questoes: 30,
+//            status: "em_andamento"
+//        }
+//    ];
+
+//    renderizarTabela(listas);
+
+//});

@@ -26,157 +26,142 @@
 
 
 
-        <!-- blobs -->
-        <img src="../imagens/blobRosa.svg" alt="blob rosa" class="blob-rosa">
-        <img src="../imagens/livro.svg" alt="Livros" class="livro">
+        <!-- SIDEBARRRR -->
+<div id="sidebar-container"></div>
 
-        <div class="content">
+<div class="container-fluid">
 
-        <!-- Formulário -->
-        <div class="criarConta">
-            <form id="formCriarConta" class="login" action="" method="post">
+    <!-- blobs -->
+    <img src="../imagens/blobVerde.svg" alt="blob verde" class="blob-verde">
+    <img src="../imagens/blobRosa.svg" alt="blob rosa" class="blob-rosa">
 
-                <div id="etapa1">
+    <div class="criarConta">
+        <form id="formCriarConta" class="login" action="" method="post">
 
-                    <h2 class="titulo-form">Criar Conta</h2>
+            <!-- ETAPA 1 -->
+            <div id="etapa1">
 
-                    <!-- Nome -->
-                    <div class="mb-3">
-                        <label for="nomeCompleto" class="form-label">Nome completo</label>
-                        <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required>
-                    </div>
+                <h2 class="titulo-form">Criar Conta</h2>
 
-                    <!-- Data de nascimento -->
-                    <div class="mb-3">
-                        <label for="dataNascimento" class="form-label">Data de nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
-                    </div>
-
-                    <!-- Gênero -->
-                    <div class="mb-3">
-                        <label class="form-label d-block">Gênero</label>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="masc" value="Masculino">
-                            <label class="form-check-label" for="masc">
-                                Masculino
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="fem" value="Feminino">
-                            <label class="form-check-label" for="fem">
-                                Feminino
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="nb" value="Não-binário">
-                            <label class="form-check-label" for="nb">
-                                Não-binário
-                            </label>
-                        </div>
-                        
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="genero" id="nd" value="Prefiro não declarar">
-                            <label class="form-check-label" for="nd">
-                                Prefiro não declarar
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn botao" onclick="proximaPagina1()">
-                        Próximo
-                    </button>
-                    </div>
-
-
-
-                <div id="etapa2">
-
-                    <h2 class="titulo-form">Criar Conta</h2>
-
-                    <!-- Escola -->
-                    <div class="mb-3">
-                        <label for="escola" class="form-label">Escola</label>
-                        <input type="text" class="form-control" id="escola" name="escola">
-                    </div>
-
-                    <!-- Motivação -->
-                    <div class="mb-3">
-                        <label for="motivacao" class="form-label">
-                            Por que você está usando o Cedeefe?
-                        </label>
-
-                        <textarea 
-                            class="form-control" 
-                            id="motivacao" 
-                            name="motivacao" 
-                            rows="3"
-                            maxlength="180">
-                        </textarea>
-
-                        <div class="form-text">
-                            Máximo de 180 caracteres.
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn botao" onclick="voltarPagina1()">
-                        Voltar
-                    </button>
-
-                    <button type="button" class="btn botao" onclick="proximaPagina2()">
-                        Próximo
-                    </button>
-                </div>
-                
-
-                <div id="etapa3">
-                    <h2 class="titulo-form">Criar Conta</h2>
-
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-
-                        <div class="form-text">
-                            Nunca compartilharemos seu e-mail com ninguém.
-                        </div>
-                    </div>
-
-                    <!-- Senha -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-
-                    <!-- Checkbox -->
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="lembrarSenha" name="lembrarSenha">
-
-                        <label class="form-check-label" for="lembrarSenha">
-                            Lembrar-me
-                        </label>
-                    </div>
-
-                    <!-- Links -->
-                    <p class="recuperar">
-                        Já possui uma conta?
-                        <a href="login.html">Entrar</a>
-                    </p>
-
-                    <button type="button" class="btn botao" onclick="voltarPagina2()">
-                        Voltar
-                    </button>
-
-                    <button type="submit" class="btn botao">
-                        Criar conta
-                    </button>
+                <div class="mb-3">
+                    <label for="nomeCompleto" class="form-label">Nome completo</label>
+                    <input type="text" class="form-control" id="nomeCompleto" required>
                 </div>
 
-            </form>
-        </div>
+                <div class="mb-3">
+                    <label for="dataNascimento" class="form-label">Data de nascimento</label>
+                    <input type="date" class="form-control" id="dataNascimento" required>
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label d-block">Gênero</label>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="genero" id="masc">
+                        <label class="form-check-label" for="masc">Masculino</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="genero" id="fem">
+                        <label class="form-check-label" for="fem">Feminino</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="genero" id="nb">
+                        <label class="form-check-label" for="nb">Não-binário</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="genero" id="nd">
+                        <label class="form-check-label" for="nd">Prefiro não declarar</label>
+                    </div>
+
+                </div>
+
+                <button class="btn botao" type="button" onclick="proximaPagina1()">Próximo</button>
+
+            </div>
+
+            <!-- ETAPA 2 -->
+            <div id="etapa2">
+
+                <h2 class="titulo-form">Criar Conta</h2>
+
+                <div class="mb-3">
+                    <label class="form-label">Escola</label>
+                    <input type="text" class="form-control">
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Por que você está usando o Cedeefe?
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        rows="3"
+                        maxlength="180">
+                    </textarea>
+
+                    <div class="form-text">
+                        Máximo de 180 caracteres.
+                    </div>
+
+                </div>
+
+                <button class="btn botao" type="button" onclick="voltarPagina1()">Voltar</button>
+
+                <button class="btn botao" type="button" onclick="proximaPagina2()">Próximo</button>
+
+            </div>
+
+            <!-- ETAPA 3 -->
+            <div id="etapa3">
+
+                <h2 class="titulo-form">Criar Conta</h2>
+
+                <div class="mb-3">
+                    <label class="form-label">E-mail</label>
+                    <input class="form-control" type="email">
+
+                    <div class="form-text">
+                        Nunca compartilharemos seu e-mail com ninguém.
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input class="form-control" type="password">
+                </div>
+
+                <div class="mb-3 form-check">
+
+                    <input class="form-check-input" type="checkbox" id="lembrarSenha">
+
+                    <label class="form-check-label" for="lembrarSenha">
+                        Lembrar-me
+                    </label>
+
+                </div>
+
+                <p class="recuperar">
+                    Já possui uma conta?
+                    <a href="login.html">Entrar</a>
+                </p>
+
+                <button class="btn botao" type="button" onclick="voltarPagina2()">Voltar</button>
+
+                <button class="btn botao" type="submit">Criar conta</button>
+
+            </div>
+
+        </form>
     </div>
+
+</div>
 
 
 
