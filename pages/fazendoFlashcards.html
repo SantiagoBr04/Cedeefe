@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
-     <!-- Responsividade em dispositivos móveis -->
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe</title> <!-- Título da aba do navegador -->
+    <title>Estudando Flashcards - Cedeefe</title>
 
     <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-    <!-- Ícones Material Symbols (Google) -->
+    <!-- Ícones Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-
-    <!-- Bootstrap -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- CSS externo -->
@@ -21,74 +18,116 @@
 </head>
 <body>
  
-    <!-- SIDEBARRRR -->
     <div id="sidebar-container"></div>
-<div class="content">
 
-    <div class="topo-flashcards">
+    <div class="content">
 
-      <div class="btnPassar">
-        <span class="material-symbols-outlined" id="antesQuest">chevron_left</span>
-      </div>
+        <!-- NAVEGAÇÃO E TÍTULO -->
+        <div class="topo-flashcards">
+            <button class="btnPassar" id="antesQuest" title="Anterior">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
 
-        <div class="informacoes">
-            <h3>Geometria Analítica</h3>
-            <span>1/10</span>
+            <div class="informacoes">
+                <h3 id="nomeBaralhoEstudo">Carregando...</h3>
+                <span id="contadorProgresso">0/0</span>
+            </div>
+        
+            <button class="btnPassar" id="proxQuest" title="Próximo">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
         </div>
-    
-      <div class="btnPassar">
-        <span class="material-symbols-outlined" id="proxQuest">chevron_right</span>
-      </div>
+
+        <!-- CONTAINER DA CARTA E BOTÕES -->
+        <div class="flashcard-container" id="areaEstudo">
+
+            <!-- CARTA DE FLASHCARD (CLICÁVEL PARA VIRAR) -->
+            <div class="flashcard" id="cardEstudo" title="Clique no cartão para mostrar a resposta">
+                
+                <!-- PERGUNTA (FRENTE) -->
+                <div class="flashcard-pergunta" id="facePergunta">
+                    <h5>Pergunta</h5>
+                    <p id="textoPergunta">Carregando pergunta...</p>
+                    
+                    <!-- CAMPO DE RESPOSTA DIGITADA (TIPO ESCRITA) -->
+                    <div id="areaEscritaInput" class="w-100 mt-3" style="display: none;" onclick="event.stopPropagation()">
+                        <textarea id="respostaDigitadaInput" class="form-control mb-2" rows="2" placeholder="Digite sua resposta antes de verificar..."></textarea>
+                        <button class="btn btn-verde btn-sm w-100" id="btnVerificarResposta">
+                            <i class="bi bi-search"></i> Verificar Resposta
+                        </button>
+                    </div>
+
+                    <span class="dica-virar" id="dicaVirar"><i class="bi bi-arrow-repeat"></i> Clique para revelar a resposta</span>
+                </div>
+
+                <!-- RESPOSTA (VERSO) -->
+                <div class="flashcard-resposta" id="faceResposta" style="display: none;">
+                    <h5>Resposta Correta</h5>
+                    <p id="textoResposta" class="fw-bold mb-3">Carregando resposta...</p>
+                    
+                    <!-- COMPARAÇÃO DE PALAVRAS COLORIDAS (VERDE / AMARELO / VERMELHO) -->
+                    <div id="areaComparacao" style="display: none;">
+                        <h6 class="text-muted small text-uppercase fw-bold">Comparação da sua escrita:</h6>
+                        <div id="comparacaoBadges" class="d-flex flex-wrap gap-1 justify-content-center p-3 rounded bg-light border"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BOTÕES DE AVALIAÇÃO SRS (4 NÍVEIS) -->
+            <div class="flashcard-feedback" id="painelFeedback" style="opacity: 0.5; pointer-events: none;">
+
+                <button class="btn btn-errei" data-dificuldade="1">
+                    <i class="bi bi-x-circle"></i>
+                    Errei
+                </button>
+
+                <button class="btn btn-dificil" data-dificuldade="2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Difícil
+                </button>
+
+                <button class="btn btn-medio" data-dificuldade="3">
+                    <i class="bi bi-dash-circle"></i>
+                    Médio
+                </button>
+
+                <button class="btn btn-facil" data-dificuldade="4">
+                    <i class="bi bi-check-circle"></i>
+                    Fácil
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
-
-    <div class="flashcard-container">
-
-        <div class="flashcard">
-
-            <!-- Pergunta do flashcard, virar para a resposta com um clique na carta ta-->
-
-            <div class="flashcard-pergunta">
-                <h5>Pergunta</h5>
-                <p>O que é Lorem Ipsum?</p>
+    <!-- MODAL: SEM CARTÕES A REVISAR -->
+    <div class="modal fade" id="modalSemPendentes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalSemPendentesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSemPendentesLabel">Sem Cartões Pendentes</h5>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="bi bi-calendar-check text-success display-4 mb-3 d-block"></i>
+                    <h5>Você está em dia com este baralho!</h5>
+                    <p class="text-muted">Não há nenhum cartão pendente para ser revisado no momento.</p>
+                    <p class="small text-secondary">Deseja revisar todos os cartões novamente em <strong>Modo Prática</strong>? (A prática extra não alterará as datas da sua próxima revisão no algoritmo).</p>
+                </div>
+                <div class="modal-footer justify-content-center gap-2">
+                    <a href="verBaralhos.html" class="btn btn-secondary">Voltar aos Baralhos</a>
+                    <button type="button" class="btn btn-verde" id="btnConfirmarRevisarTodos">Revisar Todos (Modo Prática)</button>
+                </div>
             </div>
-
-            <div class="flashcard-resposta">
-                <h5>Resposta</h5>
-                <p>Lorem Ipsum é simplesmente um texto fictício da indústria tipográfica e de impressão.</p>
-            </div>
-
         </div>
-
-        <div class="flashcard-feedback">
-
-            <button class="btn btn-rosa">
-                <i class="bi bi-x-circle"></i>
-                Difícil
-            </button>
-
-            <button class="btn btn-amarelo">
-                <i class="bi bi-dash-circle"></i>
-                Médio
-            </button>
-
-            <button class="btn btn-verde">
-                <i class="bi bi-check-circle"></i>
-                Fácil
-            </button>
-
-        </div>
-
     </div>
 
-</div>
-
-<!-- Seu JS da sidebar -->
-<script src="../scripts/loadSidebar.js"></script>
-<script src="../scripts/sidebar.js"></script>
-
-<!-- Bootstrap JS -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/fazendoFlashcards.js"></script>
 </body>
 </html>

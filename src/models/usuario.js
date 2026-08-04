@@ -24,9 +24,10 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
             default: false
         },
-        data_nasc: {type: DataTypes.DATE},
-        motivo: {type: DataTypes.STRING(100)},
-        escola: {type: DataTypes.STRING(50)},
+        data_nasc: { type: DataTypes.DATE },
+        motivo: { type: DataTypes.STRING(100) },
+        escola: { type: DataTypes.STRING(50) },
+        foto: { type: DataTypes.STRING(255), allowNull: true },
         genero_cod: {
             type: DataTypes.INTEGER,
             references: {
@@ -51,12 +52,12 @@ export default (sequelize, DataTypes) => {
             foreignKey: 'usuario_cod',
             as: 'estatisticas_gerais'
         })
-    
+
         Usuario.hasMany(models.Usuario_estatisticas_por_area, {
             foreignKey: 'usuario_cod',
             as: 'estatisticas_areas'
         })
-    
+
         Usuario.hasMany(models.Atividade, {
             foreignKey: 'usuario_cod',
             as: 'Atividades'

@@ -41,6 +41,8 @@ body {
 
 .header-title {
     margin: 0;
+    font-weight: 600;
+    color: #333;
 }
 
 
@@ -51,7 +53,7 @@ body {
     align-items: center;
     justify-content: flex-end;
 
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
@@ -61,20 +63,34 @@ body {
 
 
 /* =========================
-   BOTÕES
+   BOTÕES CUSTOMIZADOS
 ========================= */
 
 .btn {
     border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-.btn-create:hover {
-    background-color: #e9ecef;
+.btn-verde {
+    background-color: #80C242;
+    color: white;
+    border: none;
 }
 
-.verde:hover {
-    background-color: #afed74d4;
-    border-color: #cafa9b2b;
+.btn-verde:hover {
+    background-color: #69a730;
+    color: white;
+}
+
+.btn-rosa {
+    background-color: #c23672;
+    color: white;
+    border: none;
+}
+
+.btn-rosa:hover {
+    background-color: #a0285b;
     color: white;
 }
 
@@ -86,8 +102,8 @@ body {
 .baralhos {
     display: grid;
 
-    /* 3 cards por linha no desktop */
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* 3 cards por linha no desktop, auto-fit/wrap quando necessário */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 
     gap: 20px;
 
@@ -96,7 +112,7 @@ body {
 
 
 /* =========================
-   CARD
+   CARD DO BARALHO
 ========================= */
 
 .flashcard-container {
@@ -105,61 +121,89 @@ body {
 
     background: white;
 
-    border: 1px solid #95959591;
+    border: 1px solid #e0e0e0;
     border-radius: 15px;
 
-    padding: 25px;
+    padding: 22px;
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
-    min-height: 190px;
+    min-height: 180px;
+    position: relative;
 
-    transition: all 0.2s ease-in-out;
+    transition: all 0.25s ease-in-out;
 
     cursor: pointer;
 }
 
 
-/* HOVER */
+/* HOVER NO CARD */
 
 .flashcard-container:hover {
     transform: translateY(-5px);
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 20px rgba(128, 194, 66, 0.15);
 
-    border-color: #7a7a7a;
+    border-color: #80C242;
 }
 
-
-/* =========================
-   TEXTO DO CARD
-========================= */
+.flashcard-header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
 
 .flashcard-title {
-    margin: 0 0 10px 0;
+    margin: 0;
 
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 600;
 
-    color: #333;
+    color: #2c3e50;
+    word-break: break-word;
 }
 
-.flashcard-description {
-    margin-bottom: 12px;
 
-    color: #555;
+/* BOTÕES DE AÇÕES DO CARD (LIXEIRA E EDITAR) */
 
-    line-height: 1.5;
+.card-acoes-baralho {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.btn-deletar-baralho, .btn-editar-baralho {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.05rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-deletar-baralho:hover {
+    color: #c23672;
+    background-color: #fce8f0;
+}
+
+.btn-editar-baralho:hover {
+    color: #538d24;
+    background-color: #eef7e5;
 }
 
 
 /* =========================
-   INFORMAÇÕES
+   INFORMAÇÕES DO BARALHO
 ========================= */
 
 .flashcard-info {
-    margin-top: auto;
+    margin-top: 15px;
 
     display: flex;
     justify-content: space-between;
@@ -167,7 +211,7 @@ body {
 
     gap: 10px;
 
-    font-size: 14px;
+    font-size: 0.88rem;
     color: #666;
 
     flex-wrap: wrap;
@@ -177,7 +221,21 @@ body {
     display: flex;
     align-items: center;
 
-    gap: 5px;
+    gap: 6px;
+}
+
+.badge-revisar {
+    background-color: #eef7e5;
+    color: #538d24;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.badge-revisar.pendente {
+    background-color: #fce8f0;
+    color: #c23672;
 }
 
 
@@ -190,10 +248,6 @@ body {
     .content {
         margin-left: 90px;
         margin-right: 40px;
-    }
-
-    .baralhos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 }
@@ -220,10 +274,6 @@ body {
 
     .header-actions {
         justify-content: flex-start;
-    }
-
-    .baralhos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 }
@@ -256,7 +306,7 @@ body {
     }
 
     .header-title {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
     }
 
     /* BOTÕES */
@@ -275,57 +325,8 @@ body {
         width: 100%;
     }
 
-    /* CARDS */
-
     .baralhos {
         grid-template-columns: 1fr;
-
-        gap: 15px;
     }
 
-    .flashcard-container {
-        padding: 20px;
-
-        min-height: 170px;
-    }
-
-    .flashcard-title {
-        font-size: 1.15rem;
-    }
-
-    .flashcard-description {
-        font-size: 14px;
-    }
-
-    .flashcard-info {
-        font-size: 13px;
-    }
-
-}
-
-
-/* =========================
-   CELULAR PEQUENO
-========================= */
-
-@media (max-width: 400px) {
-
-    .content {
-        padding: 12px;
-        padding-top: 65px;
-    }
-
-    .header-actions {
-        grid-template-columns: 1fr;
-    }
-
-    .flashcard-container {
-        padding: 18px;
-    }
-
-    .flashcard-info {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-}
+}

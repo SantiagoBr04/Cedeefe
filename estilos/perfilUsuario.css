@@ -30,6 +30,8 @@
     font-size: 2rem;
     font-weight: 700;
     flex-shrink: 0;
+    border: 3px solid #c23672;
+    box-shadow: 0 4px 12px rgba(194, 54, 114, 0.2);
 }
 
 .perfil-cabecalho-texto h1 {

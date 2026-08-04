@@ -19,6 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
         Authorization: `Bearer ${token}`
     });
 
+    const atualizarFotoNavbar = (fotoPath) => {
+        const btnUser = document.getElementById('btn-user');
+        const btnAvatar = document.getElementById('btn-user-avatar');
+        const fullUrl = fotoPath.startsWith('http') ? fotoPath : `http://localhost:3000${fotoPath}`;
+        if (btnUser) {
+            btnUser.classList.add('d-none');
+        }
+        if (btnAvatar) {
+            btnAvatar.src = fullUrl;
+            btnAvatar.classList.remove('d-none');
+        }
+    };
+
     const carregarPerfil = async () => {
         try {
             const resposta = await fetch('http://localhost:3000/api/users/profile', {
@@ -47,8 +60,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            const nomeInicial = (dados.nomeCompleto || dados.login || 'A').trim().charAt(0).toUpperCase();
-            perfilAvatar.textContent = nomeInicial || 'A';
+            if (dados.foto) {
+                const fotoUrl = `http://localhost:3000${dados.foto}`;
+                perfilAvatar.textContent = '';
+                perfilAvatar.style.backgroundImage = `url(${fotoUrl})`;
+                perfilAvatar.style.backgroundSize = 'cover';
+                perfilAvatar.style.backgroundPosition = 'center';
+                atualizarFotoNavbar(dados.foto);
+            } else {
+                const nomeInicial = (dados.nomeCompleto || dados.login || 'A').trim().charAt(0).toUpperCase();
+                perfilAvatar.textContent = nomeInicial || 'A';
+                perfilAvatar.style.backgroundImage = '';
+            }
         } catch (erro) {
             console.error(erro);
             alert('Falha ao buscar os dados do perfil.');
@@ -183,20 +206,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (fotoPerfilInput) {
-        fotoPerfilInput.addEventListener('change', () => {
+        fotoPerfilInput.addEventListener('change', async () => {
             const arquivo = fotoPerfilInput.files && fotoPerfilInput.files[0];
             if (!arquivo) {
                 return;
             }
 
-            const leitor = new FileReader();
-            leitor.onload = () => {
-                perfilAvatar.textContent = '';
-                perfilAvatar.style.backgroundImage = `url(${leitor.result})`;
-                perfilAvatar.style.backgroundSize = 'cover';
-                perfilAvatar.style.backgroundPosition = 'center';
-            };
-            leitor.readAsDataURL(arquivo);
+            const formData = new FormData();
+            formData.append('foto', arquivo);
+
+            try {
+                const resposta = await fetch('http://localhost:3000/api/users/profile/photo', {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const dados = await resposta.json();
+
+                if (resposta.ok && dados.foto) {
+                    const fotoUrl = `http://localhost:3000${dados.foto}`;
+                    perfilAvatar.textContent = '';
+                    perfilAvatar.style.backgroundImage = `url(${fotoUrl})`;
+                    perfilAvatar.style.backgroundSize = 'cover';
+                    perfilAvatar.style.backgroundPosition = 'center';
+
+                    atualizarFotoNavbar(dados.foto);
+                } else {
+                    alert(dados.error || 'Não foi possível atualizar a foto de perfil.');
+                }
+            } catch (erro) {
+                console.error(erro);
+                alert('Falha de rede ao enviar a foto de perfil.');
+            }
         });
     }
 

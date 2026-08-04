@@ -1,0 +1,126 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif !important;
+    overflow-x: hidden;
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.content {
+    margin-top: 80px;
+    margin-left: 300px;
+    margin-right: 240px;
+    margin-bottom: 80px;
+    padding: 20px;
+
+    transition: all 0.3s ease;
+}
+
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.header-card {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-title i {
+    color: #80C242;
+}
+
+/* =========================
+   CAMPOS DO FORMULÁRIO
+========================= */
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #80C242;
+    box-shadow: 0 0 0 3px rgba(128, 194, 66, 0.2);
+}
+
+/* =========================
+   BOTÕES CUSTOMIZADOS
+========================= */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: all 0.2s ease;
+}
+
+.btn-verde {
+    background-color: #80C242;
+    color: white;
+    border: none;
+}
+
+.btn-verde:hover {
+    background-color: #69a730;
+    color: white;
+}
+
+.btn-rosa {
+    background-color: #c23672;
+    color: white;
+    border: none;
+}
+
+.btn-rosa:hover {
+    background-color: #a0285b;
+    color: white;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        margin-right: 40px;
+    }
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 70px;
+        padding: 15px;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
+}

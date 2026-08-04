@@ -91,12 +91,12 @@ const cartaoController = {
 
       if (dificuldade === 1) { // Errei
         fator_facilidade = Math.max(1.3, fator_facilidade - 0.2);
-        intervalo_dias = 1; // Reseta para rever no rescaldo
+        intervalo_dias = 0; // Reseta para 0 dias (revisão imediata hoje)
       } else if (dificuldade === 2) { // Dificil
         fator_facilidade = Math.max(1.3, fator_facilidade - 0.15);
         intervalo_dias = diasEmAtraso * 1.2;
       } else if (dificuldade === 3) { // Medio
-        // Mantém Fato
+        // Mantém Fator
         intervalo_dias = diasEmAtraso * fator_facilidade;
       } else if (dificuldade === 4) { // Facil
         fator_facilidade += 0.15;
@@ -106,7 +106,7 @@ const cartaoController = {
 
       // Round e atualização do BD
       intervalo_dias = Math.round(intervalo_dias);
-      if (intervalo_dias < 1) intervalo_dias = 1; // Nunca menor que 1
+      if (intervalo_dias < 0) intervalo_dias = 0; // Permite 0 para cartões errados que precisam de revisão no mesmo dia
 
       // Nova Data baseado na somatoria da data real em que foi feito a revisao
       const previsaoProximaRevisao = new Date(hoje);

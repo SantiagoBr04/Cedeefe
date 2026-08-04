@@ -207,6 +207,26 @@ a #btn-user {
     color: black;
 }
 
+#btn-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 5px;
+    cursor: pointer;
+    vertical-align: middle;
+    border: 2px solid #c23672;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+#btn-user-avatar:hover {
+    border-color: #a0285b;
+}
+
+.d-none {
+    display: none !important;
+}
+
 .dropdown-toggle{
 color: black;
 text-decoration: none;

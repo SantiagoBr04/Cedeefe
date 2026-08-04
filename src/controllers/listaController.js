@@ -6,74 +6,115 @@ const listaController = {
 
   // Cria o metodo para gerar um simulado
   gerarLista: async (req, res) => {
-    const t = await db.sequelize.transaction()
+    const t = await db.sequelize.transaction();
     try {
       // Receber os criterios
-      const { quantidade, disciplinas, nome, descricao, disciplina_cod } = req.body; // ex: { "quantidade": 20, "disciplinas": [1, 5] }
+      const { quantidade, disciplinas, nome, descricao, disciplina_cod } = req.body;
       const usuario_cod = req.userId;
 
-      // Verifica se os dados obrigatorios estão de acordo, tecnicamente não precisava, pois em teoria
-      // é impossivel o aluno colocar um número menor ou igual a zero por exemplo, mas é bom né
       if (!quantidade || !disciplinas) {
+        await t.rollback();
         return res.status(400).json({ error: 'Dados incompletos.' });
       }
 
-      const questoes = await db.Questao.findAll({
-        attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod', 'autor', 'ano'], 
-        where: { disciplina_cod: disciplinas },
-        order: db.sequelize.random(),
-        limit: parseInt(quantidade), 
-        include: [
-            {
-                model: db.Alternativa,
-                as: 'alternativas', // O apelido definido no associate
-                attributes: ['cod', 'texto', 'correta'] // O que você quer trazer da alternativa
-            }
-        ]
+      // Busca as questões que o usuário já respondeu ou foi vinculado em atividades anteriores
+      const meusteQuestoesJaUsadas = await db.Atividade_questoes.findAll({
+        include: [{
+          model: db.Atividade,
+          as: 'atividade',
+          where: { usuario_cod }
+        }],
+        attributes: ['questao_cod'],
+        transaction: t
       });
 
-      // Verifica se o banco encontrou questões suficientes (.length é tamanho, se tamanho menor que quantidade for truly, vai dar o erro)
-      if (questoes.length < quantidade) {
+      const idsUsados = [...new Set(meusteQuestoesJaUsadas.map(q => q.questao_cod))];
+
+      // Busca primeiramente questões inéditas (que o usuário não utilizou ainda)
+      let questoes = await db.Questao.findAll({
+        attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod', 'autor', 'ano'],
+        where: {
+          disciplina_cod: disciplinas,
+          ...(idsUsados.length > 0 ? { cod: { [Op.notIn]: idsUsados } } : {})
+        },
+        order: db.sequelize.random(),
+        limit: parseInt(quantidade),
+        include: [
+          {
+            model: db.Alternativa,
+            as: 'alternativas',
+            attributes: ['cod', 'texto', 'correta']
+          }
+        ],
+        transaction: t
+      });
+
+      // Se não encontrou questões inéditas suficientes, completa o restante reciclando questões já usadas
+      if (questoes.length < parseInt(quantidade)) {
+        const faltam = parseInt(quantidade) - questoes.length;
+        const idsIneditosSelecionados = questoes.map(q => q.cod);
+        const idsExcluirParaReciclagem = [...idsIneditosSelecionados];
+
+        const meusteQuestoesRecicladas = await db.Questao.findAll({
+          attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod', 'autor', 'ano'],
+          where: {
+            disciplina_cod: disciplinas,
+            ...(idsExcluirParaReciclagem.length > 0 ? { cod: { [Op.notIn]: idsExcluirParaReciclagem } } : {})
+          },
+          order: db.sequelize.random(),
+          limit: faltam,
+          include: [
+            {
+              model: db.Alternativa,
+              as: 'alternativas',
+              attributes: ['cod', 'texto', 'correta']
+            }
+          ],
+          transaction: t
+        });
+
+        questoes = [...questoes, ...meusteQuestoesRecicladas];
+      }
+
+      // Verifica se o banco encontrou questões suficientes
+      if (questoes.length < parseInt(quantidade)) {
+        await t.rollback();
         return res.status(404).json({ error: `Não foram encontradas ${quantidade} questões para os critérios selecionados. Foram encontradas apenas ${questoes.length}.` });
       }
 
       // Cria a atividade para o cabeçalho
       const novaAtividade = await db.Atividade.create({
-          usuario_cod: usuario_cod, // ID do aluno
-          nome: nome || `Lista de Exercícios - ${new Date().toLocaleDateString()}`,
-          descricao: descricao,
-          disciplina_cod: disciplina_cod,
-          tipo: 'lista',
-          status: 'em_andamento'
+        usuario_cod: usuario_cod,
+        nome: nome || `Lista de Exercícios - ${new Date().toLocaleDateString()}`,
+        descricao: descricao,
+        disciplina_cod: disciplina_cod,
+        tipo: 'lista',
+        status: 'em_andamento'
       }, { transaction: t });
 
-      // Vincula as questões (Salva só os cod's na tabela intermediária)
+      // Vincula as questões
       const vinculos = questoes.map(q => ({
-          atividade_cod: novaAtividade.cod,
-          questao_cod: q.cod
-          // resposta_usuario: null (para possivel implementação)
+        atividade_cod: novaAtividade.cod,
+        questao_cod: q.cod
       }));
 
       await db.Atividade_questoes.bulkCreate(vinculos, { transaction: t });
 
-      await t.commit(); // Salva tudo no banco
+      await t.commit();
 
-      // Prepara a resposta sem gabarito para enviar, o .map mapeia o array questões, e executa a arrow function
-      // com q de parametro, o ...restoDaQuestão é onde tudo acontece, os ... é um operador que pega o resto do array
-      // tirando o que está citado anteriormente, nesse caso o gabarito, e coloca dentro de q, depois o return
       const questoesSemGabarito = questoes.map(q => {
-        const questaoPura = q.get({ plain: true }); 
+        const questaoPura = q.get({ plain: true });
         const { gabarito, ...restoDaQuestao } = questaoPura;
         return restoDaQuestao;
       });
 
-      // Manda as resposta sem gabarito
       res.status(200).json({
-          atividade_cod: novaAtividade.cod, 
-          questoes: questoesSemGabarito
+        atividade_cod: novaAtividade.cod,
+        questoes: questoesSemGabarito
       });
 
-    } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
+    } catch (error) {
+      await t.rollback();
       console.error('Erro ao gerar simulado:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
     }
@@ -100,6 +141,10 @@ const listaController = {
                           include: [{ model: db.Alternativa, as: 'alternativas' }]
                       }]
                   }
+              ],
+              order: [
+                  [{ model: db.Atividade_questoes, as: 'registroDasQuestoes' }, 'cod', 'ASC'],
+                  [{ model: db.Atividade_questoes, as: 'registroDasQuestoes' }, { model: db.Questao, as: 'questao' }, { model: db.Alternativa, as: 'alternativas' }, 'cod', 'ASC']
               ]
           });
 
@@ -110,17 +155,47 @@ const listaController = {
               return res.status(403).json({ error: 'Acesso negado. Esta atividade não pertence a você.' });
           }
 
-          const questoesFormatadas = atividade.registroDasQuestoes.map(r => r.questao);
+          let primeiraNaoRespondidaIndex = -1;
+          let acertos = 0;
+          let erros = 0;
+
+          const questoesFormatadas = (atividade.registroDasQuestoes || []).map((r, index) => {
+              const questaoObj = r.questao ? r.questao.get({ plain: true }) : {};
+              const altSelecionadaCod = r.alternativa_selecionada_cod;
+
+              if (!altSelecionadaCod && primeiraNaoRespondidaIndex === -1) {
+                  primeiraNaoRespondidaIndex = index;
+              }
+
+              if (altSelecionadaCod && r.questao && r.questao.alternativas) {
+                  const altCorreta = r.questao.alternativas.find(a => a.cod === altSelecionadaCod && (a.correta === true || a.correta === 1));
+                  if (altCorreta) {
+                      acertos++;
+                  } else {
+                      erros++;
+                  }
+              }
+
+              return {
+                  ...questaoObj,
+                  alternativa_selecionada_cod: altSelecionadaCod
+              };
+          });
+
+          const ultimaQuestaoIndex = primeiraNaoRespondidaIndex !== -1 
+              ? primeiraNaoRespondidaIndex 
+              : Math.max(0, questoesFormatadas.length - 1);
 
           res.json({
               atividade_cod: atividade.cod,
-              
-              // Tudo vem direto do banco 
               nome: atividade.nome,           
               descricao: atividade.descricao, 
-              disciplina: atividade.disciplina.descricao, 
+              disciplina: atividade.disciplina ? atividade.disciplina.descricao : 'Geral', 
+              status: atividade.status,
               quantidade: questoesFormatadas.length,
-              
+              ultima_questao_index: ultimaQuestaoIndex,
+              acertos,
+              erros,
               questoes: questoesFormatadas
           });
 
@@ -307,7 +382,10 @@ const listaController = {
       const usuario_cod = req.userId;
 
       // Verifica se a Atividade existe e pertence ao usuário
-      const atividade = await db.Atividade.findByPk(id, { transaction: t });
+      const atividade = await db.Atividade.findByPk(id, {
+        include: [{ model: db.Disciplina, as: 'disciplina', attributes: ['descricao'] }],
+        transaction: t
+      });
 
       if (!atividade) {
         return res.status(404).json({ error: 'Atividade não encontrada.' });
@@ -318,7 +396,32 @@ const listaController = {
       }
 
       if (atividade.status === 'finalizada') {
-        return res.status(400).json({ error: 'Esta atividade já foi finalizada.' });
+        const meusteQuestoes = await db.Atividade_questoes.findAll({
+          where: { atividade_cod: id },
+          include: [{ model: db.Alternativa, as: 'alternativaSelecionada' }],
+          transaction: t
+        });
+
+        const acertosJaFinalizados = meusteQuestoes.filter(aq => {
+          return aq.alternativa_selecionada_cod && 
+                 aq.alternativaSelecionada && 
+                 aq.alternativaSelecionada.correta;
+        }).length;
+
+        const totalJaFinalizados = meusteQuestoes.length;
+        const pontuacaoJaFinalizada = totalJaFinalizados > 0 ? (acertosJaFinalizados / totalJaFinalizados) * 10 : 0;
+
+        await t.commit();
+
+        return res.status(200).json({
+          message: 'Esta atividade já foi finalizada.',
+          pontuacao: pontuacaoJaFinalizada,
+          acertos: acertosJaFinalizados,
+          erros: totalJaFinalizados - acertosJaFinalizados,
+          total: totalJaFinalizados,
+          nome: atividade.nome,
+          disciplina: atividade.disciplina ? atividade.disciplina.descricao : 'Geral'
+        });
       }
 
       // Calcula a pontuação (acertos / total * 10)
@@ -383,7 +486,10 @@ const listaController = {
         message: 'Lista finalizada com sucesso!',
         pontuacao: pontuacao,
         acertos: acertos,
-        total: total
+        erros: total - acertos,
+        total: total,
+        nome: atividade.nome,
+        disciplina: atividade.disciplina ? atividade.disciplina.descricao : 'Geral'
       });
 
     } catch (error) {

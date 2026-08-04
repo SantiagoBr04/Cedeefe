@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Cartão - Cedeefe</title>
+
+    <!-- Ícones do Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Ícones Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/adicionarCartao.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<div class="content">
+    <div class="form-container">
+        <!-- HEADER -->
+        <div class="header-card">
+            <h2 class="form-title"><i class="bi bi-card-plus"></i> Novo Cartão de Flashcard</h2>
+            <p class="text-muted">Preencha as informações para adicionar um novo cartão ao seu baralho.</p>
+        </div>
+
+        <form id="formAdicionarCartao" class="card-body-form" enctype="multipart/form-data">
+            <!-- SELEÇÃO DE BARALHO -->
+            <div class="mb-3">
+                <label for="baralhoSelect" class="form-label fw-bold">Baralho de Destino <span class="text-danger">*</span></label>
+                <select class="form-select" id="baralhoSelect" name="baralho_id" required>
+                    <option value="" disabled selected>Selecione um baralho...</option>
+                </select>
+            </div>
+
+            <!-- FRENTE / PERGUNTA -->
+            <div class="mb-3">
+                <label for="frenteInput" class="form-label fw-bold">Frente (Pergunta) <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="frenteInput" name="frente" rows="3" placeholder="Ex: Qual é a fórmula da Teorema de Pitágoras?" required></textarea>
+            </div>
+
+            <!-- VERSO / RESPOSTA -->
+            <div class="mb-3">
+                <label for="versoInput" class="form-label fw-bold">Verso (Resposta) <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="versoInput" name="verso" rows="3" placeholder="Ex: a² = b² + c²" required></textarea>
+            </div>
+
+            <!-- TIPO DE CARTÃO -->
+            <div class="mb-4">
+                <label for="tipoSelect" class="form-label fw-bold">Tipo de Cartão</label>
+                <select class="form-select" id="tipoSelect" name="tipo">
+                    <option value="tradicional" selected>Tradicional (Pergunta / Revelar no Clique)</option>
+                    <option value="escrita">Resposta Escrita (Digitar e Comparar)</option>
+                </select>
+            </div>
+
+            <!-- MENSAGENS DE FEEDBACK -->
+            <div id="mensagemFeedback" class="alert mt-3" style="display: none;"></div>
+
+            <!-- BOTÕES DE AÇÃO -->
+            <div class="d-flex gap-2 justify-content-end mt-4">
+                <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
+                <button type="submit" class="btn btn-verde" id="btnSalvarCartao">
+                    <i class="bi bi-check-lg"></i> Salvar Cartão
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="../scripts/loadSidebar.js"></script>
+<script src="../scripts/sidebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../scripts/adicionarCartao.js"></script>
+
+</body>
+</html>
