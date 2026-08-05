@@ -90,6 +90,12 @@ body {
 
 #btn-menu{
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#btn-menu:hover{
+    color:#8e8989;
+    background-color:#00000000;
 }
 
 /* --------------------

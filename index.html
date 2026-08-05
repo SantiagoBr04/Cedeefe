@@ -21,8 +21,25 @@
 <body>
 
     
-     <!-- SIDEBARRRR -->
-    <div id="sidebar-container"></div>
+    <!-- Menu fixo superior -->
+    <div class="menu">
+        <!-- Logo + botão do menu -->
+        <div class="logo_content">
+            <!-- Botão que abre/fecha sidebar -->
+            <span class="material-symbols-outlined" id="btn-menu">menu</span>
+
+            <!-- Nome/logo do site -->
+            <div class="logo">
+                <div class="logo_name"><a href="../index.html" class="logo_name">Cedeefe</a></div>
+            </div>
+        </div>
+
+        <!-- Ícone do usuário (lado direito do menu) -->
+        <a href="/pages/login.html" id="btn-user-link">
+            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
+            <img id="btn-user-avatar" src="" alt="Foto de perfil" class="d-none" />
+        </a>
+    </div>
 
     <!-- PRECISO AJUSTAR O DESING DAS PÁGINAS QUE POSSUEM DESENHOS #DEMONHEDO! -->
 
@@ -30,19 +47,24 @@
         <div class="forma">
             <div class="texto">
                     <h2>Domine Português e Matemática de um jeito fácil e organizado!</h2>
-                    <p>Navegue pelo nosso mapa de estudos e descubra o caminho certo para aprender de forma simples e eficiente. <br>
-                    Chega de conteúdos soltos—tudo o que você precisa, bem estruturado e acessível!</p>
-            
+                    <p>Navegue pelo nosso <strong>mapa de estudos</strong> e descubra o caminho certopara aprender de forma 
+                        <strong>simples</strong> e <strong>eficiente</strong>.
+                        <br><br>
+                        Chega de conteúdos soltos — tenha acesso a um ambiente com
+                        <strong>roteiros de aprendizagem</strong>,
+                        <strong>banco de questões</strong>,
+                        <strong>flashcards</strong> e
+                        <strong>simulados</strong>, tudo organizado para ajudar você a conquistar sua vaga no
+                        <strong>PartiuIF 2026</strong>.
+                    </p>
+                                
             <!-- Botão de login -->
-            <button class="botao" type="submit">Entrar</button>
+            <a class ="botao" href="/pages/login.html" id="btn-user-link">Comece a estudar agora!</a>
+
             </div>
             <img src="imagens/imgPgInicial.png" class="imagem">   
         </div>
     </div>     
-
-
-
-
 
     <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

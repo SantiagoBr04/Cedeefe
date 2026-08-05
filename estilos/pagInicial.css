@@ -2,52 +2,59 @@
    CONTAINER
 ========================= */
 
-.container {
-    margin: 90px 40px 40px 300px;
-    padding: 20px;
+.container-fluid {
+    padding-top: 90px;
+    
 
-    width: auto;
+    min-height: calc(100vh - 80px);
+
     display: flex;
     justify-content: center;
+    align-items: center;
+
     box-sizing: border-box;
 }
-
 /* =========================
    CARD VERDE
 ========================= */
 
 .forma {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1150px;
 
-    background: #E9FFD3;
-    border-radius: 60px;
+    min-height: 460px;
+    background: linear-gradient(to right, #E9FFD3, #c9ff93c5);
+    border-radius: 55px;
+
+    padding: 50px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 50px;
-
-    padding: 50px;
+    gap: 60px;
 }
 
 /* =========================
    TEXTO
 ========================= */
 
-.texto {
-    flex: 1;
-}
-
 .texto h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
 }
 
 .texto p {
-    font-size: 1rem;
-    line-height: 1.7;
-    text-align: justify;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+    text-align: left;
+}
+
+.texto strong{
+    font-weight: 650;
+    color: #2f6b3d;
 }
 
 /* =========================
@@ -63,118 +70,134 @@
 /* =========================
    BOTÃO
 ========================= */
+a.botao {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
 
 .botao {
-    margin-top: 30px;
+    margin-top: 35px;
+
     background: #FFCAD4;
+    color: #333;
+
     border: none;
     border-radius: 50px;
 
-    width: 140px;
-    height: 42px;
+    padding: 15px 32px;
+
+    min-width: 280px;
+    width: fit-content;
+
+    font-size: 1rem;
+    font-weight: 600;
 
     cursor: pointer;
-    transition: .2s;
+    transition: all .25s ease;
 }
 
 .botao:hover {
     background: #FFB8C5;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 184, 197, .35);
 }
 
-/* =========================
-   NOTEBOOKS
-========================= */
+/* Notebook */
+@media (max-width:1200px){
 
-@media (max-width: 1200px) {
-
-    .container {
-        padding-left: 90px;
-        padding-right: 30px;
+    .forma{
+        padding:50px;
+        gap:40px;
     }
 
-    .forma {
-        gap: 30px;
-        padding: 40px;
+    .texto h2{
+        font-size:2.2rem;
     }
 
-    .imagem {
-        max-width: 340px;
-    }
-
-}
-
-/* =========================
-   TABLETS
-========================= */
-
-@media (max-width: 992px) {
-
-       .container {
-        margin: 90px 20px 20px 90px;
-    }
-
-    .forma {
-        flex-direction: column-reverse;
-        text-align: center;
-        padding: 40px 30px;
-    }
-
-    .texto h2 {
-        font-size: 1.8rem;
-    }
-
-    .texto p {
-        text-align: center;
-    }
-
-    .botao {
-        margin: 30px auto 0;
-    }
-
-    .imagem {
-        max-width: 300px;
+    .imagem{
+        max-width:340px;
     }
 
 }
 
-@media (max-width: 768px) {
-    .container {
-        margin: 90px 15px 15px 15px;
+/* Tablet */
+@media (max-width:992px){
+
+    .forma{
+
+        flex-direction:column-reverse;
+
+        text-align:center;
+
+        min-height:auto;
+
+        padding:45px 35px;
     }
+
+    .texto{
+
+        max-width:100%;
+    }
+
+    .texto h2{
+
+        font-size:2rem;
+    }
+
+    .texto p{
+
+        text-align:center;
+    }
+
+    .botao{
+
+        display:block;
+        margin:30px auto 0;
+    }
+
+    .imagem{
+
+        max-width:300px;
+    }
+
 }
 
-/* =========================
-   CELULARES
-========================= */
+/* Celular */
+@media (max-width:768px){
 
-@media (max-width: 576px) {
+    .container-fluid{
 
-    .container {
-        padding: 100px 15px 20px;
+        padding:20px;
     }
 
-    .forma {
-        border-radius: 30px;
-        padding: 25px;
+    .forma{
+
+        border-radius:35px;
+
+        padding:30px 25px;
+
+        gap:25px;
     }
 
-    .texto h2 {
-        font-size: 1.5rem;
+    .texto h2{
+
+        font-size:1.7rem;
     }
 
-    .texto p {
-        font-size: .95rem;
+    .texto p{
+
+        font-size:.95rem;
     }
 
-    .imagem {
-        max-width: 220px;
+    .imagem{
+
+        max-width:220px;
     }
 
-    .botao {
-        width: 100%;
-        max-width: 220px;
+    .botao{
+        width:100%;
+        min-width:0;
+        padding:15px 20px;
     }
-
 }
-
-

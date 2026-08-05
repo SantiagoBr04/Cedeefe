@@ -1,0 +1,288 @@
+/* ===========================
+   DASHBOARD ADMIN
+=========================== */
+
+.dashboard-body{
+    background:#f8f9fa;
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+}
+
+/* ===========================
+   CONTEÚDO
+=========================== */
+
+.content{
+    margin:90px 260px 40px 300px;
+    padding:0;
+}
+/* ===========================
+   CABEÇALHO
+=========================== */
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.dashboard-header h1{
+    font-size:1.6rem;
+    font-weight:700;
+    color:#333;
+    margin-bottom:5px;
+}
+
+.dashboard-header p{
+    margin:0;
+    color:#7d7d7d;
+    font-size:.95rem;
+}
+
+.dashboard-data{
+    background:#fff;
+    padding:12px 18px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+    color:#777;
+    font-weight:500;
+}
+
+/* ===========================
+   GRID
+=========================== */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-bottom:25px;
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.dashboard-card{
+    padding:18px;
+    border-radius:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.card-topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.card-topo h2{
+    font-size:1rem;
+    font-weight:700;
+    color:#333;
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.card-topo i{
+    color: #5c1f2b;
+}
+
+/* ===========================
+   QUESTÕES REPORTADAS
+=========================== */
+
+.questao-reportada{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 14px;
+    border:1px solid #f0f0f0;
+    border-radius:12px;
+    margin-bottom:10px;
+    transition:.25s;
+}
+
+.questao-reportada:last-child{
+    margin-bottom:0;
+}
+
+.questao-reportada:hover{
+    transform:translateY(-1px);
+    border-color:#ffd7e4;
+    box-shadow:0 2px 5px rgba(255,124,168,.15);
+}
+
+.questao-info h5{
+    font-size:1rem;
+    font-weight:600;
+    margin-bottom:4px;
+    color:#333;
+}
+
+.questao-info p{
+    margin-bottom:3px;
+    color:#555;
+}
+
+.questao-info small{
+    color:#999;
+}
+
+/* ===========================
+   ÚLTIMAS QUESTÕES
+=========================== */
+
+.lista-questoes{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.lista-questoes li{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid #f3f3f3;
+}
+
+.lista-questoes li:last-child{
+    border-bottom:none;
+}
+
+.lista-questoes strong{
+    display:block;
+    color:#333;
+}
+
+.lista-questoes span{
+    color:#888;
+    font-size:.93rem;
+}
+
+.lista-questoes small{
+    color:#999;
+}
+
+/* ===========================
+   BOTÕES
+=========================== */
+
+.btn-verde{
+    background-color: #dfefcd;
+    color: #2e541d;
+    border:none;
+    border-radius:10px;
+    font-weight:600;
+    padding:8px 16px;
+    font-size:.9rem;
+    min-height:38px;
+}
+
+.btn-verde:hover{
+    background-color: #cde4b3;
+}
+
+.btn-rosa{
+    background-color: #ffcad4;
+    color: #5c1f2b;
+    border:none;
+    border-radius:10px;
+    font-weight:600;
+    padding:8px 16px;
+    font-size:.9rem;
+    min-height:38px;
+}
+
+.btn-rosa:hover{
+    background-color: #ffb8c5;
+    color:#fff;
+}
+
+
+/* ===========================
+   BADGE
+=========================== */
+
+.badge{
+    font-size:.9rem;
+    padding:8px 12px;
+}
+
+/* ===========================
+   GRÁFICO
+=========================== */
+
+.grafico-card{
+    margin-top:5px;
+}
+
+#graficoDisciplinas{
+    width:100%;
+    height:350px;
+}
+
+/* ===========================
+   RESPONSIVIDADE
+=========================== */
+
+@media (max-width:1200px){
+
+    .content{
+        margin:90px 30px 30px 250px;
+    }
+
+}
+
+@media (max-width:992px){
+
+    .content{
+        margin:90px 20px 20px 90px;
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .content{
+        margin:90px 15px 20px 15px;
+    }
+
+    .dashboard-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .questao-reportada{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .questao-reportada button{
+        width:100%;
+    }
+
+    .card-topo{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .card-topo .btn{
+        width:100%;
+    }
+
+}
