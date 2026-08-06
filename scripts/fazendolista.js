@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Enunciado
-    questaoElement.innerText = questao.descricao; 
+    // Enunciado com suporte a formatação HTML e notação matemática (5^2, x^2, H_2O)
+    questaoElement.innerHTML = processarFormatacaoTexto(questao.descricao); 
 
     // Limpa alternativas anteriores
     alternativasElement.innerHTML = '';
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function criarDivAlternativa(texto, chave, altCod) {
       const div = document.createElement('div');
       div.classList.add('alternativa');
-      div.innerText = texto;
+      div.innerHTML = processarFormatacaoTexto(texto);
       div.dataset.chave = chave; 
       if (altCod !== null && altCod !== undefined) div.dataset.cod = altCod;
 
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (questao.explicacao && questao.explicacao.trim() !== "") {
         btnExplicacao.style.display = "inline-block";
-        boxExplicacao.innerText = questao.explicacao;
+        boxExplicacao.innerHTML = formatarExplicacaoHtml(questao.explicacao);
       }
     } else {
       btnVerificar.disabled = false;
@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (questao.explicacao && questao.explicacao.trim() !== "") {
         btnExplicacao.style.display = "inline-block";
-        boxExplicacao.innerText = questao.explicacao;
+        boxExplicacao.innerHTML = formatarExplicacaoHtml(questao.explicacao);
     }
     
     todasDivs.forEach(div => div.style.pointerEvents = 'none');
@@ -316,6 +316,81 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnVerificar.style.opacity = '0.6';
     btnVerificar.innerText = 'Resposta Registrada';
   });
+
+  // Função auxiliar para formatar texto (suporta HTML, Markdown, Notação Matemática e LaTeX)
+  function processarFormatacaoTexto(texto) {
+      if (texto === null || texto === undefined) return '';
+      let html = String(texto);
+
+      // 1. Remove demarcadores de bloco/inline de LaTeX: $$...$$, \[...\], $...$, \(...\)
+      html = html.replace(/\$\$(.*?)\$\$/gs, '$1');
+      html = html.replace(/\\\[(.*?)\\\]/gs, '$1');
+      html = html.replace(/\$(.*?)\$/g, '$1');
+      html = html.replace(/\\\((.*?)\\\)/g, '$1');
+
+      // 2. Comandos complexos de LaTeX: \frac{numerador}{denominador} -> (numerador/denominador) e \sqrt{expressao}
+      html = html.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1/$2)');
+      html = html.replace(/\\sqrt\{([^}]+)\}/g, '√($1)');
+      html = html.replace(/\\sqrt\s*([a-zA-Z0-9]+)/g, '√$1');
+
+      // 3. Comandos de operadores e símbolos matemáticos LaTeX
+      html = html.replace(/\\cdot/g, ' · ');
+      html = html.replace(/\\times/g, ' × ');
+      html = html.replace(/\\div/g, ' ÷ ');
+      html = html.replace(/\\pm/g, ' ± ');
+      html = html.replace(/\\mp/g, ' ∓ ');
+      html = html.replace(/\\neq/g, ' ≠ ');
+      html = html.replace(/\\leq/g, ' ≤ ');
+      html = html.replace(/\\geq/g, ' ≥ ');
+      html = html.replace(/\\approx/g, ' ≈ ');
+      html = html.replace(/\\infty/g, ' ∞ ');
+      html = html.replace(/\\degree/g, '°');
+      html = html.replace(/\^\\circ/g, '°');
+
+      // 4. Letras gregas LaTeX
+      html = html.replace(/\\alpha/g, 'α');
+      html = html.replace(/\\beta/g, 'β');
+      html = html.replace(/\\gamma/g, 'γ');
+      html = html.replace(/\\delta/g, 'δ');
+      html = html.replace(/\\theta/g, 'θ');
+      html = html.replace(/\\lambda/g, 'λ');
+      html = html.replace(/\\pi/g, 'π');
+      html = html.replace(/\\sigma/g, 'σ');
+      html = html.replace(/\\omega/g, 'ω');
+      html = html.replace(/\\Delta/g, 'Δ');
+      html = html.replace(/\\Omega/g, 'Ω');
+      html = html.replace(/\\Pi/g, 'Π');
+
+      // 5. Flechas e conectivos LaTeX
+      html = html.replace(/\\rightarrow/g, ' → ');
+      html = html.replace(/\\leftarrow/g, ' ← ');
+      html = html.replace(/\\Rightarrow/g, ' ⇒ ');
+      html = html.replace(/\\Leftrightarrow/g, ' ⇔ ');
+
+      // 6. Expoentes/Potências com chaves, parênteses ou simples ex: x^{2+n}, x^(2+n), 5^2
+      html = html.replace(/([a-zA-Z0-9\)])\^\{([^}]+)\}/g, '$1<sup>$2</sup>');
+      html = html.replace(/([a-zA-Z0-9\)])\^\(([^)]+)\)/g, '$1<sup>$2</sup>');
+      html = html.replace(/([a-zA-Z0-9\)])\^([a-zA-Z0-9+\-]+)/g, '$1<sup>$2</sup>');
+
+      // 7. Subscritos com chaves, parênteses ou simples ex: x_{1}, H_2O
+      html = html.replace(/([a-zA-Z0-9])_\{([^}]+)\}/g, '$1<sub>$2</sub>');
+      html = html.replace(/([a-zA-Z0-9])_\(([^)]+)\)/g, '$1<sub>$2</sub>');
+      html = html.replace(/([a-zA-Z0-9])_([a-zA-Z0-9+\-]+)/g, '$1<sub>$2</sub>');
+
+      // 8. Notações Markdown para Negrito e Itálico
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+      // 9. Preserva quebras de linha
+      html = html.replace(/\r?\n/g, '<br>');
+
+      return html;
+  }
+
+  // Alias mantido para compatibilidade
+  function formatarExplicacaoHtml(texto) {
+      return processarFormatacaoTexto(texto);
+  }
 
   // Botão EXPLICAÇÃO
   btnExplicacao.addEventListener('click', () => {

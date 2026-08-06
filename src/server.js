@@ -48,6 +48,15 @@ const RECONSTRUIR_BANCO = false;
 
 db.sequelize.sync({ force: RECONSTRUIR_BANCO })
   .then(async () => {
+    // Ajusta as colunas de texto da tabela questoes e alternativas no PostgreSQL para aceitar textos longos (TEXT)
+    try {
+      await db.sequelize.query('ALTER TABLE "questoes" ALTER COLUMN "descricao" TYPE TEXT;');
+      await db.sequelize.query('ALTER TABLE "questoes" ALTER COLUMN "explicacao" TYPE TEXT;');
+      await db.sequelize.query('ALTER TABLE "alternativas" ALTER COLUMN "texto" TYPE TEXT;');
+    } catch (eAlter) {
+      console.warn("Aviso na atualização de colunas do banco:", eAlter.message);
+    }
+
     console.log("Banco de dados conectado e sincronizado com sucesso!");
 
     // Só liga o server se o banco de dados estiver sincronizado corretamente

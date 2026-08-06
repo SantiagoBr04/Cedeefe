@@ -27,5 +27,56 @@ router.delete(
   questaoController.deleteQuestao
 );
 
+// Rota para analisar PDFs de prova e gabarito via Gemini
+router.post(
+  '/importar-pdf-analise',
+  authMiddleware,
+  adminMiddleware,
+  upload.fields([
+    { name: 'pdf_prova', maxCount: 1 },
+    { name: 'pdf_gabarito', maxCount: 1 }
+  ]),
+  questaoController.analisarPdf
+);
+
+// Rota para confirmar e salvar as questões revisadas no banco de dados
+router.post(
+  '/importar-pdf-confirmar',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.confirmarImportacaoLote
+);
+
+// Rota para fazer upload de imagem individual de questão na tela de revisão
+router.post(
+  '/upload-imagem',
+  authMiddleware,
+  adminMiddleware,
+  upload.single('imagem'),
+  questaoController.uploadImagem
+);
+
+// Rotas para gerenciar rascunhos de importação em servidor sem usar localStorage
+router.post(
+  '/rascunho',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.salvarRascunho
+);
+
+router.get(
+  '/rascunhos',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.listarRascunhos
+);
+
+router.get(
+  '/rascunho/:loteId',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.obterRascunho
+);
+
 // Export default para exportar o valor principal do arquivo.
 export default router;

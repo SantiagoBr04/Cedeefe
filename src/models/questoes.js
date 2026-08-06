@@ -7,12 +7,12 @@ export default (sequelize, DataTypes) => {
             allowNull: false
         },
         descricao: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         autor: {type: DataTypes.STRING(40)},
         ano: {type: DataTypes.INTEGER},
-        explicacao: {type: DataTypes.STRING},
+        explicacao: {type: DataTypes.TEXT},
         imagem_url: {type: DataTypes.STRING(255)},
         disciplina_cod: {
             type: DataTypes.INTEGER,

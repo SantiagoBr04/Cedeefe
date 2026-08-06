@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
             onDelete: 'CASCADE' // Para atualizar automaticamente quando uma questão for apagada, por exemplo
         },
         texto: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.TEXT,
             allowNull: false
         },
         correta: {

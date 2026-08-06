@@ -162,14 +162,19 @@ max-width: 100%;
 /* Caixa onde o texto da explicação aparece */
 .box-explicacao {
   background-color: #f8f9fa;
-  border-left: 5px solid #222;
-  padding: 15px;
+  border-left: 5px solid #2e7d32;
+  padding: 18px;
   margin-top: 15px;
-  border-radius: 5px;
+  border-radius: 8px;
   display: none; /* Começa escondido */
-  color: #333;
-  line-height: 1.5;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  color: #222;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  max-height: 500px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ESTILOS DA TELA DE FINALIZAÇÃO DA LISTA */

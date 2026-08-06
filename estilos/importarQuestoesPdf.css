@@ -1,0 +1,117 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+.content {
+    margin-top: 80px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
+    max-width: 1300px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 25px;
+    }
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        padding: 15px;
+    }
+}
+
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+.btn-verde {
+    background-color: #2e7d32;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-verde:hover {
+    background-color: #1b5e20;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+}
+
+.text-verde {
+    color: #2e7d32;
+}
+
+.bg-verde {
+    background-color: #2e7d32 !important;
+}
+
+.card-questao-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-questao-item:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.questao-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eeeeee;
+    padding: 1rem 1.25rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.grupo-alternativa-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    background-color: #fafafa;
+    transition: background-color 0.2s;
+}
+
+.grupo-alternativa-item.is-correta {
+    background-color: #e8f5e9;
+    border-color: #a5d6a7;
+}
+
+.grupo-alternativa-item .form-check-input:checked {
+    background-color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.badge-correta {
+    background-color: #2e7d32;
+    color: white;
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    border-radius: 6px;
+}
+
+.max-w-md {
+    max-width: 600px;
+}

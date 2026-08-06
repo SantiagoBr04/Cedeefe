@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisar Importação de Prova - Cedeefe</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/revisarImportacaoPdf.css">
+</head>
+<body>
+
+    <!-- Sidebar Reutilizável -->
+    <div id="sidebar-container"></div>
+
+    <div class="content">
+        <!-- Cabeçalho Principal -->
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 bg-white p-4 rounded shadow-sm border">
+            <div>
+                <h2 class="mb-1 fw-bold text-dark d-flex align-items-center flex-wrap gap-2">
+                    <i class="bi bi-check2-square text-verde me-2"></i>Revisão das Questões Extraídas
+                    <span class="badge bg-secondary fs-6 ms-2" id="badge-total-questoes">Carregando rascunho...</span>
+                </h2>
+                <p class="text-muted mb-0">Revise os enunciados, gabaritos, disciplinas e temas antes de salvar no banco de dados.</p>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <button class="btn btn-outline-primary px-3 py-2" id="btn-selecionar-prova" data-bs-toggle="modal" data-bs-target="#modalRascunhos">
+                    <i class="bi bi-folder2-open me-1"></i>Selecionar Prova / Rascunho
+                </button>
+                <a href="importarQuestoesPdf.html" class="btn btn-outline-secondary px-3 py-2">
+                    <i class="bi bi-arrow-left me-1"></i>Voltar ao Upload
+                </a>
+                <button class="btn btn-verde px-4 py-2 font-weight-bold shadow-sm" id="btn-confirmar-tudo">
+                    <i class="bi bi-cloud-upload-fill me-2"></i>Salvar Todas no Banco
+                </button>
+            </div>
+        </div>
+
+        <!-- Banner de Status de Revisão da Prova -->
+        <div id="banner-status-rascunho" class="mb-4"></div>
+
+        <!-- Alerta de Notificação -->
+        <div id="alerta-feedback" class="alert d-none mb-4" role="alert"></div>
+
+        <!-- Container onde os cards de questões serão injetados -->
+        <div id="container-questoes-revisao"></div>
+
+        <!-- Barra de Ação Inferior -->
+        <div class="card p-4 my-4 text-center bg-white shadow-sm border">
+            <h5 class="fw-bold mb-2">Concluiu a revisão das questões?</h5>
+            <p class="text-muted mb-3">Após clicar abaixo, todas as questões ajustadas serão salvas no banco de dados do Cedeefe de forma atômica.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="importarQuestoesPdf.html" class="btn btn-outline-danger px-4 py-3 font-weight-bold">
+                    <i class="bi bi-x-lg me-2"></i>Cancelar e Voltar
+                </a>
+                <button class="btn btn-verde btn-lg px-5 py-3 font-weight-bold shadow" id="btn-confirmar-tudo-bottom">
+                    <i class="bi bi-cloud-upload-fill me-2"></i>Confirmar e Salvar Todas no Banco
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Selecionar Prova / Rascunho -->
+    <div class="modal fade" id="modalRascunhos" tabindex="-1" aria-labelledby="modalRascunhosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="modalRascunhosLabel">
+                        <i class="bi bi-files me-2 text-verde"></i>Provas Disponíveis em uploads/rascunhos
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="lista-rascunhos-modal" class="list-group">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-verde mb-2" role="status"></div>
+                            <p class="text-muted mb-0">Carregando lista de provas disponíveis...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <a href="importarQuestoesPdf.html" class="btn btn-outline-success">
+                        <i class="bi bi-cloud-upload me-1"></i>Importar Nova Prova (PDF)
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/revisarImportacaoPdf.js"></script>
+
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+</body>
+</html>

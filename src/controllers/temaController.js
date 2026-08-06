@@ -1,6 +1,20 @@
 import db from '../models/index.js';
 
 const temaController = {
+    // Lista todos os temas cadastrados
+    getAllTemas: async (req, res) => {
+        try {
+            const temas = await db.Tema.findAll({
+                attributes: ['cod', 'descricao', 'disciplina_cod'],
+                order: [['descricao', 'ASC']]
+            });
+            res.status(200).json(temas);
+        } catch (error) {
+            console.error("Erro em getAllTemas:", error);
+            res.status(500).json({ error: 'Erro ao buscar todos os temas.', detalhes: error.message });
+        }
+    },
+
     // Lista todos os temas vinculados a uma respectiva disciplina
     getTemasPorDisciplina: async (req, res) => {
         try {

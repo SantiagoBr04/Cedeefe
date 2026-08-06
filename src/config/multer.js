@@ -12,12 +12,18 @@ const storage = multer.diskStorage({
     }
 });
 
-// Filtro para permitir apenas imagens ou csv (no caso de importação de baralho)
+// Filtro para permitir imagens, csv (baralhos) ou pdf (importação de prova)
 const fileFilter = (req, file, cb) => {
-    // Se a rota for de importar baralhos, aceitamos csv, senão só imagens
+    const isImportPdfRoute = req.originalUrl && req.originalUrl.includes('/importar-pdf');
     const isImportRoute = req.originalUrl && req.originalUrl.includes('/importar');
 
-    if (isImportRoute) {
+    if (isImportPdfRoute) {
+        if (file.mimetype === 'application/pdf' || path.extname(file.originalname).toLowerCase() === '.pdf') {
+            cb(null, true);
+        } else {
+            cb(new Error('Apenas arquivos PDF são permitidos para importação de provas.'), false);
+        }
+    } else if (isImportRoute) {
         if (file.mimetype === 'text/csv' || 
             file.mimetype === 'application/vnd.ms-excel' ||
             path.extname(file.originalname).toLowerCase() === '.csv') {
@@ -40,7 +46,7 @@ const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 5 * 1024 * 1024 // Limite de 5MB
+        fileSize: 15 * 1024 * 1024 // Limite de 15MB
     }
 });
 

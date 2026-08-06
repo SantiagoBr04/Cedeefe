@@ -1,0 +1,211 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+.content {
+    margin-top: 80px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
+    max-width: 1300px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 25px;
+    }
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        padding: 15px;
+    }
+}
+
+.btn-verde {
+    background-color: #2e7d32;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-verde:hover {
+    background-color: #1b5e20;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+}
+
+.text-verde {
+    color: #2e7d32;
+}
+
+.bg-verde {
+    background-color: #2e7d32 !important;
+}
+
+.card-questao-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-questao-item:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.questao-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eeeeee;
+    padding: 1rem 1.25rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.grupo-alternativa-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    background-color: #fafafa;
+    transition: background-color 0.2s;
+}
+
+.grupo-alternativa-item.is-correta {
+    background-color: #e8f5e9;
+    border-color: #a5d6a7;
+}
+
+.grupo-alternativa-item .form-check-input:checked {
+    background-color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+/* Editor de Texto Rico (WYSIWYG Enunciado) */
+.editor-toolbar {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 6px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
+
+.editor-toolbar .btn-fmt {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    color: #495057;
+    transition: all 0.15s ease-in-out;
+}
+
+.editor-toolbar .btn-fmt:hover {
+    background-color: #e9ecef;
+    color: #212529;
+    border-color: #adb5bd;
+}
+
+.editor-toolbar select.select-fmt {
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    background-color: #ffffff;
+}
+
+.editor-enunciado {
+    min-height: 120px;
+    max-height: 350px;
+    overflow-y: auto;
+    border: 1px solid #ced4da;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 12px;
+    background-color: #ffffff;
+    outline: none;
+    line-height: 1.6;
+}
+
+.editor-enunciado:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.15);
+}
+
+/* Seção de Imagem da Questão */
+.container-imagem-questao {
+    background-color: #fdfdfd;
+    border: 1px dashed #cccccc;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.preview-imagem-questao {
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Card Marcado como Revisado (Marcador Visual Green) */
+.card-questao-item.is-revisada {
+    border: 2px solid #66bb6a !important;
+    background-color: #f9fbf7 !important;
+    box-shadow: 0 4px 14px rgba(46, 125, 50, 0.12) !important;
+}
+
+.card-questao-item.is-revisada .questao-header {
+    background-color: #e8f5e9 !important;
+    border-bottom: 1px solid #c8e6c9 !important;
+}
+
+.btn-toggle-revisada {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #adb5bd;
+    background-color: #ffffff;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-toggle-revisada:hover {
+    border-color: #2e7d32;
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    transform: scale(1.08);
+}
+
+.card-questao-item.is-revisada .btn-toggle-revisada {
+    border-color: #2e7d32 !important;
+    background-color: #2e7d32 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.35);
+}
+
+

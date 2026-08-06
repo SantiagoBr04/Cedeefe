@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importar Prova em PDF - Cedeefe</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../estilos/sidebar.css">
+    <link rel="stylesheet" href="../estilos/importarQuestoesPdf.css">
+</head>
+<body>
+
+    <!-- Sidebar Reutilizável -->
+    <div id="sidebar-container"></div>
+
+    <div class="content">
+        <div class="header-importacao mb-4">
+            <h2><i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>Importar Questões de Prova (PDF)</h2>
+            <p class="text-muted">Envie o PDF da prova e o PDF do gabarito oficial. A IA analisará o documento, extrairá enunciados, alternativas e marcará as respostas corretas para sua revisão antes de salvar.</p>
+        </div>
+
+        <!-- Alerta de Notificação -->
+        <div id="alerta-feedback" class="alert d-none mb-4" role="alert"></div>
+
+        <!-- Seção 1: Formulário de Upload e Metadados Globais -->
+        <div class="card card-custom p-4 mb-4" id="card-upload">
+            <h4 class="card-title mb-3"><i class="bi bi-upload me-2 text-verde"></i>1. Seleção dos Arquivos e Metadados</h4>
+            
+            <form id="form-upload-pdf">
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-6">
+                        <label for="input-pdf-prova" class="form-label font-weight-bold">PDF da Prova (Enunciados) <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" id="input-pdf-prova" accept=".pdf" required>
+                        <div class="form-text">Arquivo contendo as questões e alternativas.</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="input-pdf-gabarito" class="form-label font-weight-bold">PDF do Gabarito Oficial <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" id="input-pdf-gabarito" accept=".pdf" required>
+                        <div class="form-text">Arquivo com a relação de respostas por número de questão.</div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-4">
+                        <label for="autor-global" class="form-label">Instituição / Autor</label>
+                        <input type="text" class="form-control" id="autor-global" placeholder="Ex: IFC, IFRS, FEPESE" value="IFC">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="ano-global" class="form-label">Ano da Prova</label>
+                        <input type="number" class="form-control" id="ano-global" placeholder="Ex: 2024" value="2024">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="disciplina-padrao" class="form-label">Disciplina Padrão (Opcional)</label>
+                        <select class="form-select" id="disciplina-padrao">
+                            <option value="">-- Prova Multidisciplinar (Usar sugestão da IA) --</option>
+                        </select>
+                        <div class="form-text">Caso a prova inteira seja de apenas uma matéria.</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-verde btn-lg w-100 mb-2" id="btn-analisar">
+                    <i class="bi bi-cpu-fill me-2"></i>Analisar PDFs com IA Gemini
+                </button>
+
+                <a href="revisarImportacaoPdf.html" class="btn btn-outline-primary btn-md w-100" id="btn-ir-revisao">
+                    <i class="bi bi-card-checklist me-2"></i>Ir para Página de Revisão / Ver Rascunhos
+                </a>
+            </form>
+        </div>
+
+        <!-- Seção 2: Loading Status -->
+        <div class="card card-custom p-5 text-center d-none mb-4" id="card-loading">
+            <div class="spinner-border text-verde mb-3" style="width: 3.5rem; height: 3.5rem;" role="status">
+                <span class="visually-hidden">Processando...</span>
+            </div>
+            <h4 class="fw-bold">Processando arquivos com a API do Gemini...</h4>
+            <p class="text-muted max-w-md mx-auto">
+                A IA está realizando a leitura dos PDFs, extraindo os enunciados, estruturando as alternativas e cruzando as respostas com o gabarito oficial. Isso pode levar alguns segundos.
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/importarQuestoesPdf.js"></script>
+
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+</body>
+</html>

@@ -5,6 +5,9 @@ import adminMiddleware from '../middlewares/adminMiddleware.js';
 
 const router = express.Router();
 
+// Busca todos os temas cadastrados
+router.get('/', authMiddleware, temaController.getAllTemas);
+
 // Busca os temas vinculados a uma disciplina específica (qualquer usuário logado)
 router.get('/disciplina/:disciplina_cod', authMiddleware, temaController.getTemasPorDisciplina);
 
