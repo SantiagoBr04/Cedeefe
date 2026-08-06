@@ -1,0 +1,323 @@
+/* ===========================
+   GERAL
+=========================== */
+
+body{
+    background:#f7f8fa;
+    font-family:'Poppins',sans-serif;
+    color:#444;
+}
+
+/* ===========================
+   CONTEÚDO
+=========================== */
+
+.content{
+    margin:90px 240px 40px 300px;
+    transition:.3s;
+}
+
+.sidebar.collapsed ~ .content{
+    margin-left:100px;
+}
+
+.dashboard-header{
+    margin-bottom:30px;
+}
+
+.dashboard-header h1{
+    font-size:2rem;
+    font-weight:700;
+    color:#2d2d2d;
+    margin-bottom:6px;
+}
+
+.dashboard-header p{
+    color:#7d7d7d;
+    margin:0;
+}
+
+/* ===========================
+   LISTA
+=========================== */
+
+.lista-reportes{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+/* ===========================
+   ACCORDION
+=========================== */
+
+.questao-item{
+    border:none !important;
+    border-radius:18px !important;
+    overflow:hidden;
+    margin-bottom:20px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+.accordion-button{
+    background:#fff;
+    padding:20px 24px;
+    min-height:78px;
+    box-shadow:none !important;
+}
+
+.accordion-button:not(.collapsed){
+    background:#fff;
+}
+
+.accordion-button:focus{
+    box-shadow:none;
+}
+
+.accordion-body{
+    padding:28px;
+    background:#fff;
+}
+
+/* ===========================
+   CABEÇALHO
+=========================== */
+
+.titulo-questao{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.titulo-questao strong{
+    font-size:1rem;
+    min-width:65px;
+}
+
+.titulo-questao span:nth-child(2){
+    flex:1;
+    font-weight:500;
+}
+
+/* ===========================
+   BADGES
+=========================== */
+
+.badge-reportes{
+    background:#f7dce3;
+    color:#b05b6d;
+    padding:7px 14px;
+    border-radius:30px;
+    font-size:.82rem;
+    font-weight:600;
+}
+
+/* ===========================
+   MOTIVO
+=========================== */
+
+.erro-box{
+    background:#fff4f6;
+    border-left:5px solid #f08ca0;
+    padding:18px 22px;
+    border-radius:14px;
+    margin-bottom:25px;
+}
+
+.erro-box h5{
+    color:#d76b82;
+    font-size:1rem;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.erro-box p{
+    margin:0;
+    color:#555;
+    line-height:1.6;
+}
+
+/* ===========================
+   ÁREA DE EDIÇÃO
+=========================== */
+
+.edicao-box{
+    background:#fafafa;
+    border:1px solid #ececec;
+    border-radius:16px;
+    padding:25px;
+}
+
+.edicao-box h5{
+    margin-bottom:20px;
+    font-weight:600;
+    color:#333;
+}
+
+.edicao-box label{
+    font-weight:600;
+    color:#555;
+    margin-bottom:8px;
+}
+
+.form-control,
+.form-select{
+    border-radius:10px;
+    border:1px solid #dcdcdc;
+    padding:10px 14px;
+    transition:.2s;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#5ab56c;
+    box-shadow:0 0 0 .18rem rgba(90,181,108,.15);
+}
+
+textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+/* ===========================
+   BOTÕES
+=========================== */
+
+.acoes{
+    display:flex;
+    justify-content:flex-end;
+    gap:14px;
+    margin-top:28px;
+}
+
+.acoes .btn{
+    min-width:180px;
+    border:none;
+    border-radius:10px;
+    padding:11px 20px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.btn{
+
+    border-radius:40px;
+    padding:9px 20px;
+    font-weight:500;
+
+}
+
+.btn-verde{
+
+    background:#d4ffa9;
+
+    border:1px solid #d7ffaf;
+
+    color:#333;
+
+}
+
+.btn-verde:hover{
+
+    background:#c9f3a7;
+
+}
+/* ===========================
+   CAMPOS
+=========================== */
+
+.row{
+    margin-top:10px;
+}
+
+.col-md-6{
+    margin-bottom:18px;
+}
+
+/* ===========================
+   SCROLL
+=========================== */
+
+textarea::-webkit-scrollbar{
+    width:8px;
+}
+
+textarea::-webkit-scrollbar-thumb{
+    background:#d6d6d6;
+    border-radius:10px;
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media(max-width:1200px){
+
+    .content{
+        margin:90px 35px 40px 110px;
+    }
+
+    .lista-reportes{
+        max-width:100%;
+    }
+
+}
+
+/* ===========================
+   CELULAR
+=========================== */
+
+@media(max-width:768px){
+
+    .content{
+        margin:85px 18px 25px;
+    }
+
+    .dashboard-header h1{
+        font-size:1.7rem;
+    }
+
+    .accordion-button{
+        padding:18px;
+    }
+
+    .accordion-body{
+        padding:20px;
+    }
+
+    .titulo-questao{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+    .badge-reportes{
+        margin-top:5px;
+    }
+
+    .edicao-box{
+        padding:18px;
+    }
+
+    .acoes{
+        flex-direction:column;
+    }
+
+    .acoes .btn{
+        width:100%;
+        min-width:unset;
+    }
+
+}
+
+/* ===========================
+   TELAS MUITO GRANDES
+=========================== */
+
+@media(min-width:1600px){
+
+    .lista-reportes{
+        max-width:1200px;
+    }
+
+}
