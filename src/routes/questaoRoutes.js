@@ -9,6 +9,22 @@ import upload from '../config/multer.js';
 // Cria o objeto router com a configuração padrão do expressa para receber requisições HTTP
 const router = new Router();
 
+// Rota para listar questões com filtros (disciplina, tema, ano, autor, busca)
+router.get(
+  '/',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.listarQuestoes
+);
+
+// Rota para obter anos e autores disponíveis para os filtros da interface
+router.get(
+  '/filtros',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.obterFiltrosDisponiveis
+);
+
 // Rota para adicionar uma nova questão.
 // Note a "corrente" de middlewares: a requisição passa primeiro pelo auth, depois pelo admin.
 router.post(
@@ -17,6 +33,22 @@ router.post(
   adminMiddleware, 
   upload.single('imagem'), // Middleware do multer entra aqui
   questaoController.addQuestao
+);
+
+// Rota para obter uma questão específica pelo código
+router.get(
+  '/:cod',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.obterQuestaoPorCod
+);
+
+// Rota para atualizar uma questão existente
+router.put(
+  '/:cod',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.atualizarQuestao
 );
 
 // Rota para deletar uma questão
@@ -76,6 +108,13 @@ router.get(
   authMiddleware,
   adminMiddleware,
   questaoController.obterRascunho
+);
+
+// Rota para o usuário reportar erro em uma questão
+router.post(
+  '/:cod/reportar',
+  authMiddleware,
+  questaoController.reportarQuestao
 );
 
 // Export default para exportar o valor principal do arquivo.

@@ -13,4 +13,12 @@ router.get('/listas', adminController.listarListas);
 router.delete('/usuarios/:cod', adminController.excluirUsuario);
 router.delete('/listas/:cod', adminController.excluirLista);
 
+// Rota de Estatísticas do Dashboard
+router.get('/dashboard-stats', adminController.obterDashboardStats);
+
+// Rotas de Questões Reportadas
+router.get('/questoes-reportadas', adminController.listarQuestoesReportadas);
+router.put('/questoes-reportadas/:questaoCod', adminController.atualizarEEditarQuestaoReportada);
+router.put('/questoes-reportadas/:questaoCod/descartar', adminController.descartarReportesQuestao);
+
 export default router;

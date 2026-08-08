@@ -1,0 +1,177 @@
+/* estilos/editorQuestao.css - Estilos Padronizados do Editor de Texto Enriquecido Cedeefe */
+
+.editor-questao-container {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.editor-questao-container:focus-within {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15);
+}
+
+/* Barra de Ferramentas */
+.editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    user-select: none;
+}
+
+/* Botões da Barra de Ferramentas */
+.editor-toolbar .btn-fmt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #495057;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.editor-toolbar .btn-fmt:hover {
+    background-color: #e9ecef;
+    color: #212529;
+    border-color: #ced4da;
+}
+
+/* Estado Ativo dos Botões (Itálico, Negrito, Sublinhado, etc.) */
+.editor-toolbar .btn-fmt.is-active,
+.editor-toolbar .btn-fmt.active {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+    border-color: #146c43 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Seletores de Fonte e Tamanho */
+.editor-toolbar .select-fmt {
+    height: 32px;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    color: #495057;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.editor-toolbar .select-fmt:focus {
+    outline: none;
+    border-color: #198754;
+}
+
+/* Separador Vertical */
+.editor-toolbar .separator {
+    width: 1px;
+    height: 20px;
+    background-color: #dee2e6;
+    margin: 0 4px;
+}
+
+/* Área Editável */
+.editor-contentarea {
+    min-height: 120px;
+    max-height: 500px;
+    padding: 12px 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #212529;
+    outline: none;
+    overflow-y: auto;
+}
+
+.editor-contentarea u {
+    text-decoration: underline !important;
+}
+
+.editor-contentarea[contenteditable="true"]:empty::before {
+    content: attr(placeholder);
+    color: #adb5bd;
+    font-style: italic;
+    pointer-events: none;
+    display: block;
+}
+
+/* Imagens dentro do Editor */
+.editor-contentarea img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px auto;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.editor-contentarea img:hover {
+    outline: 2px solid #198754;
+}
+
+/* Editor em Tamanho Compacto (ex: Alternativas) */
+.editor-questao-container.editor-compact {
+    margin-bottom: 0;
+}
+
+.editor-questao-container.editor-compact .editor-contentarea {
+    min-height: 44px;
+    max-height: 150px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+.editor-questao-container.editor-compact .editor-toolbar {
+    padding: 4px 6px;
+}
+
+.editor-questao-container.editor-compact .editor-toolbar .btn-fmt {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    font-size: 0.8rem;
+}
+
+/* Dropdown de Símbolos */
+.editor-symbols-dropdown .dropdown-menu {
+    max-width: 260px;
+    padding: 8px;
+}
+
+.editor-symbols-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+}
+
+.editor-symbols-grid button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    font-size: 1rem;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.editor-symbols-grid button:hover {
+    background-color: #198754;
+    color: white;
+}

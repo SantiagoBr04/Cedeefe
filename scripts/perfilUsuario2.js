@@ -15,6 +15,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const perfilAvatar = document.getElementById("perfilAvatar");
     const fotoPerfil = document.getElementById("fotoPerfil");
 
+    const perfilFotoWrapper = document.getElementById("perfilFotoWrapper");
+    const perfilAvatarInicial = document.getElementById("perfilAvatarInicial");
+    const perfilFotoOverlayTexto = document.getElementById("perfilFotoOverlayTexto");
+
+    function atualizarEstadoFoto(fotoPath, nomeOuLogin) {
+        if(fotoPath) {
+            perfilAvatar.style.backgroundImage = `url(${fotoPath})`;
+            perfilAvatar.style.backgroundSize = "cover";
+            perfilAvatar.style.backgroundPosition = "center";
+            if(perfilAvatarInicial) perfilAvatarInicial.textContent = "";
+            if(perfilFotoWrapper) {
+                perfilFotoWrapper.classList.remove("sem-foto");
+                perfilFotoWrapper.classList.add("com-foto");
+            }
+            if(perfilFotoOverlayTexto) {
+                perfilFotoOverlayTexto.textContent = "Atualizar foto";
+            }
+        } else {
+            perfilAvatar.style.backgroundImage = "";
+            const inicial = (nomeOuLogin || 'A').charAt(0).toUpperCase();
+            if(perfilAvatarInicial) perfilAvatarInicial.textContent = inicial;
+            if(perfilFotoWrapper) {
+                perfilFotoWrapper.classList.remove("com-foto");
+                perfilFotoWrapper.classList.add("sem-foto");
+            }
+            if(perfilFotoOverlayTexto) {
+                perfilFotoOverlayTexto.textContent = "Colocar foto";
+            }
+        }
+    }
+
     function carregarPerfil(){
 
         document.getElementById("nomeCompleto").value = usuario.nomeCompleto;
@@ -29,20 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(radio) radio.checked = true;
 
-        if(usuario.foto){
-
-            perfilAvatar.textContent = "";
-            perfilAvatar.style.backgroundImage = `url(${usuario.foto})`;
-            perfilAvatar.style.backgroundSize = "cover";
-            perfilAvatar.style.backgroundPosition = "center";
-
-        }else{
-
-            perfilAvatar.style.backgroundImage = "";
-            perfilAvatar.textContent =
-                usuario.nomeCompleto.charAt(0).toUpperCase();
-
-        }
+        atualizarEstadoFoto(usuario.foto, usuario.nomeCompleto);
 
     }
 

@@ -138,17 +138,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
     
-    // Imagem da questão
+    // Imagem de Apoio da questão (caso não esteja inline na descrição)
     let imgElement = document.querySelector('.imgQuest');
+    const jaTemImagemInline = questao.descricao && questao.descricao.includes('<img');
 
-    if (questao.imagem_url) {
+    if (questao.imagem_url && !jaTemImagemInline) {
       if (!imgElement) {
         imgElement = document.createElement('img');
-        imgElement.classList.add('imgQuest');
-        imgElement.alt = "Imagem da questão";
+        imgElement.classList.add('imgQuest', 'img-fluid', 'rounded', 'my-2', 'd-block', 'mx-auto');
+        imgElement.alt = "";
         questaoElement.parentNode.insertBefore(imgElement, questaoElement);
       }
-      imgElement.src = `http://localhost:3000/imagens/${questao.imagem_url}`;
+      let urlLimpa = questao.imagem_url;
+      if (!urlLimpa.startsWith('http://') && !urlLimpa.startsWith('https://') && !urlLimpa.startsWith('data:')) {
+        const pathClean = urlLimpa.startsWith('/') ? urlLimpa : `/${urlLimpa}`;
+        urlLimpa = `http://localhost:3000${pathClean}`;
+      }
+      imgElement.src = urlLimpa;
     } else {
       if (imgElement) {
         imgElement.remove();
@@ -555,11 +561,140 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
 
     document.getElementById('btn-voltar-inicio').addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = 'dashboard.html';
     });
 
     document.getElementById('btn-minhas-listas').addEventListener('click', () => {
       window.location.href = 'verListas.html';
+    });
+  }
+
+  // ===============================================
+  // MODAL FLUTUANTE PARA REPORTAR ERRO NA QUESTÃO
+  // ===============================================
+  const btnReportarQuestao = document.getElementById('btn-reportar-questao');
+  const modalReportar = document.getElementById('modal-reportar');
+  const modalReportarCod = document.getElementById('modal-reportar-cod');
+  const btnFecharModalReportar = document.getElementById('btn-fechar-modal-reportar');
+  const btnCancelarReporte = document.getElementById('btn-cancelar-reporte');
+  const btnEnviarReporte = document.getElementById('btn-enviar-reporte');
+  const selectMotivoReporte = document.getElementById('select-motivo-reporte');
+  const containerMotivoOutros = document.getElementById('container-motivo-outros');
+  const txtMotivoOutros = document.getElementById('txt-motivo-outros');
+  const alertModalReportar = document.getElementById('alert-modal-reportar');
+
+  function fecharModalReportar() {
+    if (modalReportar) {
+      modalReportar.style.display = 'none';
+      if (selectMotivoReporte) selectMotivoReporte.value = '';
+      if (containerMotivoOutros) containerMotivoOutros.style.display = 'none';
+      if (txtMotivoOutros) txtMotivoOutros.value = '';
+      if (alertModalReportar) {
+        alertModalReportar.style.display = 'none';
+        alertModalReportar.innerText = '';
+        alertModalReportar.className = 'alert alert-danger p-2';
+      }
+    }
+  }
+
+  if (btnReportarQuestao) {
+    btnReportarQuestao.addEventListener('click', () => {
+      const questao = simulado[questaoAtual];
+      if (!questao) return;
+
+      if (modalReportarCod) {
+        modalReportarCod.innerText = `#${questao.cod || (questaoAtual + 1)}`;
+      }
+      if (modalReportar) {
+        modalReportar.style.display = 'flex';
+      }
+    });
+  }
+
+  if (btnFecharModalReportar) btnFecharModalReportar.addEventListener('click', fecharModalReportar);
+  if (btnCancelarReporte) btnCancelarReporte.addEventListener('click', fecharModalReportar);
+
+  if (modalReportar) {
+    modalReportar.addEventListener('click', (e) => {
+      if (e.target === modalReportar) fecharModalReportar();
+    });
+  }
+
+  if (selectMotivoReporte) {
+    selectMotivoReporte.addEventListener('change', () => {
+      if (selectMotivoReporte.value === 'Outros') {
+        containerMotivoOutros.style.display = 'block';
+      } else {
+        containerMotivoOutros.style.display = 'none';
+      }
+      if (alertModalReportar) alertModalReportar.style.display = 'none';
+    });
+  }
+
+  if (btnEnviarReporte) {
+    btnEnviarReporte.addEventListener('click', async () => {
+      const questao = simulado[questaoAtual];
+      if (!questao || !questao.cod) {
+        alertModalReportar.innerText = 'Erro ao identificar o código desta questão.';
+        alertModalReportar.style.display = 'block';
+        return;
+      }
+
+      const motivo = selectMotivoReporte.value;
+      const descricaoDetalhada = txtMotivoOutros.value.trim();
+
+      if (!motivo) {
+        alertModalReportar.innerText = 'Por favor, selecione o motivo do reporte.';
+        alertModalReportar.style.display = 'block';
+        return;
+      }
+
+      if (motivo === 'Outros' && !descricaoDetalhada) {
+        alertModalReportar.innerText = 'Por favor, descreva o problema encontrado no campo de texto.';
+        alertModalReportar.style.display = 'block';
+        return;
+      }
+
+      btnEnviarReporte.disabled = true;
+      btnEnviarReporte.innerText = 'Enviando...';
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/questoes/${questao.cod}/reportar`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            motivo,
+            descricao_detalhada: descricaoDetalhada
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erro ao registrar reporte.');
+        }
+
+        alertModalReportar.className = 'alert alert-success p-2';
+        alertModalReportar.innerText = data.message || 'Reporte enviado com sucesso!';
+        alertModalReportar.style.display = 'block';
+
+        setTimeout(() => {
+          fecharModalReportar();
+          btnEnviarReporte.disabled = false;
+          btnEnviarReporte.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar Reporte';
+        }, 1500);
+
+      } catch (err) {
+        console.error('Erro ao enviar reporte de questão:', err);
+        alertModalReportar.className = 'alert alert-danger p-2';
+        alertModalReportar.innerText = err.message || 'Falha na conexão ao enviar o reporte.';
+        alertModalReportar.style.display = 'block';
+        btnEnviarReporte.disabled = false;
+        btnEnviarReporte.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar Reporte';
+      }
     });
   }
 

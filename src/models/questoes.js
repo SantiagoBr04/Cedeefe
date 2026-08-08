@@ -54,6 +54,11 @@ export default (sequelize, DataTypes) => {
             foreignKey: 'questao_cod', 
             as: 'alternativas'         
         });
+
+        Questao.hasMany(models.QuestaoReportada, {
+            foreignKey: 'questao_cod',
+            as: 'reportes'
+        });
     }
 
     return Questao

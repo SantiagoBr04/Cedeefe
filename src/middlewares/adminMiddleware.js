@@ -7,11 +7,15 @@ const adminMiddleware = async (req, res, next) => {
     // Neste ponto, o authMiddleware já rodou e deu o req.userId.
     const { userId } = req;
 
+    if (!userId) {
+      return res.status(401).json({ error: 'Sessão inválida ou não autenticada.' });
+    }
+
     // Busca o usuário no banco para verificar seu status de admin
     const user = await Usuario.findOne({
-      where: { cod: userId},
+      where: { cod: userId },
       attributes: ['adm']
-    })
+    });
 
     // Verifica se o usuário existe
     if (!user) {

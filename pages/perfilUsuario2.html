@@ -32,22 +32,17 @@
         <!-- CABEÇALHO -->
         <section class="perfil-cabecalho">
 
-            <div class="perfil-foto">
-
-                <div class="perfil-avatar" id="perfilAvatar">
-                    A
-                </div>
-
-                <label class="btn-foto" for="fotoPerfil">
-                    <i class="bi bi-camera-fill"></i>
+            <div class="perfil-foto-container">
+                <label for="fotoPerfil" class="perfil-foto-wrapper sem-foto" id="perfilFotoWrapper" title="Clique para alterar a foto de perfil">
+                    <div class="perfil-avatar" id="perfilAvatar">
+                        <span id="perfilAvatarInicial">A</span>
+                    </div>
+                    <div class="perfil-foto-overlay" id="perfilFotoOverlay">
+                        <i class="bi bi-camera-fill"></i>
+                        <span id="perfilFotoOverlayTexto">Colocar foto</span>
+                    </div>
                 </label>
-
-                <input
-                    type="file"
-                    id="fotoPerfil"
-                    accept="image/png,image/jpeg,image/webp,image/gif"
-                    hidden>
-
+                <input type="file" id="fotoPerfil" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
             </div>
 
             <div class="perfil-cabecalho-texto">

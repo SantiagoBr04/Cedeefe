@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,114 +8,120 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../estilos/sidebar.css">
     <link rel="stylesheet" href="../estilos/adicionarQuestao.css">
+    <link rel="stylesheet" href="../estilos/editorQuestao.css">
     <!-- Guardião de Autenticação -->
     <script src="../scripts/authGuard.js"></script>
 </head>
+
 <body data-admin-required="true">
 
-    <!-- SIDEBARRRR -->
+    <!-- SIDEBAR -->
     <div id="sidebar-container"></div>
 
-
     <div class="content">
-        <h2>Adicionar Nova Questão</h2>
-        
-        <form id="form-add-questao" class="form-container">
-            
-            <div class="row mb-3">
+        <!-- Cabeçalho de Adição de Questão -->
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 bg-white p-4 rounded shadow-sm border">
+            <div>
+                <h2 class="mb-1 fw-bold text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-file-earmark-plus-fill text-verde"></i> Adicionar Nova Questão
+                </h2>
+                <p class="text-muted mb-0">Cadastre questões com suporte a formatação avançada, fórmulas e imagens no enunciado, gabarito e alternativas.</p>
+            </div>
+            <a href="dashboardAdm.html" class="btn btn-outline-secondary px-3 py-2">
+                <i class="bi bi-arrow-left me-1"></i> Voltar ao Painel
+            </a>
+        </div>
+
+        <form id="form-add-questao" class="bg-white p-4 rounded shadow-sm border">
+
+            <div class="row g-3 mb-3">
                 <div class="col-12 col-md-6">
-                    <label for="disciplina-select" class="form-label">Disciplina</label>
+                    <label for="disciplina-select" class="form-label font-weight-bold">Disciplina <span class="text-danger">*</span></label>
                     <select id="disciplina-select" class="form-select" required>
-                        <option value="">Carregando...</option>
+                        <option value="">Carregando disciplinas...</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-6">
-                    <label for="tema-input" class="form-label">Código do Tema (Opcional)</label>
-                    <input type="number" id="tema-input" class="form-control" placeholder="Ex: 1">
+                    <label for="tema-select" class="form-label font-weight-bold">Tema (Opcional)</label>
+                    <select id="tema-select" class="form-select">
+                        <option value="">-- Selecione uma disciplina primeiro --</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="row mb-3">
+            <div class="row g-3 mb-3">
                 <div class="col-12 col-md-8">
-                    <label for="autor-input" class="form-label">Instituição / Autor</label>
-                    <input type="text" id="autor-input" class="form-control" placeholder="Ex: IFC, IFRS, IFPR..">
+                    <label for="autor-input" class="form-label font-weight-bold">Instituição / Autor</label>
+                    <input type="text" id="autor-input" class="form-control" placeholder="Ex: IFC, IFRS, IFPR, ENEM...">
                 </div>
                 <div class="col-12 col-md-4">
-                    <label for="ano-input" class="form-label">Ano</label>
+                    <label for="ano-input" class="form-label font-weight-bold">Ano</label>
                     <input type="number" id="ano-input" class="form-control" placeholder="Ex: 2024">
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label for="enunciado" class="form-label">Enunciado da Questão</label>
-                <textarea id="enunciado" class="form-control" rows="4" required placeholder="Digite o texto da questão aqui..."></textarea>
+            <!-- Editor de Enunciado -->
+            <div class="mb-4">
+                <label class="form-label font-weight-bold d-flex justify-content-between align-items-center">
+                    <span>Enunciado da Questão <span class="text-danger">*</span></span>
+                    <small class="text-muted fw-normal"><i class="bi bi-fonts me-1"></i>Formatação Rica & Imagem Inline</small>
+                </label>
+                <div id="container-editor-enunciado"></div>
             </div>
 
-            <div class="mb-4">
-                <label for="input-imagem" class="form-label">Imagem de Apoio (Opcional)</label>
+            <!-- Imagem de Apoio Geral (Opcional) -->
+            <div class="mb-4 p-3 bg-light rounded border">
+                <label for="input-imagem" class="form-label font-weight-bold d-flex align-items-center gap-2 mb-1">
+                    <i class="bi bi-image text-verde fs-5"></i> Imagem Principal de Apoio (Opcional)
+                </label>
                 <input type="file" id="input-imagem" class="form-control" accept="image/*">
-                <div class="form-text">Formatos aceitos: PNG, JPG, JPEG.</div>
+                <div class="form-text">Envie uma imagem complementar caso queira exibi-la em destaque na questão (Formatos: PNG, JPG, WEBP).</div>
             </div>
 
+            <!-- Editor da Explicação / Gabarito Comentado -->
             <div class="mb-4">
-                <label for="explicacao" class="form-label">Explicação / Gabarito Comentado</label>
-                <textarea id="explicacao" class="form-control" rows="3" placeholder="Explique por que a resposta correta é a correta (aparecerá após o aluno responder)."></textarea>
+                <label class="form-label font-weight-bold d-flex justify-content-between align-items-center">
+                    <span>Explicação / Gabarito Comentado</span>
+                    <small class="text-muted fw-normal"><i class="bi bi-journal-check me-1"></i>Resolução Passo a Passo com Imagens e Fórmulas</small>
+                </label>
+                <div id="container-editor-explicacao"></div>
             </div>
 
-            <hr>
+            <hr class="my-4">
 
-            <h4>Alternativas</h4>
-            <p class="text-muted">Marque a bolinha na alternativa correta.</p>
-            
-            <div id="container-alternativas">
-                <div class="grupo-alternativa input-group mb-2">
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="0" aria-label="Alternativa correta" required>
-                    </div>
-                    <input type="text" class="form-control input-texto" placeholder="Alternativa A" required>
-                </div>
-
-                <div class="grupo-alternativa input-group mb-2">
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="1">
-                    </div>
-                    <input type="text" class="form-control input-texto" placeholder="Alternativa B" required>
-                </div>
-
-                <div class="grupo-alternativa input-group mb-2">
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="2">
-                    </div>
-                    <input type="text" class="form-control input-texto" placeholder="Alternativa C">
-                </div>
-
-                <div class="grupo-alternativa input-group mb-2">
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="3">
-                    </div>
-                    <input type="text" class="form-control input-texto" placeholder="Alternativa D">
-                </div>
-
-                <div class="grupo-alternativa input-group mb-2">
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 radio-correta" type="radio" name="correta" value="4">
-                    </div>
-                    <input type="text" class="form-control input-texto" placeholder="Alternativa E">
+            <!-- Alternativas -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="fw-bold mb-0">Alternativas da Questão</h4>
+                    <p class="text-muted small mb-0">Selecione a opção correta e formate o texto de cada alternativa com textos ou imagens.</p>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-verde">Salvar Questão</button>
+            <div id="container-alternativas-add" class="mb-4">
+                <!-- Alternativas serão renderizadas via JavaScript com editores individuais -->
+            </div>
+
+            <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                <button type="reset" class="btn btn-outline-secondary px-4 py-2">Limpar Campos</button>
+                <button type="submit" class="btn btn-verde px-5 py-2 font-weight-bold shadow-sm">
+                    <i class="bi bi-check-lg me-1"></i> Salvar Questão
+                </button>
+            </div>
+
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/editorQuestao.js"></script>
     <script src="../scripts/adicionarQuestao.js"></script>
 
-    <script src="../scripts/loadSidebar2.js"></script>
+    <script src="../scripts/loadSidebar.js"></script>
     <script src="../scripts/sidebar.js"></script>
 </body>
+
 </html>

@@ -28,18 +28,22 @@
 
     <main class="content">
         <section class="perfil-cabecalho">
-            <div class="perfil-avatar" id="perfilAvatar">A</div>
+            <div class="perfil-foto-container">
+                <label for="fotoPerfil" class="perfil-foto-wrapper sem-foto" id="perfilFotoWrapper" title="Clique para alterar a foto de perfil">
+                    <div class="perfil-avatar" id="perfilAvatar">
+                        <span id="perfilAvatarInicial">A</span>
+                    </div>
+                    <div class="perfil-foto-overlay" id="perfilFotoOverlay">
+                        <i class="bi bi-camera-fill"></i>
+                        <span id="perfilFotoOverlayTexto">Colocar foto</span>
+                    </div>
+                </label>
+                <input type="file" id="fotoPerfil" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+            </div>
             <div class="perfil-cabecalho-texto">
                 <p class="perfil-selo">Conta do aluno</p>
                 <h1>Dados da Conta</h1>
                 <p>Atualize seus dados, troque a senha e gerencie sua conta em um só lugar.</p>
-            </div>
-            <div class="perfil-acoes-topo">
-                <label class="btn btn-rosa btn-foto" for="fotoPerfil">
-                    <i class="bi bi-camera-fill"></i>
-                    Trocar foto
-                </label>
-                <input type="file" id="fotoPerfil" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
             </div>
         </section>
 

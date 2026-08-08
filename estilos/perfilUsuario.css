@@ -58,86 +58,87 @@ body{
 
 /* FOTO */
 
-.perfil-foto{
-
+.perfil-foto-container{
     position:relative;
-
-    width:95px;
-
-    height:95px;
-
     flex-shrink:0;
+}
 
+.perfil-foto-wrapper{
+    position:relative;
+    width:105px;
+    height:105px;
+    border-radius:50%;
+    display:block;
+    cursor:pointer;
+    overflow:hidden;
+    border:3px solid #c23672;
+    box-shadow:0 4px 14px rgba(194,54,114,.2);
+    transition:transform .2s ease,box-shadow .2s ease;
+}
+
+.perfil-foto-wrapper:hover{
+    transform:scale(1.04);
+    box-shadow:0 6px 18px rgba(194,54,114,.35);
 }
 
 .perfil-avatar{
-
-    width:95px;
-
-    height:95px;
-
+    width:100%;
+    height:100%;
     border-radius:50%;
-
     display:grid;
-
     place-items:center;
-
     background:linear-gradient(135deg,#ff9cae,#e9ffd3);
-
-    border:3px solid #c23672;
-
-    font-size:2rem;
-
+    font-size:2.4rem;
     font-weight:700;
-
-    overflow:hidden;
-
+    color:#c23672;
     background-size:cover;
-
     background-position:center;
-
 }
 
-.btn-foto{
-
+.perfil-foto-overlay{
     position:absolute;
-
-    right:-3px;
-
-    bottom:-3px;
-
-    width:34px;
-
-    height:34px;
-
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
     border-radius:50%;
-
-    background:#ff9cae;
-
     color:#fff;
-
     display:flex;
-
+    flex-direction:column;
     align-items:center;
-
     justify-content:center;
-
-    cursor:pointer;
-
-    border:3px solid #fff;
-
-    transition:.2s;
-
-    box-shadow:0 3px 8px rgba(0,0,0,.15);
-
+    gap:3px;
+    font-size:0.72rem;
+    font-weight:600;
+    text-align:center;
+    padding:6px;
+    transition:opacity .25s ease,background .25s ease;
 }
 
-.btn-foto:hover{
+.perfil-foto-overlay i{
+    font-size:1.35rem;
+}
 
-    transform:scale(1.08);
+/* Quando NÃO TEM FOTO: overlay sempre visível incentivando a colocar foto */
+.perfil-foto-wrapper.sem-foto .perfil-foto-overlay{
+    opacity:0.88;
+    background:rgba(194,54,114,.75);
+}
 
-    background:#ff7d98;
+.perfil-foto-wrapper.sem-foto:hover .perfil-foto-overlay{
+    opacity:1;
+    background:rgba(194,54,114,.9);
+}
 
+/* Quando TEM FOTO: a foto do usuário é exibida limpa e o overlay só aparece no hover com 'Atualizar foto' */
+.perfil-foto-wrapper.com-foto .perfil-foto-overlay{
+    opacity:0;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(2px);
+}
+
+.perfil-foto-wrapper.com-foto:hover .perfil-foto-overlay{
+    opacity:1;
 }
 
 /* TEXTO */

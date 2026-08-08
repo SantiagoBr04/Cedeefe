@@ -11,7 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Elementos do DOM
+    function formatarUrlImagem(url) {
+        if (!url || typeof url !== 'string') return '';
+        if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+            return url;
+        }
+        return `http://localhost:3000${url.startsWith('/') ? url : '/' + url}`;
+    }
+
     const containerQuestoes = document.getElementById('container-questoes-revisao');
     const badgeTotalQuestoes = document.getElementById('badge-total-questoes');
     const alertaFeedback = document.getElementById('alerta-feedback');
@@ -27,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let questoesEmRevisao = [];
     let loteIdAtual = null;
 
-    // Carrega Disciplinas e Temas para preencher os seletores
+    const editoresPorCard = new Map();
+
     async function carregarAuxiliares() {
         try {
             const [respDisc, respTemas] = await Promise.all([
@@ -42,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Busca a lista de rascunhos disponíveis no servidor e popula o modal
     async function carregarListaRascunhos() {
         try {
             const resp = await fetch(`${API_BASE_URL}/questoes/rascunhos`, {
@@ -57,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Renderiza a lista de rascunhos dentro do modal de seleção
     function renderizarModalRascunhos(rascunhos) {
         if (!listaRascunhosModal) return;
 
@@ -95,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        // Adiciona evento de clique a cada item do modal
         listaRascunhosModal.querySelectorAll('.btn-item-rascunho').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const loteId = e.currentTarget.dataset.loteid;
@@ -109,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Carrega os dados de um rascunho específico pelo loteId
     async function carregarRascunho(loteId) {
         if (!loteId) return false;
 
@@ -128,18 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
             questoesEmRevisao = payloadImportacao.questoes || [];
             loteIdAtual = loteId;
 
-            // Atualiza a URL sem recarregar a página
             if (window.history && window.history.replaceState) {
                 window.history.replaceState({}, document.title, `revisarImportacaoPdf.html?loteId=${loteId}`);
             }
 
-            // Atualiza o banner de status da prova
             atualizarBannerStatus(payloadImportacao);
-
-            // Renderiza as questões na tela
             renderizarRevisaoQuestoes(questoesEmRevisao, payloadImportacao.disciplinaPadraoCod || '');
-
-            // Atualiza destaque no modal
             renderizarModalRascunhos(rascunhosLista);
 
             exibirAlerta(`${questoesEmRevisao.length} questões carregadas do rascunho selecionado.`, 'alert-success');
@@ -152,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Atualiza o banner no topo da página conforme o status de revisão da prova
     function atualizarBannerStatus(payload) {
         if (!bannerStatusRascunho) return;
 
@@ -204,9 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Renderiza a lista de questões na tela de revisão
     function renderizarRevisaoQuestoes(questoes, disciplinaPadraoCod) {
         containerQuestoes.innerHTML = '';
+        editoresPorCard.clear();
+
         const listDisc = Array.isArray(disciplinasCache) ? disciplinasCache : [];
         const listTemas = Array.isArray(temasCache) ? temasCache : [];
 
@@ -228,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'card card-questao-item mb-4';
             card.dataset.index = index;
 
-            // Tratamento de disciplina sugerida com mapeamento inteligente de subdisciplinas
             let disciplinaSelecionada = disciplinaPadraoCod;
             const sugestaoStr = typeof q.disciplina_sugerida === 'string'
                 ? q.disciplina_sugerida
@@ -238,12 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 disciplinaSelecionada = resolverDisciplinaSugerida(sugestaoStr, listDisc);
             }
 
-            // Opções de disciplinas para o select
             const optionsDisc = listDisc.map(d =>
                 `<option value="${d.cod}" ${String(d.cod) === String(disciplinaSelecionada) ? 'selected' : ''}>${escapeHtml(d.descricao || d.nome || `Disciplina #${d.cod}`)}</option>`
             ).join('');
 
-            // Opções de temas
             const getOptionsTema = (discCod, temaAtualCod) => {
                 const temasFiltrados = discCod
                     ? listTemas.filter(t => String(t.disciplina_cod) === String(discCod))
@@ -255,19 +250,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const optionsTema = getOptionsTema(disciplinaSelecionada, q.tema_cod);
 
-            // Alternativas
             const alternativasLista = Array.isArray(q.alternativas) ? q.alternativas : [];
             const alternativasHtml = alternativasLista.map((alt, aIdx) => {
-                const textoAlt = typeof alt === 'string' ? alt : (alt && alt.texto ? alt.texto : '');
                 const isCorreta = alt && typeof alt === 'object' ? Boolean(alt.correta) : (aIdx === 0);
 
                 return `
-                    <div class="grupo-alternativa-item input-group mb-2 ${isCorreta ? 'is-correta' : ''}" id="group-alt-${index}-${aIdx}">
-                        <div class="input-group-text">
-                            <input class="form-check-input mt-0 radio-correta" type="radio" name="correta-q-${index}" value="${aIdx}" ${isCorreta ? 'checked' : ''} onchange="atualizarCorreta(${index}, ${aIdx})">
+                    <div class="grupo-alternativa-item mb-3 p-3 rounded border ${isCorreta ? 'is-correta bg-light-subtle border-success' : ''}" id="group-alt-${index}-${aIdx}">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <input class="form-check-input mt-0 radio-correta cursor-pointer" type="radio" name="correta-q-${index}" value="${aIdx}" ${isCorreta ? 'checked' : ''} onchange="atualizarCorreta(${index}, ${aIdx})">
+                                <span class="font-weight-bold text-dark">${String.fromCharCode(65 + aIdx)})</span>
+                            </div>
+                            <label class="btn btn-sm btn-outline-primary mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
+                                <i class="bi bi-upload"></i> Imagem p/ Alt ${String.fromCharCode(65 + aIdx)}
+                                <input type="file" class="d-none input-file-alt-pdf" data-qindex="${index}" data-altindex="${aIdx}" accept="image/*">
+                            </label>
                         </div>
-                        <span class="input-group-text font-weight-bold bg-white">${String.fromCharCode(65 + aIdx)})</span>
-                        <input type="text" class="form-control input-texto-alt" value="${escapeHtml(textoAlt)}" required>
+                        <div id="editor-alt-pdf-${index}-${aIdx}"></div>
                     </div>
                 `;
             }).join('');
@@ -321,38 +320,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="mb-3">
                         <label class="form-label font-weight-bold d-flex align-items-center justify-content-between">
                             <span>Enunciado da Questão <span class="text-danger">*</span></span>
-                            <small class="text-muted fw-normal"><i class="bi bi-fonts me-1"></i>Editor de Formatação (Negrito, Itálico, Fontes)</small>
+                            <small class="text-muted fw-normal"><i class="bi bi-fonts me-1"></i>Formatação Rica</small>
                         </label>
-                        <div class="editor-toolbar">
-                            <button type="button" class="btn-fmt btn-bold" title="Negrito"><i class="bi bi-type-bold"></i></button>
-                            <button type="button" class="btn-fmt btn-italic" title="Itálico"><i class="bi bi-type-italic"></i></button>
-                            <button type="button" class="btn-fmt btn-underline" title="Sublinhado"><i class="bi bi-type-underline"></i></button>
-                            <button type="button" class="btn-fmt btn-subscript" title="Subscrito">H<sub>2</sub>O</button>
-                            <button type="button" class="btn-fmt btn-superscript" title="Sobrescrito">X<sup>2</sup></button>
-                            <span class="border-end mx-1" style="height: 18px;"></span>
-                            <button type="button" class="btn-fmt btn-ul" title="Lista Marcadores"><i class="bi bi-list-ul"></i></button>
-                            <button type="button" class="btn-fmt btn-ol" title="Lista Numerada"><i class="bi bi-list-ol"></i></button>
-                            <span class="border-end mx-1" style="height: 18px;"></span>
-                            <select class="select-fmt select-font" title="Fonte">
-                                <option value="Poppins, sans-serif">Poppins</option>
-                                <option value="Arial, sans-serif">Arial</option>
-                                <option value="Times New Roman, serif">Times New Roman</option>
-                                <option value="Courier New, monospace">Courier</option>
-                            </select>
-                            <button type="button" class="btn-fmt btn-clear ms-auto" title="Limpar Formatação"><i class="bi bi-eraser me-1"></i>Limpar</button>
-                        </div>
-                        <div class="editor-enunciado" contenteditable="true"></div>
+                        <div id="editor-enunciado-pdf-${index}"></div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label font-weight-bold d-flex align-items-center justify-content-between">
-                            <span>Imagem da Questão (Opcional)</span>
-                            <small class="text-muted fw-normal"><i class="bi bi-image me-1"></i>URL ou Upload de Imagem</small>
+                    <div class="mb-3 p-3 bg-light rounded border">
+                        <label class="form-label font-weight-bold d-flex align-items-center justify-content-between mb-1">
+                            <span>Upload de Imagem da Questão (Opcional)</span>
+                            <small class="text-muted fw-normal"><i class="bi bi-image me-1"></i>Gere a tag de imagem</small>
                         </label>
                         <div class="container-imagem-questao">
                             <div class="row g-2 align-items-center">
                                 <div class="col">
-                                    <input type="text" class="form-control input-imagem-url" placeholder="URL da imagem (ex: /imagens/figura1.png ou https://...)" value="${escapeHtml(q.imagem_url || '')}">
+                                    <input type="text" class="form-control input-imagem-url" placeholder="URL da imagem (ex: /imagens/figura1.png)" value="${escapeHtml(q.imagem_url || '')}">
                                 </div>
                                 <div class="col-auto d-flex gap-2">
                                     <label class="btn btn-outline-primary btn-sm mb-0 d-flex align-items-center gap-1 cursor-pointer">
@@ -364,8 +345,18 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </button>
                                 </div>
                             </div>
+                            <div class="box-acoes-imagem mt-2 ${q.imagem_url ? '' : 'd-none'}">
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <button type="button" class="btn btn-sm btn-success btn-inserir-no-enunciado">
+                                        <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Enunciado
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-primary btn-inserir-no-gabarito">
+                                        <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Gabarito
+                                    </button>
+                                </div>
+                            </div>
                             <div class="preview-imagem-container text-center mt-2 ${q.imagem_url ? '' : 'd-none'}">
-                                <img src="${escapeHtml(q.imagem_url || '')}" class="preview-imagem-questao img-fluid shadow-sm" alt="Preview da imagem">
+                                <img src="${formatarUrlImagem(q.imagem_url)}" class="preview-imagem-questao img-fluid shadow-sm" style="max-height: 120px; max-width: 200px; object-fit: contain;" alt="Preview da imagem">
                             </div>
                         </div>
                     </div>
@@ -379,53 +370,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <div>
                         <label class="form-label font-weight-bold">Explicação / Gabarito Comentado (Passo a Passo)</label>
-                        <textarea class="form-control textarea-explicacao" rows="6" placeholder="Digite a explicação passo a passo da resposta...">${escapeHtml(q.explicacao || '')}</textarea>
+                        <div id="editor-explicacao-pdf-${index}"></div>
                     </div>
                 </div>
             `;
 
             containerQuestoes.appendChild(card);
 
-            // Popula o conteúdo inicial do editor do enunciado com suporte a notação matemática e HTML
-            const editorEnunciado = card.querySelector('.editor-enunciado');
-            if (editorEnunciado) {
-                editorEnunciado.innerHTML = processarFormatacaoTexto(q.enunciado || '');
-            }
+            const editorEnunciadoObj = new EditorQuestao(`#editor-enunciado-pdf-${index}`, {
+                placeholder: 'Edite o enunciado da questão...',
+                initialValue: processarFormatacaoTexto(q.enunciado || '')
+            });
 
-            // Eventos da barra de ferramentas de formatação do enunciado
-            if (editorEnunciado) {
-                const execFmt = (command, value = null) => {
-                    editorEnunciado.focus();
-                    document.execCommand(command, false, value);
-                };
+            const editorExplicacaoObj = new EditorQuestao(`#editor-explicacao-pdf-${index}`, {
+                placeholder: 'Edite a explicação/gabarito comentado...',
+                initialValue: processarFormatacaoTexto(q.explicacao || '')
+            });
 
-                card.querySelector('.btn-bold')?.addEventListener('click', () => execFmt('bold'));
-                card.querySelector('.btn-italic')?.addEventListener('click', () => execFmt('italic'));
-                card.querySelector('.btn-underline')?.addEventListener('click', () => execFmt('underline'));
-                card.querySelector('.btn-subscript')?.addEventListener('click', () => execFmt('subscript'));
-                card.querySelector('.btn-superscript')?.addEventListener('click', () => execFmt('superscript'));
-                card.querySelector('.btn-ul')?.addEventListener('click', () => execFmt('insertUnorderedList'));
-                card.querySelector('.btn-ol')?.addEventListener('click', () => execFmt('insertOrderedList'));
-                card.querySelector('.select-font')?.addEventListener('change', (e) => execFmt('fontName', e.target.value));
-                card.querySelector('.btn-clear')?.addEventListener('click', () => execFmt('removeFormat'));
-            }
+            const editoresAltList = [];
+            alternativasLista.forEach((alt, aIdx) => {
+                const textoAlt = typeof alt === 'string' ? alt : (alt && alt.texto ? alt.texto : '');
+                const edAltObj = new EditorQuestao(`#editor-alt-pdf-${index}-${aIdx}`, {
+                    placeholder: `Texto da alternativa ${String.fromCharCode(65 + aIdx)}...`,
+                    compact: true,
+                    initialValue: processarFormatacaoTexto(textoAlt)
+                });
 
-            // Eventos da Imagem da Questão
+                editoresAltList.push(edAltObj);
+
+                const fileAltInput = card.querySelector(`.input-file-alt-pdf[data-altindex="${aIdx}"]`);
+                if (fileAltInput) {
+                    fileAltInput.addEventListener('change', async (ev) => {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+
+                        const file = ev.target.files[0];
+                        if (!file) return;
+
+                        const formData = new FormData();
+                        formData.append('imagem', file);
+
+                        try {
+                            const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
+                                method: 'POST',
+                                headers: { Authorization: `Bearer ${token}` },
+                                body: formData
+                            });
+
+                            const data = await resp.json();
+                            if (!resp.ok) throw new Error(data.error || 'Erro no upload.');
+
+                            edAltObj.inserirTagImagem(data.imagem_url);
+                        } catch (err) {
+                            console.error('Erro no upload de imagem da alternativa:', err);
+                            alert(`Erro ao fazer upload da imagem: ${err.message}`);
+                        }
+                    });
+                }
+            });
+
+            editoresPorCard.set(index, {
+                enunciado: editorEnunciadoObj,
+                explicacao: editorExplicacaoObj,
+                alternativas: editoresAltList
+            });
+
             const inputImagemUrl = card.querySelector('.input-imagem-url');
+            const boxAcoesImg = card.querySelector('.box-acoes-imagem');
             const previewContainer = card.querySelector('.preview-imagem-container');
             const previewImg = card.querySelector('.preview-imagem-questao');
             const btnRemoverImg = card.querySelector('.btn-remover-imagem');
             const inputFileImg = card.querySelector('.input-file-imagem');
+            const btnInserirEnunciado = card.querySelector('.btn-inserir-no-enunciado');
+            const btnInserirGabarito = card.querySelector('.btn-inserir-no-gabarito');
 
             const atualizarPreviewImg = (url) => {
                 if (url && url.trim()) {
-                    previewImg.src = url.trim();
+                    previewImg.src = formatarUrlImagem(url.trim());
                     previewContainer.classList.remove('d-none');
                     btnRemoverImg.classList.remove('d-none');
+                    boxAcoesImg.classList.remove('d-none');
                 } else {
                     previewImg.src = '';
                     previewContainer.classList.add('d-none');
                     btnRemoverImg.classList.add('d-none');
+                    boxAcoesImg.classList.add('d-none');
                 }
             };
 
@@ -434,15 +463,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (btnRemoverImg) {
-                btnRemoverImg.addEventListener('click', () => {
+                btnRemoverImg.addEventListener('click', (e) => {
+                    e.preventDefault();
                     if (inputImagemUrl) inputImagemUrl.value = '';
                     if (inputFileImg) inputFileImg.value = '';
                     atualizarPreviewImg('');
                 });
             }
 
+            if (btnInserirEnunciado) {
+                btnInserirEnunciado.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = inputImagemUrl ? inputImagemUrl.value.trim() : '';
+                    if (url) editorEnunciadoObj.inserirTagImagem(url);
+                });
+            }
+
+            if (btnInserirGabarito) {
+                btnInserirGabarito.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = inputImagemUrl ? inputImagemUrl.value.trim() : '';
+                    if (url) editorExplicacaoObj.inserirTagImagem(url);
+                });
+            }
+
             if (inputFileImg) {
                 inputFileImg.addEventListener('change', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
                     const file = e.target.files[0];
                     if (!file) return;
 
@@ -452,9 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     try {
                         const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
                             method: 'POST',
-                            headers: {
-                                Authorization: `Bearer ${token}`
-                            },
+                            headers: { Authorization: `Bearer ${token}` },
                             body: formData
                         });
 
@@ -470,7 +517,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Marcador visual de questão revisada
             const btnToggleRevisada = card.querySelector('.btn-toggle-revisada');
             const badgeStatusRevisada = card.querySelector('.badge-status-revisada');
 
@@ -490,7 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Atualiza temas ao mudar disciplina
         containerQuestoes.querySelectorAll('.card-questao-item').forEach(card => {
             const selectDisc = card.querySelector('.select-disciplina');
             const selectTema = card.querySelector('.select-tema');
@@ -508,7 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Botões de remover questão
         containerQuestoes.querySelectorAll('.btn-remover-card').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = e.currentTarget.dataset.index;
@@ -517,7 +561,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Atualizar estilo visual da alternativa marcada como correta
     window.atualizarCorreta = function (qIndex, altIndex) {
         const card = containerQuestoes.querySelector(`.card-questao-item[data-index="${qIndex}"]`);
         if (!card) return;
@@ -525,9 +568,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const grupos = card.querySelectorAll('.grupo-alternativa-item');
         grupos.forEach((g, idx) => {
             if (idx === altIndex) {
-                g.classList.add('is-correta');
+                g.classList.add('is-correta', 'bg-light-subtle', 'border-success');
             } else {
-                g.classList.remove('is-correta');
+                g.classList.remove('is-correta', 'bg-light-subtle', 'border-success');
             }
         });
     };
@@ -536,13 +579,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm('Tem certeza que deseja remover esta questão da importação?')) {
             const card = containerQuestoes.querySelector(`.card-questao-item[data-index="${index}"]`);
             if (card) card.remove();
+            editoresPorCard.delete(parseInt(index, 10));
 
             const restantes = containerQuestoes.querySelectorAll('.card-questao-item').length;
             badgeTotalQuestoes.textContent = `${restantes} Questão(ões)`;
         }
     }
 
-    // Salva as questões no banco de dados e marca o rascunho no servidor como revisado
     async function salvarTodasEmLote() {
         const cards = containerQuestoes.querySelectorAll('.card-questao-item');
         if (cards.length === 0) {
@@ -550,7 +593,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Se a prova já foi revisada/enviada, solicita confirmação ao usuário para evitar duplicidade
         if (payloadImportacao && payloadImportacao.revisada) {
             const confirmaReenvio = confirm(
                 'Atenção! Esta prova já foi enviada ao banco de dados anteriormente.\n\n' +
@@ -562,18 +604,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const questoesParaEnviar = [];
         let erroValidacao = null;
 
-        cards.forEach((card, idx) => {
+        cards.forEach((card) => {
             if (erroValidacao) return;
 
-            const editorEnunciado = card.querySelector('.editor-enunciado');
-            const enunciadoHtml = editorEnunciado ? editorEnunciado.innerHTML.trim() : '';
-            const enunciadoText = editorEnunciado ? editorEnunciado.innerText.trim() : '';
+            const idx = parseInt(card.dataset.index, 10);
+            const edObj = editoresPorCard.get(idx);
+
+            const enunciadoHtml = edObj ? edObj.enunciado.obterHtml() : '';
+            const enunciadoText = edObj ? edObj.enunciado.obterTexto() : '';
+            const explicacaoHtml = edObj ? edObj.explicacao.obterHtml() : '';
 
             const disciplinaCod = card.querySelector('.select-disciplina').value;
             const temaCod = card.querySelector('.select-tema').value;
             const autor = card.querySelector('.input-autor').value.trim();
             const ano = card.querySelector('.input-ano').value;
-            const explicacao = card.querySelector('.textarea-explicacao').value.trim();
             const imagemUrl = card.querySelector('.input-imagem-url')?.value.trim();
 
             if (!enunciadoText && !enunciadoHtml) {
@@ -585,21 +629,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const altInputs = card.querySelectorAll('.input-texto-alt');
             const radioCorreta = card.querySelector('.radio-correta:checked');
+            const alternativas = [];
 
-            if (altInputs.length === 0) {
+            if (edObj && Array.isArray(edObj.alternativas)) {
+                edObj.alternativas.forEach((edAlt, aIdx) => {
+                    alternativas.push({
+                        texto: edAlt.obterHtml() || edAlt.obterTexto(),
+                        correta: radioCorreta ? (parseInt(radioCorreta.value, 10) === aIdx) : (aIdx === 0)
+                    });
+                });
+            }
+
+            if (alternativas.length === 0) {
                 erroValidacao = `A questão ${idx + 1} precisa ter alternativas.`;
                 return;
             }
-
-            const alternativas = [];
-            altInputs.forEach((inp, aIdx) => {
-                alternativas.push({
-                    texto: inp.value.trim(),
-                    correta: radioCorreta ? (parseInt(radioCorreta.value, 10) === aIdx) : (aIdx === 0)
-                });
-            });
 
             questoesParaEnviar.push({
                 descricao: enunciadoHtml,
@@ -607,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 tema_cod: temaCod ? parseInt(temaCod, 10) : null,
                 autor: autor || null,
                 ano: ano ? parseInt(ano, 10) : null,
-                explicacao: explicacao || null,
+                explicacao: explicacaoHtml || null,
                 imagem_url: imagemUrl || null,
                 alternativas
             });
@@ -663,7 +708,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnConfirmarTudo) btnConfirmarTudo.addEventListener('click', salvarTodasEmLote);
     if (btnConfirmarTudoBottom) btnConfirmarTudoBottom.addEventListener('click', salvarTodasEmLote);
 
-    // Mapeamento inteligente entre termos de subdisciplinas sugeridas pela IA e disciplinas do banco
     function resolverDisciplinaSugerida(sugestaoStr, listDisc) {
         if (!sugestaoStr || !Array.isArray(listDisc) || listDisc.length === 0) return null;
         const sugClean = String(sugestaoStr).toLowerCase().trim();
@@ -696,23 +740,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return discDireta ? discDireta.cod : null;
     }
 
-    // Processa notações matemáticas e LaTeX ($ $, \cdot, \frac, \sqrt, operadores, letras gregas), markdown e quebras de linha
     function processarFormatacaoTexto(texto) {
         if (texto === null || texto === undefined) return '';
         let html = String(texto);
 
-        // 1. Remove demarcadores de bloco/inline de LaTeX: $$...$$, \[...\], $...$, \(...\)
         html = html.replace(/\$\$(.*?)\$\$/gs, '$1');
         html = html.replace(/\\\[(.*?)\\\]/gs, '$1');
         html = html.replace(/\$(.*?)\$/g, '$1');
         html = html.replace(/\\\((.*?)\\\)/g, '$1');
 
-        // 2. Comandos complexos de LaTeX: \frac{numerador}{denominador} -> (numerador/denominador) e \sqrt{expressao}
         html = html.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1/$2)');
         html = html.replace(/\\sqrt\{([^}]+)\}/g, '√($1)');
         html = html.replace(/\\sqrt\s*([a-zA-Z0-9]+)/g, '√$1');
 
-        // 3. Comandos de operadores e símbolos matemáticos LaTeX
         html = html.replace(/\\cdot/g, ' · ');
         html = html.replace(/\\times/g, ' × ');
         html = html.replace(/\\div/g, ' ÷ ');
@@ -726,7 +766,6 @@ document.addEventListener('DOMContentLoaded', () => {
         html = html.replace(/\\degree/g, '°');
         html = html.replace(/\^\\circ/g, '°');
 
-        // 4. Letras gregas LaTeX
         html = html.replace(/\\alpha/g, 'α');
         html = html.replace(/\\beta/g, 'β');
         html = html.replace(/\\gamma/g, 'γ');
@@ -740,23 +779,19 @@ document.addEventListener('DOMContentLoaded', () => {
         html = html.replace(/\\Omega/g, 'Ω');
         html = html.replace(/\\Pi/g, 'Π');
 
-        // 5. Flechas e conectivos LaTeX
         html = html.replace(/\\rightarrow/g, ' → ');
         html = html.replace(/\\leftarrow/g, ' ← ');
         html = html.replace(/\\Rightarrow/g, ' ⇒ ');
         html = html.replace(/\\Leftrightarrow/g, ' ⇔ ');
 
-        // 6. Expoentes/Potências com chaves, parênteses ou simples ex: x^{2+n}, x^(2+n), 5^2
         html = html.replace(/([a-zA-Z0-9\)])\^\{([^}]+)\}/g, '$1<sup>$2</sup>');
         html = html.replace(/([a-zA-Z0-9\)])\^\(([^)]+)\)/g, '$1<sup>$2</sup>');
         html = html.replace(/([a-zA-Z0-9\)])\^([a-zA-Z0-9+\-]+)/g, '$1<sup>$2</sup>');
 
-        // 7. Subscritos com chaves, parênteses ou simples ex: x_{1}, H_2O
         html = html.replace(/([a-zA-Z0-9])_\{([^}]+)\}/g, '$1<sub>$2</sub>');
         html = html.replace(/([a-zA-Z0-9])_\(([^)]+)\)/g, '$1<sub>$2</sub>');
         html = html.replace(/([a-zA-Z0-9])_([a-zA-Z0-9+\-]+)/g, '$1<sub>$2</sub>');
 
-        // 8. Notações Markdown para Negrito e Itálico
         html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
@@ -781,7 +816,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alertaFeedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // Inicialização da página
     async function inicializar() {
         await carregarAuxiliares();
         await carregarListaRascunhos();
@@ -789,7 +823,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         let loteId = urlParams.get('loteId');
 
-        // Se o loteId não for informado na URL, seleciona o primeiro rascunho pendente ou o mais recente
         if (!loteId && Array.isArray(rascunhosLista) && rascunhosLista.length > 0) {
             const pendente = rascunhosLista.find(r => !r.revisada);
             loteId = pendente ? pendente.loteId : rascunhosLista[0].loteId;
@@ -798,16 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loteId) {
             await carregarRascunho(loteId);
         } else {
-            containerQuestoes.innerHTML = `
-                <div class="card p-5 text-center bg-white shadow-sm border">
-                    <i class="bi bi-folder-x fs-1 text-warning mb-3"></i>
-                    <h4>Nenhum rascunho de prova encontrado</h4>
-                    <p class="text-muted">Faça o upload de uma prova em PDF para gerar um rascunho de questões.</p>
-                    <div>
-                        <a href="importarQuestoesPdf.html" class="btn btn-verde px-4 py-2">Ir para Upload de Provas</a>
-                    </div>
-                </div>
-            `;
+            renderizarRevisaoQuestoes([], '');
         }
     }
 

@@ -20,7 +20,7 @@ const authMiddleware = (req, res, next) => {
 
     // Se for válido, adiciona o ID do usuário à requisição
     // para que as próximas funções (controllers) saibam quem é o usuário
-    req.userId = decoded.userId;
+    req.userId = decoded.userId || decoded.id;
     
     // Chama a próxima função (o controller da rota)
     next();

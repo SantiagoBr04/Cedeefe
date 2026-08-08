@@ -118,7 +118,7 @@
     background-color: #dc3545; /* danger */
 }
 
-.calendar-marker-lista::after {
+.calendar-marker-lista::before {
     content: '';
     position: absolute;
     bottom: 2px;
@@ -128,4 +128,12 @@
     height: 6px;
     border-radius: 50%;
     background-color: #0d6efd; /* primary */
+}
+
+.calendar-marker-simulado.calendar-marker-lista::after {
+    transform: translateX(2px);
+}
+
+.calendar-marker-simulado.calendar-marker-lista::before {
+    transform: translateX(-8px);
 }

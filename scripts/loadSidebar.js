@@ -1,4 +1,11 @@
+const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
 const isRoot = !window.location.pathname.includes('/pages/');
+
+// Se o usuário estiver logado e tentar acessar a raiz (index.html), envia para o dashboard normal
+if (isRoot && token) {
+    window.location.href = 'pages/dashboard.html';
+}
+
 const sidebarPath = isRoot ? 'componentes/sidebar.html' : '../componentes/sidebar.html';
 
 fetch(sidebarPath)
@@ -7,6 +14,8 @@ fetch(sidebarPath)
         const container = document.getElementById("sidebar-container");
         if (!container) return;
         container.innerHTML = data;
+
+        const dashboardUrl = isRoot ? 'pages/dashboard.html' : 'dashboard.html';
 
         // Se estiver na página inicial (raiz), ajusta os links da sidebar para a pasta /pages/
         if (isRoot) {
@@ -21,11 +30,21 @@ fetch(sidebarPath)
             });
         }
 
+        // Se o usuário estiver LOGADO (estudante ou adm), os links de Página inicial e Logo redirecionam para o dashboard normal
+        if (token) {
+            const links = container.querySelectorAll('a');
+            links.forEach(a => {
+                const href = a.getAttribute('href');
+                if (href && (href === 'index.html' || href === '../index.html' || href.endsWith('index.html'))) {
+                    a.setAttribute('href', dashboardUrl);
+                }
+            });
+        }
+
         if (typeof iniciarSidebar === 'function') {
             iniciarSidebar();
         }
 
-        const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
         const btnUserLink = document.getElementById("btn-user-link");
         const userDropdown = document.getElementById("user-dropdown");
         const userMenuContainer = document.getElementById("user-menu-container");

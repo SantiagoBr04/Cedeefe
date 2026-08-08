@@ -8,5 +8,6 @@ const router = new Router();
 router.get('/gerais', authMiddleware, estatisticasController.getEstatisticasGerais);
 router.get('/por-area', authMiddleware, estatisticasController.getEstatisticasPorArea);
 router.get('/flashcards', authMiddleware, estatisticasController.getHeatmapFlashcards);
+router.get('/atividades-calendario', authMiddleware, estatisticasController.getAtividadesCalendario);
 
 export default router;

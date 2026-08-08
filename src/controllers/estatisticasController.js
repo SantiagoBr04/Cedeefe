@@ -97,27 +97,41 @@ const estatisticasController = {
     try {
       const usuarioCod = req.userId;
 
-      // Pega o ano atual para limitar o envio de dados que não seriam renderizados
-      const anoAtual = new Date().getFullYear();
-
       // Buscando os registros do usuário
-      // Como o campo é DATEONLY ou string YYYY-MM-DD, a ordenação e filtros são diretos
       const historico = await db.HistoricoRevisaoFlashcard.findAll({
         where: { usuario_cod: usuarioCod },
         order: [['data_revisao', 'ASC']],
         attributes: ['data_revisao', 'cartoes_resolvidos']
       });
 
-      // Se quiser filtrar apenas do ano atual depois:
-      const dadosFiltradosAnoAtual = historico.filter(registro => {
-         return registro.data_revisao.toString().includes(anoAtual.toString());
-      });
-
-      return res.status(200).json(dadosFiltradosAnoAtual);
+      return res.status(200).json(historico);
 
     } catch (error) {
       console.error('Erro ao buscar heatmap de flashcards:', error);
       return res.status(500).json({ error: 'Erro interno no servidor ao consolidar o heatmap.' });
+    }
+  },
+
+  // Pega o histórico de atividades finalizadas (listas e simulados) do usuário para o calendário
+  getAtividadesCalendario: async (req, res) => {
+    try {
+      const usuarioCod = req.userId;
+
+      const resultados = await db.Historico_resultados.findAll({
+        include: [{
+          model: db.Atividade,
+          as: 'atividade',
+          where: { usuario_cod: usuarioCod },
+          attributes: ['cod', 'nome', 'tipo']
+        }],
+        attributes: ['cod', 'pontuacao', 'data_finalizacao'],
+        order: [['data_finalizacao', 'DESC']]
+      });
+
+      return res.status(200).json(resultados);
+    } catch (error) {
+      console.error('Erro ao buscar atividades para o calendário:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor ao buscar dados do calendário.' });
     }
   }
 };

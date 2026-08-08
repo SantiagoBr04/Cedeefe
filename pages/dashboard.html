@@ -26,21 +26,40 @@
                 <!-- Coluna Esquerda: 2/3 -->
                 <div class="col-lg-8 left-col">
                     
-                    <!-- Carrossel de Notícias -->
+                    <!-- Carrossel de Notícias / Recursos -->
                     <div id="newsCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
                         <div class="carousel-inner rounded shadow-sm">
                             <div class="carousel-item active">
-                                <img src="https://picsum.photos/800/250?random=1" class="d-block w-100 placeholder-img" alt="Notícia 1">
-                                <div class="carousel-caption d-none d-md-block news-caption">
-                                    <h5>Novo simulado disponível</h5>
-                                    <p>Confira o novo simulado de Matemática.</p>
+                                <div class="news-banner d-flex align-items-center justify-content-between p-4" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; min-height: 200px; border-radius: 8px;">
+                                    <div>
+                                        <span class="badge bg-warning text-dark mb-2">Trilhas de Estudo</span>
+                                        <h3 class="fw-bold mb-2">Roadmaps para o Processo Seletivo IFC</h3>
+                                        <p class="mb-3">Acesse os roadmaps por disciplina e organize sua rotina de estudos de forma eficiente.</p>
+                                        <a href="roadmaps.html" class="btn btn-light btn-sm fw-bold">Explorar Roadmaps</a>
+                                    </div>
+                                    <i class="bi bi-map d-none d-md-block ms-3" style="font-size: 4.5rem; opacity: 0.85;"></i>
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <img src="https://picsum.photos/800/250?random=2" class="d-block w-100 placeholder-img" alt="Notícia 2">
-                                <div class="carousel-caption d-none d-md-block news-caption">
-                                    <h5>Dicas de Redação</h5>
-                                    <p>Veja como melhorar sua pontuação na redação.</p>
+                                <div class="news-banner d-flex align-items-center justify-content-between p-4" style="background: linear-gradient(135deg, #831843, #ec4899); color: white; min-height: 200px; border-radius: 8px;">
+                                    <div>
+                                        <span class="badge bg-light text-dark mb-2">Flashcards SRS</span>
+                                        <h3 class="fw-bold mb-2">Repetição Espaçada de Conteúdos</h3>
+                                        <p class="mb-3">Memorize conceitos essenciais com baralhos personalizados e inteligência de revisão.</p>
+                                        <a href="flashcards.html" class="btn btn-light btn-sm fw-bold">Revisar Agora</a>
+                                    </div>
+                                    <i class="bi bi-card-text d-none d-md-block ms-3" style="font-size: 4.5rem; opacity: 0.85;"></i>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="news-banner d-flex align-items-center justify-content-between p-4" style="background: linear-gradient(135deg, #064e3b, #10b981); color: white; min-height: 200px; border-radius: 8px;">
+                                    <div>
+                                        <span class="badge bg-warning text-dark mb-2">Simulados & Listas</span>
+                                        <h3 class="fw-bold mb-2">Treine com Questões Anteriores</h3>
+                                        <p class="mb-3">Resolva listas por matéria e avalie seu desempenho detalhado antes da prova oficial.</p>
+                                        <a href="listas.html" class="btn btn-light btn-sm fw-bold">Ir para Listas</a>
+                                    </div>
+                                    <i class="bi bi-journal-check d-none d-md-block ms-3" style="font-size: 4.5rem; opacity: 0.85;"></i>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +128,7 @@
                                 <img src="https://ui-avatars.com/api/?name=User&background=random" id="profile-img" alt="Foto do perfil" class="rounded-circle img-fluid shadow-sm">
                             </div>
                             <h4 class="card-title mb-0" id="profile-name">Carregando...</h4>
-                            <p class="text-muted mt-1">Aluno Cedeefe</p>
+                            <p class="text-muted mt-1" id="profile-role">Aluno Cedeefe</p>
                         </div>
                     </div>
 
@@ -137,11 +156,11 @@
                                 <h6>Legenda:</h6>
                                 <div class="d-flex align-items-center gap-2 mb-1">
                                     <div class="legend-dot bg-danger rounded-circle" style="width: 10px; height: 10px;"></div>
-                                    <small>Simulados</small>
+                                    <small>Simulados Concluídos</small>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
-                          a          <div class="legend-dot bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
-                                    <small>Fechamento de Listas</small>
+                                    <div class="legend-dot bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
+                                    <small>Listas Concluídas</small>
                                 </div>
                             </div>
                         </div>
@@ -152,6 +171,7 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../scripts/loadSidebar.js"></script>
     <script src="../scripts/sidebar.js"></script>
     <script src="../scripts/dashboard.js"></script>

@@ -387,6 +387,267 @@ const questaoController = {
       console.error('Erro ao realizar upload de imagem da questão:', error);
       return res.status(500).json({ error: 'Erro ao salvar a imagem no servidor.' });
     }
+  },
+
+  // Permite que um usuário autenticado reporte um erro em uma questão
+  reportarQuestao: async (req, res) => {
+    try {
+      const { cod } = req.params;
+      const usuario_cod = req.userId;
+      const { motivo, descricao_detalhada } = req.body;
+
+      if (!motivo || typeof motivo !== 'string' || motivo.trim() === '') {
+        return res.status(400).json({ error: 'O motivo do reporte é obrigatório.' });
+      }
+
+      if (motivo.toLowerCase().includes('outro') && (!descricao_detalhada || descricao_detalhada.trim() === '')) {
+        return res.status(400).json({ error: 'Ao selecionar "Outros", você deve descrever o motivo do reporte.' });
+      }
+
+      const questao = await db.Questao.findByPk(cod);
+      if (!questao) {
+        return res.status(404).json({ error: 'Questão não encontrada.' });
+      }
+
+      // Verifica quantos reportes este usuário já realizou para esta mesma questão
+      const totalReportesUsuario = await db.QuestaoReportada.count({
+        where: {
+          questao_cod: cod,
+          usuario_cod
+        }
+      });
+
+      if (totalReportesUsuario >= 2) {
+        return res.status(400).json({
+          error: 'Você já atingiu o limite máximo de 2 reportes para esta questão.'
+        });
+      }
+
+      const novoReporte = await db.QuestaoReportada.create({
+        questao_cod: cod,
+        usuario_cod,
+        motivo: motivo.trim(),
+        descricao_detalhada: descricao_detalhada ? descricao_detalhada.trim() : null,
+        status: 'pendente'
+      });
+
+      return res.status(201).json({
+        message: 'Reporte registrado com sucesso! Obrigado por colaborar.',
+        reporte: novoReporte
+      });
+    } catch (error) {
+      console.error('Erro ao reportar questão:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor ao registrar o reporte.' });
+    }
+  },
+
+  // Método para listar questões com filtros dinâmicos por disciplina, tema, ano, autor e texto
+  listarQuestoes: async (req, res) => {
+    try {
+      const { disciplina_cod, tema_cod, ano, autor, busca, pagina = 1, limite = 10 } = req.query;
+
+      const whereClause = {};
+
+      if (disciplina_cod) {
+        whereClause.disciplina_cod = parseInt(disciplina_cod);
+      }
+
+      if (tema_cod) {
+        whereClause.tema_cod = parseInt(tema_cod);
+      }
+
+      if (ano) {
+        whereClause.ano = parseInt(ano);
+      }
+
+      if (autor && autor.trim() !== '') {
+        whereClause.autor = autor.trim();
+      }
+
+      if (busca && busca.trim() !== '') {
+        const Op = db.Sequelize.Op;
+        whereClause.descricao = {
+          [Op.iLike || Op.like]: `%${busca.trim()}%`
+        };
+      }
+
+      const offset = (parseInt(pagina) - 1) * parseInt(limite);
+
+      const { count, rows } = await db.Questao.findAndCountAll({
+        where: whereClause,
+        distinct: true,
+        limit: parseInt(limite),
+        offset: offset,
+        order: [['cod', 'DESC']],
+        include: [
+          { model: db.Disciplina, as: 'disciplina' },
+          { model: db.Tema, as: 'tema' },
+          { model: db.Alternativa, as: 'alternativas' }
+        ]
+      });
+
+      // Mapeia o atributo 'descricao' para 'nome' para compatibilidade na resposta
+      const meQuestoesFormatadas = rows.map(q => {
+        const json = q.toJSON();
+        if (json.disciplina) json.disciplina.nome = json.disciplina.descricao || json.disciplina.nome;
+        if (json.tema) json.tema.nome = json.tema.descricao || json.tema.nome;
+        return json;
+      });
+
+      return res.status(200).json({
+        total: count,
+        paginas: Math.ceil(count / parseInt(limite)),
+        paginaAtual: parseInt(pagina),
+        questoes: meQuestoesFormatadas
+      });
+    } catch (error) {
+      console.error('Erro ao listar questões:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor ao listar questões.' });
+    }
+  },
+
+  // Retorna os valores distintos de anos e autores para os filtros da interface
+  obterFiltrosDisponiveis: async (req, res) => {
+    try {
+      const Op = db.Sequelize.Op;
+      const anosRaw = await db.Questao.findAll({
+        attributes: ['ano'],
+        where: { ano: { [Op.ne]: null } },
+        group: ['ano'],
+        order: [['ano', 'DESC']],
+        raw: true
+      });
+
+      const autoresRaw = await db.Questao.findAll({
+        attributes: ['autor'],
+        where: { autor: { [Op.ne]: null } },
+        group: ['autor'],
+        order: [['autor', 'ASC']],
+        raw: true
+      });
+
+      const anos = anosRaw.map(item => item.ano).filter(Boolean);
+      const autores = autoresRaw.map(item => item.autor).filter(Boolean);
+
+      return res.status(200).json({ anos, autores });
+    } catch (error) {
+      console.error('Erro ao obter opções de filtros:', error);
+      return res.status(500).json({ error: 'Erro interno ao obter filtros das questões.' });
+    }
+  },
+
+  // Retorna os detalhes de uma questão por código
+  obterQuestaoPorCod: async (req, res) => {
+    try {
+      const { cod } = req.params;
+      const questao = await db.Questao.findByPk(cod, {
+        include: [
+          { model: db.Disciplina, as: 'disciplina' },
+          { model: db.Tema, as: 'tema' },
+          { model: db.Alternativa, as: 'alternativas' }
+        ]
+      });
+
+      if (!questao) {
+        return res.status(404).json({ error: 'Questão não encontrada.' });
+      }
+
+      return res.status(200).json(questao);
+    } catch (error) {
+      console.error('Erro ao obter questão por código:', error);
+      return res.status(500).json({ error: 'Erro interno ao buscar questão.' });
+    }
+  },
+
+  // Atualiza os dados de uma questão e suas alternativas
+  atualizarQuestao: async (req, res) => {
+    const t = await db.sequelize.transaction();
+    try {
+      const { cod } = req.params;
+      const {
+        descricao,
+        disciplina_cod,
+        tema_cod,
+        autor,
+        ano,
+        explicacao,
+        imagem_url,
+        alternativas
+      } = req.body;
+
+      const questao = await db.Questao.findByPk(cod, { transaction: t });
+      if (!questao) {
+        await t.rollback();
+        return res.status(404).json({ error: 'Questão não encontrada.' });
+      }
+
+      if (!descricao || !disciplina_cod) {
+        await t.rollback();
+        return res.status(400).json({ error: 'Descrição e disciplina são obrigatórias.' });
+      }
+
+      // Validar disciplina
+      const disciplina = await db.Disciplina.findByPk(disciplina_cod, { transaction: t });
+      if (!disciplina) {
+        await t.rollback();
+        return res.status(404).json({ error: `Disciplina com código ${disciplina_cod} não encontrada.` });
+      }
+
+      // Validar tema se informado
+      if (tema_cod) {
+        const tema = await db.Tema.findByPk(tema_cod, { transaction: t });
+        if (!tema) {
+          await t.rollback();
+          return res.status(404).json({ error: `Tema com código ${tema_cod} não encontrado.` });
+        }
+      }
+
+      // Atualizar campos da questão
+      questao.descricao = descricao;
+      questao.disciplina_cod = parseInt(disciplina_cod);
+      questao.tema_cod = tema_cod ? parseInt(tema_cod) : null;
+      questao.autor = autor !== undefined ? (autor ? String(autor).trim() : null) : questao.autor;
+      questao.ano = ano !== undefined ? (ano ? parseInt(ano) : null) : questao.ano;
+      questao.explicacao = explicacao !== undefined ? (explicacao ? String(explicacao).trim() : null) : questao.explicacao;
+      if (imagem_url !== undefined) {
+        questao.imagem_url = imagem_url ? String(imagem_url).trim() : null;
+      }
+
+      await questao.save({ transaction: t });
+
+      // Atualizar alternativas se informadas
+      if (Array.isArray(alternativas) && alternativas.length > 0) {
+        await db.Alternativa.destroy({ where: { questao_cod: cod }, transaction: t });
+
+        const novasAlternativas = alternativas.map(alt => ({
+          questao_cod: parseInt(cod),
+          texto: alt.texto,
+          correta: Boolean(alt.correta)
+        }));
+
+        await db.Alternativa.bulkCreate(novasAlternativas, { transaction: t });
+      }
+
+      await t.commit();
+
+      const questaoAtualizada = await db.Questao.findByPk(cod, {
+        include: [
+          { model: db.Disciplina, as: 'disciplina' },
+          { model: db.Tema, as: 'tema' },
+          { model: db.Alternativa, as: 'alternativas' }
+        ]
+      });
+
+      return res.status(200).json({
+        message: 'Questão atualizada com sucesso!',
+        questao: questaoAtualizada
+      });
+
+    } catch (error) {
+      await t.rollback();
+      console.error('Erro ao atualizar questão:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor ao atualizar questão.' });
+    }
   }
 
 };

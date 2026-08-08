@@ -1,0 +1,186 @@
+/* Estilos da Página de Edição e Exclusão de Questões - Cedeefe */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+.content {
+    margin-top: 80px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 25px;
+    }
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        padding: 15px;
+    }
+}
+
+.text-verde {
+    color: #1f9a55 !important;
+}
+
+.btn-verde {
+    background-color: #1f9a55;
+    color: #ffffff;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-verde:hover {
+    background-color: #167a42;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(31, 154, 85, 0.3);
+}
+
+.border-verde {
+    border-color: #1f9a55 !important;
+}
+
+/* Card da Questão */
+.card-questao-gerenciamento {
+    transition: all 0.25s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.card-questao-gerenciamento:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Header do Card */
+.questao-card-header {
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.questao-enunciado-preview img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Alternativas no modo leitura */
+.alternativa-item-leitura {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    word-break: break-word;
+    transition: background-color 0.2s ease;
+}
+
+.alternativa-item-leitura.correta {
+    border-color: #1f9a55;
+    background-color: #f0fdf4;
+}
+
+.badge-alternativa {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.alternativa-item-leitura.correta .badge-alternativa {
+    background-color: #1f9a55;
+    color: #ffffff;
+}
+
+.alternativa-item-leitura:not(.correta) .badge-alternativa {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+/* Modo Edição */
+.editor-container-wrap {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.alternativa-edit-row {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+}
+
+.alternativa-edit-row.is-correct {
+    border-color: #1f9a55;
+    background-color: #f0fdf4;
+}
+
+/* Imagem Preview */
+.img-preview-box img,
+.img-preview-container img {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+/* Paginação */
+.page-link-custom {
+    color: #1f9a55;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 6px 14px;
+    background-color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.page-link-custom:hover {
+    background-color: #e8f5e9;
+    color: #167a42;
+}
+
+.page-link-custom.active {
+    background-color: #1f9a55;
+    color: #ffffff;
+    border-color: #1f9a55;
+}
+
+.page-link-custom.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #f8f9fa;
+}

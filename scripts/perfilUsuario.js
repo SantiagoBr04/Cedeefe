@@ -36,6 +36,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const perfilFotoWrapper = document.getElementById('perfilFotoWrapper');
+    const perfilAvatarInicial = document.getElementById('perfilAvatarInicial');
+    const perfilFotoOverlayTexto = document.getElementById('perfilFotoOverlayTexto');
+
+    const atualizarEstadoFoto = (fotoPath, nomeOuLogin) => {
+        if (fotoPath) {
+            const fotoUrl = fotoPath.startsWith('http') ? fotoPath : `http://localhost:3000${fotoPath}`;
+            if (perfilAvatar) {
+                perfilAvatar.style.backgroundImage = `url(${fotoUrl})`;
+                perfilAvatar.style.backgroundSize = 'cover';
+                perfilAvatar.style.backgroundPosition = 'center';
+            }
+            if (perfilAvatarInicial) {
+                perfilAvatarInicial.textContent = '';
+            }
+            if (perfilFotoWrapper) {
+                perfilFotoWrapper.classList.remove('sem-foto');
+                perfilFotoWrapper.classList.add('com-foto');
+            }
+            if (perfilFotoOverlayTexto) {
+                perfilFotoOverlayTexto.textContent = 'Atualizar foto';
+            }
+            atualizarFotoNavbar(fotoPath);
+        } else {
+            const nomeInicial = (nomeOuLogin || 'A').trim().charAt(0).toUpperCase();
+            if (perfilAvatar) {
+                perfilAvatar.style.backgroundImage = '';
+            }
+            if (perfilAvatarInicial) {
+                perfilAvatarInicial.textContent = nomeInicial || 'A';
+            }
+            if (perfilFotoWrapper) {
+                perfilFotoWrapper.classList.remove('com-foto');
+                perfilFotoWrapper.classList.add('sem-foto');
+            }
+            if (perfilFotoOverlayTexto) {
+                perfilFotoOverlayTexto.textContent = 'Colocar foto';
+            }
+        }
+    };
+
     const carregarPerfil = async () => {
         try {
             const resposta = await fetch('http://localhost:3000/api/users/profile', {
@@ -64,18 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (dados.foto) {
-                const fotoUrl = `http://localhost:3000${dados.foto}`;
-                perfilAvatar.textContent = '';
-                perfilAvatar.style.backgroundImage = `url(${fotoUrl})`;
-                perfilAvatar.style.backgroundSize = 'cover';
-                perfilAvatar.style.backgroundPosition = 'center';
-                atualizarFotoNavbar(dados.foto);
-            } else {
-                const nomeInicial = (dados.nomeCompleto || dados.login || 'A').trim().charAt(0).toUpperCase();
-                perfilAvatar.textContent = nomeInicial || 'A';
-                perfilAvatar.style.backgroundImage = '';
-            }
+            atualizarEstadoFoto(dados.foto, dados.nomeCompleto || dados.login);
         } catch (erro) {
             console.error(erro);
             alert('Falha ao buscar os dados do perfil.');
@@ -231,13 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dados = await resposta.json();
 
                 if (resposta.ok && dados.foto) {
-                    const fotoUrl = `http://localhost:3000${dados.foto}`;
-                    perfilAvatar.textContent = '';
-                    perfilAvatar.style.backgroundImage = `url(${fotoUrl})`;
-                    perfilAvatar.style.backgroundSize = 'cover';
-                    perfilAvatar.style.backgroundPosition = 'center';
-
-                    atualizarFotoNavbar(dados.foto);
+                    atualizarEstadoFoto(dados.foto, document.getElementById('nomeCompleto').value || document.getElementById('email').value);
                 } else {
                     alert(dados.error || 'Não foi possível atualizar a foto de perfil.');
                 }

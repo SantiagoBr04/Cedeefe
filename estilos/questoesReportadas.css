@@ -222,6 +222,54 @@ textarea{
     background:#c9f3a7;
 
 }
+
+/* ===========================
+   ESTADO VAZIO & REPORTE MULTIPLO
+   =========================== */
+.estado-vazio-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 60px 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    max-width: 700px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.icone-vazio-wrapper i {
+    color: #4CAF50 !important;
+    font-size: 4rem;
+}
+
+.item-reporte-unico {
+    background: #ffffff;
+    border: 1px solid #f9dbe1;
+    border-left: 4px solid #f08ca0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.item-reporte-unico .rep-autor {
+    font-weight: 600;
+    color: #b05b6d;
+    font-size: 0.88rem;
+}
+
+.item-reporte-unico .rep-motivo {
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-cinza {
+    background: #e9ecef;
+    border: 1px solid #ced4da;
+    color: #495057;
+}
+
+.btn-cinza:hover {
+    background: #dee2e6;
+}
 /* ===========================
    CAMPOS
 =========================== */

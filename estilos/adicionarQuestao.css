@@ -16,7 +16,7 @@ body {
     background-color: #fff;
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     max-width: 900px;
     margin: 0 auto;
 }
@@ -34,18 +34,19 @@ h4 {
 }
 
 /* Ajuste nos inputs para ficarem mais bonitos */
-.form-control, .form-select {
+.form-control,
+.form-select {
     border-radius: 8px;
     padding: 10px;
     border: 1px solid #ddd;
 }
 
 .form-control:focus {
-    border-color:#e9ffd3;
+    border-color: #e9ffd3;
     box-shadow: 0 0 0 0.2rem #e9ffd3ac;
 }
 
-.grupo-alternativa{
+.grupo-alternativa {
     cursor: pointer;
 }
 
@@ -55,12 +56,12 @@ h4 {
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.btn-verde{
+.btn-verde {
     background-color: #c6fe92d4;
     border: 1px solid #e9ffd3;
 }
 
-.btn-verde:hover{
+.btn-verde:hover {
     background-color: #97d75bd4;
     border: 1px solid #cafa9b2b;
 }
@@ -69,7 +70,7 @@ h4 {
    DESKTOP
 =========================== */
 
-.content{
+.content {
     margin-top: 80px;
     margin-left: 270px;
     padding: 30px;
@@ -80,12 +81,12 @@ h4 {
    NOTEBOOKS
 =========================== */
 
-@media (max-width:1200px){
+@media (max-width:1200px) {
 
-    .content{
+    .content {
         margin-left: 90px;
         width: calc(100% - 90px);
-        padding:25px;
+        padding: 25px;
     }
 
 }
@@ -94,17 +95,17 @@ h4 {
    TABLETS
 =========================== */
 
-@media (max-width:991px){
+@media (max-width:991px) {
 
-    .content{
-        margin-left:0;
-        width:100%;
-        padding:20px;
-        margin-top:80px;
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        margin-top: 80px;
     }
 
-    .form-container{
-        padding:25px;
+    .form-container {
+        padding: 25px;
     }
 
 }
@@ -113,52 +114,52 @@ h4 {
    CELULARES
 =========================== */
 
-@media (max-width:576px){
+@media (max-width:576px) {
 
-    .content{
-        padding:15px;
+    .content {
+        padding: 15px;
     }
 
-    .form-container{
-        padding:18px;
-        border-radius:10px;
+    .form-container {
+        padding: 18px;
+        border-radius: 10px;
     }
 
-    h2{
-        font-size:1.5rem;
+    h2 {
+        font-size: 1.5rem;
     }
 
-    h4{
-        font-size:1.1rem;
+    h4 {
+        font-size: 1.1rem;
     }
 
-    .btn{
-        width:100%;
-        padding:12px;
+    .btn {
+        width: 100%;
+        padding: 12px;
     }
 
-    .row > div{
-        margin-bottom:15px;
+    .row>div {
+        margin-bottom: 15px;
     }
 
-    .grupo-alternativa{
-        flex-wrap:nowrap;
+    .grupo-alternativa {
+        flex-wrap: nowrap;
     }
 
-    .grupo-alternativa .input-group-text{
-        padding:8px;
+    .grupo-alternativa .input-group-text {
+        padding: 8px;
     }
 
-    .grupo-alternativa .form-control{
-        font-size:14px;
+    .grupo-alternativa .form-control {
+        font-size: 14px;
     }
 
 }
 
-@media (max-width:576px){
+@media (max-width:576px) {
 
-    .btn-verde{
-        width:100%;
+    .btn-verde {
+        width: 100%;
     }
 
 }

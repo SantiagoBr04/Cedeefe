@@ -43,7 +43,13 @@
         <span class="material-symbols-outlined" id="proxQuest">chevron_right</span>
       </div>
 
-      <h2 id="cabecalho-questao" class="infoQuests">Carregando...</h2>
+      <div class="cabecalho-container">
+        <h2 id="cabecalho-questao" class="infoQuests">Carregando...</h2>
+        <button id="btn-reportar-questao" class="btn-reportar" type="button" title="Reportar questão">
+          <i class="bi bi-flag-fill"></i>
+          <span class="btn-reportar-label">Reportar questão</span>
+        </button>
+      </div>
 
       <div class="contQuest">
         </div>
@@ -64,6 +70,47 @@
         <div id="box-explicacao" class="box-explicacao"></div>
 
         <button class="botao" id="submit">Verificar resposta</button>
+    </div>
+
+    <!-- Modal Flutuante para Reportar Erro na Questão -->
+    <div id="modal-reportar" class="modal-reportar-overlay" style="display: none;">
+      <div class="modal-reportar-card">
+        <div class="modal-reportar-header">
+          <h3>
+            <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
+            Reportar Erro na Questão <span id="modal-reportar-cod">#--</span>
+          </h3>
+          <button id="btn-fechar-modal-reportar" class="btn-close-custom" type="button">&times;</button>
+        </div>
+        <div class="modal-reportar-body">
+          <p class="modal-instrucao">Selecione o motivo do problema encontrado nesta questão:</p>
+          
+          <div class="mb-3">
+            <label for="select-motivo-reporte" class="form-label fw-bold">Motivo do Reporte</label>
+            <select id="select-motivo-reporte" class="form-select">
+              <option value="" disabled selected>Selecione um motivo...</option>
+              <option value="Gabarito incorreto">Gabarito incorreto</option>
+              <option value="Erro de digitação / Ortografia">Erro de digitação / Ortografia</option>
+              <option value="Enunciado confuso ou incompleto">Enunciado confuso ou incompleto</option>
+              <option value="Imagem ausente ou incorreta">Imagem ausente ou incorreta</option>
+              <option value="Outros">Outros (especificar)</option>
+            </select>
+          </div>
+
+          <div id="container-motivo-outros" class="mb-3" style="display: none;">
+            <label for="txt-motivo-outros" class="form-label fw-bold">Descreva o problema encontrado *</label>
+            <textarea id="txt-motivo-outros" class="form-control" rows="4" placeholder="Explique detalhadamente o erro observado na questão..."></textarea>
+          </div>
+
+          <div id="alert-modal-reportar" class="alert alert-danger p-2" style="display: none; font-size: 0.88rem;"></div>
+        </div>
+        <div class="modal-reportar-footer">
+          <button id="btn-cancelar-reporte" class="btn btn-secondary-custom" type="button">Cancelar</button>
+          <button id="btn-enviar-reporte" class="btn btn-danger-custom" type="button">
+            <i class="bi bi-send-fill me-1"></i> Enviar Reporte
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- JS da sidebar e Navbar -->
