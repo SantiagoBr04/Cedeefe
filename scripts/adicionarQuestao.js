@@ -27,10 +27,13 @@ document.getElementById('form-add-questao').addEventListener('submit', async (e)
     e.preventDefault();
 
     // Pegar token (Admin precisa estar logado)
-    const token = localStorage.getItem('jwt_token');
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
     if (!token) {
-        alert("Você precisa estar logado!");
-        window.location.href = "login.html";
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin("Você precisa estar logado como administrador!");
+        } else {
+            window.location.href = "login.html";
+        }
         return;
     }
 

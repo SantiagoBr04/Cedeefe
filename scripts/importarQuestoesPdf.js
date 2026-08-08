@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const API_BASE_URL = 'http://localhost:3000/api';
-    const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
 
     if (!token) {
-        alert('Sessão expirada. Faça login para acessar esta página.');
-        window.location.href = 'login.html';
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Sessão expirada. Faça login para acessar esta página.');
+        } else {
+            window.location.href = 'login.html';
+        }
         return;
     }
 

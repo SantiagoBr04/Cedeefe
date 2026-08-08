@@ -75,11 +75,14 @@ document.querySelector('.criarLista').addEventListener('submit', async function(
   };
 
   try {
-    const token = localStorage.getItem('jwt_token'); 
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token')); 
 
     if (!token) {
-        alert('Você precisa estar logado para criar uma lista!');
-        window.location.href = 'login.html';
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Você precisa estar logado para criar uma lista!');
+        } else {
+            window.location.href = 'login.html';
+        }
         return;
     }
 
@@ -92,6 +95,12 @@ document.querySelector('.criarLista').addEventListener('submit', async function(
       },
       body: JSON.stringify(corpoRequisicao) 
     });
+
+    if (!resposta.ok) {
+      if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(resposta)) {
+        return;
+      }
+    }
 
     const resultado = await resposta.json(); 
 

@@ -90,10 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function carregarBaralhoECartoes() {
+    const token = getToken();
+    if (!token) {
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Acesso negado: Faça login para estudar os flashcards.');
+        } else {
+            window.location.href = 'login.html';
+        }
+        return;
+    }
+
     try {
         // Carregar nome do baralho
         const resBaralhos = await fetch(`${API_BASE}/baralhos`, { headers: getAuthHeaders() });
-        if (resBaralhos.ok) {
+        if (!resBaralhos.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(resBaralhos)) {
+                return;
+            }
+        } else {
             const baralhos = await resBaralhos.json();
             const baralho = baralhos.find(b => b.id === Number(baralhoId));
             if (baralho) {
@@ -104,6 +118,9 @@ async function carregarBaralhoECartoes() {
         // Carregar cartões
         const resCartoes = await fetch(`${API_BASE}/cartoes/baralho/${baralhoId}`, { headers: getAuthHeaders() });
         if (!resCartoes.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(resCartoes)) {
+                return;
+            }
             alert('Erro ao carregar os cartões do baralho.');
             return;
         }

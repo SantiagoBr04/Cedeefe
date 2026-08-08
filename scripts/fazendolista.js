@@ -2,7 +2,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const codListaParam = urlParams.get('codLista');
-  const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+  const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
+
+  if (!token) {
+      if (typeof redirecionarParaLogin === 'function') {
+          redirecionarParaLogin('Acesso negado: Faça login para resolver listas.');
+      } else {
+          window.location.href = 'login.html';
+      }
+      return;
+  }
 
   let atividadeCod = codListaParam || localStorage.getItem('atividadeAtualID');
   let simulado = [];

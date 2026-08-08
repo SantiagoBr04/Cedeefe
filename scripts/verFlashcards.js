@@ -101,6 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function carregarDadosBaralhoECartoes() {
+    const token = getToken();
+    if (!token) {
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Acesso negado: Faça login para ver seus flashcards.');
+        } else {
+            window.location.href = 'login.html';
+        }
+        return;
+    }
+
     const container = document.getElementById('cartoesContainer');
     const tituloEl = document.getElementById('tituloBaralho');
 
@@ -109,7 +119,11 @@ async function carregarDadosBaralhoECartoes() {
     try {
         // Buscar nome do baralho
         const resBaralhos = await fetch(`${API_BASE}/baralhos`, { headers: getAuthHeaders() });
-        if (resBaralhos.ok) {
+        if (!resBaralhos.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(resBaralhos)) {
+                return;
+            }
+        } else {
             const baralhos = await resBaralhos.json();
             const baralhoEncontrado = baralhos.find(b => b.id === Number(baralhoIdAtual));
             if (baralhoEncontrado) {

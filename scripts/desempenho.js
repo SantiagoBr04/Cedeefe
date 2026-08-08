@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('jwt_token');
-    const devMode = false;
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
     const apiBase = 'http://localhost:3000/api';
 
-    if (!token && !devMode) {
-        window.location.href = 'login.html';
+    if (!token) {
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Acesso negado. Faça login para acessar o desempenho.');
+        } else {
+            window.location.href = 'login.html';
+        }
         return;
     }
 
@@ -14,16 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    if (devMode) {
-        renderGeralChart({ total_acertos: 72, total_erros: 28 });
-        renderTotals({ total_questoes_respondidas: 100, total_listas_finalizadas: 14 });
-        renderAreas([
-            { disciplina_area: { descricao: 'Matemática' }, total_questoes_respondidas: 22, total_acertos: 18, total_erros: 4, aproveitamento_area: 81.82 },
-            { disciplina_area: { descricao: 'Português' }, total_questoes_respondidas: 18, total_acertos: 13, total_erros: 5, aproveitamento_area: 72.22 }
-        ]);
-        return;
-    }
-
     try {
         const [geraisRes, areaRes] = await Promise.all([
             fetch(`${apiBase}/estatisticas/gerais`, fetchOptions),
@@ -31,10 +24,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         ]);
 
         if (!geraisRes.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(geraisRes)) {
+                return;
+            }
             throw new Error('Falha ao carregar estatísticas gerais.');
         }
 
         if (!areaRes.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(areaRes)) {
+                return;
+            }
             throw new Error('Falha ao carregar estatísticas por área.');
         }
 

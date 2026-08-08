@@ -135,6 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function carregarBaralhos() {
     const container = document.getElementById('baralhos-container');
+    
+    const token = getToken();
+    if (!token) {
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Acesso negado: Faça login para ver seus baralhos.');
+        } else {
+            window.location.href = 'login.html';
+        }
+        return;
+    }
+
     container.innerHTML = '<div class="text-muted p-3">Carregando seus baralhos...</div>';
 
     try {
@@ -143,8 +154,7 @@ async function carregarBaralhos() {
         });
 
         if (!response.ok) {
-            if (response.status === 401) {
-                container.innerHTML = '<div class="text-danger p-3">Sessão expirada. Faça login novamente.</div>';
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(response)) {
                 return;
             }
             container.innerHTML = '<div class="text-danger p-3">Erro ao carregar baralhos.</div>';

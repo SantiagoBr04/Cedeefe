@@ -123,7 +123,7 @@ const userController = {
       res.status(200).json({
         message: 'Login bem-sucedido!',
         token: token,
-        user: { id: user.cod, email: user.login }
+        user: { id: user.cod, email: user.login, adm: user.adm }
       });
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo
@@ -137,7 +137,7 @@ const userController = {
     try {
       // Pega os dados do usuário autenticado
       const user = await db.Usuario.findByPk(req.userId, {
-        attributes: ['cod', 'login', 'nome_completo', 'data_nasc', 'motivo', 'escola', 'genero_cod', 'foto'],
+        attributes: ['cod', 'login', 'nome_completo', 'data_nasc', 'motivo', 'escola', 'genero_cod', 'foto', 'adm'],
         include: [{
           model: db.Genero,
           as: 'genero',
@@ -160,6 +160,7 @@ const userController = {
         escola: user.escola,
         genero: user.genero?.descricao || null,
         foto: user.foto || null,
+        adm: user.adm
       });
 
     } catch (error) { // Resposta de erro caso de um erro na execução do try, seja por qual for o motivo

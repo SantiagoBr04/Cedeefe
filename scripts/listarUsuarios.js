@@ -4,7 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function carregarUsuariosAdmin() {
     try {
-        const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+        const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
+        
+        if (!token) {
+            if (typeof redirecionarParaLogin === 'function') {
+                redirecionarParaLogin('Acesso negado: Faça login para acessar esta página.');
+            } else {
+                window.location.href = 'login.html';
+            }
+            return;
+        }
+
         const response = await fetch('http://localhost:3000/api/admin/usuarios', {
             method: 'GET',
             headers: {
@@ -13,6 +23,9 @@ async function carregarUsuariosAdmin() {
         });
 
         if (!response.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(response)) {
+                return;
+            }
             throw new Error('Falha ao obter usuários admin');
         }
 

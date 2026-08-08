@@ -1,15 +1,13 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-    // =========================
-    // MODO DESENVOLVIMENTO
-    // =========================
-    const DEV_MODE = true;
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
 
-    let token = localStorage.getItem('jwt_token');
-
-    // Se não tiver token e NÃO estiver em DEV
-    if (!token && !DEV_MODE) {
-        window.location.href = "login.html";
+    if (!token) {
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin("Acesso negado. Faça login para acessar o dashboard.");
+        } else {
+            window.location.href = "login.html";
+        }
         return;
     }
 
@@ -23,49 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     try {
-
-        // =========================
-        // DADOS MOCKADOS (DESIGN)
-        // =========================
-        if (DEV_MODE) {
-
-            populateProfile({
-                login: "karen@email.com"
-            });
-
-            renderGeralChart({
-                total_acertos: 75,
-                total_erros: 25
-            });
-
-            renderDisciplinaChart([
-                {
-                    disciplina_area: {
-                        descricao: "Matemática"
-                    },
-                    total_acertos: 40
-                },
-                {
-                    disciplina_area: {
-                        descricao: "Português"
-                    },
-                    total_acertos: 25
-                },
-                {
-                    disciplina_area: {
-                        descricao: "Biologia"
-                    },
-                    total_acertos: 10
-                }
-            ]);
-
-            renderHeatmap([]);
-
-            renderCalendar();
-
-            return;
-        }
-
         // =========================
         // API REAL
         // =========================
@@ -77,13 +32,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         ]);
 
         if (!profileRes.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(profileRes)) {
+                return;
+            }
             throw new Error('Falha na autenticação');
         }
 
         const profile = await profileRes.json();
-        const stats = await statsRes.json();
-        const areaStats = await areaRes.json();
-        const heatmapData = await heatmapRes.json();
+        const stats = statsRes.ok ? await statsRes.json() : {};
+        const areaStats = areaRes.ok ? await areaRes.json() : [];
+        const heatmapData = heatmapRes.ok ? await heatmapRes.json() : [];
 
         // Renderização
         populateProfile(profile);
@@ -93,11 +51,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderCalendar();
 
     } catch (error) {
-
         console.error("Erro ao carregar dashboard:", error);
 
         if (error.message === 'Falha na autenticação') {
-            window.location.href = "login.html";
+            if (typeof redirecionarParaLogin === 'function') {
+                redirecionarParaLogin("Sessão expirada.");
+            } else {
+                window.location.href = "login.html";
+            }
         }
     }
 });

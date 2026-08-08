@@ -5,7 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
 // Busca as listas do usuario logado no backend
 async function carregarListas() {
     try {
-        const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+        const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
+        
+        if (!token) {
+            if (typeof redirecionarParaLogin === 'function') {
+                redirecionarParaLogin('Acesso negado: Faça login para ver suas listas.');
+            } else {
+                window.location.href = 'login.html';
+            }
+            return;
+        }
+
         const response = await fetch('http://localhost:3000/api/listas', {
             method: 'GET',
             headers: {
@@ -14,16 +24,18 @@ async function carregarListas() {
         });
 
         if (!response.ok) {
-           throw new Error('Falha ao obter listas');
-       }
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(response)) {
+                return;
+            }
+            throw new Error('Falha ao obter listas');
+        }
 
         const listas = await response.json();
         renderizarTabela(listas);
 
    } catch (error) {
        console.error('Erro ao carregar listas:', error);
-        alert('Ocorreu um erro ao carregar as suas listas.');
-    }
+   }
 }
 
 

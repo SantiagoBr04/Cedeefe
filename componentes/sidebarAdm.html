@@ -13,10 +13,42 @@
             </div>
         </div>
 
-        <!-- Ícone do usuário (lado direito do menu) -->
-        <a href="login.html" id="btn-user-link">
-            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
-        </a>
+        <!-- Ícone do usuário e caixa de opções (lado direito do menu) -->
+        <div class="user-menu-container" id="user-menu-container">
+            <a href="login.html" id="btn-user-link">
+                <span class="material-symbols-outlined" id="btn-user">account_circle</span>
+                <img id="btn-user-avatar" src="" alt="Foto de perfil" class="d-none" />
+            </a>
+
+            <!-- Caixa de opções do usuário (Dropdown) -->
+            <div id="user-dropdown" class="user-dropdown d-none">
+                <div class="user-dropdown-header">
+                    <div id="user-dropdown-name" class="user-dropdown-name">Carregando...</div>
+                    <div id="user-dropdown-email" class="user-dropdown-email"></div>
+                </div>
+                <hr class="user-dropdown-divider" />
+                <ul class="user-dropdown-list">
+                    <li>
+                        <a href="perfilUsuario.html" id="dropdown-item-perfil" class="user-dropdown-item">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Perfil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button type="button" id="dropdown-item-tema" class="user-dropdown-item btn-tema-toggle">
+                            <span class="material-symbols-outlined">dark_mode</span>
+                            <span>Modo Claro/Escuro</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="dropdown-item-sair" class="user-dropdown-item btn-logout">
+                            <span class="material-symbols-outlined">logout</span>
+                            <span>Sair</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Barra lateral -->

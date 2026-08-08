@@ -29,10 +29,12 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
   - `DB_DATABASE`
   - `DB_PORT`
   - `JWT_SECRET`
+  - `GEMINI_API_KEY` (obrigatória para a funcionalidade de OCR / Parsing de PDFs de exames via IA Google Gemini)
   - `PORT` (opcional, padrão: `3000`)
 - **Sincronização Sequelize:**
   - O backend executa `sequelize.sync()` no momento da inicialização em `src/server.js`.
   - Mantenha `RECONSTRUIR_BANCO = false` em `src/server.js`, a menos que deseje recriar (dropar e refazer) as tabelas intencionalmente.
+  - O servidor faz um `ALTER TABLE` dinâmico em `src/server.js` nas colunas de `questoes` e `alternativas` para garantir o tipo `TEXT`.
   - Para popular dados, utilize o comando `npm run seed`.
 - **Autenticação no Frontend:**
   - O Bearer Token de sessão do usuário deve ser armazenado/recuperado sempre via chave `jwt_token` no `localStorage` ou `sessionStorage`. Nunca utilize a chave genérica `token`.
@@ -42,8 +44,8 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
 ## 4. Arquitetura da Aplicação
 
 ### Backend (`src/`)
-- **Tecnologias:** Node.js, Express, Sequelize ORM (PostgreSQL), ES Modules.
-- **Padrão de Camadas:** Segue o fluxo `Route -> Middleware -> Controller -> Model`.
+- **Tecnologias:** Node.js, Express, Sequelize ORM (PostgreSQL), Google GenAI SDK (`@google/genai`), PDF-Lib, ES Modules.
+- **Padrão de Camadas:** Segue o fluxo `Route -> Middleware -> Controller -> Model` (além da camada `src/services/` para integrações como a API do Gemini).
 - **Ponto de Entrada:** `src/server.js`, que registra as rotas base da API:
   - `/api/users` (`userRoutes.js`)
   - `/api/listas` (`listaRoutes.js`)
@@ -54,30 +56,34 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
   - `/api/baralhos` (`baralhoRoutes.js`)
   - `/api/cartoes` (`cartaoRoutes.js`)
   - `/api/admin` (`adminRoutes.js`)
-- **Arquivos Estáticos:** A rota `/imagens` serve estaticamente o diretório `uploads/`.
+- **Arquivos Estáticos:** A rota `/imagens` serve estaticamente o diretório `uploads/` (usado para imagens de cartões, fotos de perfil de usuário e ilustrações de questões).
 - **Models:** Factories do Sequelize localizadas em `src/models/`, carregadas centralizadamente por `src/models/index.js` e associadas via método `associate` de cada model.
 
 ### Frontend (`pages/`, `estilos/`, `scripts/`, `componentes/`, `index.html`)
-- **Tecnologias:** HTML5 estático, CSS3 Vanilla, JavaScript puro (ES6+ com `fetch`).
+- **Tecnologias:** HTML5 estático, CSS3 Vanilla, **Bootstrap 5.3.3** (via CDN), JavaScript puro (ES6+ com `fetch`).
 - **Estrutura:**
-  - `pages/`: Arquivos HTML das páginas da aplicação.
+  - `pages/`: Arquivos HTML das páginas da aplicação (incluindo Roadmaps, Flashcards, Simulados, Perfil e Painéis de Administração).
   - `estilos/`: Folhas de estilo CSS separadas por página/componente.
   - `scripts/`: Scripts JS de nível de página consumindo a API backend via `fetch()`.
-- **Componentes Compartilhados:** A Sidebar e a Navbar são estáticas e replicadas em cada arquivo HTML.
+- **Componentes Compartilhados:** 
+  - A **Sidebar** é injetada dinamicamente via `scripts/loadSidebar.js` no container `<div id="sidebar-container"></div>`, carregando `componentes/sidebar.html` (ou `sidebarAdm.html`) e preenchendo os dados de perfil do usuário.
+- **Guardião de Autenticação (`scripts/authGuard.js`):**
+  - Gerencia o acesso a páginas restritas no cliente. Deve ser incluído na `<head>` das páginas HTML com as propriedades `data-auth-required="true"` e/ou `data-admin-required="true"` configuradas no elemento `<body>`.
 
 ---
 
 ## 5. Frontend (Estrutura e Padrões Visuais)
 
-- **HTML:** Utiliza estrutura semântica HTML5. Não há template engine dinâmica no backend ou framework de frontend (React/Vue); os elementos compartilhados (sidebar/navbar) têm estrutura replicada manualmente nas páginas.
-- **CSS:**
+- **HTML:** Utiliza estrutura semântica HTML5. A Sidebar é injetada dinamicamente no container `#sidebar-container` através do script `loadSidebar.js`.
+- **CSS e Frameworks:**
+  - O projeto utiliza **Bootstrap 5.3.3** via CDN para o sistema de Grid responsivo (`container-fluid`, `col-lg-*`), modais, carrosséis e classes utilitárias de layout (`d-none`, `d-flex`, `gap-*`, etc.).
   - Mantenha a separação entre CSS global (ex: `sidebar.css`) e CSS específico de cada página (ex: `login.css`).
-  - Disposição visual baseada em **Flexbox**.
+  - Disposição visual complementar baseada em **Flexbox**.
   - Evite criar ou utilizar variáveis CSS customizadas (`var(--minha-cor)`). Mantenha o padrão existente com valores hexadecimais ou RGB.
   - Ícones obtidos via FontAwesome, Bootstrap Icons ou Material Symbols.
   - Tipografia: Google Fonts (**Poppins**).
 - **Padronização:**
-  - Mantenha a Sidebar e a Navbar rigorosamente idênticas ao padrão atual (mesmo layout, ordem e ícones), a menos que uma alteração seja solicitada.
+  - Mantenha o layout da Sidebar e Navbar coerente ao padrão carregado por `loadSidebar.js`.
   - Siga a paleta de cores dominante do site (tons de rosa e verde; consulte os valores exatos nos arquivos CSS em `estilos/`).
 
 ---
@@ -108,13 +114,13 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
 
 ## 7. Armadilhas Comuns e Regras Críticas
 
-- **`JWT_SECRET` Ausente:** Sem a variável `JWT_SECRET` no `.env`, a autenticação falhará em todas as rotas protegidas.
+- **`JWT_SECRET` e `GEMINI_API_KEY` Ausentes:** Sem a variável `JWT_SECRET` no `.env`, a autenticação falhará em todas as rotas protegidas. Sem a `GEMINI_API_KEY`, a importação/parsing de provas por IA falhará.
 - **Sincronização Forçada do Banco (`force: true`):** Nunca execute `sequelize.sync({ force: true })` em ambientes produtivos ou de teste contínuo, pois os dados serão destruídos e redefinidos.
 - **URLs de API no Frontend:** Os scripts JS do frontend contêm URLs de endpoint apontando para `http://localhost:3000`. Atente-se ao alterar portas ou ambientes.
 - **Segurança no Upload de Arquivos (Multer):**
   - O diretório `uploads/` é servido publicamente via `/imagens`.
-  - Qualquer novo fluxo de upload deve reutilizar o middleware em `src/config/multer.js`.
-  - Valide estritamente as extensões de arquivo permitidas (ex: imagens ou `.csv`) e restrinja o tamanho limite (`fileSize`) para evitar vulnerabilidades de RCE e DoS.
+  - Qualquer novo fluxo de upload deve reutilizar o middleware em `src/config/multer.js` (usado para cartões de flashcard, imagens de questões e fotos de perfil de usuário em `/api/users/profile/photo`).
+  - Valide estritamente as extensões de arquivo permitidas (ex: imagens, `.csv` ou `.pdf`) e restrinja o tamanho limite (`fileSize`) para evitar vulnerabilidades.
 - **Inicialização de Cache de Estatísticas:**
   - A tabela `usuario_estatisticas_gerais` atua como cache e **DEVE** ser criada e inicializada com valores `0` no momento do registro de um novo usuário para evitar exceções (`null pointer`) em relatórios e dashboards.
   - A tabela `usuario_estatisticas_por_area` segue o mesmo princípio (inicializada no registro ou tratada via fallback em `estatisticasController.js`).
@@ -134,13 +140,39 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
 
 ---
 
-## 9. Arquivos de Referência Rápida
+## 9. Módulo de Importação Inteligente de Questões (OCR / Parsing de PDF via IA Gemini)
+
+- **Serviço Responsável:** `src/services/geminiPdfService.js` utilizando `@google/genai`.
+- **Fluxo de Trabalho:**
+  1. O administrador envia o PDF da prova e do gabarito oficial em `pages/importarQuestoesPdf.html`.
+  2. O backend faz o parsing multimodal com o Gemini, extraindo questões, enunciados (formatados em HTML/LaTeX), alternativas e cruzando com o gabarito.
+  3. O lote fica salvo temporariamente no banco como rascunho de importação (`/api/questoes/rascunho`).
+  4. O administrador revisa e edita as questões extraídas em `pages/revisarImportacaoPdf.html` e confirma a inserção definitiva no banco de dados (`/api/questoes/importar-pdf-confirmar`).
+
+---
+
+## 10. Módulo de Roadmaps de Estudo e Painel Administrativo
+
+- **Trilhas de Estudos (Roadmaps):** 
+  - Estrutura frontend composta por `pages/roadmaps.html` e páginas específicas por disciplina (`roadmapBio.html`, `roadmapFis.html`, `roadmapGeo.html`, `roadmapHist.html`, `roadmapMat.html`, `roadmapPort.html`, `roadmapQui.html`).
+- **Gerenciamento Administrativo (`/api/admin`):**
+  - Rotas protegidas por `authMiddleware` + `adminMiddleware`.
+  - Permite listar e excluir usuários (`GET/DELETE /api/admin/usuarios`), gerenciar listas da plataforma (`GET/DELETE /api/admin/listas`), visualizar o `dashboardAdm.html` e gerenciar questões reportadas (`questoesReportadas.html`).
+- **Gestão de Temas (`/api/temas`):**
+  - Criação, edição e exclusão de temas restritas a administradores (`POST/PUT/DELETE /api/temas`).
+  - Leitura aberta para usuários autenticados por disciplina (`GET /api/temas/disciplina/:disciplina_cod`).
+
+---
+
+## 11. Arquivos de Referência Rápida
 
 - [README.md](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/README.md): Contexto geral da aplicação.
 - [api.md](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/api.md): Documentação detalhada das rotas e payloads da API.
-- [copilot-instructions.md](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/.github/copilot-instructions.md): Diretrizes originais de desenvolvimento.
 - [server.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/server.js): Ponto de entrada, configuração do Express e sincronização do banco.
 - [index.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/models/index.js): Carregamento dos modelos Sequelize e inicialização de relacionamentos.
+- [geminiPdfService.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/services/geminiPdfService.js): Serviço de OCR e parsing estruturado de exames via Google Gemini SDK.
+- [authGuard.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/scripts/authGuard.js): Guardião de autenticação client-side para o frontend.
+- [loadSidebar.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/scripts/loadSidebar.js): Carregador dinâmico do componente de Sidebar e Perfil.
 - [userRoutes.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/routes/userRoutes.js): Exemplo de estruturação de rotas e encadeamento de middlewares.
 - [userController.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/controllers/userController.js): Padrão de respostas JSON, códigos HTTP e tratamento de erros.
 - [authMiddleware.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/middlewares/authMiddleware.js): Implementação da verificação do token JWT.

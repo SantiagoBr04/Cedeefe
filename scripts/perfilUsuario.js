@@ -7,10 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const fotoPerfilInput = document.getElementById('fotoPerfil');
     const perfilAvatar = document.getElementById('perfilAvatar');
 
-    const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
 
     if (!token) {
-        window.location.href = 'login.html';
+        if (typeof redirecionarParaLogin === 'function') {
+            redirecionarParaLogin('Faça login para acessar o perfil.');
+        } else {
+            window.location.href = 'login.html';
+        }
         return;
     }
 

@@ -33,8 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         sessionStorage.setItem('jwt_token', data.token);
                     }
 
-                    // Redirecionar para index.html
-                    window.location.href = '../index.html';
+                    // Redirecionar para a página tentada anteriormente ou para o dashboard
+                    const redirectUrl = sessionStorage.getItem('redirect_after_login');
+                    if (redirectUrl) {
+                        sessionStorage.removeItem('redirect_after_login');
+                        window.location.href = redirectUrl;
+                    } else {
+                        window.location.href = 'dashboard.html';
+                    }
                 } else {
                     // Tratar erro (ex: Credenciais inválidas)
                     alert(data.error || 'Erro ao realizar login. Verifique suas credenciais.');

@@ -21,25 +21,8 @@
 <body>
 
     
-    <!-- Menu fixo superior -->
-    <div class="menu">
-        <!-- Logo + botão do menu -->
-        <div class="logo_content">
-            <!-- Botão que abre/fecha sidebar -->
-            <span class="material-symbols-outlined" id="btn-menu">menu</span>
-
-            <!-- Nome/logo do site -->
-            <div class="logo">
-                <div class="logo_name"><a href="../index.html" class="logo_name">Cedeefe</a></div>
-            </div>
-        </div>
-
-        <!-- Ícone do usuário (lado direito do menu) -->
-        <a href="/pages/login.html" id="btn-user-link">
-            <span class="material-symbols-outlined" id="btn-user">account_circle</span>
-            <img id="btn-user-avatar" src="" alt="Foto de perfil" class="d-none" />
-        </a>
-    </div>
+    <!-- Container da Sidebar dinâmica -->
+    <div id="sidebar-container"></div>
 
     <!-- PRECISO AJUSTAR O DESING DAS PÁGINAS QUE POSSUEM DESENHOS #DEMONHEDO! -->
 
@@ -59,7 +42,7 @@
                     </p>
                                 
             <!-- Botão de login -->
-            <a class ="botao" href="/pages/login.html" id="btn-user-link">Comece a estudar agora!</a>
+            <a class ="botao" href="./pages/login.html" id="btn-user-cta">Comece a estudar agora!</a>
 
             </div>
             <img src="imagens/imgPgInicial.png" class="imagem">   
@@ -70,8 +53,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
      <!-- Seu JS da sidebar -->
-    <script src="../scripts/loadSidebar.js"></script>
-    <script src="../scripts/sidebar.js"></script>
+    <script src="./scripts/loadSidebar.js"></script>
+    <script src="./scripts/sidebar.js"></script>
 
 </body>
 </html>
