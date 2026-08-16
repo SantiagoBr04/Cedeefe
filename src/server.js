@@ -4,12 +4,25 @@ import 'dotenv/config';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import fs from 'fs';
 import path from 'path';
 import db from './models/index.js';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Garante a existência dos diretórios de uploads e rascunhos na inicialização do servidor
+const diretoriosUpload = [
+  path.resolve(__dirname, '..', 'uploads'),
+  path.resolve(__dirname, '..', 'uploads', 'rascunhos')
+];
+
+diretoriosUpload.forEach(dirPath => {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+});
 
 // Importa as rotas que existem
 import userRoutes from './routes/userRoutes.js';
