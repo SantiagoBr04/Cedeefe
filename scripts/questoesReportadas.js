@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_BASE_URL = 'http://localhost:3000/api';
+    const API_BASE_URL = '/api';
     const accordionContainer = document.getElementById('accordionQuestoes');
     const estadoVazioContainer = document.getElementById('estado-vazio-reportes');
     const badgeTotalReportes = document.getElementById('badge-total-reportes');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
             return url;
         }
-        return `http://localhost:3000${url.startsWith('/') ? url : '/' + url}`;
+        return url.startsWith('/') ? url : '/' + url;
     }
 
     const editoresPorQuestao = new Map();

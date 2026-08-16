@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const API_BASE = 'http://localhost:3000/api';
+    const API_BASE = '/api';
     
     // Configurações comuns do fetch
     const fetchOptions = {

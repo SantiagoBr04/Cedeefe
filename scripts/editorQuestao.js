@@ -395,7 +395,7 @@ class EditorQuestao {
         let srcCompleto = url.trim();
         if (!srcCompleto.startsWith('http://') && !srcCompleto.startsWith('https://') && !srcCompleto.startsWith('data:')) {
             const pathClean = srcCompleto.startsWith('/') ? srcCompleto : `/${srcCompleto}`;
-            srcCompleto = `http://localhost:3000${pathClean}`;
+            srcCompleto = pathClean;
         }
 
         const imgHtml = `<img src="${srcCompleto}" class="img-fluid rounded my-2 d-block mx-auto" style="width: 100%; max-width: 100%; height: auto;" alt="">`;

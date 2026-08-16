@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
     if (!token) return;
 
-    const API_BASE_URL = 'http://localhost:3000/api/roadmaps';
+    const API_BASE_URL = '/api/roadmaps';
 
     // ====================================================
     // CASO 1: PÁGINA PRINCIPAL DOS ROADMAPS (roadmaps.html)

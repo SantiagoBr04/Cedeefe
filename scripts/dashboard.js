@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const API_BASE = 'http://localhost:3000/api';
+    const API_BASE = '/api';
 
     const fetchOptions = {
         headers: {
@@ -169,7 +169,7 @@ function populateProfile(profile) {
         if (profile.foto) {
             imgEl.src = profile.foto.startsWith('http')
                 ? profile.foto
-                : `http://localhost:3000${profile.foto.startsWith('/') ? '' : '/'}${profile.foto}`;
+                : profile.foto;
         } else {
             const avatarName = encodeURIComponent(dispName);
             imgEl.src = `https://ui-avatars.com/api/?name=${avatarName}&background=c23672&color=fff`;

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 // Realiza o cadastro simples no backend
-                const resposta = await fetch("http://localhost:3000/api/users/register", {
+                const resposta = await fetch("/api/users/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Callback global acionado pelo botão do Google Sign-In
 window.handleGoogleCredentialResponse = async (response) => {
     try {
-        const res = await fetch('http://localhost:3000/api/users/google-login', {
+        const res = await fetch('/api/users/google-login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -6,41 +6,35 @@
   width: 100%;
   min-height: 100vh;
   display: flex;
-  transition: margin-left 0.3s ease-in-out;
-  margin-left:60px;
-  margin-top: 20px;
-
-  display: flex;
   justify-content: center;
   align-items: center;
-
-  min-height: 100vh;
+  margin-left: 60px;
+  padding: 20px 15px;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
 html, body {
-    overflow: hidden;
-    height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100%;
 }
 
 /* =========================
    ÁREA DE LOGIN
 ========================= */
-
-
-
 .cont-login {
   background: #fff;
   padding: 30px;
   border-radius: 15px;
   border: solid 2px rgb(255, 156, 156);
-  left:0px;
-  width: 350px;
+  width: 100%;
+  max-width: 380px;
   height: auto;
-
   display: flex;
   flex-direction: column;
+  box-shadow: 0 10px 30px rgba(194, 54, 114, 0.08);
 }
 
 /* =========================
@@ -53,7 +47,7 @@ html, body {
 
 .recuperar {
   font-size: 14px;
-  padding: 14px;
+  padding: 14px 0;
   margin-top: 5px;
 }
 
@@ -117,13 +111,14 @@ input[type="checkbox"] {
 .blob-verde {
   position: absolute;
   bottom: -30px;
-  left:0px;
+  left: 0px;
 
   width: 35vw;
   height: 100vh;
 
   z-index: -1;
   transition: all 0.3s ease-in-out;
+  pointer-events: none;
 }
 
 .blob-rosa {
@@ -136,4 +131,39 @@ input[type="checkbox"] {
 
   z-index: -10;
   transition: all 0.4s ease-in-out;
+  pointer-events: none;
+}
+
+/* =========================
+   RESPONSIVIDADE (MOBILE / TABLET)
+========================= */
+@media (max-width: 768px) {
+  .container-fluid {
+    margin-left: 0 !important;
+    padding: 20px 15px;
+    min-height: 100vh;
+  }
+
+  .cont-login {
+    width: 100%;
+    max-width: 360px;
+    padding: 25px 20px;
+  }
+
+  /* Oculta os blobs no celular para evitar poluição visual e sobreposição */
+  .blob-verde,
+  .blob-rosa {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cont-login {
+    padding: 20px 15px;
+  }
+
+  .recuperar {
+    padding: 10px 0;
+    font-size: 13px;
+  }
 }

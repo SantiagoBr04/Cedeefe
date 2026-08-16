@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Fazer a requisição para a API
-                const response = await fetch('http://localhost:3000/api/users/login', {
+                const response = await fetch('/api/users/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const reenviar = confirm(`${data.error}\n\nDeseja que enviemos um novo e-mail de verificação para ${emailInput}?`);
                     if (reenviar) {
                         try {
-                            const resendResp = await fetch('http://localhost:3000/api/users/resend-verification', {
+                            const resendResp = await fetch('/api/users/resend-verification', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ email: emailInput })
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Callback global acionado pelo botão oficial do Google Sign-In
 window.handleGoogleCredentialResponse = async (response) => {
     try {
-        const res = await fetch('http://localhost:3000/api/users/google-login', {
+        const res = await fetch('/api/users/google-login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

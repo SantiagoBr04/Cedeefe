@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Tentar buscar perfil atual para preencher campos se já existirem (ex: Nome do Google)
     try {
-        const profileResp = await fetch("http://localhost:3000/api/users/profile", {
+        const profileResp = await fetch("/api/users/profile", {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 btnSalvar.disabled = true;
                 btnSalvar.textContent = "Salvando perfil...";
 
-                const response = await fetch("http://localhost:3000/api/users/profile", {
+                const response = await fetch("/api/users/profile", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

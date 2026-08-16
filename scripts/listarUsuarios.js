@@ -52,7 +52,7 @@ async function carregarUsuariosAdmin() {
             return;
         }
 
-        const response = await fetch('http://localhost:3000/api/admin/usuarios', {
+        const response = await fetch('/api/admin/usuarios', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -214,7 +214,7 @@ async function executarExclusaoUsuario() {
 
     try {
         const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
-        const response = await fetch(`http://localhost:3000/api/admin/usuarios/${usuarioCodParaExcluir}`, {
+        const response = await fetch(`/api/admin/usuarios/${usuarioCodParaExcluir}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`

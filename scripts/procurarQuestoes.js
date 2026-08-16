@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'http://localhost:3000/api';
+    const API_BASE_URL = '/api';
     const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
 
     if (!token) {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
             return url;
         }
-        return `http://localhost:3000${url.startsWith('/') ? url : '/' + url}`;
+        return url.startsWith('/') ? url : '/' + url;
     }
 
     function escapeHtml(str) {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. Ajusta URLs relativas de tags <img> contidas no HTML do texto (ex: src="/uploads/...")
         html = html.replace(/<img\s+([^>]*?)src=["'](\/[^"']+)["']/gi, (match, prefix, path) => {
-            return `<img ${prefix}src="http://localhost:3000${path}"`;
+            return `<img ${prefix}src="${path}"`;
         });
 
         // 2. Remove demarcadores de bloco/inline de LaTeX: $$...$$, \[...\], $...$, \(...\)

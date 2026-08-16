@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/users/verify-email', {
+        const response = await fetch('/api/users/verify-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         btnReenviar.disabled = true;
                         btnReenviar.textContent = 'Enviando...';
 
-                        const resendResp = await fetch('http://localhost:3000/api/users/resend-verification', {
+                        const resendResp = await fetch('/api/users/resend-verification', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ email: data.email })

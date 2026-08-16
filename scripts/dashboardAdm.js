@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_URL = 'http://localhost:3000/api';
+    const API_URL = '/api';
     const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
 
     const dataHojeSpan = document.getElementById('dashboard-data-texto');

@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Se houver código de atividade (via URL query param ou localStorage), busca os dados atualizados no backend
   if (atividadeCod) {
     try {
-      const response = await fetch(`http://localhost:3000/api/listas/${atividadeCod}`, {
+      const response = await fetch(`/api/listas/${atividadeCod}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       let urlLimpa = questao.imagem_url;
       if (!urlLimpa.startsWith('http://') && !urlLimpa.startsWith('https://') && !urlLimpa.startsWith('data:')) {
         const pathClean = urlLimpa.startsWith('/') ? urlLimpa : `/${urlLimpa}`;
-        urlLimpa = `http://localhost:3000${pathClean}`;
+        urlLimpa = pathClean;
       }
       imgElement.src = urlLimpa;
     } else {
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Registra resposta no backend
     if (atividadeCod && alternativaCodSelecionada) {
       try {
-        await fetch('http://localhost:3000/api/listas/responder', {
+        await fetch('/api/listas/responder', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/listas/${atividadeCod}/finalizar`, {
+      const response = await fetch(`/api/listas/${atividadeCod}/finalizar`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       btnEnviarReporte.innerText = 'Enviando...';
 
       try {
-        const response = await fetch(`http://localhost:3000/api/questoes/${questao.cod}/reportar`, {
+        const response = await fetch(`/api/questoes/${questao.cod}/reportar`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

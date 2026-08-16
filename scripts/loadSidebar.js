@@ -94,7 +94,7 @@ fetch(sidebarPath)
             }
 
             // Busca as informações do usuário autenticado no backend
-            fetch('http://localhost:3000/api/users/profile', {
+            fetch('/api/users/profile', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -128,7 +128,7 @@ fetch(sidebarPath)
                         const btnUserAvatar = document.getElementById("btn-user-avatar");
 
                         if (dados.foto && btnUserAvatar) {
-                            const fotoUrl = dados.foto.startsWith("http") ? dados.foto : `http://localhost:3000${dados.foto}`;
+                            const fotoUrl = dados.foto.startsWith("http") ? dados.foto : dados.foto;
 
                             btnUserAvatar.onerror = () => {
                                 // Se a imagem falhar ao carregar, esconde o avatar <img> e mostra o ícone de perfil padrão

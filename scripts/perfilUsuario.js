@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btnUser) btnUser.classList.remove('d-none');
             return;
         }
-        const fullUrl = fotoPath.startsWith('http') ? fotoPath : `http://localhost:3000${fotoPath}`;
+        const fullUrl = fotoPath.startsWith('http') ? fotoPath : fotoPath;
         if (btnAvatar) {
             btnAvatar.onerror = () => {
                 btnAvatar.classList.add('d-none');
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const atualizarEstadoFoto = (fotoPath, nomeOuLogin) => {
         if (fotoPath) {
-            const fotoUrl = fotoPath.startsWith('http') ? fotoPath : `http://localhost:3000${fotoPath}`;
+            const fotoUrl = fotoPath.startsWith('http') ? fotoPath : fotoPath;
             if (perfilAvatar) {
                 perfilAvatar.style.backgroundImage = `url(${fotoUrl})`;
                 perfilAvatar.style.backgroundSize = 'cover';
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const carregarPerfil = async () => {
         try {
-            const resposta = await fetch('http://localhost:3000/api/users/profile', {
+            const resposta = await fetch('/api/users/profile', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                const resposta = await fetch('http://localhost:3000/api/users/profile', {
+                const resposta = await fetch('/api/users/profile', {
                     method: 'PUT',
                     headers: headers(),
                     body: JSON.stringify(payload)
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const resposta = await fetch('http://localhost:3000/api/users/profile', {
+                const resposta = await fetch('/api/users/profile', {
                     method: 'PUT',
                     headers: headers(),
                     body: JSON.stringify({
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const resposta = await fetch('http://localhost:3000/api/users/profile', {
+                const resposta = await fetch('/api/users/profile', {
                     method: 'DELETE',
                     headers: headers(),
                     body: JSON.stringify({ senha })
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('foto', arquivo);
 
             try {
-                const resposta = await fetch('http://localhost:3000/api/users/profile/photo', {
+                const resposta = await fetch('/api/users/profile/photo', {
                     method: 'PUT',
                     headers: {
                         Authorization: `Bearer ${token}`

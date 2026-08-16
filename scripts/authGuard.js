@@ -92,7 +92,7 @@ async function validarAcessoPagina(requerAdmin = false) {
 
     try {
         // Validação remota no backend
-        const response = await fetch('http://localhost:3000/api/users/profile', {
+        const response = await fetch('/api/users/profile', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

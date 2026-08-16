@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnSalvar.disabled = true;
                 btnSalvar.textContent = 'Salvando...';
 
-                const response = await fetch('http://localhost:3000/api/users/reset-password', {
+                const response = await fetch('/api/users/reset-password', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

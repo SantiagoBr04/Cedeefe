@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Busca as estatísticas do usuário autenticado no backend
 async function carregarEstatisticas() {
     const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
-    const apiBase = 'http://localhost:3000/api';
+    const apiBase = '/api';
 
     if (!token) {
         if (typeof redirecionarParaLogin === 'function') {

@@ -68,7 +68,7 @@ async function carregarListas() {
             return;
         }
 
-        const response = await fetch('http://localhost:3000/api/listas', {
+        const response = await fetch('/api/listas', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -288,7 +288,7 @@ async function confirmarExclusaoApi() {
 
     try {
         const token = localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token');
-        const response = await fetch(`http://localhost:3000/api/listas/${listaIdParaExcluir}`, {
+        const response = await fetch(`/api/listas/${listaIdParaExcluir}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`

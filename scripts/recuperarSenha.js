@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnEnviar.disabled = true;
                 btnEnviar.textContent = 'Enviando e-mail...';
 
-                const response = await fetch('http://localhost:3000/api/users/forgot-password', {
+                const response = await fetch('/api/users/forgot-password', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

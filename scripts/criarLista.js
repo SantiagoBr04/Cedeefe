@@ -5,7 +5,7 @@ async function carregarDisciplinas() {
 
   try {
     // Faz a chamada fetch para a nova API. Como é um GET, não precisa de muitas opções.
-    const resposta = await fetch('http://localhost:3000/api/disciplinas');
+    const resposta = await fetch('/api/disciplinas');
 
     // Se a resposta da API não for bem-sucedida, lança um erro.
     if (!resposta.ok) {
@@ -87,7 +87,7 @@ document.querySelector('.criarLista').addEventListener('submit', async function(
     }
 
     // Faz a chamada para a API
-    const resposta = await fetch('http://localhost:3000/api/listas/gerar', {
+    const resposta = await fetch('/api/listas/gerar', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json', 
