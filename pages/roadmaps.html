@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe</title>
+    <title>Cedeefe - Roadmaps</title>
+
+    <!-- Guardião de Autenticação -->
+    <script src="../scripts/authGuard.js"></script>
 
     <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <!-- Ícones Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,116 +22,165 @@
     <link rel="stylesheet" href="../estilos/sidebar.css">
     <link rel="stylesheet" href="../estilos/roadmaps.css">
 </head>
-<body>
+
+<body data-auth-required="true">
 
     <!-- SIDEBARRRR -->
     <div id="sidebar-container"></div>
 
     <div class="roadmap-container">
-    
-    <div class="header">
-        <div>
-            <h1>Roadmaps</h1>
-            <h2>Veja aqui o caminho para cada máteria.</h2>
+
+        <div class="header">
+            <div>
+                <h1>Roadmaps</h1>
+                <h2>Veja aqui o caminho para cada máteria.</h2>
+            </div>
+
+            <span class="icone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8" />
+                    <path
+                        d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                    <path
+                        d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                </svg>
+            </span>
         </div>
 
-        <span class="icone">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8"/>
-                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
-            </svg>
-        </span>
+        <div class="acessoMateria">
+
+            <a href="roadmapMat.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">calculate</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>Matemática</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-matematica"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-matematica">0% concluído (0/41)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="roadmapPort.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">book_3</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>Português</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-portugues"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-portugues">0% concluído (0/23)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="roadmapHist.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">history_edu</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>História</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-historia"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-historia">0% concluído (0/34)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="roadmapGeo.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">globe</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>Geografia</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-geografia"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-geografia">0% concluído (0/14)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="roadmapQui.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">experiment</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>Química</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-quimica"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-quimica">0% concluído (0/15)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="roadmapBio.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">microbiology</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>Biologia</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-biologia"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-biologia">0% concluído (0/38)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="roadmapFis.html" class="linkPagina">
+                <div class="disciplina">
+                    <div class="icone-container">
+                        <span class="material-symbols-outlined icone2">planet</span>
+                    </div>
+                    <div class="nome-disciplina">
+                        <h1>Física</h1>
+                        <div class="card-progress-box">
+                            <div class="card-progress-bar-bg">
+                                <div class="card-progress-bar-fill" id="card-bar-fisica"></div>
+                            </div>
+                            <span class="card-progress-text" id="card-text-fisica">0% concluído (0/15)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
     </div>
 
-    <div class="acessoMateria">
 
-        <a href="roadmapMat.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">calculate</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>Matemática</h1>
-                </div>
-            </div>
-        </a>
-
-        <a href="roadmapPort.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">book_3</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>Português</h1>
-                </div>
-            </div>
-        </a>
-
-        <a href="roadmapHist.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">history_edu</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>História</h1>
-                </div>
-            </div>
-        </a>
-
-        <a href="roadmapGeo.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">globe</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>Geografia</h1>
-                </div>
-            </div>
-        </a>
-
-        <a href="roadmapQui.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">experiment</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>Química</h1>
-                </div>
-            </div>
-        </a>
-
-        <a href="roadmapBio.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">microbiology</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>Biologia</h1>
-                </div>
-            </div>
-        </a>
-
-        <a href="roadmapFis.html" class="linkPagina">
-            <div class="disciplina">
-                <div class="icone-container">
-                    <span class="material-symbols-outlined icone2">planet</span>
-                </div>
-                <div class="nome-disciplina">
-                    <h1>Física</h1>
-                </div>
-            </div>
-        </a>
-
-    </div>
-    </div>
-
-
-    <!-- Seu JS da sidebar -->
+    <!-- Seu JS da sidebar e progresso -->
     <script src="../scripts/loadSidebar.js"></script>
     <script src="../scripts/sidebar.js"></script>
+    <script src="../scripts/roadmapProgresso.js"></script>
 
-    <!-- Bootstrap JS (necessário pro dropdown funcionar) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

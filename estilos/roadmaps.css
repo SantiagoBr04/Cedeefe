@@ -137,6 +137,35 @@
     padding: 10px 0;
 }
 
+.card-progress-box {
+    margin-top: 6px;
+    padding: 0 12px 6px 12px;
+}
+
+.card-progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.card-progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff849a, #ff4769);
+    border-radius: 6px;
+    transition: width 0.4s ease-in-out;
+}
+
+.card-progress-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: #343a40;
+    display: block;
+    margin-top: 3px;
+}
+
 .nome-disciplina h1 {
     font-size: 18px;
     margin: 0;

@@ -32,6 +32,9 @@ class EditorQuestao {
             this.container.classList.add('editor-compact');
         }
 
+        this.imagemSelecionada = null;
+        this.toolbarImagemEl = null;
+
         const toolbarButtonsHtml = this.options.compact ? this.renderizarToolbarCompacta() : this.renderizarToolbarCompleta();
 
         this.container.innerHTML = `
@@ -106,8 +109,28 @@ class EditorQuestao {
 
         this.editorEl.addEventListener('keyup', atualizarAtivos);
         this.editorEl.addEventListener('mouseup', atualizarAtivos);
-        this.editorEl.addEventListener('click', atualizarAtivos);
         this.editorEl.addEventListener('focus', atualizarAtivos);
+
+        this.editorEl.addEventListener('click', (e) => {
+            atualizarAtivos();
+            if (e.target && e.target.tagName === 'IMG') {
+                this.selecionarImagem(e.target);
+            } else {
+                this.desselecionarImagem();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (this.imagemSelecionada && !this.container.contains(e.target) && (!this.toolbarImagemEl || !this.toolbarImagemEl.contains(e.target))) {
+                this.desselecionarImagem();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.imagemSelecionada) {
+                this.desselecionarImagem();
+            }
+        });
 
         document.addEventListener('selectionchange', () => {
             if (document.activeElement === this.editorEl) {
@@ -138,6 +161,118 @@ class EditorQuestao {
                 this.options.onContentChange(this.obterHtml());
             });
         }
+    }
+
+    selecionarImagem(imgEl) {
+        if (this.imagemSelecionada === imgEl) {
+            this.posicionarToolbarImagem();
+            return;
+        }
+
+        this.desselecionarImagem();
+        this.imagemSelecionada = imgEl;
+        this.imagemSelecionada.classList.add('img-selected');
+        this.criarToolbarImagem();
+    }
+
+    desselecionarImagem() {
+        if (this.imagemSelecionada) {
+            this.imagemSelecionada.classList.remove('img-selected');
+            this.imagemSelecionada = null;
+        }
+        if (this.toolbarImagemEl) {
+            this.toolbarImagemEl.remove();
+            this.toolbarImagemEl = null;
+        }
+    }
+
+    criarToolbarImagem() {
+        if (this.toolbarImagemEl) {
+            this.toolbarImagemEl.remove();
+        }
+
+        const toolbar = document.createElement('div');
+        toolbar.className = 'editor-img-toolbar shadow-sm border rounded';
+        
+        // Define o percentual atual da imagem para marcar o botão ativo
+        const widthAtual = this.imagemSelecionada.style.width || '100%';
+
+        toolbar.innerHTML = `
+            <span class="toolbar-label me-1"><i class="bi bi-aspect-ratio text-success me-1"></i> Tamanho:</span>
+            <button type="button" class="btn-img-size ${widthAtual === '10%' ? 'is-active' : ''}" data-size="10%">10%</button>
+            <button type="button" class="btn-img-size ${widthAtual === '25%' ? 'is-active' : ''}" data-size="25%">25%</button>
+            <button type="button" class="btn-img-size ${widthAtual === '50%' ? 'is-active' : ''}" data-size="50%">50%</button>
+            <button type="button" class="btn-img-size ${widthAtual === '75%' ? 'is-active' : ''}" data-size="75%">75%</button>
+            <button type="button" class="btn-img-size ${widthAtual === '100%' ? 'is-active' : ''}" data-size="100%">100%</button>
+            <div class="separator-v"></div>
+            <button type="button" class="btn-img-delete text-danger ms-1" title="Excluir Imagem"><i class="bi bi-trash3-fill"></i></button>
+        `;
+
+        this.container.appendChild(toolbar);
+        this.toolbarImagemEl = toolbar;
+
+        // Eventos dos botões de tamanho
+        toolbar.querySelectorAll('.btn-img-size').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!this.imagemSelecionada) return;
+
+                const novoTamanho = btn.dataset.size;
+                this.imagemSelecionada.style.width = novoTamanho;
+                this.imagemSelecionada.style.maxWidth = '100%';
+                this.imagemSelecionada.style.height = 'auto';
+
+                // Atualiza classe ativa dos botões
+                toolbar.querySelectorAll('.btn-img-size').forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+
+                this.posicionarToolbarImagem();
+
+                if (typeof this.options.onContentChange === 'function') {
+                    this.options.onContentChange(this.obterHtml());
+                }
+            });
+        });
+
+        // Evento de exclusão de imagem
+        const btnDelete = toolbar.querySelector('.btn-img-delete');
+        if (btnDelete) {
+            btnDelete.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (this.imagemSelecionada) {
+                    this.imagemSelecionada.remove();
+                    this.desselecionarImagem();
+
+                    if (typeof this.options.onContentChange === 'function') {
+                        this.options.onContentChange(this.obterHtml());
+                    }
+                }
+            });
+        }
+
+        this.posicionarToolbarImagem();
+    }
+
+    posicionarToolbarImagem() {
+        if (!this.toolbarImagemEl || !this.imagemSelecionada || !this.container) return;
+
+        const containerRect = this.container.getBoundingClientRect();
+        const imgRect = this.imagemSelecionada.getBoundingClientRect();
+
+        // Calcula a posição no eixo Y em relação ao container do editor
+        let top = (imgRect.top - containerRect.top) - 44;
+        if (top < 38) {
+            top = (imgRect.bottom - containerRect.top) + 6;
+        }
+
+        // Centraliza horizontalmente sobre a imagem
+        let left = (imgRect.left - containerRect.left) + (imgRect.width / 2) - (this.toolbarImagemEl.offsetWidth / 2);
+        left = Math.max(8, Math.min(left, containerRect.width - this.toolbarImagemEl.offsetWidth - 8));
+
+        this.toolbarImagemEl.style.top = `${top}px`;
+        this.toolbarImagemEl.style.left = `${left}px`;
     }
 
     alternarComandoFormatacao(command) {
@@ -263,7 +398,7 @@ class EditorQuestao {
             srcCompleto = `http://localhost:3000${pathClean}`;
         }
 
-        const imgHtml = `<img src="${srcCompleto}" class="img-fluid rounded my-2 d-block mx-auto" alt="">`;
+        const imgHtml = `<img src="${srcCompleto}" class="img-fluid rounded my-2 d-block mx-auto" style="width: 100%; max-width: 100%; height: auto;" alt="">`;
         this.editorEl.innerHTML += `<br>${imgHtml}`;
         this.focar();
     }
@@ -275,7 +410,10 @@ class EditorQuestao {
     }
 
     obterHtml() {
-        return this.editorEl ? this.editorEl.innerHTML.trim() : '';
+        if (!this.editorEl) return '';
+        const clone = this.editorEl.cloneNode(true);
+        clone.querySelectorAll('.img-selected').forEach(img => img.classList.remove('img-selected'));
+        return clone.innerHTML.trim();
     }
 
     obterTexto() {
@@ -302,3 +440,4 @@ class EditorQuestao {
 
 // Torna a classe disponível globalmente
 window.EditorQuestao = EditorQuestao;
+

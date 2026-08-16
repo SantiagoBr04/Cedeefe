@@ -441,10 +441,11 @@ const questaoController = {
     }
   },
 
-  // Método para listar questões com filtros dinâmicos por disciplina, tema, ano, autor e texto
+  // Método para listar questões com filtros dinâmicos por disciplina, tema, ano, autor, texto e status de resposta
   listarQuestoes: async (req, res) => {
     try {
-      const { disciplina_cod, tema_cod, ano, autor, busca, pagina = 1, limite = 10 } = req.query;
+      const { disciplina_cod, tema_cod, ano, autor, busca, status_resposta, pagina = 1, limite = 10 } = req.query;
+      const usuario_cod = req.userId;
 
       const whereClause = {};
 
@@ -471,6 +472,37 @@ const questaoController = {
         };
       }
 
+      // Mapeia todas as questões respondidas pelo usuário
+      const respostasMap = new Map();
+      if (usuario_cod) {
+        const atividadesQuestoes = await db.Atividade_questoes.findAll({
+          include: [{
+            model: db.Atividade,
+            as: 'atividade',
+            where: { usuario_cod }
+          }],
+          where: {
+            alternativa_selecionada_cod: { [db.Sequelize.Op.ne]: null }
+          },
+          attributes: ['questao_cod', 'alternativa_selecionada_cod']
+        });
+
+        atividadesQuestoes.forEach(aq => {
+          respostasMap.set(aq.questao_cod, aq.alternativa_selecionada_cod);
+        });
+      }
+
+      const Op = db.Sequelize.Op;
+      const respondidasIds = Array.from(respostasMap.keys());
+
+      if (status_resposta === 'ja_respondidas') {
+        whereClause.cod = { [Op.in]: respondidasIds.length > 0 ? respondidasIds : [-1] };
+      } else if (status_resposta === 'nao_respondidas') {
+        if (respondidasIds.length > 0) {
+          whereClause.cod = { [Op.notIn]: respondidasIds };
+        }
+      }
+
       const offset = (parseInt(pagina) - 1) * parseInt(limite);
 
       const { count, rows } = await db.Questao.findAndCountAll({
@@ -486,11 +518,25 @@ const questaoController = {
         ]
       });
 
-      // Mapeia o atributo 'descricao' para 'nome' para compatibilidade na resposta
+      // Mapeia o atributo 'descricao' para 'nome' e injeta dados da resposta prévia do usuário
       const meQuestoesFormatadas = rows.map(q => {
         const json = q.toJSON();
         if (json.disciplina) json.disciplina.nome = json.disciplina.descricao || json.disciplina.nome;
         if (json.tema) json.tema.nome = json.tema.descricao || json.tema.nome;
+
+        if (respostasMap.has(json.cod)) {
+          const altSelecionadaCod = respostasMap.get(json.cod);
+          const altObj = (json.alternativas || []).find(a => a.cod === altSelecionadaCod);
+          json.ja_respondida = true;
+          json.resposta_usuario = {
+            alternativa_cod: altSelecionadaCod,
+            correta: altObj ? Boolean(altObj.correta) : false
+          };
+        } else {
+          json.ja_respondida = false;
+          json.resposta_usuario = null;
+        }
+
         return json;
       });
 
@@ -540,6 +586,11 @@ const questaoController = {
   obterQuestaoPorCod: async (req, res) => {
     try {
       const { cod } = req.params;
+
+      if (isNaN(Number(cod))) {
+        return res.status(400).json({ error: 'Código de questão inválido.' });
+      }
+
       const questao = await db.Questao.findByPk(cod, {
         include: [
           { model: db.Disciplina, as: 'disciplina' },
@@ -647,6 +698,176 @@ const questaoController = {
       await t.rollback();
       console.error('Erro ao atualizar questão:', error);
       return res.status(500).json({ error: 'Erro interno no servidor ao atualizar questão.' });
+    }
+  },
+
+  // Permite ao usuário responder uma questão diretamente no Banco de Questões
+  responderQuestaoBanco: async (req, res) => {
+    const t = await db.sequelize.transaction();
+    try {
+      const { cod } = req.params;
+      const { alternativa_cod } = req.body;
+      const usuario_cod = req.userId;
+
+      if (!cod || !alternativa_cod) {
+        await t.rollback();
+        return res.status(400).json({ error: 'Código da questão e alternativa selecionada são obrigatórios.' });
+      }
+
+      const questao = await db.Questao.findByPk(cod, {
+        include: [{ model: db.Alternativa, as: 'alternativas' }],
+        transaction: t
+      });
+
+      if (!questao) {
+        await t.rollback();
+        return res.status(404).json({ error: 'Questão não encontrada.' });
+      }
+
+      const alternativaEscolhida = questao.alternativas.find(a => a.cod === parseInt(alternativa_cod));
+      if (!alternativaEscolhida) {
+        await t.rollback();
+        return res.status(404).json({ error: 'Alternativa informada não pertence a esta questão.' });
+      }
+
+      // Verifica se a questão JÁ FOI respondida pelo usuário em qualquer atividade (Globalmente)
+      const jaRespondidaGlobal = await db.Atividade_questoes.count({
+        include: [{
+          model: db.Atividade,
+          as: 'atividade',
+          where: { usuario_cod }
+        }],
+        where: {
+          questao_cod: cod,
+          alternativa_selecionada_cod: { [db.Sequelize.Op.ne]: null }
+        },
+        transaction: t
+      }) > 0;
+
+      // Localiza ou cria a atividade agregadora "Banco de Questões" para o usuário
+      let atividadeBanco = await db.Atividade.findOne({
+        where: {
+          usuario_cod,
+          nome: 'Banco de Questões',
+          tipo: 'lista'
+        },
+        transaction: t
+      });
+
+      if (!atividadeBanco) {
+        atividadeBanco = await db.Atividade.create({
+          usuario_cod,
+          nome: 'Banco de Questões',
+          descricao: 'Respostas registradas individualmente via Banco de Questões',
+          disciplina_cod: questao.disciplina_cod,
+          tipo: 'lista',
+          status: 'em_andamento'
+        }, { transaction: t });
+      }
+
+      // Vincula a resposta na tabela atividade_questoes
+      let vinculo = await db.Atividade_questoes.findOne({
+        where: {
+          atividade_cod: atividadeBanco.cod,
+          questao_cod: cod
+        },
+        transaction: t
+      });
+
+      if (vinculo) {
+        vinculo.alternativa_selecionada_cod = alternativa_cod;
+        await vinculo.save({ transaction: t });
+      } else {
+        await db.Atividade_questoes.create({
+          atividade_cod: atividadeBanco.cod,
+          questao_cod: cod,
+          alternativa_selecionada_cod: alternativa_cod
+        }, { transaction: t });
+      }
+
+      const respostaCorreta = Boolean(alternativaEscolhida.correta);
+
+      // Atualiza as estatísticas gerais e por área APENAS se for a primeira resposta global
+      if (!jaRespondidaGlobal) {
+        let [estatisticasGerais] = await db.Usuario_estatisticas_gerais.findOrCreate({
+          where: { usuario_cod },
+          defaults: {
+            total_questoes_respondidas: 0,
+            total_acertos: 0,
+            total_erros: 0,
+            aproveitamento_geral: 0
+          },
+          transaction: t
+        });
+
+        let totalAcertos = estatisticasGerais.total_acertos;
+        let totalErros = estatisticasGerais.total_erros;
+        let totalRespondidas = estatisticasGerais.total_questoes_respondidas + 1;
+
+        if (respostaCorreta) {
+          totalAcertos += 1;
+        } else {
+          totalErros += 1;
+        }
+
+        const aproveitamento = totalRespondidas > 0 ? (totalAcertos / totalRespondidas) * 100 : 0;
+
+        await db.Usuario_estatisticas_gerais.update({
+          total_questoes_respondidas: totalRespondidas,
+          total_acertos: totalAcertos,
+          total_erros: totalErros,
+          aproveitamento_geral: aproveitamento
+        }, { where: { usuario_cod }, transaction: t });
+
+        if (questao.disciplina_cod) {
+          let [estatisticasArea] = await db.Usuario_estatisticas_por_area.findOrCreate({
+            where: { usuario_cod, disciplina_cod: questao.disciplina_cod },
+            defaults: {
+              total_questoes_respondidas: 0,
+              total_acertos: 0,
+              total_erros: 0,
+              aproveitamento_area: 0
+            },
+            transaction: t
+          });
+
+          let areaTotalAcertos = estatisticasArea.total_acertos;
+          let areaTotalErros = estatisticasArea.total_erros;
+          let areaTotalRespondidas = estatisticasArea.total_questoes_respondidas + 1;
+
+          if (respostaCorreta) {
+            areaTotalAcertos += 1;
+          } else {
+            areaTotalErros += 1;
+          }
+
+          const aproveitamentoArea = areaTotalRespondidas > 0 ? (areaTotalAcertos / areaTotalRespondidas) * 100 : 0;
+
+          await db.Usuario_estatisticas_por_area.update({
+            total_questoes_respondidas: areaTotalRespondidas,
+            total_acertos: areaTotalAcertos,
+            total_erros: areaTotalErros,
+            aproveitamento_area: aproveitamentoArea
+          }, { where: { usuario_cod, disciplina_cod: questao.disciplina_cod }, transaction: t });
+        }
+      }
+
+      await t.commit();
+
+      const alternativaCorretaObj = questao.alternativas.find(a => a.correta === true || a.correta === 1);
+
+      return res.status(200).json({
+        message: respostaCorreta ? 'Resposta correta!' : 'Resposta incorreta.',
+        correta: respostaCorreta,
+        alternativa_correta_cod: alternativaCorretaObj ? alternativaCorretaObj.cod : null,
+        explicacao: questao.explicacao || null,
+        ja_respondida_anteriormente: jaRespondidaGlobal
+      });
+
+    } catch (error) {
+      await t.rollback();
+      console.error('Erro ao responder questão no banco:', error);
+      return res.status(500).json({ error: 'Erro interno ao registrar resposta da questão.' });
     }
   }
 

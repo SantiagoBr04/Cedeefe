@@ -1,11 +1,11 @@
 /* estilos/editorQuestao.css - Estilos Padronizados do Editor de Texto Enriquecido Cedeefe */
 
 .editor-questao-container {
+    position: relative;
     border: 1px solid #ced4da;
     border-radius: 8px;
     background-color: #ffffff;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    overflow: hidden;
     margin-bottom: 1rem;
 }
 
@@ -175,3 +175,87 @@
     background-color: #198754;
     color: white;
 }
+
+/* Imagem Selecionada para Redimensionamento */
+.editor-contentarea img.img-selected {
+    outline: 3px solid #198754 !important;
+    box-shadow: 0 0 12px rgba(25, 135, 84, 0.4) !important;
+    cursor: pointer;
+}
+
+/* Toolbar Flutuante de Redimensionamento de Imagem */
+.editor-img-toolbar {
+    position: absolute;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background-color: #ffffff;
+    border: 1px solid #198754 !important;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    user-select: none;
+    font-size: 0.8rem;
+}
+
+.editor-img-toolbar .toolbar-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.editor-img-toolbar .btn-img-size {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.editor-img-toolbar .btn-img-size:hover {
+    background-color: #e9ecef;
+    color: #212529;
+    border-color: #ced4da;
+}
+
+.editor-img-toolbar .btn-img-size.is-active {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+    border-color: #146c43 !important;
+}
+
+.editor-img-toolbar .btn-img-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    background-color: #fff0f0;
+    border: 1px solid #fecaca;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.editor-img-toolbar .btn-img-delete:hover {
+    background-color: #dc3545;
+    color: #ffffff !important;
+    border-color: #b02a37;
+}
+
+.editor-img-toolbar .separator-v {
+    width: 1px;
+    height: 18px;
+    background-color: #dee2e6;
+    margin: 0 4px;
+}
+

@@ -1,0 +1,211 @@
+/* Estilos da Página Procurar Questões (Banco de Questões) - Cedeefe */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+.content {
+    margin-top: 80px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 25px;
+    }
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        padding: 15px;
+    }
+}
+
+.text-verde {
+    color: #1f9a55 !important;
+}
+
+.btn-verde {
+    background-color: #1f9a55;
+    color: #ffffff;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-verde:hover {
+    background-color: #167a42;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(31, 154, 85, 0.3);
+}
+
+.border-verde {
+    border-color: #1f9a55 !important;
+}
+
+/* Card da Questão */
+.card-questao-procurar {
+    transition: all 0.25s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.card-questao-procurar:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Header do Card */
+.questao-card-header {
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.questao-enunciado img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Badges de Status */
+.badge-status-respondida {
+    background-color: #0dcaf0;
+    color: #000000;
+    font-weight: 600;
+}
+
+.badge-status-inedita {
+    background-color: #6c757d;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Alternativas Interativas */
+.alternativa-item-interativa {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.alternativa-item-interativa:hover:not(.desabilitada) {
+    border-color: #1f9a55;
+    background-color: #f4fbf7;
+}
+
+.alternativa-item-interativa.selecionada {
+    border-color: #1f9a55;
+    background-color: #e8f5e9;
+    box-shadow: 0 0 0 2px rgba(31, 154, 85, 0.2);
+}
+
+.alternativa-item-interativa.correta {
+    border-color: #1f9a55 !important;
+    background-color: #d1e7dd !important;
+    color: #0f5132 !important;
+    font-weight: 500;
+}
+
+.alternativa-item-interativa.incorreta {
+    border-color: #dc3545 !important;
+    background-color: #f8d7da !important;
+    color: #842029 !important;
+}
+
+.badge-letra {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background-color: #e9ecef;
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+.alternativa-item-interativa.selecionada .badge-letra {
+    background-color: #1f9a55;
+    color: #ffffff;
+}
+
+.alternativa-item-interativa.correta .badge-letra {
+    background-color: #1f9a55;
+    color: #ffffff;
+}
+
+.alternativa-item-interativa.incorreta .badge-letra {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+/* Desabilita interação após resposta */
+.alternativa-item-interativa.desabilitada {
+    cursor: default;
+    opacity: 0.9;
+}
+
+/* Caixa de Explicação / Gabarito */
+.box-explicacao {
+    border-left: 4px solid #1f9a55;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 15px;
+}
+
+/* Paginação */
+.page-link-custom {
+    color: #1f9a55;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 6px 14px;
+    background-color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.page-link-custom:hover {
+    background-color: #e8f5e9;
+    color: #167a42;
+}
+
+.page-link-custom.active {
+    background-color: #1f9a55;
+    color: #ffffff;
+    border-color: #1f9a55;
+}
+
+.page-link-custom.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #f8f9fa;
+}

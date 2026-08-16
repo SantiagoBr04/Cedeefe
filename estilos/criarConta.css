@@ -1,0 +1,163 @@
+/* ==========================
+   CONFIGURAÇÃO GLOBAL DA PÁGINA
+========================== */
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ==========================
+   CONTAINER PRINCIPAL
+========================== */
+.container-fluid {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+    padding: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ==========================
+   FORMULÁRIO DE CRIAR CONTA
+========================== */
+.criarConta {
+    width: 380px;
+    max-width: 100%;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(255, 156, 156);
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.login {
+    width: 100%;
+}
+
+.titulo-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.recuperar {
+    padding: 14px 0;
+    font-size: 14px;
+}
+
+.recuperar a {
+    text-decoration: none;
+}
+
+#etapa2,
+#etapa3 {
+    display: none;
+}
+
+/* ==========================
+   BOTÕES
+========================== */
+.botao {
+    background: #ffcad4;
+    border: none;
+    border-radius: 75px;
+    width: 125px;
+    height: 35px;
+    display: block;
+    margin: 10px auto 0;
+    transition: 0.2s ease-in-out;
+}
+
+.botao:hover {
+    background: #ffb8c5;
+}
+
+/* =========================
+   BLOBS (DECORAÇÃO DE FUNDO)
+========================= */
+.blob-verde {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.blob-rosa {
+    position: absolute;
+    top: 0;
+    right: -60px;
+    width: 35vw;
+    height: 100vh;
+    z-index: -10;
+    pointer-events: none;
+    transition: all 0.4s ease-in-out;
+}
+
+/* ==========================
+   RESPONSIVIDADE
+========================== */
+@media (max-width: 1200px) {
+    .blob-verde,
+    .blob-rosa {
+        width: 42vw;
+    }
+}
+
+@media (max-width: 991px) {
+    html,
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .container-fluid {
+        margin-left: 0;
+        padding: 30px 20px;
+    }
+
+    .blob-verde,
+    .blob-rosa {
+        width: 55vw;
+        opacity: 0.15;
+    }
+
+    .blob-verde {
+        left: -180px;
+    }
+
+    .blob-rosa {
+        right: -180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-fluid {
+        padding: 20px 15px;
+    }
+
+    .criarConta {
+        width: 100%;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .botao {
+        width: 100%;
+        height: 42px;
+    }
+
+    .blob-verde,
+    .blob-rosa {
+        width: 90vw;
+        opacity: 0.08;
+    }
+}

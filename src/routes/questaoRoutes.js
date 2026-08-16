@@ -9,11 +9,10 @@ import upload from '../config/multer.js';
 // Cria o objeto router com a configuração padrão do expressa para receber requisições HTTP
 const router = new Router();
 
-// Rota para listar questões com filtros (disciplina, tema, ano, autor, busca)
+// Rota para listar questões com filtros (disciplina, tema, ano, autor, busca, status_resposta)
 router.get(
   '/',
   authMiddleware,
-  adminMiddleware,
   questaoController.listarQuestoes
 );
 
@@ -21,42 +20,29 @@ router.get(
 router.get(
   '/filtros',
   authMiddleware,
-  adminMiddleware,
   questaoController.obterFiltrosDisponiveis
 );
 
-// Rota para adicionar uma nova questão.
-// Note a "corrente" de middlewares: a requisição passa primeiro pelo auth, depois pelo admin.
+// Rotas para gerenciar rascunhos de importação em servidor sem usar localStorage
 router.post(
-  '/', 
-  authMiddleware, 
-  adminMiddleware, 
-  upload.single('imagem'), // Middleware do multer entra aqui
-  questaoController.addQuestao
+  '/rascunho',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.salvarRascunho
 );
 
-// Rota para obter uma questão específica pelo código
 router.get(
-  '/:cod',
+  '/rascunhos',
   authMiddleware,
   adminMiddleware,
-  questaoController.obterQuestaoPorCod
+  questaoController.listarRascunhos
 );
 
-// Rota para atualizar uma questão existente
-router.put(
-  '/:cod',
+router.get(
+  '/rascunho/:loteId',
   authMiddleware,
   adminMiddleware,
-  questaoController.atualizarQuestao
-);
-
-// Rota para deletar uma questão
-router.delete(
-  '/:cod', 
-  authMiddleware, 
-  adminMiddleware, 
-  questaoController.deleteQuestao
+  questaoController.obterRascunho
 );
 
 // Rota para analisar PDFs de prova e gabarito via Gemini
@@ -88,26 +74,39 @@ router.post(
   questaoController.uploadImagem
 );
 
-// Rotas para gerenciar rascunhos de importação em servidor sem usar localStorage
+// Rota para adicionar uma nova questão
 router.post(
-  '/rascunho',
-  authMiddleware,
-  adminMiddleware,
-  questaoController.salvarRascunho
+  '/', 
+  authMiddleware, 
+  adminMiddleware, 
+  upload.single('imagem'), // Middleware do multer entra aqui
+  questaoController.addQuestao
 );
 
+// Rotas paramétricas de questão (devem ser declaradas DEPOIS de rotas estáticas como /filtros e /rascunhos)
+
+// Rota para obter uma questão específica pelo código
 router.get(
-  '/rascunhos',
+  '/:cod',
   authMiddleware,
   adminMiddleware,
-  questaoController.listarRascunhos
+  questaoController.obterQuestaoPorCod
 );
 
-router.get(
-  '/rascunho/:loteId',
+// Rota para atualizar uma questão existente
+router.put(
+  '/:cod',
   authMiddleware,
   adminMiddleware,
-  questaoController.obterRascunho
+  questaoController.atualizarQuestao
+);
+
+// Rota para deletar uma questão
+router.delete(
+  '/:cod', 
+  authMiddleware, 
+  adminMiddleware, 
+  questaoController.deleteQuestao
 );
 
 // Rota para o usuário reportar erro em uma questão
@@ -115,6 +114,13 @@ router.post(
   '/:cod/reportar',
   authMiddleware,
   questaoController.reportarQuestao
+);
+
+// Rota para o usuário responder a uma questão no banco de questões
+router.post(
+  '/:cod/responder',
+  authMiddleware,
+  questaoController.responderQuestaoBanco
 );
 
 // Export default para exportar o valor principal do arquivo.
