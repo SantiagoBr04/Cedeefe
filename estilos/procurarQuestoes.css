@@ -199,10 +199,86 @@ body {
     border-bottom: 1px solid #f4d6dd;
 }
 
+/* Body/Container do Enunciado com suporte a quebras de linha e tipografia rica */
+.questao-enunciado {
+    line-height: 1.65;
+    color: #1f1f1f;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.98rem;
+}
+
+.questao-enunciado p {
+    margin-bottom: 0.75rem;
+}
+
+.questao-enunciado p:last-child {
+    margin-bottom: 0;
+}
+
+.questao-enunciado ul,
+.questao-enunciado ol {
+    padding-left: 1.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.questao-enunciado li {
+    margin-bottom: 0.35rem;
+}
+
+.questao-enunciado table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.questao-enunciado table, 
+.questao-enunciado th, 
+.questao-enunciado td {
+    border: 1px solid #f4d6dd;
+    padding: 8px 12px;
+}
+
+.questao-enunciado th {
+    background-color: #fff7f9;
+    color: #c23672;
+    font-weight: 600;
+}
+
 .questao-enunciado img {
     max-width: 100%;
     height: auto;
     object-fit: contain;
+    border-radius: 12px;
+    margin: 10px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.questao-enunciado sup,
+.alternativa-item-interativa sup,
+.explicacao-conteudo sup {
+    font-size: 0.75em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.5em;
+}
+
+.questao-enunciado sub,
+.alternativa-item-interativa sub,
+.explicacao-conteudo sub {
+    font-size: 0.75em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    bottom: -0.25em;
+}
+
+.explicacao-conteudo {
+    line-height: 1.6;
+    color: #2b2b2b;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* ========================

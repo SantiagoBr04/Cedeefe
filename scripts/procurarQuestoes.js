@@ -61,6 +61,86 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/'/g, '&#039;');
     }
 
+    /**
+     * Processa a formatação de texto para enunciados, alternativas e explicações.
+     * Suporta quebras de linha (\n -> <br>), sintaxe Markdown (**negrito**, *itálico*),
+     * notação matemática/LaTeX (\frac, \sqrt, superescritos x^2, subescritos H_2O, símbolos e letras gregas)
+     * e ajusta URLs relativas de imagens inline.
+     */
+    function processarFormatacaoTexto(texto) {
+        if (texto === null || texto === undefined) return '';
+        let html = String(texto);
+
+        // 1. Ajusta URLs relativas de tags <img> contidas no HTML do texto (ex: src="/uploads/...")
+        html = html.replace(/<img\s+([^>]*?)src=["'](\/[^"']+)["']/gi, (match, prefix, path) => {
+            return `<img ${prefix}src="http://localhost:3000${path}"`;
+        });
+
+        // 2. Remove demarcadores de bloco/inline de LaTeX: $$...$$, \[...\], $...$, \(...\)
+        html = html.replace(/\$\$(.*?)\$\$/gs, '$1');
+        html = html.replace(/\\\[(.*?)\\\]/gs, '$1');
+        html = html.replace(/\$(.*?)\$/g, '$1');
+        html = html.replace(/\\\((.*?)\\\)/g, '$1');
+
+        // 3. Comandos complexos de LaTeX: \frac{numerador}{denominador} -> (numerador/denominador) e \sqrt{expressao}
+        html = html.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1/$2)');
+        html = html.replace(/\\sqrt\{([^}]+)\}/g, '√($1)');
+        html = html.replace(/\\sqrt\s*([a-zA-Z0-9]+)/g, '√$1');
+
+        // 4. Comandos de operadores e símbolos matemáticos LaTeX
+        html = html.replace(/\\cdot/g, ' · ');
+        html = html.replace(/\\times/g, ' × ');
+        html = html.replace(/\\div/g, ' ÷ ');
+        html = html.replace(/\\pm/g, ' ± ');
+        html = html.replace(/\\mp/g, ' ∓ ');
+        html = html.replace(/\\neq/g, ' ≠ ');
+        html = html.replace(/\\leq/g, ' ≤ ');
+        html = html.replace(/\\geq/g, ' ≥ ');
+        html = html.replace(/\\approx/g, ' ≈ ');
+        html = html.replace(/\\infty/g, ' ∞ ');
+        html = html.replace(/\\degree/g, '°');
+        html = html.replace(/\^\\circ/g, '°');
+
+        // 5. Letras gregas LaTeX
+        html = html.replace(/\\alpha/g, 'α');
+        html = html.replace(/\\beta/g, 'β');
+        html = html.replace(/\\gamma/g, 'γ');
+        html = html.replace(/\\delta/g, 'δ');
+        html = html.replace(/\\theta/g, 'θ');
+        html = html.replace(/\\lambda/g, 'λ');
+        html = html.replace(/\\pi/g, 'π');
+        html = html.replace(/\\sigma/g, 'σ');
+        html = html.replace(/\\omega/g, 'ω');
+        html = html.replace(/\\Delta/g, 'Δ');
+        html = html.replace(/\\Omega/g, 'Ω');
+        html = html.replace(/\\Pi/g, 'Π');
+
+        // 6. Flechas e conectivos LaTeX
+        html = html.replace(/\\rightarrow/g, ' → ');
+        html = html.replace(/\\leftarrow/g, ' ← ');
+        html = html.replace(/\\Rightarrow/g, ' ⇒ ');
+        html = html.replace(/\\Leftrightarrow/g, ' ⇔ ');
+
+        // 7. Expoentes/Potências com chaves, parênteses ou simples ex: x^{2+n}, x^(2+n), 5^2
+        html = html.replace(/([a-zA-Z0-9\)])\^\{([^}]+)\}/g, '$1<sup>$2</sup>');
+        html = html.replace(/([a-zA-Z0-9\)])\^\(([^)]+)\)/g, '$1<sup>$2</sup>');
+        html = html.replace(/([a-zA-Z0-9\)])\^([a-zA-Z0-9+\-]+)/g, '$1<sup>$2</sup>');
+
+        // 8. Subscritos com chaves, parênteses ou simples ex: x_{1}, H_2O
+        html = html.replace(/([a-zA-Z0-9])_\{([^}]+)\}/g, '$1<sub>$2</sub>');
+        html = html.replace(/([a-zA-Z0-9])_\(([^)]+)\)/g, '$1<sub>$2</sub>');
+        html = html.replace(/([a-zA-Z0-9])_([a-zA-Z0-9+\-]+)/g, '$1<sub>$2</sub>');
+
+        // 9. Notações Markdown para Negrito e Itálico
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        // 10. Preserva quebras de linha (\n -> <br>)
+        html = html.replace(/\r?\n/g, '<br>');
+
+        return html;
+    }
+
     function exibirAlerta(mensagem, tipo = 'alert-success') {
         if (!alertaFeedback) return;
         alertaFeedback.className = `alert ${tipo} alert-dismissible fade show shadow-sm`;
@@ -358,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `
                     <div class="${classeAlt}" data-questao-cod="${q.cod}" data-alternativa-cod="${alt.cod}" id="alt-${q.cod}-${alt.cod}">
                         <div class="badge-letra">${letra}</div>
-                        <div class="flex-grow-1">${escapeHtml(alt.texto)}</div>
+                        <div class="flex-grow-1">${processarFormatacaoTexto(alt.texto)}</div>
                     </div>
                 `;
             }).join('');
@@ -399,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="card-body p-4">
                         <div class="questao-enunciado fs-6 text-dark mb-3">
-                            ${q.descricao}
+                            ${processarFormatacaoTexto(q.descricao)}
                         </div>
                         ${imgHtml}
                         
@@ -425,7 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         <div class="box-explicacao d-none mt-3" id="box-explicacao-${q.cod}">
                             <h6 class="fw-bold mb-2" style="color: #538d24;"><i class="bi bi-journal-check me-2"></i>Explicação / Gabarito Comentado</h6>
-                            <p class="mb-0 text-dark small">${escapeHtml(q.explicacao)}</p>
+                            <div class="mb-0 text-dark small explicacao-conteudo">${processarFormatacaoTexto(q.explicacao)}</div>
                         </div>
                     </div>
                 </div>
