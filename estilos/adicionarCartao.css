@@ -1,126 +1,320 @@
-/* =========================
-   CONFIGURAÇÕES GERAIS
-========================= */
+/* ===================================================
+   ADICIONAR FLASHCARD — Cedeefe
+   Diretrizes e Paleta Oficial (Seção 12 do gemini.md)
+   =================================================== */
 
+/* Animação de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================
+   FUNDO E LAYOUT BASE
+   =================================================== */
 body {
     background-color: #f9f9f9;
     font-family: 'Poppins', sans-serif !important;
+    min-height: 100vh;
+    color: #1f1f1f;
     overflow-x: hidden;
 }
 
-/* =========================
-   CONTEÚDO
-========================= */
-
 .content {
     margin-top: 80px;
-    margin-left: 300px;
-    margin-right: 240px;
-    margin-bottom: 80px;
-    padding: 20px;
-
-    transition: all 0.3s ease;
-}
-
-.form-container {
-    max-width: 700px;
-    margin: 0 auto;
-    background: #ffffff;
-    border-radius: 16px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
     padding: 30px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-.header-card {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
-    margin-bottom: 25px;
+/* Utilitários */
+.accent-rosa {
+    color: #c23672 !important;
 }
 
-.form-title {
-    font-size: 1.5rem;
+.accent-verde {
+    color: #80C242 !important;
+}
+
+.text-rosa {
+    color: #c23672 !important;
+}
+
+.text-verde {
+    color: #538d24 !important;
+}
+
+.btn-voltar-link {
+    color: #c23672;
+    text-decoration: none;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #2c3e50;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-}
-
-.form-title i {
-    color: #80C242;
-}
-
-/* =========================
-   CAMPOS DO FORMULÁRIO
-========================= */
-
-.form-control, .form-select {
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-    padding: 10px 14px;
-    font-size: 0.95rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: #80C242;
-    box-shadow: 0 0 0 3px rgba(128, 194, 66, 0.2);
-}
-
-/* =========================
-   BOTÕES CUSTOMIZADOS
-========================= */
-
-.btn {
-    border-radius: 8px;
-    font-weight: 500;
-    padding: 10px 20px;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #f4d6dd;
     transition: all 0.2s ease;
 }
 
+.btn-voltar-link:hover {
+    background: #fce8f0;
+    color: #a0285b;
+    border-color: #c23672;
+}
+
+/* ===================================================
+   CABEÇALHO DA PÁGINA
+   =================================================== */
+.page-header {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 28px 32px;
+    animation: fadeInUp 0.45s ease both;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #1f1f1f;
+    font-size: 1.75rem;
+}
+
+/* ===================================================
+   CARD DE FORMULÁRIO
+   =================================================== */
+.form-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 10px 30px rgba(30, 30, 30, 0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.08s;
+}
+
+.form-card-header {
+    background: #fff7f9;
+    padding: 20px 28px;
+    border-bottom: 1px solid #f4d6dd;
+}
+
+.form-kicker {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #ff9cae;
+    display: block;
+}
+
+.form-card-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1f1f1f;
+}
+
+.form-card-body {
+    padding: 28px;
+}
+
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    padding: 11px 16px;
+    font-size: 0.92rem;
+    color: #1f1f1f;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #c23672;
+    box-shadow: 0 0 0 3px rgba(194, 54, 114, 0.10);
+}
+
+/* ===================================================
+   CARD DE PRÉ-VISUALIZAÇÃO (LIVE PREVIEW)
+   =================================================== */
+.preview-card-container {
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.14s;
+    position: sticky;
+    top: 100px;
+}
+
+.preview-kicker {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    display: flex;
+    align-items: center;
+}
+
+.preview-flashcard {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.45);
+    box-shadow: 0 12px 32px rgba(194, 54, 114, 0.08);
+    padding: 24px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.preview-card-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.badge-tipo-preview {
+    background: #fff7f9;
+    color: #c23672;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: 1px solid #f4d6dd;
+}
+
+.badge-baralho-preview {
+    background: #eef7e5;
+    color: #538d24;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: 1px solid #d4edc2;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-card-face {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.face-tag-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.preview-texto {
+    font-size: 1.15rem;
+    color: #1f1f1f;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.preview-texto.font-bold {
+    font-weight: 600;
+}
+
+.preview-footer-dica {
+    border-top: 1px solid #f4d6dd;
+    font-size: 0.78rem;
+}
+
+/* ===================================================
+   BOTÕES
+   =================================================== */
 .btn-verde {
     background-color: #80C242;
-    color: white;
+    color: #ffffff !important;
     border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-verde:hover {
     background-color: #69a730;
-    color: white;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+    transform: translateY(-1px);
 }
 
-.btn-rosa {
-    background-color: #c23672;
-    color: white;
-    border: none;
+.btn-outline-rosa {
+    background: transparent;
+    color: #c23672 !important;
+    border: 1px solid #f4d6dd;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-rosa:hover {
-    background-color: #a0285b;
-    color: white;
+.btn-outline-rosa:hover {
+    background-color: #fce8f0;
+    color: #a0285b !important;
+    border-color: #c23672;
 }
 
-/* =========================
+/* ===================================================
    RESPONSIVIDADE
-========================= */
-
+   =================================================== */
 @media (max-width: 1200px) {
     .content {
         margin-left: 90px;
-        margin-right: 40px;
+        width: calc(100% - 90px);
+        padding: 24px;
     }
 }
 
 @media (max-width: 991px) {
     .content {
+        margin-top: 80px;
         margin-left: 0;
-        margin-right: 0;
-        margin-top: 70px;
-        padding: 15px;
+        width: 100%;
+        padding: 20px 16px;
     }
-    
-    .form-container {
-        padding: 20px;
+
+    .preview-card-container {
+        position: static;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-card-body {
+        padding: 20px 16px;
+    }
+
+    .form-card-header {
+        padding: 16px;
     }
 }

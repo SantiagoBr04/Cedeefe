@@ -1,235 +1,440 @@
+/* ===================================================
+   SESSÃO DE ESTUDO DE FLASHCARDS — Cedeefe
+   Diretrizes e Paleta Oficial (Seção 12 do gemini.md)
+   =================================================== */
+
+/* Animação de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================
+   FUNDO E LAYOUT BASE
+   =================================================== */
 body {
     background-color: #f9f9f9;
     font-family: 'Poppins', sans-serif !important;
+    min-height: 100vh;
+    color: #1f1f1f;
+    overflow-x: hidden;
 }
 
-/* CONTEÚDO */
 .content {
-    transition: .3s;
-    margin: 80px auto 40px;
-    margin-left: 290px;
-    max-width: 900px;
-    padding: 20px;
+    margin-top: 80px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    max-width: 960px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-.topo-flashcards {
-    display: grid;
-    grid-template-columns: 60px 1fr 60px;
-    align-items: center;
-    margin-bottom: 25px;
+/* Utilitários */
+.accent-rosa {
+    color: #c23672 !important;
 }
 
-.informacoes {
-    text-align: center;
+.accent-verde {
+    color: #80C242 !important;
 }
 
-.informacoes h3 {
-    margin: 0;
+.text-rosa {
+    color: #c23672 !important;
+}
+
+.text-verde {
+    color: #538d24 !important;
+}
+
+.btn-voltar-link {
+    color: #c23672;
+    text-decoration: none;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #2c3e50;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #f4d6dd;
+    transition: all 0.2s ease;
+}
+
+.btn-voltar-link:hover {
+    background: #fce8f0;
+    color: #a0285b;
+    border-color: #c23672;
+}
+
+/* ===================================================
+   HEADER DO ESTUDO
+   =================================================== */
+.estudo-header-container {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 24px 30px;
+    animation: fadeInUp 0.45s ease both;
+}
+
+.estudo-kicker {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #ff9cae;
+    display: block;
+}
+
+.estudo-titulo {
+    font-weight: 700;
+    color: #1f1f1f;
     font-size: 1.5rem;
 }
 
-.informacoes span {
+.badge-progresso-cartoes {
+    background: #fce8f0;
+    color: #c23672;
+    font-weight: 700;
     font-size: 0.9rem;
-    color: #777;
-    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
 }
 
-/* CARTA DE ESTUDO */
-.flashcard {
-    background-color: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    padding: 40px 30px;
-    margin-bottom: 25px;
-    text-align: center;
+.progresso-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progresso-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c23672, #80C242);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+
+/* ===================================================
+   CARTÃO DE FLASHCARD
+   =================================================== */
+.flashcard-stage-container {
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.1s;
+}
+
+.flashcard-card {
+    background: #ffffff;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 14px 36px rgba(30, 30, 30, 0.08);
+    min-height: 380px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
     cursor: pointer;
-    min-height: 320px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.flashcard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 44px rgba(194, 54, 114, 0.12);
+    border-color: #f4d6dd;
+}
+
+.flashcard-card-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.badge-tipo-cartao {
+    background: #fff7f9;
+    color: #c23672;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+    border: 1px solid #f4d6dd;
+}
+
+.badge-dica-teclado {
+    font-size: 0.78rem;
+    color: #7b7b7b;
+}
+
+kbd {
+    background: #f3f4f6;
+    color: #374151;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 6px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.flashcard-face {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+    width: 100%;
 }
 
-.flashcard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-    border-color: #80C242;
-}
-
-.flashcard h5 {
-    font-size: 0.85rem;
+.face-kicker {
+    font-size: 0.8rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #888;
-    margin-bottom: 15px;
-    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
 }
 
-.flashcard p {
-    font-size: 1.25rem;
-    color: #2c3e50;
+.flashcard-texto {
+    font-size: 1.4rem;
+    color: #1f1f1f;
     line-height: 1.6;
-    margin: 0;
+    max-width: 680px;
+    word-break: break-word;
+}
+
+.flashcard-texto.font-bold {
+    font-weight: 600;
 }
 
 .dica-virar {
-    position: absolute;
-    bottom: 15px;
-    font-size: 0.8rem;
-    color: #999;
+    font-size: 0.82rem;
+    color: #7b7b7b;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-/* BOTÕES DE FEEDBACK */
-.flashcard-feedback {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
+/* ===================================================
+   BOTÕES DE AVALIAÇÃO SRS (4 NÍVEIS)
+   =================================================== */
+.flashcard-feedback-panel {
+    transition: opacity 0.3s ease;
 }
 
-.flashcard-feedback .btn {
-    flex: 1;
-    max-width: 180px;
-    padding: 12px 10px;
-    font-weight: 600;
-    border-radius: 10px;
+.btn-srs {
+    border-radius: 16px;
+    padding: 14px 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    font-size: 0.95rem;
+    gap: 4px;
     transition: all 0.2s ease;
+    border-width: 1px;
+    border-style: solid;
 }
 
-.btn-errei {
-    background-color: #fce8f0;
-    color: #c23672;
-    border: 1px solid #f8c0d5;
-}
-
-.btn-errei:hover {
-    background-color: #c23672;
-    color: white;
-}
-
-.btn-dificil {
-    background-color: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
-}
-
-.btn-dificil:hover {
-    background-color: #e09b12;
-    color: white;
-}
-
-.btn-medio {
-    background-color: #e6f7ff;
-    color: #006699;
-    border: 1px solid #b3e5ff;
-}
-
-.btn-medio:hover {
-    background-color: #0077b6;
-    color: white;
-}
-
-.btn-facil {
-    background-color: #eef7e5;
-    color: #538d24;
-    border: 1px solid #c8e6af;
-}
-
-.btn-facil:hover {
-    background-color: #80C242;
-    color: white;
-}
-
-.btnPassar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: white;
-    border: 1px solid #e0e0e0;
-    cursor: pointer;
-    transition: all .2s;
-}
-
-.btnPassar:hover {
-    background: #80C242;
-    color: white;
-    border-color: #80C242;
-}
-
-/* COMPARAÇÃO DE PALAVRAS COLORIDAS */
-.word-badge {
-    padding: 5px 10px;
-    border-radius: 6px;
+.btn-srs-label {
     font-size: 0.95rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-srs-dica {
+    font-size: 0.72rem;
+    opacity: 0.85;
+}
+
+.btn-srs-errei {
+    background: #fce8f0;
+    color: #c23672;
+    border-color: #f4d6dd;
+}
+
+.btn-srs-errei:hover {
+    background: #c23672;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(194, 54, 114, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-srs-dificil {
+    background: #fff8e6;
+    color: #d97706;
+    border-color: #fed7aa;
+}
+
+.btn-srs-dificil:hover {
+    background: #d97706;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(217, 119, 6, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-srs-medio {
+    background: #eff6ff;
+    color: #2563eb;
+    border-color: #dbeafe;
+}
+
+.btn-srs-medio:hover {
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-srs-facil {
+    background: #eef7e5;
+    color: #538d24;
+    border-color: #d4edc2;
+}
+
+.btn-srs-facil:hover {
+    background: #80C242;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+    transform: translateY(-2px);
+}
+
+/* ===================================================
+   COMPARAÇÃO DE ESCRITA
+   =================================================== */
+.word-badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.88rem;
     font-weight: 600;
     display: inline-block;
 }
 
 .word-badge.exact-green {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #eef7e5;
+    color: #2f6b3d;
     border: 1px solid #c3e6cb;
 }
 
 .word-badge.similar-yellow {
-    background-color: #fff3cd;
+    background-color: #fff8e6;
     color: #856404;
     border: 1px solid #ffeeba;
 }
 
 .word-badge.wrong-red {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: #fce8f0;
+    color: #c23672;
+    border: 1px solid #f8c0d5;
+}
+
+/* ===================================================
+   BOTÕES E MODAIS
+   =================================================== */
+.btn-verde {
+    background-color: #80C242;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+}
+
+.btn-verde:hover {
+    background-color: #69a730;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+}
+
+.btn-outline-rosa {
+    background: transparent;
+    color: #c23672 !important;
+    border: 1px solid #f4d6dd;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-rosa:hover {
+    background-color: #fce8f0;
+    color: #a0285b !important;
+    border-color: #c23672;
+}
+
+.modal-custom {
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.modal-header-icon-wrapper-sucesso {
+    width: 64px;
+    height: 64px;
+    background-color: #eef7e5;
+    color: #538d24;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 10px auto 0 auto;
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+   =================================================== */
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 24px;
+    }
 }
 
 @media (max-width: 991px) {
     .content {
+        margin-top: 80px;
         margin-left: 0;
-        margin-right: 0;
-        max-width: 700px;
+        width: 100%;
+        padding: 20px 16px;
+    }
+
+    .estudo-header-container {
+        padding: 20px;
+    }
+
+    .flashcard-card {
+        padding: 24px;
+        min-height: 320px;
+    }
+
+    .flashcard-texto {
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 576px) {
-    .content {
-        padding: 15px;
+    .btn-srs {
+        padding: 10px 6px;
     }
 
-    .flashcard {
-        min-height: 260px;
-        padding: 25px 15px;
-    }
-
-    .flashcard-feedback {
-        flex-direction: column;
-    }
-
-    .flashcard-feedback .btn {
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .topo-flashcards {
-        grid-template-columns: 45px 1fr 45px;
-    }
-
-    .informacoes h3 {
-        font-size: 1.2rem;
+    .btn-srs-label {
+        font-size: 0.85rem;
     }
 }

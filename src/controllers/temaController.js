@@ -11,7 +11,7 @@ const temaController = {
             res.status(200).json(temas);
         } catch (error) {
             console.error("Erro em getAllTemas:", error);
-            res.status(500).json({ error: 'Erro ao buscar todos os temas.', detalhes: error.message });
+            res.status(500).json({ error: 'Erro ao buscar todos os temas.' });
         }
     },
 
@@ -27,7 +27,7 @@ const temaController = {
             res.status(200).json(temas);
         } catch (error) {
             console.error("Erro em getTemasPorDisciplina:", error);
-            res.status(500).json({ error: 'Erro ao buscar temas.', detalhes: error.message });
+            res.status(500).json({ error: 'Erro ao buscar temas.' });
         }
     },
 
@@ -66,7 +66,7 @@ const temaController = {
             res.status(201).json({ message: 'Tema adicionado com sucesso!', tema: novoTema });
         } catch (error) {
             console.error("Erro em criarTema:", error);
-            res.status(500).json({ error: 'Erro ao criar o tema.', detalhes: error.message });
+            res.status(500).json({ error: 'Erro ao criar o tema.' });
         }
     },
 
@@ -114,7 +114,7 @@ const temaController = {
             res.status(200).json({ message: 'Tema atualizado com sucesso!', tema });
         } catch (error) {
             console.error("Erro em editarTema:", error);
-            res.status(500).json({ error: 'Erro ao atualizar o tema.', detalhes: error.message });
+            res.status(500).json({ error: 'Erro ao atualizar o tema.' });
         }
     },
 
@@ -128,12 +128,12 @@ const temaController = {
                 return res.status(404).json({ error: 'Tema não encontrado.' });
             }
 
-        await tema.destroy();
-        
-        res.status(200).json({ message: 'Tema excluído com sucesso.' });
-    } catch (error) {
+            await tema.destroy();
+            
+            res.status(200).json({ message: 'Tema excluído com sucesso.' });
+        } catch (error) {
             console.error("Erro em excluirTema:", error);
-            res.status(500).json({ error: 'Erro ao excluir tema.', detalhes: error.message });
+            res.status(500).json({ error: 'Erro ao excluir tema.' });
         }
     }
 };

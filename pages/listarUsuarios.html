@@ -1,75 +1,181 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"> <!-- Define a codificação UTF-8 -->
-     <!-- Responsividade em dispositivos móveis -->
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe</title> <!-- Título da aba do navegador -->
+    <title>Lista de Usuários - Painel Administrativo - Cedeefe</title>
+    <meta name="description" content="Gerenciamento de usuários e permissões da plataforma Cedeefe.">
 
     <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
-     <!-- Ícones Material Symbols (Google) -->
+    <!-- Ícones Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <!-- CSS externo -->
+    <!-- CSS Externo -->
     <link rel="stylesheet" href="../estilos/sidebar.css">
-    <link rel="stylesheet" href="../estilos/verLista.css">
-    <!-- Guardião de Autenticação -->
+    <link rel="stylesheet" href="../estilos/listarUsuarios.css">
+    <!-- Guardião de Autenticação com permissão administrativa -->
     <script src="../scripts/authGuard.js"></script>
 </head>
 <body data-admin-required="true">
  
-    <!-- SIDEBARRRR -->
+    <!-- Sidebar Reutilizável (carrega automaticamente sidebarAdm para admins) -->
     <div id="sidebar-container"></div>
 
     <div class="content">
 
-        <div class="header">
-            <h1>Lista de Usuários</h1>
-            <!--<button type="submit" class="btn btn-outline-secondary"> <i class="bi bi-search"></i> Buscar</button>!-->
-
-            <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Buscar usuário..." aria-label="Search"/>
-            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-            </form>
-
-            <button type="button" class="btn btn-outline-secondary"> <i class="bi bi-person-plus-fill"></i></button>
+        <!-- Cabeçalho Principal -->
+        <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="mb-1 d-flex align-items-center flex-wrap gap-2">
+                    <i class="bi bi-people-fill accent-rosa me-2"></i>Lista de Usuários
+                    <span class="badge-total ms-2" id="badge-total-usuarios">Carregando...</span>
+                </h2>
+                <p class="mb-0 text-muted">Gerencie as contas registradas no sistema, visualize perfis e administre permissões.</p>
+            </div>
+            <div>
+                <a href="dashboardAdm.html" class="btn btn-outline-rosa px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-speedometer2"></i> Dashboard Adm
+                </a>
+            </div>
         </div>
 
-        <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">Cod</th>
-            <th scope="col">Nome</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Ações</th>
-            </tr>
-        </thead>
+        <!-- Alerta de Feedback -->
+        <div id="alerta-feedback" class="alert d-none mb-4" role="alert"></div>
 
-        <tbody id="usuario-tbody">
-            <tr>
-                <td colspan="5" class="text-center text-muted">Carregando usuários...</td>
-            </tr>
-        </tbody>
-        </table>
+        <!-- Cards de Estatísticas Rápidas -->
+        <div class="row g-3 mb-4" id="stats-container">
+            <div class="col-12 col-sm-4">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper rosa">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total de Usuários</span>
+                        <h3 class="stat-value" id="stat-total-usuarios">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper verde">
+                        <i class="bi bi-shield-lock-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Administradores</span>
+                        <h3 class="stat-value" id="stat-total-admins">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper azul">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Estudantes</span>
+                        <h3 class="stat-value" id="stat-total-estudantes">0</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel de Busca e Filtros -->
+        <div class="filtros-card mb-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-12 col-md-7">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" id="filtro-busca-usuario" class="form-control" placeholder="Buscar usuário por nome, e-mail ou código...">
+                    </div>
+                </div>
+                <div class="col-9 col-md-4">
+                    <select id="filtro-tipo-usuario" class="form-select">
+                        <option value="todos">Todos os tipos</option>
+                        <option value="estudante">Apenas Estudantes</option>
+                        <option value="admin">Apenas Administradores</option>
+                    </select>
+                </div>
+                <div class="col-3 col-md-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-rosa w-100 py-2" id="btn-limpar-filtros-usuario" title="Limpar filtros">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela Estilizada de Usuários -->
+        <div class="tabela-card-wrapper mb-4" id="usuarios-table-container">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 80px;">Cód</th>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">E-mail / Login</th>
+                            <th scope="col">Função</th>
+                            <th scope="col">Listas</th>
+                            <th scope="col" class="text-end" style="width: 100px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usuario-tbody">
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="spinner-border spinner-rosa" role="status">
+                                    <span class="visually-hidden">Carregando usuários...</span>
+                                </div>
+                                <p class="mt-3 text-muted mb-0">Carregando lista de usuários...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Estado Vazio -->
+        <div id="estado-vazio" class="estado-vazio text-center d-none">
+            <div class="estado-vazio-icone">
+                <i class="bi bi-person-x"></i>
+            </div>
+            <h4 class="estado-vazio-titulo">Nenhum usuário encontrado</h4>
+            <p class="estado-vazio-subtitulo text-muted">Nenhum usuário cadastrado corresponde aos critérios de pesquisa informados.</p>
+        </div>
+
     </div>
 
+    <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO DE USUÁRIO -->
+    <div class="modal fade" id="modalConfirmarExclusaoUsuario" tabindex="-1" aria-labelledby="modalConfirmarExclusaoUsuarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-custom">
+                <div class="modal-header border-0 pb-0">
+                    <div class="modal-header-icon-wrapper">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body text-center pt-2 pb-4">
+                    <h5 class="modal-title mb-2" id="modalConfirmarExclusaoUsuarioLabel">Excluir Usuário?</h5>
+                    <p class="text-muted mb-1">Tem certeza de que deseja excluir o usuário <strong id="nome-usuario-excluir" class="text-dark"></strong>?</p>
+                    <small class="text-danger">Todas as listas, estatísticas, progresso e cartões associados a este usuário serão permanentemente apagados do banco.</small>
+                </div>
+                <div class="modal-footer border-0 justify-content-center gap-2 pt-0 pb-4">
+                    <button type="button" class="btn btn-outline-rosa px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger-custom px-4" id="btn-confirmar-exclusao-modal">
+                        <i class="bi bi-trash3 me-1"></i> Excluir Usuário
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- Seu JS da sidebar -->
-<script src="../scripts/loadSidebar.js"></script>
-<script src="../scripts/sidebar.js"></script>
-<script src="../scripts/listarUsuarios.js"></script>
-
-<!-- Bootstrap JS -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="../scripts/loadSidebar.js"></script>
+    <script src="../scripts/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/listarUsuarios.js"></script>
 </body>
 </html>
-
-
-        

@@ -176,3 +176,134 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
 - [userRoutes.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/routes/userRoutes.js): Exemplo de estruturação de rotas e encadeamento de middlewares.
 - [userController.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/controllers/userController.js): Padrão de respostas JSON, códigos HTTP e tratamento de erros.
 - [authMiddleware.js](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/src/middlewares/authMiddleware.js): Implementação da verificação do token JWT.
+
+---
+
+## 12. Guia de Estilização Visual — Identidade do Cedeefe
+
+Esta seção define as regras obrigatórias de estilização para que **todas** as páginas do Cedeefe mantenham uma identidade visual coesa, premium e moderna. As páginas de referência que exemplificam o padrão visual são `dashboard.html`/`dashboard.css` e `procurarQuestoes.html`/`procurarQuestoes.css`.
+
+### 12.1. Paleta de Cores Oficial
+
+A identidade visual do Cedeefe é construída sobre dois eixos de cor: **rosa** (destaque, acento, interação) e **verde** (ação positiva, sucesso, botões primários). **Nunca utilize cores genéricas do Bootstrap** (`bg-success`, `bg-primary`, `bg-danger`, `bg-info`, `bg-secondary`, `text-success`, `text-danger`) diretamente. Crie classes customizadas com os valores hexadecimais abaixo.
+
+#### Rosa (Destaque e Identidade)
+| Função | Hex | Uso |
+|---|---|---|
+| Rosa principal (accent) | `#c23672` | Ícones de destaque, bordas de avatar, paginação ativa, títulos de calendário, badges de status |
+| Rosa escuro | `#a0285b` | Hover do rosa principal, texto forte sobre fundos rosa |
+| Rosa botão (CTA suave) | `#FFCAD4` | Botões da landing page, fundo de "dia de hoje" no calendário |
+| Rosa hover botão | `#FFB8C5` | Hover do botão rosa suave |
+| Rosa fundo card | `#FFD8DF` | Fundo de cards de estatísticas, badges de ano, seções de destaque |
+| Rosa fundo badge | `#fce8f0` | Fundo de badges de tema, hover de alternativas incorretas, hover de calendário |
+| Rosa borda | `#f4d6dd` | Bordas de cards, inputs, divisores, stat cards |
+| Rosa header card | `#fff7f9` | Background do header de cards de questão |
+| Rosa texto kicker | `#ff9cae` | Kickers de seção, texto de destaque suave |
+| Rosa checkbox | `#ff7ca3` | Accent de checkboxes |
+| Rosa borda login | `rgb(255, 156, 156)` | Borda dos formulários de login e cadastro |
+| Rosa sombra | `rgba(194, 54, 114, 0.08~0.12)` | Box-shadow de cards e containers |
+
+#### Verde (Ação e Sucesso)
+| Função | Hex | Uso |
+|---|---|---|
+| Verde botão primário | `#80C242` | `.btn-verde`, botões de ação principal (Filtrar, Responder, Criar) |
+| Verde hover | `#69a730` | Hover dos botões verdes |
+| Verde texto | `#2f6b3d` | Texto forte sobre fundo verde claro |
+| Verde stat texto | `#538d24` | Texto de badges de disciplina, título de explicação |
+| Verde fundo badge | `#eef7e5` | Fundo de badges de disciplina, stat cards verdes |
+| Verde fundo suave | `#E9FFD3` | Fundo de badges de autor, gradientes |
+| Verde borda | `#d4edc2` | Borda de stat cards verdes |
+| Verde fundo hover alt. | `#f5faf0` | Hover de alternativas interativas |
+| Verde fundo explicação | `#e0f0d0` | Fundo de alternativas corretas |
+| Verde sombra | `rgba(128, 194, 66, 0.15~0.25)` | Box-shadow de botões verdes no hover |
+
+#### Neutros
+| Função | Hex | Uso |
+|---|---|---|
+| Fundo body | `#f9f9f9` | Background geral de todas as páginas internas |
+| Branco sidebar/menu | `#FDFDFD` | Background da sidebar e menu superior |
+| Texto principal | `#1f1f1f` | Títulos e headings |
+| Texto secundário | `#555` ou `#7b7b7b` | Labels, subtítulos, descrições |
+| Texto muted | `#6f6f6f` ou `#7b7b7b` | Texto de apoio, metadados |
+| Borda suave | `#e9ecef` | Bordas de inputs, divisores neutros |
+| Fundo input | `#f0f0f0` | Background de badges de letra neutros |
+| Fundo vazio (gráficos) | `#f0f0f0` | Gráficos sem dados |
+
+### 12.2. Padrão de Componentes CSS
+
+Ao criar ou redesenhar qualquer página interna do Cedeefe, siga rigorosamente estes padrões:
+
+#### Cards e Containers
+- `border-radius: 24px` para cards principais, `20px` para cards de conteúdo, `14px~16px` para elementos menores
+- `border: 1px solid rgba(255, 184, 197, 0.35)` ou `1px solid #f4d6dd` — **nunca** usar `.border` genérica do Bootstrap
+- `box-shadow: 0 14px 34px rgba(30, 30, 30, 0.08)` para cards normais
+- `box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08~0.10)` para cards em destaque
+- Background: `#ffffff` para cards normais, `#fff7f9` para headers de card
+
+#### Botões
+- **Botão principal (ação):** classe `.btn-verde` — `background: #80C242`, `color: #fff`, `border-radius: 12px`, hover com `#69a730` e `translateY(-1px)`
+- **Botão secundário (cancelar/limpar):** classe `.btn-outline-rosa` — `border: 1px solid #f4d6dd`, `color: #c23672`, hover com `background: #fce8f0`
+- **Botão terciário (explicação/detalhe):** classe `.btn-outline-verde` — `border: 1px solid #d4edc2`, `color: #80C242`, hover com `background: #eef7e5`
+- **Nunca** use `btn-success`, `btn-primary`, `btn-danger`, `btn-info`, `btn-outline-success`, `btn-outline-primary` do Bootstrap
+
+#### Badges
+- **Disciplina:** `.badge-disciplina` — fundo `#eef7e5`, texto `#538d24`
+- **Tema:** `.badge-tema` — fundo `#fce8f0`, texto `#c23672`
+- **Ano:** `.badge-ano` — fundo `#FFD8DF`, texto `#a0285b`
+- **Autor/Prova:** `.badge-autor` — fundo `#E9FFD3`, texto `#2f6b3d`
+- **Total/Contagem:** `.badge-total` — fundo `#c23672`, texto `#fff`
+- **Status positivo:** fundo `#80C242`, texto `#fff`
+- **Status pendente:** fundo `#FFD8DF`, texto `#a0285b`
+- Todos com `border-radius: 12px~20px`, `font-weight: 600`, `padding: 5px 12px`
+- **Nunca** use `bg-success`, `bg-primary`, `bg-secondary`, `bg-info`, `bg-warning`, `bg-danger` do Bootstrap
+
+#### Inputs e Selects
+- `border-radius: 12px`
+- `border: 1px solid #e9ecef`
+- `:focus` → `border-color: #c23672` + `box-shadow: 0 0 0 3px rgba(194, 54, 114, 0.10)`
+- Input group icon: fundo `#fff7f9`, cor `#c23672`
+
+#### Animações
+- Usar `@keyframes fadeInUp` (`from: opacity 0, translateY(18px)` → `to: opacity 1, translateY(0)`) em cards e seções
+- Duração: `0.45s~0.5s ease both`
+- Delays escalonados para múltiplos cards: `0.06s`, `0.12s`, `0.18s`, `0.24s`...
+- Hover em cards: `transform: translateY(-2px~-4px)` + sombra expandida
+- Hover em elementos menores (heatmap, calendário): `transform: scale(1.08~1.4)`
+- **Nunca** deixe uma página estática — sempre adicione ao menos `fadeInUp` nos blocos principais
+
+#### Gráficos (Chart.js)
+- Cor de acertos: `#80C242` (verde do projeto)
+- Cor de erros: `#c23672` (rosa do projeto)
+- Paleta de disciplinas: `['#c23672', '#80C242', '#ff9cae', '#69a730', '#FFCAD4', '#538d24', '#a0285b', '#E9FFD3']`
+- `borderWidth: 2`, `borderColor: '#ffffff'`
+- Doughnut: `cutout: '65%'`
+- Legendas: `usePointStyle: true`, `pointStyleWidth: 12`
+- Estado vazio: `backgroundColor: '#f0f0f0'`
+
+#### Paginação
+- Cor do link: `#c23672`, borda `#f4d6dd`
+- Ativo: fundo `#c23672`, texto `#fff`
+- Hover: fundo `#fce8f0`
+- `border-radius: 10px`, `font-weight: 600`
+
+### 12.3. Regras Obrigatórias
+
+1. **Fundo do body**: Sempre `#f9f9f9` em páginas internas autenticadas (dashboard, questões, flashcards, desempenho, perfil, etc.)
+2. **Nunca usar classes de cor do Bootstrap** (`bg-success`, `bg-primary`, `bg-danger`, `bg-info`, `bg-secondary`, `text-success`, `text-primary`, `text-danger`, `btn-success`, `btn-primary`, `btn-danger`) — sempre criar classes customizadas com os hexadecimais da paleta acima
+3. **Nunca usar variáveis CSS** (`var(--minha-cor)`) — manter valores hexadecimais ou RGB diretos
+4. **Sempre incluir animação `fadeInUp`** nos blocos principais de cada página
+5. **Sempre usar `border-radius` arredondado** — mínimo `12px` para elementos pequenos, `20px~24px` para cards
+6. **Sombras rosadas** em cards principais — usar `rgba(194, 54, 114, 0.06~0.12)` ao invés de sombras genéricas cinzas
+7. **Hover com elevação** — cards devem ter `transform: translateY(-2px~-4px)` no hover
+8. **Spinner de loading**: classe `.spinner-rosa` (cor `#c23672`) ao invés de `text-primary`, `text-success` etc.
+9. **Estados vazios**: usar classe `.estado-vazio` com `border-radius: 20px`, borda `#f4d6dd`, sombra rosada
+10. **Avatar do usuário**: borda `3px solid #c23672`, fallback de cor `background=c23672&color=fff`
+
+### 12.4. Páginas de Referência
+
+Ao redesenhar qualquer página existente, use como referência visual e de código:
+- [dashboard.css](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/estilos/dashboard.css): Padrão de cards, heatmap, calendário, perfil e stats
+- [dashboard.html](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/pages/dashboard.html): Estrutura de banner, cards de stats rápidas, gráficos
+- [procurarQuestoes.css](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/estilos/procurarQuestoes.css): Padrão de filtros, cards de questão, badges, alternativas interativas, paginação
+- [procurarQuestoes.html](file:///c:/Users/santi/OneDrive/Desktop/Cedeefe/pages/procurarQuestoes.html): Estrutura de cabeçalho de página, painel de filtros, container de conteúdo
+

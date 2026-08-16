@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     };
 
+    // Atualiza a data no banner imediatamente
+    atualizarDataBanner();
+
     try {
         // =========================
         // BUSCA DE DADOS REAIS DA API
@@ -49,6 +52,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Renderização da interface
         populateProfile(profile);
+        atualizarSaudacao(profile);
+        populateStatCards(stats, heatmapData, atividadesData);
         renderGeralChart(stats);
         renderDisciplinaChart(areaStats);
         renderHeatmap(heatmapData);
@@ -66,6 +71,75 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 });
+
+// ========================
+// SAUDAÇÃO DINÂMICA
+// ========================
+function atualizarSaudacao(profile) {
+    const greetingEl = document.getElementById('welcome-greeting');
+    if (!greetingEl) return;
+
+    const hora = new Date().getHours();
+    let saudacao = 'Olá';
+
+    if (hora >= 5 && hora < 12) {
+        saudacao = 'Bom dia';
+    } else if (hora >= 12 && hora < 18) {
+        saudacao = 'Boa tarde';
+    } else {
+        saudacao = 'Boa noite';
+    }
+
+    const nome = profile.nomeCompleto
+        ? profile.nomeCompleto.split(' ')[0]
+        : (profile.login ? profile.login.split('@')[0] : 'Estudante');
+
+    greetingEl.textContent = `${saudacao}, ${nome}! `;
+}
+
+function atualizarDataBanner() {
+    const dateEl = document.getElementById('welcome-date');
+    if (!dateEl) return;
+
+    const agora = new Date();
+    const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+    dateEl.textContent = `${diasSemana[agora.getDay()]}, ${agora.getDate()} de ${meses[agora.getMonth()]} de ${agora.getFullYear()}`;
+}
+
+// ========================
+// CARDS DE ESTATÍSTICAS RÁPIDAS
+// ========================
+function populateStatCards(stats, heatmapData, atividadesData) {
+    // Total de questões respondidas
+    const totalQuestoes = (Number(stats.total_acertos) || 0) + (Number(stats.total_erros) || 0);
+    const elQuestoes = document.getElementById('stat-questoes');
+    if (elQuestoes) elQuestoes.textContent = totalQuestoes;
+
+    // Taxa de acertos
+    const taxa = totalQuestoes > 0 ? Math.round((Number(stats.total_acertos) / totalQuestoes) * 100) : 0;
+    const elTaxa = document.getElementById('stat-taxa');
+    if (elTaxa) elTaxa.textContent = `${taxa}%`;
+
+    // Flashcards revisados (soma total de cartões resolvidos)
+    let totalFlashcards = 0;
+    if (Array.isArray(heatmapData)) {
+        heatmapData.forEach(item => {
+            totalFlashcards += parseInt(item.cartoes_resolvidos || 0, 10);
+        });
+    }
+    const elFlash = document.getElementById('stat-flashcards');
+    if (elFlash) elFlash.textContent = totalFlashcards;
+
+    // Listas concluídas
+    let totalListas = 0;
+    if (Array.isArray(atividadesData)) {
+        totalListas = atividadesData.filter(a => a.atividade?.tipo === 'lista').length;
+    }
+    const elListas = document.getElementById('stat-listas');
+    if (elListas) elListas.textContent = totalListas;
+}
 
 // ========================
 // PERFIL DO USUÁRIO
@@ -89,7 +163,7 @@ function populateProfile(profile) {
     if (imgEl) {
         imgEl.onerror = () => {
             const avatarName = encodeURIComponent(dispName);
-            imgEl.src = `https://ui-avatars.com/api/?name=${avatarName}&background=0d6efd&color=fff`;
+            imgEl.src = `https://ui-avatars.com/api/?name=${avatarName}&background=c23672&color=fff`;
         };
 
         if (profile.foto) {
@@ -98,7 +172,7 @@ function populateProfile(profile) {
                 : `http://localhost:3000${profile.foto.startsWith('/') ? '' : '/'}${profile.foto}`;
         } else {
             const avatarName = encodeURIComponent(dispName);
-            imgEl.src = `https://ui-avatars.com/api/?name=${avatarName}&background=0d6efd&color=fff`;
+            imgEl.src = `https://ui-avatars.com/api/?name=${avatarName}&background=c23672&color=fff`;
         }
     }
 }
@@ -129,7 +203,7 @@ function renderGeralChart(stats) {
                 labels: ['Nenhuma questão respondida'],
                 datasets: [{
                     data: [1],
-                    backgroundColor: ['#e0e0e0']
+                    backgroundColor: ['#f0f0f0']
                 }]
             },
             options: {
@@ -151,8 +225,9 @@ function renderGeralChart(stats) {
             labels: ['Acertos', 'Erros'],
             datasets: [{
                 data: [acertos, erros],
-                backgroundColor: ['#39d353', '#dc3545'],
-                borderWidth: 1
+                backgroundColor: ['#80C242', '#c23672'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }]
         },
         options: {
@@ -160,9 +235,15 @@ function renderGeralChart(stats) {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        padding: 16,
+                        usePointStyle: true,
+                        pointStyleWidth: 12
+                    }
                 }
-            }
+            },
+            cutout: '65%'
         }
     });
 }
@@ -186,7 +267,7 @@ function renderDisciplinaChart(areaStats) {
                 labels: ['Sem dados'],
                 datasets: [{
                     data: [1],
-                    backgroundColor: ['#e0e0e0']
+                    backgroundColor: ['#f0f0f0']
                 }]
             },
             options: {
@@ -214,7 +295,7 @@ function renderDisciplinaChart(areaStats) {
                 labels: ['Sem dados de acertos'],
                 datasets: [{
                     data: [1],
-                    backgroundColor: ['#e0e0e0']
+                    backgroundColor: ['#f0f0f0']
                 }]
             },
             options: {
@@ -230,10 +311,10 @@ function renderDisciplinaChart(areaStats) {
         return;
     }
 
-    // Cores vibrantes e consistentes para disciplinas
+    // Paleta consistente com o projeto (rosa/verde)
     const palette = [
-        '#0d6efd', '#198754', '#ffc107', '#0dcaf0',
-        '#6f42c1', '#d63384', '#fd7e14', '#20c997'
+        '#c23672', '#80C242', '#ff9cae', '#69a730',
+        '#FFCAD4', '#538d24', '#a0285b', '#E9FFD3'
     ];
     const bgColors = labels.map((_, i) => palette[i % palette.length]);
 
@@ -244,7 +325,8 @@ function renderDisciplinaChart(areaStats) {
             datasets: [{
                 data: dataAcertos,
                 backgroundColor: bgColors,
-                borderWidth: 1
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }]
         },
         options: {
@@ -252,7 +334,12 @@ function renderDisciplinaChart(areaStats) {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        padding: 14,
+                        usePointStyle: true,
+                        pointStyleWidth: 12
+                    }
                 }
             }
         }

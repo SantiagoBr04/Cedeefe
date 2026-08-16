@@ -12,6 +12,13 @@ router.post('/register', userController.register);
 // Rota para fazer login do usuario
 router.post('/login', userController.login);
 
+// Rotas públicas de verificação de e-mail e recuperação de senha
+router.post('/verify-email', userController.verifyEmail);
+router.post('/resend-verification', userController.resendVerificationEmail);
+router.post('/forgot-password', userController.forgotPassword);
+router.post('/reset-password', userController.resetPassword);
+router.post('/google-login', userController.googleLogin);
+
 // Rotas privadas (precisa de login)
 // O authMiddleware é colocado ENTRE a rota e o controller.
 // Ele será executado primeiro. Se tudo der certo, ele chama o controller.

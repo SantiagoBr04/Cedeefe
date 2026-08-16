@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
 
             // Obter os valores dos campos
-            const emailInput = document.getElementById('exampleInputEmail1').value;
+            const emailInput = document.getElementById('exampleInputEmail1').value.trim().toLowerCase();
             const passwordInput = document.getElementById('exampleInputPassword1').value;
             const rememberMe = document.getElementById('exampleCheck1').checked;
 
@@ -33,13 +33,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         sessionStorage.setItem('jwt_token', data.token);
                     }
 
-                    // Redirecionar para a página tentada anteriormente ou para o dashboard
+                    // Redirecionar para conclusão de perfil se necessário, ou para o dashboard
                     const redirectUrl = sessionStorage.getItem('redirect_after_login');
-                    if (redirectUrl) {
+                    if (data.precisaCompletarPerfil) {
+                        window.location.href = 'completarPerfil.html';
+                    } else if (redirectUrl) {
                         sessionStorage.removeItem('redirect_after_login');
                         window.location.href = redirectUrl;
                     } else {
                         window.location.href = 'dashboard.html';
+                    }
+                } else if (response.status === 403 && data.unverified) {
+                    const reenviar = confirm(`${data.error}\n\nDeseja que enviemos um novo e-mail de verificação para ${emailInput}?`);
+                    if (reenviar) {
+                        try {
+                            const resendResp = await fetch('http://localhost:3000/api/users/resend-verification', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ email: emailInput })
+                            });
+                            const resendData = await resendResp.json();
+                            alert(resendData.message || resendData.error);
+                        } catch (err) {
+                            alert('Falha ao tentar reenviar o e-mail de verificação.');
+                        }
                     }
                 } else {
                     // Tratar erro (ex: Credenciais inválidas)
@@ -52,3 +69,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Callback global acionado pelo botão oficial do Google Sign-In
+window.handleGoogleCredentialResponse = async (response) => {
+    try {
+        const res = await fetch('http://localhost:3000/api/users/google-login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                credentialToken: response.credential
+            })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            // Armazenar o token de sessão JWT do Cedeefe
+            localStorage.setItem('jwt_token', data.token);
+
+            // Redirecionar para a página tentada anteriormente ou para o dashboard
+            const redirectUrl = sessionStorage.getItem('redirect_after_login');
+            if (redirectUrl) {
+                sessionStorage.removeItem('redirect_after_login');
+                window.location.href = redirectUrl;
+            } else {
+                window.location.href = 'dashboard.html';
+            }
+        } else {
+            alert(data.error || 'Falha ao autenticar com a conta do Google.');
+        }
+    } catch (error) {
+        console.error('Erro no login com Google:', error);
+        alert('Erro ao se conectar com o servidor para autenticação via Google.');
+    }
+};

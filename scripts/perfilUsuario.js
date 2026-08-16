@@ -26,13 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const atualizarFotoNavbar = (fotoPath) => {
         const btnUser = document.getElementById('btn-user');
         const btnAvatar = document.getElementById('btn-user-avatar');
-        const fullUrl = fotoPath.startsWith('http') ? fotoPath : `http://localhost:3000${fotoPath}`;
-        if (btnUser) {
-            btnUser.classList.add('d-none');
+        if (!fotoPath) {
+            if (btnAvatar) btnAvatar.classList.add('d-none');
+            if (btnUser) btnUser.classList.remove('d-none');
+            return;
         }
+        const fullUrl = fotoPath.startsWith('http') ? fotoPath : `http://localhost:3000${fotoPath}`;
         if (btnAvatar) {
+            btnAvatar.onerror = () => {
+                btnAvatar.classList.add('d-none');
+                if (btnUser) btnUser.classList.remove('d-none');
+            };
             btnAvatar.src = fullUrl;
             btnAvatar.classList.remove('d-none');
+            if (btnUser) btnUser.classList.add('d-none');
         }
     };
 

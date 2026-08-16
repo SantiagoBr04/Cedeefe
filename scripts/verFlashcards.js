@@ -13,7 +13,9 @@ function getAuthHeaders() {
 }
 
 let baralhoIdAtual = null;
+let todosCartoes = [];
 let cartaoParaEditarId = null;
+let modalEditarInstance = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -25,218 +27,366 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Configurar botões do header
-    document.getElementById('btnAdicionarCartao').addEventListener('click', () => {
-        window.location.href = `adicionarCartao.html?baralho_id=${baralhoIdAtual}`;
-    });
-
-    document.getElementById('btnIniciarRevisao').addEventListener('click', () => {
-        window.location.href = `fazendoFlashcards.html?baralho_id=${baralhoIdAtual}`;
-    });
-
-    carregarDadosBaralhoECartoes();
-
-    // Eventos do Modal Editar Cartão
+    // Inicialização do Modal Bootstrap
     const modalEditarElement = document.getElementById('modalEditarCartao');
-    const modalEditarInstance = new bootstrap.Modal(modalEditarElement);
+    if (modalEditarElement && typeof bootstrap !== 'undefined') {
+        modalEditarInstance = new bootstrap.Modal(modalEditarElement);
+    }
+
+    // Configuração dos Botões
+    configurarEventos();
+
+    // Carregamento dos dados
+    carregarDadosBaralhoECartoes();
+});
+
+function configurarEventos() {
+    const btnAdicionar = document.getElementById('btnAdicionarCartao');
+    const btnCriarPrimeiro = document.getElementById('btnCriarPrimeiroCartao');
+    const btnIniciarRevisao = document.getElementById('btnIniciarRevisao');
+
+    const irParaAdicionar = () => {
+        window.location.href = `adicionarCartao.html?baralho_id=${baralhoIdAtual}`;
+    };
+
+    if (btnAdicionar) btnAdicionar.addEventListener('click', irParaAdicionar);
+    if (btnCriarPrimeiro) btnCriarPrimeiro.addEventListener('click', irParaAdicionar);
+
+    if (btnIniciarRevisao) {
+        btnIniciarRevisao.addEventListener('click', () => {
+            window.location.href = `fazendoFlashcards.html?baralho_id=${baralhoIdAtual}`;
+        });
+    }
+
+    // Filtros e Busca
+    const inputBusca = document.getElementById('filtro-busca-cartao');
+    const selectStatus = document.getElementById('filtro-status-cartao');
+    const btnLimpar = document.getElementById('btn-limpar-filtros-cartao');
+
+    if (inputBusca) inputBusca.addEventListener('input', aplicarFiltros);
+    if (selectStatus) selectStatus.addEventListener('change', aplicarFiltros);
+    if (btnLimpar) {
+        btnLimpar.addEventListener('click', () => {
+            if (inputBusca) inputBusca.value = '';
+            if (selectStatus) selectStatus.value = 'todos';
+            aplicarFiltros();
+        });
+    }
+
+    // Eventos do Modal Editar
     const btnSalvarEdicao = document.getElementById('btnSalvarEdicaoCartao');
     const btnExcluirCartao = document.getElementById('btnExcluirCartaoModal');
     const erroDiv = document.getElementById('erroEditarCartao');
 
-    btnSalvarEdicao.addEventListener('click', async () => {
-        const frente = document.getElementById('editFrenteInput').value.trim();
-        const verso = document.getElementById('editVersoInput').value.trim();
+    if (btnSalvarEdicao) {
+        btnSalvarEdicao.addEventListener('click', async () => {
+            const frente = document.getElementById('editFrenteInput').value.trim();
+            const verso = document.getElementById('editVersoInput').value.trim();
 
-        if (!frente || !verso) {
-            erroDiv.textContent = 'Frente e verso são obrigatórios.';
-            erroDiv.style.display = 'block';
-            return;
-        }
-
-        try {
-            const res = await fetch(`${API_BASE}/cartoes/${cartaoParaEditarId}`, {
-                method: 'PUT',
-                headers: getAuthHeaders(),
-                body: JSON.stringify({ frente, verso })
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                erroDiv.textContent = data.error || 'Erro ao editar cartão.';
+            if (!frente || !verso) {
+                erroDiv.textContent = 'Frente e verso são obrigatórios.';
                 erroDiv.style.display = 'block';
                 return;
             }
 
-            modalEditarInstance.hide();
-            carregarDadosBaralhoECartoes();
-        } catch (error) {
-            console.error(error);
-            erroDiv.textContent = 'Erro de conexão ao editar cartão.';
-            erroDiv.style.display = 'block';
-        }
-    });
+            try {
+                const res = await fetch(`${API_BASE}/cartoes/${cartaoParaEditarId}`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ frente, verso })
+                });
 
-    btnExcluirCartao.addEventListener('click', async () => {
-        if (!confirm('Tem certeza de que deseja excluir este cartão?')) return;
-
-        try {
-            const res = await fetch(`${API_BASE}/cartoes/${cartaoParaEditarId}`, {
-                method: 'DELETE',
-                headers: getAuthHeaders()
-            });
-
-            if (res.ok) {
-                modalEditarInstance.hide();
-                carregarDadosBaralhoECartoes();
-            } else {
                 const data = await res.json();
-                alert(data.error || 'Erro ao excluir cartão.');
+
+                if (!res.ok) {
+                    erroDiv.textContent = data.error || 'Erro ao editar cartão.';
+                    erroDiv.style.display = 'block';
+                    return;
+                }
+
+                if (modalEditarInstance) modalEditarInstance.hide();
+                mostrarFeedback('Cartão atualizado com sucesso!', 'success');
+                carregarDadosBaralhoECartoes();
+            } catch (error) {
+                console.error(error);
+                erroDiv.textContent = 'Erro de conexão ao editar cartão.';
+                erroDiv.style.display = 'block';
             }
-        } catch (error) {
-            console.error(error);
-            alert('Erro de conexão ao excluir cartão.');
+        });
+    }
+
+    if (btnExcluirCartao) {
+        btnExcluirCartao.addEventListener('click', async () => {
+            if (!confirm('Tem certeza de que deseja excluir este cartão?')) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/cartoes/${cartaoParaEditarId}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+
+                if (res.ok) {
+                    if (modalEditarInstance) modalEditarInstance.hide();
+                    mostrarFeedback('Cartão excluído com sucesso!', 'success');
+                    carregarDadosBaralhoECartoes();
+                } else {
+                    const data = await res.json();
+                    alert(data.error || 'Erro ao excluir cartão.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Erro de conexão ao excluir cartão.');
+            }
+        });
+    }
+}
+
+// Carrega dados do baralho e seus cartões
+async function carregarDadosBaralhoECartoes() {
+    const container = document.getElementById('cartoesContainer');
+    const estadoVazio = document.getElementById('estado-vazio');
+
+    try {
+        const token = getToken();
+        if (!token) {
+            if (typeof redirecionarParaLogin === 'function') {
+                redirecionarParaLogin('Acesso negado: Faça login para ver seus flashcards.');
+            } else {
+                window.location.href = 'login.html';
+            }
+            return;
+        }
+
+        // Busca informações do baralho e seus cartões
+        const [baralhosRes, cartoesRes] = await Promise.all([
+            fetch(`${API_BASE}/baralhos`, { method: 'GET', headers: getAuthHeaders() }),
+            fetch(`${API_BASE}/cartoes/baralho/${baralhoIdAtual}`, { method: 'GET', headers: getAuthHeaders() })
+        ]);
+
+        if (!baralhosRes.ok || !cartoesRes.ok) {
+            throw new Error('Falha ao carregar informações.');
+        }
+
+        const baralhos = await baralhosRes.json();
+        const baralho = baralhos.find(b => String(b.id) === String(baralhoIdAtual));
+
+        if (baralho) {
+            document.getElementById('tituloBaralho').textContent = baralho.nome;
+            document.title = `${baralho.nome} - Flashcards - Cedeefe`;
+        }
+
+        todosCartoes = await cartoesRes.json();
+
+        // Atualiza estatísticas rápidas
+        atualizarEstatisticas(todosCartoes);
+
+        // Aplica filtros e renderiza
+        aplicarFiltros();
+
+    } catch (error) {
+        console.error('Erro ao carregar dados do baralho:', error);
+        if (container) {
+            container.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-exclamation-circle text-danger fs-1"></i>
+                    <p class="mt-3 text-muted">Não foi possível carregar os cartões deste baralho.</p>
+                    <button class="btn btn-outline-rosa mt-2" onclick="carregarDadosBaralhoECartoes()">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Tentar novamente
+                    </button>
+                </div>
+            `;
+        }
+        if (estadoVazio) estadoVazio.classList.add('d-none');
+    }
+}
+
+// Atualiza contadores no topo
+function atualizarEstatisticas(cartoes) {
+    const total = cartoes.length;
+    const hoje = new Date();
+
+    let pendentes = 0;
+    let aprendendo = 0;
+    let revisados = 0;
+
+    cartoes.forEach(c => {
+        const prox = c.proxima_revisao ? new Date(c.proxima_revisao) : null;
+        const rep = Number(c.repeticoes || 0);
+
+        if (!prox || prox <= hoje) {
+            pendentes++;
+        }
+
+        if (rep <= 1) {
+            aprendendo++;
+        } else {
+            revisados++;
         }
     });
-});
 
-async function carregarDadosBaralhoECartoes() {
-    const token = getToken();
-    if (!token) {
-        if (typeof redirecionarParaLogin === 'function') {
-            redirecionarParaLogin('Acesso negado: Faça login para ver seus flashcards.');
-        } else {
-            window.location.href = 'login.html';
-        }
+    const elTotal = document.getElementById('stat-total-baralho-cartoes');
+    const elPendentes = document.getElementById('stat-pendentes-hoje');
+    const elAprendendo = document.getElementById('stat-aprendendo-cartoes');
+    const elRevisados = document.getElementById('stat-revisados-cartoes');
+    const elBadge = document.getElementById('badge-total-cartoes');
+
+    if (elTotal) elTotal.textContent = total;
+    if (elPendentes) elPendentes.textContent = pendentes;
+    if (elAprendendo) elAprendendo.textContent = aprendendo;
+    if (elRevisados) elRevisados.textContent = revisados;
+    if (elBadge) elBadge.textContent = `${total} ${total === 1 ? 'cartão' : 'cartões'}`;
+}
+
+// Filtra cartões por texto e status SRS
+function aplicarFiltros() {
+    const termo = (document.getElementById('filtro-busca-cartao')?.value || '').toLowerCase().trim();
+    const status = document.getElementById('filtro-status-cartao')?.value || 'todos';
+    const hoje = new Date();
+
+    let filtrados = [...todosCartoes];
+
+    if (status === 'pendentes') {
+        filtrados = filtrados.filter(c => {
+            const prox = c.proxima_revisao ? new Date(c.proxima_revisao) : null;
+            return !prox || prox <= hoje;
+        });
+    } else if (status === 'novos') {
+        filtrados = filtrados.filter(c => Number(c.repeticoes || 0) <= 1);
+    } else if (status === 'em_dia') {
+        filtrados = filtrados.filter(c => {
+            const prox = c.proxima_revisao ? new Date(c.proxima_revisao) : null;
+            return prox && prox > hoje;
+        });
+    }
+
+    if (termo) {
+        filtrados = filtrados.filter(c => {
+            const frente = (c.frente || '').toLowerCase();
+            const verso = (c.verso || '').toLowerCase();
+            return frente.includes(termo) || verso.includes(termo);
+        });
+    }
+
+    renderizarCartoes(filtrados);
+}
+
+// Renderiza a lista de cartões
+function renderizarCartoes(cartoes) {
+    const container = document.getElementById('cartoesContainer');
+    const estadoVazio = document.getElementById('estado-vazio');
+
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (cartoes.length === 0) {
+        container.classList.add('d-none');
+        if (estadoVazio) estadoVazio.classList.remove('d-none');
         return;
     }
 
-    const container = document.getElementById('cartoesContainer');
-    const tituloEl = document.getElementById('tituloBaralho');
+    container.classList.remove('d-none');
+    if (estadoVazio) estadoVazio.classList.add('d-none');
 
-    container.innerHTML = '<div class="text-muted p-3">Carregando cartões...</div>';
-
-    try {
-        // Buscar nome do baralho
-        const resBaralhos = await fetch(`${API_BASE}/baralhos`, { headers: getAuthHeaders() });
-        if (!resBaralhos.ok) {
-            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(resBaralhos)) {
-                return;
-            }
-        } else {
-            const baralhos = await resBaralhos.json();
-            const baralhoEncontrado = baralhos.find(b => b.id === Number(baralhoIdAtual));
-            if (baralhoEncontrado) {
-                tituloEl.textContent = baralhoEncontrado.nome;
-            } else {
-                tituloEl.textContent = 'Baralho';
-            }
-        }
-
-        // Buscar cartões do baralho
-        const resCartoes = await fetch(`${API_BASE}/cartoes/baralho/${baralhoIdAtual}`, {
-            headers: getAuthHeaders()
-        });
-
-        if (!resCartoes.ok) {
-            container.innerHTML = '<div class="text-danger p-3">Erro ao carregar cartões deste baralho.</div>';
-            return;
-        }
-
-        const cartoes = await resCartoes.json();
-
-        if (!cartoes || cartoes.length === 0) {
-            container.innerHTML = `
-                <div class="col-12 text-center p-5 bg-white rounded-3 border">
-                    <p class="text-muted mb-3">Este baralho ainda não possui cartões.</p>
-                    <a href="adicionarCartao.html?baralho_id=${baralhoIdAtual}" class="btn btn-rosa">
-                        <i class="bi bi-plus-lg"></i> Adicionar o primeiro cartão
-                    </a>
-                </div>
-            `;
-            return;
-        }
-
-        renderizarCartoes(cartoes);
-
-    } catch (error) {
-        console.error(error);
-        container.innerHTML = '<div class="text-danger p-3">Erro de conexão ao carregar cartões.</div>';
-    }
-}
-
-function getTempoRevisaoInfo(cartao) {
-    if (!cartao.data_proxima_revisao) {
-        return { texto: 'A revisar hoje', pendente: true };
-    }
-
-    const agora = new Date();
-    agora.setHours(0, 0, 0, 0);
-
-    const proxima = new Date(cartao.data_proxima_revisao);
-    proxima.setHours(0, 0, 0, 0);
-
-    const diffMs = proxima.getTime() - agora.getTime();
-    const diffDias = Math.round(diffMs / (1000 * 60 * 60 * 24));
-
-    if (diffDias <= 0) {
-        return { texto: 'A revisar hoje', pendente: true };
-    } else if (diffDias === 1) {
-        return { texto: 'Revisão amanhã', futuro: true };
-    } else {
-        return { texto: `Revisão em ${diffDias} dias`, futuro: true };
-    }
-}
-
-function renderizarCartoes(cartoes) {
-    const container = document.getElementById('cartoesContainer');
-    container.innerHTML = '';
+    const hoje = new Date();
 
     cartoes.forEach((cartao, index) => {
-        const card = document.createElement('div');
-        card.className = 'flashcard-container';
-        card.title = 'Clique para editar este cartão';
+        const col = document.createElement('div');
+        col.className = 'col-12 col-md-6 col-lg-4 cartao-card-wrapper';
+        col.style.animationDelay = `${(index * 0.05).toFixed(2)}s`;
 
-        const infoRevisao = getTempoRevisaoInfo(cartao);
+        const prox = cartao.proxima_revisao ? new Date(cartao.proxima_revisao) : null;
+        const rep = Number(cartao.repeticoes || 0);
+        const intervalo = Number(cartao.intervalo_dias || 0);
+        const isPendente = !prox || prox <= hoje;
 
-        card.innerHTML = `
-            <div class="flashcard-header">
-                <h4><span class="text-muted fs-6">#${index + 1}</span> ${escapeHtml(cartao.frente)}</h4>
-                <span class="edit-hint"><i class="bi bi-pencil"></i> Editar</span>
-            </div>
-            <div class="flashcard-body">
-                <span class="badge ${cartao.tipo === 'escrita' ? 'bg-info text-dark' : 'bg-light text-secondary'} mb-2 align-self-start">
-                    <i class="bi ${cartao.tipo === 'escrita' ? 'bi-keyboard' : 'bi-card-text'}"></i> ${cartao.tipo === 'escrita' ? 'Resposta Escrita' : 'Tradicional'}
-                </span>
-            </div>
-            <div class="flashcard-footer-info">
-                <span class="badge-revisar ${infoRevisao.pendente ? 'pendente' : (infoRevisao.futuro ? 'futuro' : '')}">
-                    <i class="bi bi-clock-history"></i> ${infoRevisao.texto}
-                </span>
-                <span class="text-muted small"><i class="bi bi-eye-slash"></i> Resposta oculta</span>
+        let badgeStatusHtml = '';
+        if (isPendente) {
+            badgeStatusHtml = '<span class="badge-srs-status badge-srs-pendente"><i class="bi bi-clock-history"></i> Revisão Hoje</span>';
+        } else if (rep <= 1) {
+            badgeStatusHtml = '<span class="badge-srs-status badge-srs-aprendendo"><i class="bi bi-lightning-charge-fill"></i> Aprendendo</span>';
+        } else {
+            badgeStatusHtml = `<span class="badge-srs-status badge-srs-revisado"><i class="bi bi-check2-circle"></i> Em dia (${intervalo}d)</span>`;
+        }
+
+        col.innerHTML = `
+            <div class="cartao-item-card">
+                <div class="cartao-item-header">
+                    <span class="text-muted small fw-semibold">
+                        <i class="bi ${cartao.tipo === 'escrita' ? 'bi-pencil-square' : 'bi-card-text'} accent-rosa me-1"></i>
+                        ${cartao.tipo === 'escrita' ? 'Escrita' : 'Tradicional'}
+                    </span>
+                    <div class="d-flex gap-1">
+                        <button type="button" class="btn-icon-action edit" title="Editar Cartão" onclick="abrirModalEditarCartao(${cartao.id}, '${escapeJsString(cartao.frente)}', '${escapeJsString(cartao.verso)}')">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="cartao-item-body">
+                    <div class="cartao-secao-frente">
+                        <span class="cartao-label-frente"><i class="bi bi-question-circle"></i> Pergunta</span>
+                        <p class="cartao-texto-frente">${escapeHtml(cartao.frente)}</p>
+                    </div>
+
+                    <div class="cartao-secao-verso">
+                        <span class="cartao-label-verso"><i class="bi bi-check-circle"></i> Resposta</span>
+                        <p class="cartao-texto-verso">${escapeHtml(cartao.verso)}</p>
+                    </div>
+
+                    <div class="cartao-item-footer">
+                        ${badgeStatusHtml}
+                        <small class="text-muted">${rep} ${rep === 1 ? 'revisão' : 'revisões'}</small>
+                    </div>
+                </div>
             </div>
         `;
 
-        card.addEventListener('click', () => {
-            abrirModalEdicao(cartao);
-        });
-
-        container.appendChild(card);
+        container.appendChild(col);
     });
 }
 
-function abrirModalEdicao(cartao) {
-    cartaoParaEditarId = cartao.id;
-    document.getElementById('editCartaoId').value = cartao.id;
-    document.getElementById('editFrenteInput').value = cartao.frente;
-    document.getElementById('editVersoInput').value = cartao.verso;
+function abrirModalEditarCartao(id, frente, verso) {
+    cartaoParaEditarId = id;
+    document.getElementById('editCartaoId').value = id;
+    document.getElementById('editFrenteInput').value = frente;
+    document.getElementById('editVersoInput').value = verso;
     document.getElementById('erroEditarCartao').style.display = 'none';
 
-    const modalEditarElement = document.getElementById('modalEditarCartao');
-    const modalEditarInstance = bootstrap.Modal.getInstance(modalEditarElement) || new bootstrap.Modal(modalEditarElement);
-    modalEditarInstance.show();
+    if (modalEditarInstance) modalEditarInstance.show();
 }
 
-function escapeHtml(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function mostrarFeedback(mensagem, tipo = 'success') {
+    const alerta = document.getElementById('alerta-feedback');
+    if (!alerta) return;
+
+    alerta.className = `alert alert-${tipo === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+    alerta.style.borderRadius = '16px';
+    alerta.style.boxShadow = '0 6px 20px rgba(0,0,0,0.06)';
+    alerta.innerHTML = `
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi ${tipo === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'} fs-5"></i>
+            <div>${mensagem}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    alerta.classList.remove('d-none');
+
+    setTimeout(() => {
+        alerta.classList.add('d-none');
+    }, 4000);
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function escapeJsString(text) {
+    if (!text) return '';
+    return String(text).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }

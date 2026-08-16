@@ -1,5 +1,5 @@
 /* ===================================================
-   QUESTÕES REPORTADAS (ADMIN) — Cedeefe
+   LISTA DE USUÁRIOS (ADMIN) — Cedeefe
    Diretrizes e Paleta Oficial (Seção 12 do gemini.md)
    =================================================== */
 
@@ -44,8 +44,10 @@ body {
     color: #80C242 !important;
 }
 
-.text-verde {
-    color: #538d24 !important;
+.spinner-rosa {
+    color: #c23672;
+    width: 3rem;
+    height: 3rem;
 }
 
 /* ===================================================
@@ -78,7 +80,7 @@ body {
 /* ===================================================
    CARDS DE ESTATÍSTICAS RÁPIDAS
    =================================================== */
-#stats-reportes-container {
+#stats-container {
     animation: fadeInUp 0.5s ease both;
     animation-delay: 0.08s;
 }
@@ -117,14 +119,14 @@ body {
     color: #c23672;
 }
 
-.stat-icon-wrapper.amarelo {
-    background: #fff8e6;
-    color: #d97706;
-}
-
 .stat-icon-wrapper.verde {
     background: #eef7e5;
     color: #538d24;
+}
+
+.stat-icon-wrapper.azul {
+    background: #eff6ff;
+    color: #2563eb;
 }
 
 .stat-info {
@@ -149,215 +151,197 @@ body {
 }
 
 /* ===================================================
-   ACCORDION DE QUESTÕES REPORTADAS
+   PAINEL DE BUSCA E FILTROS
    =================================================== */
-.lista-reportes {
-    animation: fadeInUp 0.5s ease both;
-    animation-delay: 0.14s;
-}
-
-.questao-item {
-    border: 1px solid rgba(255, 184, 197, 0.35) !important;
-    border-radius: 20px !important;
-    overflow: hidden;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.06);
+.filtros-card {
     background: #ffffff;
-    transition: all 0.25s ease;
-}
-
-.questao-item:hover {
-    border-color: #f4d6dd !important;
-    box-shadow: 0 12px 30px rgba(194, 54, 114, 0.10);
-}
-
-.accordion-button {
-    background: #ffffff;
-    padding: 20px 24px;
-    border: none;
-    box-shadow: none !important;
-    font-size: 0.95rem;
-}
-
-.accordion-button:not(.collapsed) {
-    background: #fff7f9;
-    color: #1f1f1f;
-    border-bottom: 1px solid #f4d6dd;
-}
-
-.accordion-body {
-    padding: 28px;
-    background: #ffffff;
-}
-
-.titulo-questao {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.titulo-questao strong {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #1f1f1f;
-    min-width: 90px;
-}
-
-.badge-disciplina-pill {
-    background: #eef7e5;
-    color: #538d24;
-    padding: 4px 10px;
-    border-radius: 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border: 1px solid #d4edc2;
-    white-space: nowrap;
-}
-
-.previa-enunciado {
-    color: #4b5563;
-    font-size: 0.9rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 450px;
-}
-
-.badge-reportes {
-    background: #fce8f0;
-    color: #c23672;
-    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.82rem;
-    font-weight: 600;
     border: 1px solid #f4d6dd;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(194, 54, 114, 0.05);
+    padding: 18px 24px;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.12s;
 }
 
-/* ===================================================
-   CAIXA DE MOTIVOS (ERRO-BOX)
-   =================================================== */
-.erro-box {
-    background: #fff7f9;
-    border: 1px solid #f4d6dd;
-    border-left: 5px solid #c23672;
-    padding: 20px 24px;
-    border-radius: 16px;
-    margin-bottom: 24px;
-}
-
-.erro-box h5 {
-    color: #c23672;
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.item-reporte-unico {
-    background: #ffffff;
-    border: 1px solid #f4d6dd;
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-top: 10px;
-    transition: all 0.2s ease;
-}
-
-.item-reporte-unico .rep-autor {
-    font-weight: 600;
-    color: #c23672;
-    font-size: 0.88rem;
-}
-
-.item-reporte-unico .rep-motivo {
-    font-weight: 600;
-    color: #1f1f1f;
-}
-
-/* ===================================================
-   ÁREA DE EDIÇÃO (EDICAO-BOX)
-   =================================================== */
-.edicao-box {
-    background: #ffffff;
-    border: 1px solid #f4d6dd;
-    border-radius: 18px;
-    padding: 24px;
-}
-
-.edicao-box h5 {
-    margin-bottom: 18px;
-    font-weight: 700;
-    color: #1f1f1f;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.edicao-box label {
-    font-weight: 600;
-    color: #4b5563;
-    margin-bottom: 6px;
-    font-size: 0.88rem;
-}
-
-.form-control, .form-select {
+.filtros-card .form-control,
+.filtros-card .form-select {
     border-radius: 12px;
     border: 1px solid #e9ecef;
+    font-size: 0.9rem;
     padding: 10px 14px;
-    font-size: 0.92rem;
     color: #1f1f1f;
     transition: all 0.2s ease;
 }
 
-.form-control:focus, .form-select:focus {
+.filtros-card .form-control:focus,
+.filtros-card .form-select:focus {
     border-color: #c23672;
     box-shadow: 0 0 0 3px rgba(194, 54, 114, 0.10);
 }
 
-/* ===================================================
-   BOTÕES DE AÇÃO
-   =================================================== */
-.acoes {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 24px;
-    flex-wrap: wrap;
+.filtros-card .input-group-text {
+    background: #fff7f9;
+    border: 1px solid #e9ecef;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    color: #c23672;
 }
 
-.btn-verde {
-    background-color: #80C242;
-    color: #ffffff !important;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    padding: 10px 22px;
-    transition: all 0.25s ease;
+.filtros-card .input-group .form-control {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+}
+
+/* ===================================================
+   TABELA ESTILIZADA DE USUÁRIOS
+   =================================================== */
+.tabela-card-wrapper {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 10px 30px rgba(30, 30, 30, 0.06);
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.16s;
+}
+
+.tabela-card-wrapper .table {
+    margin-bottom: 0;
+}
+
+.tabela-card-wrapper .table th {
+    background: #fff7f9;
+    color: #1f1f1f;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f4d6dd;
+    white-space: nowrap;
+}
+
+.tabela-card-wrapper .table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f9e8ed;
+    color: #374151;
+    font-size: 0.92rem;
+    vertical-align: middle;
+}
+
+.tabela-card-wrapper .table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.tabela-card-wrapper .table tbody tr:hover {
+    background-color: #fff8f9;
+}
+
+.tabela-card-wrapper .table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Avatar de Usuário */
+.avatar-usuario-circulo {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fce8f0;
+    color: #c23672;
+    font-weight: 700;
+    font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    border: 2px solid #c23672;
+    flex-shrink: 0;
 }
 
-.btn-verde:hover {
-    background-color: #69a730;
-    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
-    transform: translateY(-1px);
+.avatar-usuario-circulo.admin {
+    background: #eef7e5;
+    color: #538d24;
+    border-color: #80C242;
 }
 
+.usuario-info-nome {
+    font-weight: 600;
+    color: #1f1f1f;
+    line-height: 1.3;
+}
+
+.usuario-info-escola {
+    font-size: 0.76rem;
+    color: #7b7b7b;
+}
+
+/* Badges de Função / Role */
+.badge-role-admin {
+    background-color: #eef7e5;
+    color: #2f6b3d;
+    border: 1px solid #d4edc2;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-role-estudante {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #dbeafe;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-listas-count {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+/* Botões de Ação */
+.btn-icon-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f4d6dd;
+    background: #ffffff;
+    color: #7b7b7b;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-icon-action:hover {
+    background-color: #fce8f0;
+    color: #c23672;
+    border-color: #c23672;
+}
+
+/* ===================================================
+   BOTÕES
+   =================================================== */
 .btn-outline-rosa {
     background: transparent;
     color: #c23672 !important;
     border: 1px solid #f4d6dd;
     border-radius: 12px;
     font-weight: 600;
-    padding: 10px 22px;
+    padding: 9px 18px;
     transition: all 0.25s ease;
     display: inline-flex;
     align-items: center;
@@ -369,6 +353,22 @@ body {
     background-color: #fce8f0;
     color: #a0285b !important;
     border-color: #c23672;
+}
+
+.btn-danger-custom {
+    background-color: #e11d48;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+}
+
+.btn-danger-custom:hover {
+    background-color: #be123c;
+    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25);
+    transform: translateY(-1px);
 }
 
 /* ===================================================
@@ -387,6 +387,8 @@ body {
 .estado-vazio-icone {
     width: 80px;
     height: 80px;
+    background-color: #fce8f0;
+    color: #c23672;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -405,6 +407,29 @@ body {
     font-size: 0.95rem;
     max-width: 500px;
     margin: 0 auto;
+}
+
+/* ===================================================
+   MODAIS
+   =================================================== */
+.modal-custom {
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.modal-header-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background-color: #ffe4e6;
+    color: #e11d48;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin: 10px auto 0 auto;
 }
 
 /* ===================================================
@@ -430,23 +455,21 @@ body {
         padding: 20px;
     }
 
-    .titulo-questao {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+    .stat-card {
+        padding: 16px;
     }
 
-    .previa-enunciado {
-        max-width: 100%;
+    .filtros-card {
+        padding: 16px;
     }
 }
 
 @media (max-width: 576px) {
-    .acoes {
-        flex-direction: column;
+    .page-header h2 {
+        font-size: 1.4rem;
     }
 
-    .acoes .btn {
+    .page-header .btn {
         width: 100%;
     }
 }

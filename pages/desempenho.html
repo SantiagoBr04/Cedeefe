@@ -3,70 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe - Desempenho</title>
+    <title>Estatísticas de Desempenho - Cedeefe</title>
+    <meta name="description" content="Acompanhe suas estatísticas de estudo, taxa de acertos e evolução por disciplina no Cedeefe.">
 
+    <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Ícones Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- CSS Externo -->
     <link rel="stylesheet" href="../estilos/sidebar.css">
     <link rel="stylesheet" href="../estilos/desempenho.css">
+    
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Guardião de Autenticação -->
     <script src="../scripts/authGuard.js"></script>
 </head>
 <body data-auth-required="true">
+
+    <!-- Sidebar Reutilizável -->
     <div id="sidebar-container"></div>
 
-    <main class="desempenho-main">
-        <div class="container-fluid px-4 py-4">
-            <div class="d-flex align-items-center justify-content-between mb-4 header-bloco">
-                <div>
-                    <h1 class="page-title mb-0">Minhas estatísticas</h1>
+    <div class="content">
+
+        <!-- Cabeçalho Principal -->
+        <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <h2 class="mb-1 d-flex align-items-center flex-wrap gap-2">
+                    <i class="bi bi-bar-chart-line-fill accent-rosa me-2"></i>Minhas Estatísticas
+                    <span class="badge-total ms-2" id="badge-status-estatisticas">Geral</span>
+                </h2>
+                <p class="mb-0 text-muted">Acompanhe seu desempenho geral, analise seus pontos fortes e descubra matérias para reforçar.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <a href="procurarQuestoes.html" class="btn btn-verde px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-search"></i> Praticar Questões
+                </a>
+                <a href="criarLista.html" class="btn btn-outline-rosa px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-plus-circle"></i> Criar Lista
+                </a>
+            </div>
+        </div>
+
+        <!-- Cards de Estatísticas Rápidas -->
+        <div class="row g-3 mb-4" id="stats-container">
+            <!-- Questões Respondidas -->
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stat-card stat-questoes">
+                    <div class="stat-icon-wrapper azul">
+                        <i class="bi bi-patch-question-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Questões Feitas</span>
+                        <h3 class="stat-value" id="total-questoes">0</h3>
+                    </div>
                 </div>
             </div>
 
-            <section class="top-grid">
-                <div class="cards-stack">
-                    <article class="stats-card stats-card-green">
-                        <span class="card-label">Questões respondidas</span>
-                        <strong id="total-questoes">0</strong>
-                        <small>Quantidade total de questões concluídas</small>
-                    </article>
-
-                    <article class="stats-card stats-card-pink">
-                        <span class="card-label">Listas finalizadas</span>
-                        <strong id="total-listas">0</strong>
-                        <small>Volume de listas concluídas no sistema</small>
-                    </article>
-                </div>
-
-                <article class="chart-card chart-card-wide">
-                    <div class="card-header-block">
-                        <span class="card-label">Aproveitamento geral</span>
-                        <h2>Acertos e erros</h2>
+            <!-- Taxa Geral de Acertos -->
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stat-card stat-aproveitamento">
+                    <div class="stat-icon-wrapper verde">
+                        <i class="bi bi-bullseye"></i>
                     </div>
-                    <div class="chart-wrap chart-wrap-large">
-                        <canvas id="geral-chart"></canvas>
+                    <div class="stat-info">
+                        <span class="stat-label">Aproveitamento</span>
+                        <h3 class="stat-value" id="taxa-acerto-geral">0%</h3>
                     </div>
-                </article>
-            </section>
-
-            <section class="areas-section">
-                <div class="areas-section__header">
-                    <p class="section-kicker mb-1">Média por área</p>
-                    <h2 class="areas-title mb-0">Aproveitamento por disciplina</h2>
                 </div>
+            </div>
 
-                <div id="areas-container" class="areas-container">
-                    <div class="empty-state">Carregando estatísticas por área...</div>
+            <!-- Total de Acertos vs Erros -->
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stat-card stat-acertos-erros">
+                    <div class="stat-icon-wrapper rosa">
+                        <i class="bi bi-check2-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Acertos / Erros</span>
+                        <h3 class="stat-value">
+                            <span id="total-acertos" class="text-verde">0</span>
+                            <span class="text-muted fw-normal fs-5">/</span>
+                            <span id="total-erros" class="text-rosa">0</span>
+                        </h3>
+                    </div>
                 </div>
-            </section>
+            </div>
+
+            <!-- Listas Finalizadas -->
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stat-card stat-listas">
+                    <div class="stat-icon-wrapper amarelo">
+                        <i class="bi bi-journal-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Listas Finalizadas</span>
+                        <h3 class="stat-value" id="total-listas">0</h3>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
 
+        <!-- Painel de Gráficos Centrais -->
+        <div class="row g-4 mb-4">
+            <!-- Gráfico de Aproveitamento Geral (Doughnut) -->
+            <div class="col-12 col-lg-5">
+                <div class="chart-card h-100">
+                    <div class="chart-card-header">
+                        <span class="card-kicker">Visão Geral</span>
+                        <h4 class="card-titulo mb-0">Acertos vs. Erros</h4>
+                    </div>
+                    <div class="chart-card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="chart-wrapper-doughnut position-relative">
+                            <canvas id="geral-chart"></canvas>
+                            <div class="chart-center-metric" id="chart-center-metric">
+                                <span class="chart-center-value" id="chart-center-taxa">0%</span>
+                                <span class="chart-center-label">Acertos</span>
+                            </div>
+                        </div>
+                        <div class="chart-legenda-custom mt-3">
+                            <div class="legenda-item">
+                                <span class="legenda-cor-ponto bg-verde"></span>
+                                <span class="legenda-texto">Acertos: <strong id="legenda-acertos">0</strong></span>
+                            </div>
+                            <div class="legenda-item">
+                                <span class="legenda-cor-ponto bg-rosa"></span>
+                                <span class="legenda-texto">Erros: <strong id="legenda-erros">0</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico Comparativo por Disciplina (Bar Chart) -->
+            <div class="col-12 col-lg-7">
+                <div class="chart-card h-100">
+                    <div class="chart-card-header">
+                        <span class="card-kicker">Comparativo</span>
+                        <h4 class="card-titulo mb-0">Aproveitamento por Disciplina (%)</h4>
+                    </div>
+                    <div class="chart-card-body">
+                        <div class="chart-wrapper-bar">
+                            <canvas id="disciplinas-bar-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção: Desempenho por Disciplina -->
+        <div class="disciplinas-section mb-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <span class="section-kicker">Detalhamento por Matéria</span>
+                    <h3 class="section-titulo mb-0">Desempenho por Disciplina</h3>
+                </div>
+                <div class="text-muted small">
+                    <i class="bi bi-info-circle me-1"></i> Dados atualizados em tempo real a cada questão resolvida
+                </div>
+            </div>
+
+            <!-- Container Dinâmico de Cards por Disciplina -->
+            <div id="areas-container" class="row g-3">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border spinner-rosa" role="status">
+                        <span class="visually-hidden">Carregando disciplinas...</span>
+                    </div>
+                    <p class="mt-3 text-muted">Carregando estatísticas por disciplina...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts da Aplicação -->
     <script src="../scripts/loadSidebar.js"></script>
     <script src="../scripts/sidebar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../scripts/desempenho.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

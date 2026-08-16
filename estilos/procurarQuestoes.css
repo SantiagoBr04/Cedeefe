@@ -1,7 +1,25 @@
-/* Estilos da Página Procurar Questões (Banco de Questões) - Cedeefe */
+/* ===================================================
+   PROCURAR QUESTÕES (Banco de Questões) — Cedeefe
+   Paleta rosa/verde consistente com o restante do projeto
+   =================================================== */
 
+/* Animação de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================
+   FUNDO E LAYOUT BASE
+======================== */
 body {
-    background-color: #f8f9fa;
+    background-color: #f9f9f9;
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
 }
@@ -15,6 +33,540 @@ body {
     box-sizing: border-box;
 }
 
+/* ========================
+   CORES UTILITÁRIAS
+======================== */
+.accent-verde {
+    color: #80C242 !important;
+}
+
+.accent-rosa {
+    color: #c23672 !important;
+}
+
+/* ========================
+   CABEÇALHO DA PÁGINA
+======================== */
+.page-header {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 28px 32px;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #1f1f1f;
+}
+
+.page-header p {
+    color: #7b7b7b;
+}
+
+.badge-total {
+    background-color: #c23672;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+/* ========================
+   BOTÕES
+======================== */
+.btn-verde {
+    background-color: #80C242;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-verde:hover {
+    background-color: #69a730;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-outline-rosa {
+    background: transparent;
+    color: #c23672;
+    border: 1px solid #f4d6dd;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-rosa:hover {
+    background-color: #fce8f0;
+    color: #a0285b;
+    border-color: #c23672;
+}
+
+.btn-outline-verde {
+    background: transparent;
+    color: #80C242;
+    border: 1px solid #d4edc2;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-verde:hover {
+    background-color: #eef7e5;
+    color: #538d24;
+    border-color: #80C242;
+}
+
+/* ========================
+   PAINEL DE FILTROS
+======================== */
+.filtros-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 14px 34px rgba(30, 30, 30, 0.06);
+    padding: 28px 32px;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.06s;
+}
+
+.filtros-card h5 {
+    font-weight: 700;
+    color: #1f1f1f;
+}
+
+.filtros-card .form-label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.filtros-card .form-select,
+.filtros-card .form-control {
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filtros-card .form-select:focus,
+.filtros-card .form-control:focus {
+    border-color: #c23672;
+    box-shadow: 0 0 0 3px rgba(194, 54, 114, 0.10);
+}
+
+.filtros-card .input-group-text {
+    border-radius: 12px 0 0 12px;
+    border: 1px solid #e9ecef;
+    border-right: none;
+    background: #fff7f9;
+    color: #c23672;
+}
+
+.filtros-card .input-group .form-control {
+    border-radius: 0 12px 12px 0;
+}
+
+/* ========================
+   CARDS DE QUESTÃO
+======================== */
+.card-questao-procurar {
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 6px 18px rgba(194, 54, 114, 0.06);
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.45s ease both;
+}
+
+.card-questao-procurar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(194, 54, 114, 0.10);
+}
+
+/* Header do Card */
+.questao-card-header {
+    background-color: #fff7f9;
+    border-bottom: 1px solid #f4d6dd;
+}
+
+.questao-enunciado img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ========================
+   BADGES CUSTOMIZADOS
+======================== */
+.badge-disciplina {
+    background-color: #eef7e5;
+    color: #538d24;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+.badge-tema {
+    background-color: #fce8f0;
+    color: #c23672;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+.badge-ano {
+    background-color: #FFD8DF;
+    color: #a0285b;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+.badge-autor {
+    background-color: #E9FFD3;
+    color: #2f6b3d;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+/* Badges de Status */
+.badge-status-respondida {
+    background-color: #80C242;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+.badge-status-inedita {
+    background-color: #FFD8DF;
+    color: #a0285b;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+/* ========================
+   ALTERNATIVAS INTERATIVAS
+======================== */
+.alternativa-item-interativa {
+    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.alternativa-item-interativa:hover:not(.desabilitada) {
+    border-color: #80C242;
+    background-color: #f5faf0;
+}
+
+.alternativa-item-interativa.selecionada {
+    border-color: #80C242;
+    background-color: #eef7e5;
+    box-shadow: 0 0 0 2px rgba(128, 194, 66, 0.20);
+}
+
+.alternativa-item-interativa.correta {
+    border-color: #80C242 !important;
+    background-color: #e0f0d0 !important;
+    color: #2f6b3d !important;
+    font-weight: 500;
+}
+
+.alternativa-item-interativa.incorreta {
+    border-color: #c23672 !important;
+    background-color: #fce8f0 !important;
+    color: #a0285b !important;
+}
+
+.badge-letra {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.88rem;
+    background-color: #f0f0f0;
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.alternativa-item-interativa.selecionada .badge-letra {
+    background-color: #80C242;
+    color: #ffffff;
+}
+
+.alternativa-item-interativa.correta .badge-letra {
+    background-color: #80C242;
+    color: #ffffff;
+}
+
+.alternativa-item-interativa.incorreta .badge-letra {
+    background-color: #c23672;
+    color: #ffffff;
+}
+
+/* Desabilita interação após resposta */
+.alternativa-item-interativa.desabilitada {
+    cursor: default;
+    opacity: 0.9;
+}
+
+/* ========================
+   CAIXA DE EXPLICAÇÃO
+======================== */
+.box-explicacao {
+    border-left: 4px solid #80C242;
+    background-color: #f5faf0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 15px;
+}
+
+.box-explicacao h6 {
+    color: #538d24;
+}
+
+/* ========================
+   PAGINAÇÃO
+======================== */
+.page-link-custom {
+    color: #c23672;
+    border: 1px solid #f4d6dd;
+    border-radius: 10px;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.page-link-custom:hover {
+    background-color: #fce8f0;
+    color: #a0285b;
+    border-color: #c23672;
+}
+
+.page-link-custom.active {
+    background-color: #c23672;
+    color: #ffffff;
+    border-color: #c23672;
+}
+
+.page-link-custom.disabled {
+    color: #ccc;
+    pointer-events: none;
+    background-color: #f9f9f9;
+    border-color: #e9ecef;
+}
+
+/* ========================
+   SPINNER DE CARREGAMENTO
+======================== */
+.spinner-border.spinner-rosa {
+    color: #c23672;
+}
+
+/* ========================
+   ESTADOS VAZIOS E LOADING
+======================== */
+.estado-vazio {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 6px 18px rgba(194, 54, 114, 0.06);
+}
+
+/* ========================
+/* ===================================
+   BOTÃO DE REPORTAR NO CARD DE QUESTÃO
+   =================================== */
+.btn-reportar-card {
+    background-color: #fff0f3;
+    color: #d90429;
+    border: 1px solid #ffccd5;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(217, 4, 41, 0.08);
+}
+
+.btn-reportar-card i {
+    font-size: 0.88rem;
+    transition: transform 0.25s ease;
+}
+
+.btn-reportar-card:hover {
+    background-color: #d90429;
+    color: #ffffff;
+    border-color: #d90429;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(217, 4, 41, 0.28);
+}
+
+.btn-reportar-card:hover i {
+    transform: scale(1.15) rotate(-8deg);
+}
+
+/* ===================================
+   MODAL FLUTUANTE DE REPORTE DE QUESTÃO
+   =================================== */
+.modal-reportar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeInModal 0.25s ease-out;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-reportar-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 18px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+    padding: 24px 28px;
+    animation: slideUpModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUpModal {
+    from { transform: translateY(20px) scale(0.96); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-reportar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+}
+
+.modal-reportar-header h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.btn-close-custom {
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #888;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s;
+}
+
+.btn-close-custom:hover {
+    color: #222;
+}
+
+.modal-instrucao {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.modal-reportar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-secondary-custom {
+    background-color: #f1f3f5;
+    color: #495057;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #e9ecef;
+}
+
+.btn-danger-custom {
+    background-color: #d90429;
+    color: #ffffff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.btn-danger-custom:hover {
+    background-color: #b70322;
+    transform: translateY(-1px);
+}
+
+/* ========================
+   RESPONSIVIDADE
+======================== */
 @media (max-width: 1200px) {
     .content {
         margin-left: 90px;
@@ -30,182 +582,36 @@ body {
         padding: 20px;
         margin-top: 80px;
     }
+
+    .page-header,
+    .filtros-card {
+        border-radius: 18px;
+        padding: 22px 20px;
+    }
 }
 
 @media (max-width: 576px) {
     .content {
         padding: 15px;
     }
+
+    .page-header,
+    .filtros-card {
+        border-radius: 16px;
+        padding: 18px 16px;
+    }
+
+    .card-questao-procurar {
+        border-radius: 16px;
+    }
+
+    .alternativa-item-interativa {
+        border-radius: 12px;
+        padding: 12px 14px;
+    }
+
+    .modal-reportar-card {
+        padding: 18px 16px;
+    }
 }
 
-.text-verde {
-    color: #1f9a55 !important;
-}
-
-.btn-verde {
-    background-color: #1f9a55;
-    color: #ffffff;
-    border: none;
-    transition: all 0.2s ease-in-out;
-}
-
-.btn-verde:hover {
-    background-color: #167a42;
-    color: #ffffff;
-    box-shadow: 0 4px 10px rgba(31, 154, 85, 0.3);
-}
-
-.border-verde {
-    border-color: #1f9a55 !important;
-}
-
-/* Card da Questão */
-.card-questao-procurar {
-    transition: all 0.25s ease;
-    border-radius: 12px;
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-word;
-}
-
-.card-questao-procurar:hover {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Header do Card */
-.questao-card-header {
-    background-color: #fcfcfc;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.questao-enunciado img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-/* Badges de Status */
-.badge-status-respondida {
-    background-color: #0dcaf0;
-    color: #000000;
-    font-weight: 600;
-}
-
-.badge-status-inedita {
-    background-color: #6c757d;
-    color: #ffffff;
-    font-weight: 500;
-}
-
-/* Alternativas Interativas */
-.alternativa-item-interativa {
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-bottom: 10px;
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-}
-
-.alternativa-item-interativa:hover:not(.desabilitada) {
-    border-color: #1f9a55;
-    background-color: #f4fbf7;
-}
-
-.alternativa-item-interativa.selecionada {
-    border-color: #1f9a55;
-    background-color: #e8f5e9;
-    box-shadow: 0 0 0 2px rgba(31, 154, 85, 0.2);
-}
-
-.alternativa-item-interativa.correta {
-    border-color: #1f9a55 !important;
-    background-color: #d1e7dd !important;
-    color: #0f5132 !important;
-    font-weight: 500;
-}
-
-.alternativa-item-interativa.incorreta {
-    border-color: #dc3545 !important;
-    background-color: #f8d7da !important;
-    color: #842029 !important;
-}
-
-.badge-letra {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-weight: 600;
-    font-size: 0.9rem;
-    background-color: #e9ecef;
-    color: #495057;
-    transition: all 0.2s ease;
-}
-
-.alternativa-item-interativa.selecionada .badge-letra {
-    background-color: #1f9a55;
-    color: #ffffff;
-}
-
-.alternativa-item-interativa.correta .badge-letra {
-    background-color: #1f9a55;
-    color: #ffffff;
-}
-
-.alternativa-item-interativa.incorreta .badge-letra {
-    background-color: #dc3545;
-    color: #ffffff;
-}
-
-/* Desabilita interação após resposta */
-.alternativa-item-interativa.desabilitada {
-    cursor: default;
-    opacity: 0.9;
-}
-
-/* Caixa de Explicação / Gabarito */
-.box-explicacao {
-    border-left: 4px solid #1f9a55;
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    padding: 16px;
-    margin-top: 15px;
-}
-
-/* Paginação */
-.page-link-custom {
-    color: #1f9a55;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
-    padding: 6px 14px;
-    background-color: #ffffff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.page-link-custom:hover {
-    background-color: #e8f5e9;
-    color: #167a42;
-}
-
-.page-link-custom.active {
-    background-color: #1f9a55;
-    color: #ffffff;
-    border-color: #1f9a55;
-}
-
-.page-link-custom.disabled {
-    color: #6c757d;
-    pointer-events: none;
-    background-color: #f8f9fa;
-}

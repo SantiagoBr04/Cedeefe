@@ -1,332 +1,520 @@
-/* =========================
-   CONFIGURAÇÕES GERAIS
-========================= */
+/* ===================================================
+   MEUS FLASHCARDS (BARALHOS) — Cedeefe
+   Diretrizes e Paleta Oficial (Seção 12 do gemini.md)
+   =================================================== */
 
+/* Animação de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================
+   FUNDO E LAYOUT BASE
+   =================================================== */
 body {
     background-color: #f9f9f9;
     font-family: 'Poppins', sans-serif !important;
+    min-height: 100vh;
+    color: #1f1f1f;
     overflow-x: hidden;
 }
 
-
-/* =========================
-   CONTEÚDO
-========================= */
-
 .content {
     margin-top: 80px;
-    margin-left: 300px;
-    margin-right: 240px;
-    margin-bottom: 80px;
-    padding: 20px;
-
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 20px;
-    margin-bottom: 25px;
-
-    flex-wrap: wrap;
+/* Utilitários de Cores */
+.accent-rosa {
+    color: #c23672 !important;
 }
 
-.header-title {
-    margin: 0;
+.accent-verde {
+    color: #80C242 !important;
+}
+
+.spinner-rosa {
+    color: #c23672;
+    width: 3rem;
+    height: 3rem;
+}
+
+/* ===================================================
+   CABEÇALHO DA PÁGINA
+   =================================================== */
+.page-header {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 28px 32px;
+    animation: fadeInUp 0.45s ease both;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #1f1f1f;
+    font-size: 1.75rem;
+}
+
+.badge-total {
+    background-color: #c23672;
+    color: #ffffff;
+    font-size: 0.82rem;
     font-weight: 600;
-    color: #333;
+    padding: 5px 14px;
+    border-radius: 20px;
 }
 
+/* ===================================================
+   CARDS DE ESTATÍSTICAS RÁPIDAS
+   =================================================== */
+#stats-container {
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.08s;
+}
 
-/* AÇÕES DO HEADER */
-
-.header-actions {
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.06);
+    padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 16px;
+    transition: all 0.3s ease;
+    height: 100%;
 }
 
-.header-actions a {
-    text-decoration: none;
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(194, 54, 114, 0.12);
 }
 
+.stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
 
-/* =========================
-   BOTÕES CUSTOMIZADOS
-========================= */
+.stat-icon-wrapper.rosa {
+    background: #fce8f0;
+    color: #c23672;
+}
 
-.btn {
-    border-radius: 8px;
+.stat-icon-wrapper.azul {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.stat-icon-wrapper.amarelo {
+    background: #fff8e6;
+    color: #d97706;
+}
+
+.stat-icon-wrapper.verde {
+    background: #eef7e5;
+    color: #538d24;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #7b7b7b;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* ===================================================
+   PAINEL DE BUSCA E FILTROS
+   =================================================== */
+.filtros-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 6px 20px rgba(194, 54, 114, 0.05);
+    padding: 18px 24px;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.12s;
+}
+
+.filtros-card .form-control,
+.filtros-card .form-select {
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    color: #1f1f1f;
     transition: all 0.2s ease;
 }
 
+.filtros-card .form-control:focus,
+.filtros-card .form-select:focus {
+    border-color: #c23672;
+    box-shadow: 0 0 0 3px rgba(194, 54, 114, 0.10);
+}
+
+.filtros-card .input-group-text {
+    background: #fff7f9;
+    border: 1px solid #e9ecef;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    color: #c23672;
+}
+
+.filtros-card .input-group .form-control {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+}
+
+/* ===================================================
+   CARDS DE BARALHO
+   =================================================== */
+.baralho-card-wrapper {
+    animation: fadeInUp 0.45s ease both;
+}
+
+.baralho-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 10px 30px rgba(30, 30, 30, 0.06);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.baralho-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(194, 54, 114, 0.12);
+    border-color: #f4d6dd;
+}
+
+.baralho-card-header {
+    background: #fff7f9;
+    padding: 16px 22px;
+    border-bottom: 1px solid #f4d6dd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.baralho-card-body {
+    padding: 22px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.baralho-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 10px;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.baralho-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #7b7b7b;
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+}
+
+.baralho-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-status-revisao {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-revisao-pendente {
+    background-color: #fce8f0;
+    color: #c23672;
+    border: 1px solid #f4d6dd;
+}
+
+.badge-revisao-emdia {
+    background-color: #eef7e5;
+    color: #538d24;
+    border: 1px solid #d4edc2;
+}
+
+.baralho-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid #f4d6dd;
+}
+
+.btn-icon-action {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f4d6dd;
+    background: #ffffff;
+    color: #7b7b7b;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-icon-action:hover {
+    background-color: #fce8f0;
+    color: #c23672;
+    border-color: #c23672;
+}
+
+.btn-icon-action.edit:hover {
+    background-color: #eef7e5;
+    color: #538d24;
+    border-color: #80C242;
+}
+
+/* ===================================================
+   BOTÕES
+   =================================================== */
 .btn-verde {
     background-color: #80C242;
-    color: white;
+    color: #ffffff !important;
     border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .btn-verde:hover {
     background-color: #69a730;
-    color: white;
+    color: #ffffff !important;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+    transform: translateY(-1px);
 }
 
-.btn-rosa {
-    background-color: #c23672;
-    color: white;
-    border: none;
-}
-
-.btn-rosa:hover {
-    background-color: #a0285b;
-    color: white;
-}
-
-
-/* =========================
-   CONTAINER DOS BARALHOS
-========================= */
-
-.baralhos {
-    display: grid;
-
-    /* 3 cards por linha no desktop, auto-fit/wrap quando necessário */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-
-    gap: 20px;
-
-    width: 100%;
-}
-
-
-/* =========================
-   CARD DO BARALHO
-========================= */
-
-.flashcard-container {
-    width: 100%;
-    min-width: 0;
-
-    background: white;
-
-    border: 1px solid #e0e0e0;
-    border-radius: 15px;
-
-    padding: 22px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    min-height: 180px;
-    position: relative;
-
-    transition: all 0.25s ease-in-out;
-
-    cursor: pointer;
-}
-
-
-/* HOVER NO CARD */
-
-.flashcard-container:hover {
-    transform: translateY(-5px);
-
-    box-shadow: 0 8px 20px rgba(128, 194, 66, 0.15);
-
-    border-color: #80C242;
-}
-
-.flashcard-header-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 12px;
-}
-
-.flashcard-title {
-    margin: 0;
-
-    font-size: 1.2rem;
-    font-weight: 600;
-
-    color: #2c3e50;
-    word-break: break-word;
-}
-
-
-/* BOTÕES DE AÇÕES DO CARD (LIXEIRA E EDITAR) */
-
-.card-acoes-baralho {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-}
-
-.btn-deletar-baralho, .btn-editar-baralho {
+.btn-outline-rosa {
     background: transparent;
-    border: none;
-    color: #aaa;
-    font-size: 1.05rem;
-    padding: 2px 6px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.btn-deletar-baralho:hover {
-    color: #c23672;
-    background-color: #fce8f0;
-}
-
-.btn-editar-baralho:hover {
-    color: #538d24;
-    background-color: #eef7e5;
-}
-
-
-/* =========================
-   INFORMAÇÕES DO BARALHO
-========================= */
-
-.flashcard-info {
-    margin-top: 15px;
-
-    display: flex;
-    justify-content: space-between;
+    color: #c23672 !important;
+    border: 1px solid #f4d6dd;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
     align-items: center;
-
-    gap: 10px;
-
-    font-size: 0.88rem;
-    color: #666;
-
-    flex-wrap: wrap;
-}
-
-.flashcard-info span {
-    display: flex;
-    align-items: center;
-
+    justify-content: center;
     gap: 6px;
 }
 
-.badge-revisar {
-    background-color: #eef7e5;
-    color: #538d24;
-    padding: 4px 10px;
+.btn-outline-rosa:hover {
+    background-color: #fce8f0;
+    color: #a0285b !important;
+    border-color: #c23672;
+}
+
+.btn-outline-verde {
+    background: transparent;
+    color: #80C242 !important;
+    border: 1px solid #d4edc2;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 0.8rem;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
-.badge-revisar.pendente {
+.btn-outline-verde:hover {
+    background-color: #eef7e5;
+    color: #538d24 !important;
+    border-color: #80C242;
+}
+
+.btn-danger-custom {
+    background-color: #e11d48;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+}
+
+.btn-danger-custom:hover {
+    background-color: #be123c;
+    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25);
+    transform: translateY(-1px);
+}
+
+/* ===================================================
+   ESTADO VAZIO
+   =================================================== */
+.estado-vazio {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 60px 30px;
+    margin: 20px 0;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.estado-vazio-icone {
+    width: 80px;
+    height: 80px;
     background-color: #fce8f0;
     color: #c23672;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    margin-bottom: 20px;
 }
 
+.estado-vazio-titulo {
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 8px;
+}
 
-/* =========================
-   NOTEBOOK / TELAS MÉDIAS
-========================= */
+.estado-vazio-subtitulo {
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+}
 
+/* ===================================================
+   MODAIS CUSTOMIZADOS
+   =================================================== */
+.modal-custom {
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.modal-custom .modal-header {
+    background: #fff7f9;
+    border-bottom: 1px solid #f4d6dd;
+    padding: 20px 24px;
+}
+
+.modal-custom .modal-body {
+    padding: 24px;
+}
+
+.modal-custom .modal-footer {
+    border-top: 1px solid #f4d6dd;
+    padding: 16px 24px;
+}
+
+.modal-header-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background-color: #ffe4e6;
+    color: #e11d48;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin: 10px auto 0 auto;
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+   =================================================== */
 @media (max-width: 1200px) {
-
     .content {
         margin-left: 90px;
-        margin-right: 40px;
+        width: calc(100% - 90px);
+        padding: 24px;
     }
-
 }
 
-
-/* =========================
-   TABLET
-========================= */
-
 @media (max-width: 991px) {
-
     .content {
+        margin-top: 80px;
         margin-left: 0;
-        margin-right: 0;
+        width: 100%;
+        padding: 20px 16px;
+    }
 
-        margin-top: 70px;
-
+    .page-header {
         padding: 20px;
     }
 
-    .header {
-        align-items: flex-start;
+    .stat-card {
+        padding: 16px;
     }
 
-    .header-actions {
-        justify-content: flex-start;
+    .filtros-card {
+        padding: 16px;
     }
-
 }
 
-
-/* =========================
-   CELULAR
-========================= */
-
 @media (max-width: 576px) {
-
-    .content {
-        margin: 0;
-
-        padding: 15px;
-
-        padding-top: 70px;
+    .page-header h2 {
+        font-size: 1.4rem;
     }
 
-    /* HEADER */
-
-    .header {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 15px;
-
-        margin-bottom: 20px;
-    }
-
-    .header-title {
-        font-size: 1.6rem;
-    }
-
-    /* BOTÕES */
-
-    .header-actions {
-        width: 100%;
-
-        display: grid;
-
-        grid-template-columns: 1fr 1fr;
-
-        gap: 8px;
-    }
-
-    .header-actions .btn {
+    .page-header .btn {
         width: 100%;
     }
-
-    .baralhos {
-        grid-template-columns: 1fr;
-    }
-
-}
+}

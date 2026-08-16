@@ -6,23 +6,29 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --ignore uploads/ --ignore 'uploads/*' --ignore 'uploads/**/*' src/server.js",
-    "seed": "node src/seeders/run.js"
+    "seed": "node src/seeders/run.js",
+    "seed:partiuif": "node src/seeders/partiuIF.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@getbrevo/brevo": "^6.0.3",
     "@google/genai": "^2.15.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.6.2",
+    "google-auth-library": "^11.0.2",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^2.4.5",
     "pg": "^8.20.0",
     "pg-hstore": "^2.3.4",
+    "resend": "^6.20.0",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {

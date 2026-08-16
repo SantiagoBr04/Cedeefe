@@ -1,269 +1,584 @@
-.desempenho-main {
-  margin-top: 60px;
-  margin-left: 70px;
-  min-height: 100vh;
-  transition: margin-left 0.3s ease;
+/* ===================================================
+   ESTATÍSTICAS & DESEMPENHO — Cedeefe
+   Diretrizes e Paleta Oficial (Seção 12 do gemini.md)
+   =================================================== */
+
+/* Animação de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.desempenho-main .container-fluid {
-  max-width: 980px;
+/* ===================================================
+   FUNDO E LAYOUT BASE
+   =================================================== */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif !important;
+    min-height: 100vh;
+    color: #1f1f1f;
+    overflow-x: hidden;
 }
 
-.sidebar.expandido ~ .desempenho-main {
-  margin-left: 270px;
+.content {
+    margin-top: 80px;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-.header-bloco {
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
+/* Utilitários de Cores */
+.accent-rosa {
+    color: #c23672 !important;
+}
+
+.accent-verde {
+    color: #80C242 !important;
+}
+
+.text-verde {
+    color: #538d24 !important;
+    font-weight: 700;
+}
+
+.text-rosa {
+    color: #c23672 !important;
+    font-weight: 700;
+}
+
+.spinner-rosa {
+    color: #c23672;
+    width: 3rem;
+    height: 3rem;
 }
 
 .section-kicker {
-  color: #ff9cae;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.78rem;
-  font-weight: 700;
+    color: #ff9cae;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
 }
 
-.page-title,
-.areas-title {
-  font-weight: 500;
-  color: #262626;
+.section-titulo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1f1f1f;
 }
 
-.page-title {
-  width: 100%;
-  text-align: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+/* ===================================================
+   CABEÇALHO DA PÁGINA
+   =================================================== */
+.page-header {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 28px 32px;
+    animation: fadeInUp 0.45s ease both;
 }
 
-.page-subtitle {
-  color: #7b7b7b;
-  background: #ffffff;
-  border: 1px solid #f4d6dd;
-  border-radius: 999px;
-  padding: 0.65rem 1rem;
-  box-shadow: 0 8px 18px rgba(255, 156, 174, 0.08);
+.page-header h2 {
+    font-weight: 700;
+    color: #1f1f1f;
+    font-size: 1.75rem;
 }
 
-.top-grid {
-  display: grid;
-  grid-template-columns: minmax(250px, 0.8fr) minmax(300px, 1fr);
-  gap: 20px;
-  align-items: stretch;
-  justify-content: center;
+.badge-total {
+    background-color: #c23672;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
 }
 
-.cards-stack {
-  display: grid;
-  gap: 20px;
+/* ===================================================
+   CARDS DE ESTATÍSTICAS RÁPIDAS
+   =================================================== */
+#stats-container {
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.08s;
 }
 
-.stats-card,
-.chart-card,
-.area-card {
-  background: #ffffff;
-  border-radius: 24px;
-  box-shadow: 0 14px 34px rgba(30, 30, 30, 0.08);
-  border: 1px solid rgba(255, 184, 197, 0.35);
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.06);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+    height: 100%;
 }
 
-.stats-card {
-  min-height: 165px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(194, 54, 114, 0.12);
 }
 
-.stats-card strong {
-  font-size: clamp(2.1rem, 4vw, 3.3rem);
-  line-height: 1;
-  color: #1f1f1f;
-  margin: 0.5rem 0;
+.stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
-.stats-card small,
-.area-meta,
-.area-stats small {
-  color: #6f6f6f;
+.stat-icon-wrapper.rosa {
+    background: #fce8f0;
+    color: #c23672;
 }
 
-.card-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #7b7b7b;
+.stat-icon-wrapper.verde {
+    background: #eef7e5;
+    color: #538d24;
 }
 
-.stats-card-green {
-  background: #FFD8DF;
+.stat-icon-wrapper.azul {
+    background: #eff6ff;
+    color: #2563eb;
 }
 
-.stats-card-pink {
-  background: #FFD8DF;
+.stat-icon-wrapper.amarelo {
+    background: #fff8e6;
+    color: #d97706;
 }
 
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #7b7b7b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* ===================================================
+   CARDS DE GRÁFICOS CENTRAIS
+   =================================================== */
 .chart-card {
-  padding: 24px;
-  min-height: 320px;
-  background: #FFD8DF;
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 10px 30px rgba(30, 30, 30, 0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.14s;
 }
 
-.chart-card-wide {
-  display: flex;
-  flex-direction: column;
+.chart-card-header {
+    background: #fff7f9;
+    padding: 18px 24px;
+    border-bottom: 1px solid #f4d6dd;
 }
 
-.card-header-block h2 {
-  font-size: 1.2rem;
-  margin: 0.25rem 0 0;
-  color: #262626;
+.card-kicker {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #ff9cae;
+    display: block;
 }
 
-.chart-wrap {
-  position: relative;
-  width: 100%;
+.card-titulo {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1f1f1f;
 }
 
-.chart-wrap-large {
-  flex: 1;
-  min-height: 260px;
+.chart-card-body {
+    padding: 24px;
+    flex-grow: 1;
 }
 
-.chart-wrap-large canvas,
-.area-chart-wrap canvas {
-  width: 99% !important;
-  height: 99% !important;
+.chart-wrapper-doughnut {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    margin: 0 auto;
 }
 
-.areas-section {
-  margin-top: 24px;
-  width: min(100%, 980px);
-  margin-left: auto;
-  margin-right: auto;
-  background: linear-gradient(180deg, #FFD8DF 0%, #FFD8DF 100%);
-  border-radius: 30px;
-  padding: 24px;
-  box-shadow: 0 18px 40px rgba(255, 156, 174, 0.18);
+.chart-wrapper-doughnut canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
-.areas-section__header {
-  color: #fff;
-  margin-bottom: 22px;
-  text-align: center;
+.chart-center-metric {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
 }
 
-.areas-container {
-  display: grid;
-  gap: 16px;
+.chart-center-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    line-height: 1;
 }
 
-.area-card {
-  padding: 18px 20px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
-  gap: 18px;
-  align-items: center;
-  background: #ffffff;
+.chart-center-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7b7b7b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
 }
 
-.area-card__title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #262626;
-  margin-bottom: 12px;
-  line-height: 1.1;
+.chart-legenda-custom {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-.area-meta {
-  font-size: 1.02rem;
-  font-weight: 600;
-  margin-bottom: 8px;
+.legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #555;
 }
 
-.area-metrics {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 12px;
+.legenda-cor-ponto {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
 }
 
-.area-metric {
-  background: #fff7f9;
-  border-radius: 16px;
-  padding: 12px;
-  border: 1px solid #ffd3de;
+.bg-verde {
+    background-color: #80C242;
 }
 
-.area-metric strong {
-  display: block;
-  color: #1f1f1f;
-  font-size: 1.1rem;
+.bg-rosa {
+    background-color: #c23672;
 }
 
-.area-chart-wrap {
-  position: relative;
-  min-height: 150px;
-  display: flex;
-  align-items: center;
-}
-
-.area-chart-wrap canvas {
-  max-height: 170px;
-}
-
-.empty-state {
-  background: rgba(255, 255, 255, 0.88);
-  color: #6f6f6f;
-  border-radius: 18px;
-  padding: 18px;
-  text-align: center;
-}
-
-@media (max-width: 991.98px) {
-  .desempenho-main {
-    margin-left: 70px;
-  }
-
-  .desempenho-main .container-fluid,
-  .areas-section {
-    max-width: 100%;
+.chart-wrapper-bar {
+    position: relative;
     width: 100%;
-  }
-
-  .top-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .area-card {
-    grid-template-columns: 1fr;
-  }
-
+    height: 260px;
 }
 
-@media (max-width: 767.98px) {
-  .desempenho-main {
-    margin-left: 0;
-  }
+.chart-wrapper-bar canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
 
-  .container-fluid {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
+/* ===================================================
+   CARDS DE DESEMPENHO POR DISCIPLINA
+   =================================================== */
+.disciplinas-section {
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.20s;
+}
 
-  .areas-section {
+.disciplina-card-wrapper {
+    animation: fadeInUp 0.45s ease both;
+}
+
+.disciplina-card {
+    background: #ffffff;
     border-radius: 22px;
-    padding: 18px;
-  }
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(30, 30, 30, 0.05);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 
-  .area-metrics {
-    grid-template-columns: 1fr;
-  }
+.disciplina-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(194, 54, 114, 0.10);
+    border-color: #f4d6dd;
+}
+
+.disciplina-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.badge-disciplina {
+    background-color: #eef7e5;
+    color: #538d24;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.taxa-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.taxa-alta {
+    background: #eef7e5;
+    color: #2f6b3d;
+    border: 1px solid #d4edc2;
+}
+
+.taxa-media {
+    background: #fff8e6;
+    color: #d97706;
+    border: 1px solid #fed7aa;
+}
+
+.taxa-baixa {
+    background: #fce8f0;
+    color: #c23672;
+    border: 1px solid #f4d6dd;
+}
+
+.disciplina-progresso-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.disciplina-progresso-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.6s ease;
+}
+
+.progresso-verde {
+    background: linear-gradient(90deg, #a3e635, #80C242);
+}
+
+.progresso-amarelo {
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+.progresso-rosa {
+    background: linear-gradient(90deg, #ff9cae, #c23672);
+}
+
+.disciplina-metricas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.disciplina-metrica-item {
+    background: #fff7f9;
+    border: 1px solid #f4d6dd;
+    border-radius: 14px;
+    padding: 10px 8px;
+    text-align: center;
+}
+
+.disciplina-metrica-item small {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #7b7b7b;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.disciplina-metrica-item strong {
+    font-size: 1.05rem;
+    color: #1f1f1f;
+}
+
+/* ===================================================
+   BOTÕES
+   =================================================== */
+.btn-verde {
+    background-color: #80C242;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-verde:hover {
+    background-color: #69a730;
+    color: #ffffff !important;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-outline-rosa {
+    background: transparent;
+    color: #c23672 !important;
+    border: 1px solid #f4d6dd;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-outline-rosa:hover {
+    background-color: #fce8f0;
+    color: #a0285b !important;
+    border-color: #c23672;
+}
+
+.btn-outline-verde {
+    background: transparent;
+    color: #80C242 !important;
+    border: 1px solid #d4edc2;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-outline-verde:hover {
+    background-color: #eef7e5;
+    color: #538d24 !important;
+    border-color: #80C242;
+}
+
+/* ===================================================
+   ESTADO VAZIO
+   =================================================== */
+.estado-vazio {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 60px 30px;
+    margin: 20px 0;
+    text-align: center;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.estado-vazio-icone {
+    width: 80px;
+    height: 80px;
+    background-color: #fce8f0;
+    color: #c23672;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.estado-vazio-titulo {
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 8px;
+}
+
+.estado-vazio-subtitulo {
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+    color: #6f6f6f;
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+   =================================================== */
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 24px;
+    }
+}
+
+@media (max-width: 991px) {
+    .content {
+        margin-top: 80px;
+        margin-left: 0;
+        width: 100%;
+        padding: 20px 16px;
+    }
+
+    .page-header {
+        padding: 20px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .chart-wrapper-bar {
+        height: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+
+    .disciplina-metricas-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banco de Questões - Cedeefe</title>
+    <meta name="description" content="Pesquise questões do processo seletivo do IFC, filtre por disciplina, tema e ano, e pratique direto no banco.">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -22,16 +23,16 @@
 
     <div class="content">
         <!-- Cabeçalho Principal -->
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 bg-white p-4 rounded shadow-sm border">
+        <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
             <div>
-                <h2 class="mb-1 fw-bold text-dark d-flex align-items-center flex-wrap gap-2">
-                    <i class="bi bi-search-heart text-verde me-2"></i>Banco de Questões
-                    <span class="badge bg-secondary fs-6 ms-2" id="badge-total-questoes">Carregando...</span>
+                <h2 class="mb-1 d-flex align-items-center flex-wrap gap-2">
+                    <i class="bi bi-search-heart accent-rosa me-2"></i>Banco de Questões
+                    <span class="badge-total ms-2" id="badge-total-questoes">Carregando...</span>
                 </h2>
-                <p class="text-muted mb-0">Pesquise por questões cadastradas, filtre por disciplina, tema, ano ou autor e pratique direto no banco.</p>
+                <p class="mb-0">Pesquise por questões cadastradas, filtre por disciplina, tema, ano ou autor e pratique direto no banco.</p>
             </div>
             <div>
-                <a href="criarLista.html" class="btn btn-verde px-3 py-2 font-weight-bold shadow-sm">
+                <a href="criarLista.html" class="btn btn-verde px-3 py-2 shadow-sm">
                     <i class="bi bi-plus-circle me-1"></i>Criar Lista Personalizada
                 </a>
             </div>
@@ -41,55 +42,55 @@
         <div id="alerta-feedback" class="alert d-none mb-4" role="alert"></div>
 
         <!-- Painel de Filtros -->
-        <div class="card p-4 mb-4 bg-white shadow-sm border">
-            <h5 class="fw-bold mb-3 d-flex align-items-center text-dark">
-                <i class="bi bi-funnel-fill text-verde me-2"></i>Filtros de Busca
+        <div class="filtros-card mb-4">
+            <h5 class="mb-3 d-flex align-items-center">
+                <i class="bi bi-funnel-fill accent-rosa me-2"></i>Filtros de Busca
             </h5>
             <form id="form-filtros" class="row g-3">
                 <div class="col-md-3">
-                    <label for="filtro-disciplina" class="form-label fw-semibold text-secondary">Disciplina</label>
-                    <select id="filtro-disciplina" class="form-select shadow-sm">
+                    <label for="filtro-disciplina" class="form-label">Disciplina</label>
+                    <select id="filtro-disciplina" class="form-select">
                         <option value="">Todas as disciplinas</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="filtro-tema" class="form-label fw-semibold text-secondary">Tema</label>
-                    <select id="filtro-tema" class="form-select shadow-sm">
+                    <label for="filtro-tema" class="form-label">Tema</label>
+                    <select id="filtro-tema" class="form-select">
                         <option value="">Todos os temas</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="filtro-ano" class="form-label fw-semibold text-secondary">Ano</label>
-                    <select id="filtro-ano" class="form-select shadow-sm">
+                    <label for="filtro-ano" class="form-label">Ano</label>
+                    <select id="filtro-ano" class="form-select">
                         <option value="">Todos os anos</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="filtro-autor" class="form-label fw-semibold text-secondary">Autor / Prova</label>
-                    <select id="filtro-autor" class="form-select shadow-sm">
+                    <label for="filtro-autor" class="form-label">Autor / Prova</label>
+                    <select id="filtro-autor" class="form-select">
                         <option value="">Todos os autores</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="filtro-status" class="form-label fw-semibold text-secondary">Status</label>
-                    <select id="filtro-status" class="form-select shadow-sm">
+                    <label for="filtro-status" class="form-label">Status</label>
+                    <select id="filtro-status" class="form-select">
                         <option value="">Todas</option>
                         <option value="nao_respondidas">Não respondidas</option>
                         <option value="ja_respondidas">Já respondidas</option>
                     </select>
                 </div>
                 <div class="col-md-8">
-                    <label for="filtro-busca" class="form-label fw-semibold text-secondary">Busca por Enunciado</label>
-                    <div class="input-group shadow-sm">
-                        <span class="input-group-text bg-light text-muted"><i class="bi bi-search"></i></span>
+                    <label for="filtro-busca" class="form-label">Busca por Enunciado</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
                         <input type="text" id="filtro-busca" class="form-control" placeholder="Digite palavras contidas no enunciado...">
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-end gap-2">
-                    <button type="submit" class="btn btn-verde w-100 py-2 font-weight-bold shadow-sm" id="btn-filtrar">
+                    <button type="submit" class="btn btn-verde w-100 py-2" id="btn-filtrar">
                         <i class="bi bi-search me-1"></i>Filtrar
                     </button>
-                    <button type="button" class="btn btn-outline-secondary w-100 py-2 font-weight-bold" id="btn-limpar-filtros">
+                    <button type="button" class="btn btn-outline-rosa w-100 py-2" id="btn-limpar-filtros">
                         <i class="bi bi-x-circle me-1"></i>Limpar
                     </button>
                 </div>
@@ -98,14 +99,55 @@
 
         <!-- Container onde os cards de questões serão injetados -->
         <div id="container-questoes-procurar">
-            <div class="text-center py-5 bg-white rounded shadow-sm border">
-                <div class="spinner-border text-verde mb-3" role="status"></div>
+            <div class="text-center py-5 estado-vazio">
+                <div class="spinner-border spinner-rosa mb-3" role="status"></div>
                 <p class="text-muted fw-semibold mb-0">Carregando questões do banco de dados...</p>
             </div>
         </div>
 
         <!-- Controles de Paginação -->
         <div id="container-paginacao" class="d-flex justify-content-center align-items-center gap-2 my-4"></div>
+    </div>
+
+    <!-- Modal Flutuante para Reportar Erro na Questão -->
+    <div id="modal-reportar" class="modal-reportar-overlay" style="display: none;">
+      <div class="modal-reportar-card">
+        <div class="modal-reportar-header">
+          <h3>
+            <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
+            Reportar Erro na Questão <span id="modal-reportar-cod">#--</span>
+          </h3>
+          <button id="btn-fechar-modal-reportar" class="btn-close-custom" type="button">&times;</button>
+        </div>
+        <div class="modal-reportar-body">
+          <p class="modal-instrucao">Selecione o motivo do problema encontrado nesta questão:</p>
+          
+          <div class="mb-3">
+            <label for="select-motivo-reporte" class="form-label fw-bold">Motivo do Reporte</label>
+            <select id="select-motivo-reporte" class="form-select">
+              <option value="" disabled selected>Selecione um motivo...</option>
+              <option value="Gabarito incorreto">Gabarito incorreto</option>
+              <option value="Erro de digitação / Ortografia">Erro de digitação / Ortografia</option>
+              <option value="Enunciado confuso ou incompleto">Enunciado confuso ou incompleto</option>
+              <option value="Imagem ausente ou incorreta">Imagem ausente ou incorreta</option>
+              <option value="Outros">Outros (especificar)</option>
+            </select>
+          </div>
+
+          <div id="container-motivo-outros" class="mb-3" style="display: none;">
+            <label for="txt-motivo-outros" class="form-label fw-bold">Descreva o problema encontrado *</label>
+            <textarea id="txt-motivo-outros" class="form-control" rows="4" placeholder="Explique detalhadamente o erro observado na questão..."></textarea>
+          </div>
+
+          <div id="alert-modal-reportar" class="alert alert-danger p-2" style="display: none; font-size: 0.88rem;"></div>
+        </div>
+        <div class="modal-reportar-footer">
+          <button id="btn-cancelar-reporte" class="btn btn-secondary-custom" type="button">Cancelar</button>
+          <button id="btn-enviar-reporte" class="btn btn-danger-custom" type="button">
+            <i class="bi bi-send-fill me-1"></i> Enviar Reporte
+          </button>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

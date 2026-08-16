@@ -4,6 +4,9 @@ import bcrypt from 'bcryptjs'; // Para criptografia
 import jwt from 'jsonwebtoken'; // Para usar tokens
 import fs from 'fs/promises';
 import path from 'path';
+import crypto from 'crypto'; // Para geração de tokens randômicos seguros
+import brevoService from '../services/brevoService.js'; // Serviço Brevo para envio de e-mails
+import googleAuthService from '../services/googleAuthService.js'; // Serviço para verificação de tokens Google OAuth
 
 // Cria o objeto userContoller
 const userController = {
@@ -11,48 +14,44 @@ const userController = {
   // Método para registrar um novo usuário
   register: async (req, res) => {
     try {
-      // Pega os dados do corpo da requisição
-      const { nomeCompleto, dataNascimento, genero, escola, motivacao, email, password, adm } = req.body;
+      // Pega os dados do corpo da requisição (apenas email e senha no cadastro simplificado)
+      const { email, password } = req.body;
 
-      const login = email;
+      const login = email ? email.trim().toLowerCase() : '';
       const senha = password;
-      const motivo = motivacao;
-      const data_nasc = dataNascimento;
 
-      // Validação básica (verificar se os dados obrigatórios vieram)
-      if (!login || !senha || !nomeCompleto || !data_nasc || !genero) {
-        return res.status(400).json({ error: 'Os campos obrigatórios não foram preenchidos.' });
+      // Validação básica (verificar se os dados obrigatórios de e-mail e senha vieram)
+      if (!login || !senha) {
+        return res.status(400).json({ error: 'E-mail e senha são obrigatórios.' });
       }
 
       // Verificar se o email já existe no banco
       const existingUser = await db.Usuario.findOne({ where: { login: login } });
 
-      if (existingUser) { //Se ja existe, da erro
+      if (existingUser) { // Se ja existe, da erro
         return res.status(409).json({ error: 'Este e-mail já está em uso.' });
-      }
-
-      // Buscar ou criar o código do gênero fornecido
-      let genero_cod = null;
-      if (genero) {
-        const [generoRecord] = await db.Genero.findOrCreate({ where: { descricao: genero } });
-        genero_cod = generoRecord.cod;
       }
 
       // Criptografar a senha 
       const salt = await bcrypt.genSalt(10); // Gera um tempero para a senha
       const hashedPassword = await bcrypt.hash(senha, salt); // Criptografa
 
-      // Inserir o novo usuário no banco de dados
+      // Gerar token seguro para verificação de e-mail (válido por 24h)
+      const tokenVerificacao = crypto.randomBytes(32).toString('hex');
+      const tokenExpiracao = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+      // Inserir o novo usuário no banco de dados com email_verificado: false
       const newUser = await db.Usuario.create({
         login,
-        nome_completo: nomeCompleto,
         senha: hashedPassword,
-        adm: adm || false,
-        data_nasc,
-        motivo,
-        escola,
-        genero_cod
+        adm: false,
+        email_verificado: false,
+        token_verificacao: tokenVerificacao,
+        token_verificacao_expiracao: tokenExpiracao
       });
+
+      // Enviar e-mail de verificação via Brevo (assíncrono)
+      await brevoService.sendVerificationEmail(login, 'Estudante', tokenVerificacao);
 
       // Inicializar as estatísticas do usuário (tudo zerado por padrão)
       await db.Usuario_estatisticas_gerais.create({
@@ -96,8 +95,10 @@ const userController = {
         return res.status(400).json({ error: 'E-mail e senha são obrigatórios.' });
       }
 
-      // Buscar o usuário pelo e-mail no banco
-      const user = await db.Usuario.findOne({ where: { login: login } });
+      const loginNormalizado = login.trim().toLowerCase();
+
+      // Buscar o usuário pelo e-mail no banco (normalizado em minúsculas)
+      const user = await db.Usuario.findOne({ where: { login: loginNormalizado } });
 
       // Se não encontrar o usuário ou a senha está errada (não informar qual dos dois por segurança)
       if (!user) {
@@ -112,7 +113,16 @@ const userController = {
         return res.status(401).json({ error: 'Credenciais inválidas.' });
       }
 
-      // Se a senha estiver correta, gerar o token JWT
+      // Verificar se o e-mail do usuário já foi verificado
+      if (!user.email_verificado) {
+        return res.status(403).json({
+          error: 'Seu e-mail ainda não foi verificado. Por favor, confira sua caixa de entrada e clique no link de ativação.',
+          unverified: true,
+          email: user.login
+        });
+      }
+
+      // Se a senha estiver correta e e-mail verificado, gerar o token JWT
       const token = jwt.sign(
         { userId: user.cod, login: user.login }, // Informações que devem estar no token
         process.env.JWT_SECRET,             // Segredo para "assinar" o token
@@ -185,11 +195,12 @@ const userController = {
 
       // Lógica para atualizar os dados do perfil (LOGIN/EMAIL)
       if (login) {
+        const loginNormalizado = login.trim().toLowerCase();
         // Verifica se o novo 'login' (email) já está sendo usado por outro usuário
         // Sequelize: Usa Op.ne (Not Equal) para verificar se ID é diferente
         const existingUser = await db.Usuario.findOne({
           where: {
-            login: login,
+            login: loginNormalizado,
             cod: { [Op.ne]: userId } // login igual E cod diferente do meu
           }
         });
@@ -200,7 +211,7 @@ const userController = {
         }
 
         // Atualiza o login no banco de dados
-        await db.Usuario.update({ login: login }, { where: { cod: userId } });
+        await db.Usuario.update({ login: loginNormalizado }, { where: { cod: userId } });
       }
 
       const dadosAtualizacao = {};
@@ -343,6 +354,255 @@ const userController = {
     } catch (error) {
       console.error('Erro ao atualizar foto de perfil:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  },
+
+  // Método para confirmar/verificar o e-mail do usuário via token
+  verifyEmail: async (req, res) => {
+    try {
+      const { token } = req.body;
+
+      if (!token) {
+        return res.status(400).json({ error: 'Token de verificação não fornecido.' });
+      }
+
+      const user = await db.Usuario.findOne({ where: { token_verificacao: token } });
+
+      if (!user) {
+        return res.status(400).json({ error: 'Token de verificação inválido ou já utilizado.' });
+      }
+
+      if (user.token_verificacao_expiracao && new Date() > new Date(user.token_verificacao_expiracao)) {
+        return res.status(400).json({
+          error: 'O link de verificação expirou. Solicite um novo e-mail de verificação.',
+          expired: true,
+          email: user.login
+        });
+      }
+
+      // Ativar conta do usuário e limpar o token
+      await user.update({
+        email_verificado: true,
+        token_verificacao: null,
+        token_verificacao_expiracao: null
+      });
+
+      // Gerar o JWT Token para permitir a conclusão imediata do perfil
+      const tokenSessao = jwt.sign(
+        { userId: user.cod, login: user.login },
+        process.env.JWT_SECRET,
+        { expiresIn: '8h' }
+      );
+
+      const precisaCompletarPerfil = (!user.nome_completo || !user.data_nasc || !user.genero_cod);
+
+      res.status(200).json({
+        message: 'E-mail verificado com sucesso!',
+        token: tokenSessao,
+        precisaCompletarPerfil: precisaCompletarPerfil,
+        user: { id: user.cod, email: user.login, adm: user.adm }
+      });
+    } catch (error) {
+      console.error('Erro na verificação de e-mail:', error);
+      res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  },
+
+  // Método para reenviar o e-mail de verificação
+  resendVerificationEmail: async (req, res) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ error: 'E-mail é obrigatório.' });
+      }
+
+      const emailNormalizado = email.trim().toLowerCase();
+      const user = await db.Usuario.findOne({ where: { login: emailNormalizado } });
+
+      if (!user) {
+        return res.status(404).json({ error: 'Usuário não encontrado com este e-mail.' });
+      }
+
+      if (user.email_verificado) {
+        return res.status(400).json({ error: 'Este e-mail já foi verificado anteriormente.' });
+      }
+
+      // Gerar novo token de verificação (válido por 24h)
+      const tokenVerificacao = crypto.randomBytes(32).toString('hex');
+      const tokenExpiracao = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+      await user.update({
+        token_verificacao: tokenVerificacao,
+        token_verificacao_expiracao: tokenExpiracao
+      });
+
+      // Dispara envio do e-mail via Brevo
+      await brevoService.sendVerificationEmail(user.login, user.nome_completo, tokenVerificacao);
+
+      res.status(200).json({ message: 'E-mail de verificação reenviado com sucesso! Verifique sua caixa de entrada.' });
+    } catch (error) {
+      console.error('Erro ao reenviar e-mail de verificação:', error);
+      res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  },
+
+  // Método para solicitar a recuperação de senha (Forgot Password)
+  forgotPassword: async (req, res) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ error: 'Por favor, informe seu e-mail.' });
+      }
+
+      const emailNormalizado = email.trim().toLowerCase();
+      const user = await db.Usuario.findOne({ where: { login: emailNormalizado } });
+
+      // Se o usuário não existir, por questões de segurança responde mensagem genérica
+      if (user) {
+        // Gerar token de recuperação (válido por 1 hora)
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        const tokenExpiracao = new Date(Date.now() + 1 * 60 * 60 * 1000);
+
+        await user.update({
+          token_recuperacao: resetToken,
+          token_recuperacao_expiracao: tokenExpiracao
+        });
+
+        // Enviar e-mail com link de redefinição via Brevo
+        await brevoService.sendPasswordResetEmail(user.login, user.nome_completo, resetToken);
+      }
+
+      res.status(200).json({
+        message: 'Se o e-mail estiver cadastrado em nosso sistema, você receberá um link para redefinir sua senha.'
+      });
+    } catch (error) {
+      console.error('Erro na solicitação de recuperação de senha:', error);
+      res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  },
+
+  // Método para redefinir a senha com o token (Reset Password)
+  resetPassword: async (req, res) => {
+    try {
+      const { token, newPassword } = req.body;
+
+      if (!token || !newPassword) {
+        return res.status(400).json({ error: 'Token e nova senha são obrigatórios.' });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ error: 'A nova senha deve ter no mínimo 6 caracteres.' });
+      }
+
+      const user = await db.Usuario.findOne({ where: { token_recuperacao: token } });
+
+      if (!user) {
+        return res.status(400).json({ error: 'Token de redefinição de senha inválido ou já utilizado.' });
+      }
+
+      if (user.token_recuperacao_expiracao && new Date() > new Date(user.token_recuperacao_expiracao)) {
+        return res.status(400).json({ error: 'O link de redefinição de senha expirou. Solicite um novo link.' });
+      }
+
+      // Criptografar a nova senha
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      // Atualizar a senha e limpar os tokens de recuperação
+      await user.update({
+        senha: hashedPassword,
+        token_recuperacao: null,
+        token_recuperacao_expiracao: null
+      });
+
+      res.status(200).json({ message: 'Senha redefinida com sucesso! Você já pode realizar o login com a nova senha.' });
+    } catch (error) {
+      console.error('Erro ao redefinir senha:', error);
+      res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  },
+
+  // Método para autenticação / cadastro automático via Google Sign-In
+  googleLogin: async (req, res) => {
+    try {
+      const { credentialToken } = req.body;
+
+      if (!credentialToken) {
+        return res.status(400).json({ error: 'Token de credencial do Google não fornecido.' });
+      }
+
+      // Validar token com o Google
+      const googleUser = await googleAuthService.verifyIdToken(credentialToken);
+      const emailNormalizado = googleUser.email.trim().toLowerCase();
+
+      // Buscar se o usuário já existe no banco
+      let user = await db.Usuario.findOne({ where: { login: emailNormalizado } });
+
+      if (!user) {
+        // Se não existir, gera uma senha aleatória segura
+        const randomPassword = crypto.randomBytes(16).toString('hex');
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(randomPassword, salt);
+
+        // Cria o usuário com e-mail verificado automaticamente
+        user = await db.Usuario.create({
+          login: emailNormalizado,
+          nome_completo: googleUser.name,
+          senha: hashedPassword,
+          adm: false,
+          foto: googleUser.picture,
+          email_verificado: true
+        });
+
+        // Inicializar as estatísticas gerais do usuário zeradas
+        await db.Usuario_estatisticas_gerais.create({
+          usuario_cod: user.cod
+        });
+
+        // Inicializa as estatísticas por área para todas as disciplinas atuais
+        const disciplinas = await db.Disciplina.findAll();
+        if (disciplinas.length > 0) {
+          const statsPorArea = disciplinas.map(disciplina => ({
+            usuario_cod: user.cod,
+            disciplina_cod: disciplina.cod,
+            total_questoes_respondidas: 0,
+            total_erros: 0,
+            total_acertos: 0,
+            aproveitamento_area: 0
+          }));
+          await db.Usuario_estatisticas_por_area.bulkCreate(statsPorArea);
+        }
+      } else {
+        // Se o usuário já existe, atualiza email_verificado = true e a foto se vazia
+        const updates = {};
+        if (!user.email_verificado) updates.email_verificado = true;
+        if (!user.foto && googleUser.picture) updates.foto = googleUser.picture;
+
+        if (Object.keys(updates).length > 0) {
+          await user.update(updates);
+        }
+      }
+
+      // Gerar o JWT Token de sessão do Cedeefe
+      const token = jwt.sign(
+        { userId: user.cod, login: user.login },
+        process.env.JWT_SECRET,
+        { expiresIn: '8h' }
+      );
+
+      const precisaCompletarPerfil = (!user.data_nasc || !user.genero_cod || !user.nome_completo);
+
+      res.status(200).json({
+        message: 'Login com Google realizado com sucesso!',
+        token: token,
+        precisaCompletarPerfil: precisaCompletarPerfil,
+        user: { id: user.cod, email: user.login, adm: user.adm }
+      });
+    } catch (error) {
+      console.error('Erro no login com Google:', error);
+      res.status(500).json({ error: 'Erro ao realizar login com o Google.' });
     }
   }
 

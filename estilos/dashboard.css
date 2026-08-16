@@ -1,24 +1,197 @@
-/* Ajustes da main container base */
+/* ===================================================
+   DASHBOARD — Cedeefe
+   Paleta rosa/verde consistente com o restante do projeto
+   =================================================== */
+
+/* Animação de entrada dos cards */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================
+   FUNDO E LAYOUT BASE
+======================== */
+body {
+    background-color: #f9f9f9;
+}
+
 .dashboard-main {
     margin-top: 60px;
-    margin-left: 240px; /* Base side bar margin, considering sidebar.css */
+    margin-left: 70px;
     transition: all 0.3s ease;
 }
 
-/* Quando a sidebar recolhe (ajuste dependendo do JS do sidebar) */
-.sidebar:not(.active) ~ .dashboard-main {
-    margin-left: 78px;
+/* Sidebar expandida empurra a main */
+.sidebar.expandido ~ .dashboard-main {
+    margin-left: 270px;
 }
 
-.placeholder-img {
-    height: 250px;
-    object-fit: cover;
+/* ========================
+   BANNER DE SAUDAÇÃO
+======================== */
+.welcome-banner {
+    background: linear-gradient(135deg, #FFD8DF 0%, #E9FFD3 100%);
+    border-radius: 24px;
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.10);
+    animation: fadeInUp 0.5s ease both;
+    position: relative;
+    overflow: hidden;
 }
 
-.news-caption {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 8px;
-    padding: 10px;
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.20);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.welcome-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 30%;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.welcome-text h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 4px;
+}
+
+.welcome-text p {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0;
+}
+
+.welcome-icon {
+    font-size: 4rem;
+    color: #c23672;
+    opacity: 0.35;
+}
+
+/* ========================
+   CARDS DE ESTATÍSTICAS RÁPIDAS
+======================== */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 6px 18px rgba(30, 30, 30, 0.06);
+    border: 1px solid #f4d6dd;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.06s; }
+.stat-card:nth-child(2) { animation-delay: 0.12s; }
+.stat-card:nth-child(3) { animation-delay: 0.18s; }
+.stat-card:nth-child(4) { animation-delay: 0.24s; }
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(194, 54, 114, 0.12);
+}
+
+/* Alternância de cores rosa/verde nos cards */
+.stat-card.rosa {
+    background: #FFD8DF;
+    border-color: #f4d6dd;
+}
+
+.stat-card.verde {
+    background: #eef7e5;
+    border-color: #d4edc2;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.stat-icon.rosa-bg {
+    background: #fce8f0;
+    color: #c23672;
+}
+
+.stat-icon.verde-bg {
+    background: #e0f0d0;
+    color: #538d24;
+}
+
+.stat-info strong {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    line-height: 1.1;
+}
+
+.stat-info small {
+    font-size: 0.78rem;
+    color: #7b7b7b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ========================
+   CARDS DE GRÁFICOS
+======================== */
+.chart-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 14px 34px rgba(30, 30, 30, 0.08);
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.28s;
+}
+
+.chart-card .card-body {
+    padding: 24px;
+}
+
+.chart-card .card-title {
+    font-weight: 600;
+    color: #262626;
+    font-size: 1rem;
 }
 
 .chart-container {
@@ -27,49 +200,140 @@
     width: 100%;
 }
 
-/* Perfil Card */
-.profile-img-container img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
+/* ========================
+   HEATMAP — TONS DE ROSA
+======================== */
+.heatmap-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 14px 34px rgba(30, 30, 30, 0.08);
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.32s;
 }
 
-/* Heatmap Grid */
+.heatmap-card .card-body {
+    padding: 24px;
+}
+
+.heatmap-card .card-title {
+    font-weight: 600;
+    color: #262626;
+    font-size: 1rem;
+}
+
 .heatmap-grid {
     display: grid;
-    /* Grid de semanas, cada semana é uma coluna (ex 26 semanas horizontais) e 7 dias vertical */
     grid-template-rows: repeat(7, 1fr);
     grid-auto-flow: column;
     gap: 4px;
-    overflow-x: auto; /* scroll horizontal se apertado */
+    overflow-x: auto;
     padding-bottom: 5px;
 }
 
 .heatmap-cell {
     width: 14px;
     height: 14px;
-    border-radius: 2px;
-    background-color: #ebedf0; /* level 0 empty */
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    transition: transform 0.15s ease;
 }
 
-/* Níveis do Heatmap (baseado no Github) */
-.lvl-0 { background-color: #2b2b2b; } /* Fundo preto como pedido */
-.lvl-1 { background-color: #0e4429; }
-.lvl-2 { background-color: #006d32; }
-.lvl-3 { background-color: #26a641; }
-.lvl-4 { background-color: #39d353; }
+.heatmap-cell:hover {
+    transform: scale(1.4);
+}
+
+/* Níveis do heatmap — paleta rosa do projeto */
+.lvl-0 { background-color: #f5f5f5; }
+.lvl-1 { background-color: #fce8f0; }
+.lvl-2 { background-color: #ff9cae; }
+.lvl-3 { background-color: #c23672; }
+.lvl-4 { background-color: #a0285b; }
 
 /* Legenda do heatmap */
 .heatmap-legend .heatmap-cell {
     display: inline-block;
 }
 
-/* Card customizado que cresce para parear aos charts */
-.calendar-card {
-    min-height: 350px;
+/* ========================
+   PERFIL DO USUÁRIO
+======================== */
+.profile-card {
+    background: linear-gradient(145deg, #FFD8DF, #FFCAD4);
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.10);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.15s;
 }
 
-/* Calendário Miniatura */
+.profile-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(194, 54, 114, 0.16);
+}
+
+.profile-card .card-body {
+    padding: 28px 20px;
+}
+
+.profile-img-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 3px solid #c23672;
+    box-shadow: 0 4px 12px rgba(194, 54, 114, 0.18);
+}
+
+.profile-card .card-title {
+    font-weight: 700;
+    color: #1f1f1f;
+    font-size: 1.15rem;
+}
+
+.profile-card .text-muted {
+    color: #6f6f6f !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* ========================
+   CALENDÁRIO
+======================== */
+.calendar-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 14px 34px rgba(30, 30, 30, 0.08);
+    min-height: 350px;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.22s;
+}
+
+.calendar-card .card-body {
+    padding: 22px;
+}
+
+.calendar-header .card-title {
+    font-weight: 600;
+    color: #c23672;
+    font-size: 1rem;
+}
+
+.calendar-header .btn-outline-secondary {
+    border-color: #f4d6dd;
+    color: #c23672;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.calendar-header .btn-outline-secondary:hover {
+    background: #FFD8DF;
+    border-color: #c23672;
+    color: #a0285b;
+}
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -78,9 +342,9 @@
 }
 
 .calendar-day-header {
-    font-weight: bold;
-    color: #666;
-    font-size: 0.9em;
+    font-weight: 700;
+    color: #c23672;
+    font-size: 0.85em;
     padding-bottom: 5px;
 }
 
@@ -88,13 +352,16 @@
     padding: 8px 0;
     font-size: 0.9em;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.2s;
-    position: relative; /* para as bolinhas de marcador */
+    border-radius: 10px;
+    transition: background 0.2s ease, transform 0.15s ease;
+    position: relative;
+    font-weight: 500;
+    color: #333;
 }
 
 .calendar-day:hover {
-    background: #f0f0f0;
+    background: #fce8f0;
+    transform: scale(1.08);
 }
 
 .calendar-day.inactive {
@@ -102,10 +369,12 @@
 }
 
 .calendar-day.today {
-    background-color: #e6f3ff;
-    font-weight: bold;
+    background-color: #FFCAD4;
+    font-weight: 700;
+    color: #a0285b;
 }
 
+/* Marcadores do calendário */
 .calendar-marker-simulado::after {
     content: '';
     position: absolute;
@@ -115,7 +384,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #dc3545; /* danger */
+    background-color: #c23672;
 }
 
 .calendar-marker-lista::before {
@@ -127,7 +396,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #0d6efd; /* primary */
+    background-color: #80C242;
 }
 
 .calendar-marker-simulado.calendar-marker-lista::after {
@@ -136,4 +405,75 @@
 
 .calendar-marker-simulado.calendar-marker-lista::before {
     transform: translateX(-8px);
+}
+
+/* Legenda do calendário */
+.calendar-legend h6 {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.calendar-legend small {
+    color: #666;
+}
+
+.legend-dot-simulado {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #c23672;
+}
+
+.legend-dot-lista {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #80C242;
+}
+
+/* ========================
+   RESPONSIVIDADE
+======================== */
+
+/* Tablets */
+@media (max-width: 991px) {
+    .dashboard-main {
+        margin-left: 0;
+    }
+
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .welcome-icon {
+        display: none;
+    }
+}
+
+/* Celulares */
+@media (max-width: 576px) {
+    .stats-row {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-banner {
+        padding: 24px 20px;
+        border-radius: 18px;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.3rem;
+    }
+
+    .chart-card,
+    .heatmap-card,
+    .profile-card,
+    .calendar-card {
+        border-radius: 18px;
+    }
+
+    .stat-card {
+        border-radius: 16px;
+    }
 }

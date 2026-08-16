@@ -12,264 +12,397 @@ function getAuthHeaders() {
     };
 }
 
+let todosBaralhos = [];
 let baralhoParaDeletarId = null;
-let baralhoParaEditarId = null;
+let modalCriarInstance = null;
+let modalEditarInstance = null;
+let modalDeletarInstance = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    carregarBaralhos();
-
-    // Eventos do Modal Criar Baralho
-    const btnAbrirModal = document.getElementById('btn-abrir-modal-baralho');
+    // Inicialização dos Modais Bootstrap
     const modalCriarElement = document.getElementById('modalCriarBaralho');
-    const modalCriarInstance = new bootstrap.Modal(modalCriarElement);
+    if (modalCriarElement && typeof bootstrap !== 'undefined') {
+        modalCriarInstance = new bootstrap.Modal(modalCriarElement);
+    }
+
+    const modalEditarElement = document.getElementById('modalEditarBaralho');
+    if (modalEditarElement && typeof bootstrap !== 'undefined') {
+        modalEditarInstance = new bootstrap.Modal(modalEditarElement);
+    }
+
+    const modalDeletarElement = document.getElementById('modalDeletarBaralho');
+    if (modalDeletarElement && typeof bootstrap !== 'undefined') {
+        modalDeletarInstance = new bootstrap.Modal(modalDeletarElement);
+    }
+
+    // Configuração de Eventos
+    configurarEventos();
+
+    // Carregamento Inicial
+    carregarBaralhos();
+});
+
+function configurarEventos() {
+    const btnAbrirModal = document.getElementById('btn-abrir-modal-baralho');
+    const btnCriarPrimeiro = document.getElementById('btn-criar-primeiro-baralho');
     const btnSalvar = document.getElementById('btnSalvarBaralho');
     const nomeInput = document.getElementById('nomeBaralhoInput');
-    const erroDiv = document.getElementById('erroCriarBaralho');
+    const erroCriarDiv = document.getElementById('erroCriarBaralho');
 
-    btnAbrirModal.addEventListener('click', () => {
-        nomeInput.value = '';
-        erroDiv.style.display = 'none';
-        modalCriarInstance.show();
-    });
+    const btnSalvarEdicao = document.getElementById('btnSalvarEdicaoBaralho');
+    const btnConfirmarDeletar = document.getElementById('btnConfirmarDeletarBaralho');
 
-    btnSalvar.addEventListener('click', async () => {
-        const nome = nomeInput.value.trim();
-        if (!nome) {
-            erroDiv.textContent = 'Por favor, informe o nome do baralho.';
-            erroDiv.style.display = 'block';
-            return;
-        }
+    const inputBusca = document.getElementById('filtro-busca-baralho');
+    const selectStatus = document.getElementById('filtro-status-baralho');
+    const btnLimparFiltros = document.getElementById('btn-limpar-filtros');
 
-        try {
-            const res = await fetch(`${API_BASE}/baralhos`, {
-                method: 'POST',
-                headers: getAuthHeaders(),
-                body: JSON.stringify({ nome })
-            });
+    // Abrir Modal Criar
+    const abrirModalCriarHandler = () => {
+        if (nomeInput) nomeInput.value = '';
+        if (erroCriarDiv) erroCriarDiv.style.display = 'none';
+        if (modalCriarInstance) modalCriarInstance.show();
+    };
 
-            const data = await res.json();
+    if (btnAbrirModal) btnAbrirModal.addEventListener('click', abrirModalCriarHandler);
+    if (btnCriarPrimeiro) btnCriarPrimeiro.addEventListener('click', abrirModalCriarHandler);
 
-            if (!res.ok) {
-                erroDiv.textContent = data.error || 'Erro ao criar baralho.';
-                erroDiv.style.display = 'block';
+    // Salvar Novo Baralho
+    if (btnSalvar) {
+        btnSalvar.addEventListener('click', async () => {
+            const nome = nomeInput.value.trim();
+            if (!nome) {
+                erroCriarDiv.textContent = 'Por favor, informe o nome do baralho.';
+                erroCriarDiv.style.display = 'block';
                 return;
             }
 
-            modalCriarInstance.hide();
-            carregarBaralhos();
-        } catch (error) {
-            console.error(error);
-            erroDiv.textContent = 'Erro de conexão ao criar baralho.';
-            erroDiv.style.display = 'block';
-        }
-    });
+            try {
+                const res = await fetch(`${API_BASE}/baralhos`, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ nome })
+                });
 
-    // Eventos do Modal Editar Baralho
-    const modalEditarElement = document.getElementById('modalEditarBaralho');
-    const modalEditarInstance = new bootstrap.Modal(modalEditarElement);
-    const btnSalvarEdicao = document.getElementById('btnSalvarEdicaoBaralho');
-    const editNomeInput = document.getElementById('nomeBaralhoEditarInput');
-    const erroEditarDiv = document.getElementById('erroEditarBaralho');
+                const data = await res.json();
 
-    btnSalvarEdicao.addEventListener('click', async () => {
-        const nome = editNomeInput.value.trim();
-        if (!nome) {
-            erroEditarDiv.textContent = 'Por favor, informe o nome do baralho.';
-            erroEditarDiv.style.display = 'block';
-            return;
-        }
+                if (!res.ok) {
+                    erroCriarDiv.textContent = data.error || 'Erro ao criar baralho.';
+                    erroCriarDiv.style.display = 'block';
+                    return;
+                }
 
-        try {
-            const res = await fetch(`${API_BASE}/baralhos/${baralhoParaEditarId}`, {
-                method: 'PUT',
-                headers: getAuthHeaders(),
-                body: JSON.stringify({ nome })
-            });
+                if (modalCriarInstance) modalCriarInstance.hide();
+                mostrarFeedback('Baralho criado com sucesso!', 'success');
+                carregarBaralhos();
+            } catch (error) {
+                console.error('Erro ao criar baralho:', error);
+                erroCriarDiv.textContent = 'Erro ao conectar com o servidor.';
+                erroCriarDiv.style.display = 'block';
+            }
+        });
+    }
 
-            const data = await res.json();
+    // Salvar Edição de Baralho
+    if (btnSalvarEdicao) {
+        btnSalvarEdicao.addEventListener('click', async () => {
+            const id = document.getElementById('editBaralhoIdInput').value;
+            const nomeEditarInput = document.getElementById('nomeBaralhoEditarInput');
+            const erroEditarDiv = document.getElementById('erroEditarBaralho');
+            const novoNome = nomeEditarInput.value.trim();
 
-            if (!res.ok) {
-                erroEditarDiv.textContent = data.error || 'Erro ao editar baralho.';
+            if (!novoNome) {
+                erroEditarDiv.textContent = 'Por favor, informe o nome do baralho.';
                 erroEditarDiv.style.display = 'block';
                 return;
             }
 
-            modalEditarInstance.hide();
-            carregarBaralhos();
-        } catch (error) {
-            console.error(error);
-            erroEditarDiv.textContent = 'Erro de conexão ao editar baralho.';
-            erroEditarDiv.style.display = 'block';
-        }
-    });
+            try {
+                const res = await fetch(`${API_BASE}/baralhos/${id}`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ nome: novoNome })
+                });
 
-    // Eventos do Modal Deletar Baralho
-    const modalDeletarElement = document.getElementById('modalDeletarBaralho');
-    const modalDeletarInstance = new bootstrap.Modal(modalDeletarElement);
-    const btnConfirmarDeletar = document.getElementById('btnConfirmarDeletarBaralho');
-
-    btnConfirmarDeletar.addEventListener('click', async () => {
-        if (!baralhoParaDeletarId) return;
-
-        try {
-            const res = await fetch(`${API_BASE}/baralhos/${baralhoParaDeletarId}`, {
-                method: 'DELETE',
-                headers: getAuthHeaders()
-            });
-
-            if (res.ok) {
-                modalDeletarInstance.hide();
-                carregarBaralhos();
-            } else {
                 const data = await res.json();
-                alert(data.error || 'Erro ao deletar baralho.');
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Erro de conexão ao deletar baralho.');
-        } finally {
-            baralhoParaDeletarId = null;
-        }
-    });
-});
 
-async function carregarBaralhos() {
-    const container = document.getElementById('baralhos-container');
-    
-    const token = getToken();
-    if (!token) {
-        if (typeof redirecionarParaLogin === 'function') {
-            redirecionarParaLogin('Acesso negado: Faça login para ver seus baralhos.');
-        } else {
-            window.location.href = 'login.html';
-        }
-        return;
+                if (!res.ok) {
+                    erroEditarDiv.textContent = data.error || 'Erro ao editar baralho.';
+                    erroEditarDiv.style.display = 'block';
+                    return;
+                }
+
+                if (modalEditarInstance) modalEditarInstance.hide();
+                mostrarFeedback('Baralho atualizado com sucesso!', 'success');
+                carregarBaralhos();
+            } catch (error) {
+                console.error('Erro ao editar baralho:', error);
+                erroEditarDiv.textContent = 'Erro ao conectar com o servidor.';
+                erroEditarDiv.style.display = 'block';
+            }
+        });
     }
 
-    container.innerHTML = '<div class="text-muted p-3">Carregando seus baralhos...</div>';
+    // Confirmar Exclusão de Baralho
+    if (btnConfirmarDeletar) {
+        btnConfirmarDeletar.addEventListener('click', async () => {
+            if (!baralhoParaDeletarId) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/baralhos/${baralhoParaDeletarId}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+
+                if (!res.ok) {
+                    const data = await res.json();
+                    throw new Error(data.error || 'Erro ao excluir baralho.');
+                }
+
+                if (modalDeletarInstance) modalDeletarInstance.hide();
+                mostrarFeedback('Baralho excluído com sucesso!', 'success');
+                carregarBaralhos();
+            } catch (error) {
+                console.error('Erro ao deletar baralho:', error);
+                mostrarFeedback('Não foi possível excluir o baralho.', 'danger');
+            } finally {
+                baralhoParaDeletarId = null;
+            }
+        });
+    }
+
+    // Filtros e Busca
+    if (inputBusca) inputBusca.addEventListener('input', aplicarFiltros);
+    if (selectStatus) selectStatus.addEventListener('change', aplicarFiltros);
+    if (btnLimparFiltros) {
+        btnLimparFiltros.addEventListener('click', () => {
+            if (inputBusca) inputBusca.value = '';
+            if (selectStatus) selectStatus.value = 'todos';
+            aplicarFiltros();
+        });
+    }
+}
+
+// Busca a lista de baralhos da API
+async function carregarBaralhos() {
+    const container = document.getElementById('baralhos-container');
+    const estadoVazio = document.getElementById('estado-vazio');
 
     try {
-        const response = await fetch(`${API_BASE}/baralhos`, {
+        const token = getToken();
+        if (!token) {
+            if (typeof redirecionarParaLogin === 'function') {
+                redirecionarParaLogin('Acesso negado: Faça login para ver seus flashcards.');
+            } else {
+                window.location.href = 'login.html';
+            }
+            return;
+        }
+
+        const res = await fetch(`${API_BASE}/baralhos`, {
+            method: 'GET',
             headers: getAuthHeaders()
         });
 
-        if (!response.ok) {
-            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(response)) {
+        if (!res.ok) {
+            if (typeof tratarRespostaNaoAutorizada === 'function' && tratarRespostaNaoAutorizada(res)) {
                 return;
             }
-            container.innerHTML = '<div class="text-danger p-3">Erro ao carregar baralhos.</div>';
-            return;
+            throw new Error('Falha ao carregar baralhos.');
         }
 
-        const baralhos = await response.json();
+        todosBaralhos = await res.json();
 
-        if (!baralhos || baralhos.length === 0) {
+        // Atualiza as estatísticas rápidas
+        atualizarEstatisticas(todosBaralhos);
+
+        // Aplica filtros e renderiza
+        aplicarFiltros();
+
+    } catch (error) {
+        console.error('Erro ao listar baralhos:', error);
+        if (container) {
             container.innerHTML = `
-                <div class="col-12 text-center p-5 bg-white rounded-3 border">
-                    <p class="text-muted mb-3">Você ainda não criou nenhum baralho.</p>
-                    <button class="btn btn-rosa" onclick="document.getElementById('btn-abrir-modal-baralho').click()">
-                        <i class="bi bi-plus-lg"></i> Criar meu primeiro baralho
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-exclamation-circle text-danger fs-1"></i>
+                    <p class="mt-3 text-muted">Não foi possível carregar seus baralhos.</p>
+                    <button class="btn btn-outline-rosa mt-2" onclick="carregarBaralhos()">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Tentar novamente
                     </button>
                 </div>
             `;
-            return;
         }
-
-        // Buscar dados dos cartões para cada baralho para calcular totais e pendentes
-        const baralhosComInfo = await Promise.all(baralhos.map(async (baralho) => {
-            try {
-                const resCartoes = await fetch(`${API_BASE}/cartoes/baralho/${baralho.id}`, {
-                    headers: getAuthHeaders()
-                });
-                if (resCartoes.ok) {
-                    const cartoes = await resCartoes.json();
-                    const agora = new Date();
-                    agora.setHours(0, 0, 0, 0);
-
-                    const paraRevisar = cartoes.filter(c => {
-                        if (!c.data_proxima_revisao) return true;
-                        const proxima = new Date(c.data_proxima_revisao);
-                        proxima.setHours(0, 0, 0, 0);
-                        return proxima <= agora;
-                    }).length;
-                    return { ...baralho, totalCartoes: cartoes.length, paraRevisar };
-                }
-            } catch (e) {
-                console.error(e);
-            }
-            return { ...baralho, totalCartoes: 0, paraRevisar: 0 };
-        }));
-
-        renderizarBaralhos(baralhosComInfo);
-
-    } catch (error) {
-        console.error(error);
-        container.innerHTML = '<div class="text-danger p-3">Erro de conexão ao carregar baralhos.</div>';
+        if (estadoVazio) estadoVazio.classList.add('d-none');
     }
 }
 
+// Atualiza os indicadores de métricas rápidas no topo
+function atualizarEstatisticas(baralhos) {
+    const totalBaralhos = baralhos.length;
+    let totalCartoes = 0;
+    let totalParaRevisar = 0;
+
+    baralhos.forEach(b => {
+        const cartoesCount = Number(b.total_cartoes || 0);
+        const pendentesCount = Number(b.cartoes_para_revisar !== undefined ? b.cartoes_para_revisar : b.cartoes_pendentes || 0);
+        totalCartoes += cartoesCount;
+        totalParaRevisar += pendentesCount;
+    });
+
+    const emDia = Math.max(0, totalCartoes - totalParaRevisar);
+
+    const elTotalBaralhos = document.getElementById('stat-total-baralhos');
+    const elTotalCartoes = document.getElementById('stat-total-cartoes');
+    const elParaRevisar = document.getElementById('stat-para-revisar');
+    const elEmDia = document.getElementById('stat-em-dia');
+    const elBadgeTotal = document.getElementById('badge-total-baralhos');
+
+    if (elTotalBaralhos) elTotalBaralhos.textContent = totalBaralhos;
+    if (elTotalCartoes) elTotalCartoes.textContent = totalCartoes;
+    if (elParaRevisar) elParaRevisar.textContent = totalParaRevisar;
+    if (elEmDia) elEmDia.textContent = emDia;
+    if (elBadgeTotal) elBadgeTotal.textContent = `${totalBaralhos} ${totalBaralhos === 1 ? 'baralho' : 'baralhos'}`;
+}
+
+// Filtra baralhos por texto e status
+function aplicarFiltros() {
+    const termo = (document.getElementById('filtro-busca-baralho')?.value || '').toLowerCase().trim();
+    const status = document.getElementById('filtro-status-baralho')?.value || 'todos';
+
+    let filtrados = [...todosBaralhos];
+
+    if (status === 'pendentes') {
+        filtrados = filtrados.filter(b => (b.cartoes_para_revisar || b.cartoes_pendentes || 0) > 0);
+    } else if (status === 'em_dia') {
+        filtrados = filtrados.filter(b => (b.cartoes_para_revisar || b.cartoes_pendentes || 0) === 0);
+    }
+
+    if (termo) {
+        filtrados = filtrados.filter(b => (b.nome || '').toLowerCase().includes(termo));
+    }
+
+    renderizarBaralhos(filtrados);
+}
+
+// Renderiza os cards de baralho
 function renderizarBaralhos(baralhos) {
     const container = document.getElementById('baralhos-container');
+    const estadoVazio = document.getElementById('estado-vazio');
+
+    if (!container) return;
     container.innerHTML = '';
 
-    baralhos.forEach(baralho => {
-        const card = document.createElement('div');
-        card.className = 'flashcard-container';
+    if (baralhos.length === 0) {
+        container.classList.add('d-none');
+        if (estadoVazio) estadoVazio.classList.remove('d-none');
+        return;
+    }
 
-        card.innerHTML = `
-            <div>
-                <div class="flashcard-header-card">
-                    <h4 class="flashcard-title">${escapeHtml(baralho.nome)}</h4>
-                    <div class="card-acoes-baralho">
-                        <button class="btn-deletar-baralho" title="Excluir baralho" onclick="confirmarExclusaoBaralho(event, ${baralho.id}, '${escapeHtml(baralho.nome)}')">
-                            <i class="bi bi-trash"></i>
+    container.classList.remove('d-none');
+    if (estadoVazio) estadoVazio.classList.add('d-none');
+
+    baralhos.forEach((baralho, index) => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-md-6 col-lg-4 baralho-card-wrapper';
+        col.style.animationDelay = `${(index * 0.05).toFixed(2)}s`;
+
+        const totalCartoes = Number(baralho.total_cartoes || 0);
+        const pendentes = Number(baralho.cartoes_para_revisar !== undefined ? baralho.cartoes_para_revisar : baralho.cartoes_pendentes || 0);
+        const temPendentes = pendentes > 0;
+
+        col.innerHTML = `
+            <div class="baralho-card">
+                <div class="baralho-card-header">
+                    <span class="badge-status-revisao ${temPendentes ? 'badge-revisao-pendente' : 'badge-revisao-emdia'}">
+                        <i class="bi ${temPendentes ? 'bi-clock-history' : 'bi-check2-circle'}"></i>
+                        ${temPendentes ? `${pendentes} para revisar` : 'Em dia'}
+                    </span>
+                    <div class="d-flex gap-1">
+                        <button type="button" class="btn-icon-action edit" title="Editar Baralho" onclick="abrirModalEditar(${baralho.id}, '${escapeJsString(baralho.nome)}')">
+                            <i class="bi bi-pencil-square"></i>
                         </button>
-                        <button class="btn-editar-baralho" title="Editar nome do baralho" onclick="abrirModalEditarBaralho(event, ${baralho.id}, '${escapeHtml(baralho.nome)}')">
-                            <i class="bi bi-pencil"></i>
+                        <button type="button" class="btn-icon-action" title="Excluir Baralho" onclick="abrirModalDeletar(${baralho.id}, '${escapeJsString(baralho.nome)}')">
+                            <i class="bi bi-trash3"></i>
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <div class="flashcard-info">
-                <span><i class="bi bi-card-heading"></i> ${baralho.totalCartoes} cartões</span>
-                <span class="badge-revisar ${baralho.paraRevisar > 0 ? 'pendente' : ''}">
-                    <i class="bi bi-clock-history"></i> ${baralho.paraRevisar} a revisar
-                </span>
+                <div class="baralho-card-body">
+                    <h4 class="baralho-titulo">${escapeHtml(baralho.nome)}</h4>
+
+                    <div class="baralho-meta">
+                        <div class="baralho-meta-item">
+                            <i class="bi bi-card-text accent-rosa"></i>
+                            <span>${totalCartoes} ${totalCartoes === 1 ? 'cartão' : 'cartões'}</span>
+                        </div>
+                    </div>
+
+                    <div class="baralho-card-footer">
+                        <a href="fazendoFlashcards.html?baralho_id=${baralho.id}" class="btn ${temPendentes ? 'btn-verde' : 'btn-outline-verde'} flex-grow-1">
+                            <i class="bi bi-play-fill"></i> ${temPendentes ? 'Estudar Agora' : 'Praticar Baralho'}
+                        </a>
+                        <a href="verFlashcards.html?baralho_id=${baralho.id}" class="btn btn-outline-rosa" title="Ver todos os cartões">
+                            <i class="bi bi-eye"></i> Cartões
+                        </a>
+                    </div>
+                </div>
             </div>
         `;
 
-        // Clique no card redireciona para verFlashcards.html
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.card-acoes-baralho')) return;
-            window.location.href = `verFlashcards.html?baralho_id=${baralho.id}`;
-        });
-
-        container.appendChild(card);
+        container.appendChild(col);
     });
 }
 
-function abrirModalEditarBaralho(event, id, nome) {
-    event.stopPropagation();
-    baralhoParaEditarId = id;
+function abrirModalEditar(id, nome) {
     document.getElementById('editBaralhoIdInput').value = id;
-    document.getElementById('nomeBaralhoEditarInput').value = nome;
-    document.getElementById('erroEditarBaralho').style.display = 'none';
+    const nomeEditarInput = document.getElementById('nomeBaralhoEditarInput');
+    const erroEditarDiv = document.getElementById('erroEditarBaralho');
 
-    const modalElement = document.getElementById('modalEditarBaralho');
-    const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-    modalInstance.show();
+    nomeEditarInput.value = nome;
+    erroEditarDiv.style.display = 'none';
+
+    if (modalEditarInstance) modalEditarInstance.show();
 }
 
-function confirmarExclusaoBaralho(event, id, nome) {
-    event.stopPropagation();
+function abrirModalDeletar(id, nome) {
     baralhoParaDeletarId = id;
-    document.getElementById('nomeBaralhoDeletar').textContent = nome;
-    const modalDeletarElement = document.getElementById('modalDeletarBaralho');
-    const modalDeletarInstance = bootstrap.Modal.getInstance(modalDeletarElement) || new bootstrap.Modal(modalDeletarElement);
-    modalDeletarInstance.show();
+    const nomeEl = document.getElementById('nomeBaralhoDeletar');
+    if (nomeEl) nomeEl.textContent = nome;
+
+    if (modalDeletarInstance) modalDeletarInstance.show();
 }
 
-function escapeHtml(str) {
-    return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function mostrarFeedback(mensagem, tipo = 'success') {
+    const alerta = document.getElementById('alerta-feedback');
+    if (!alerta) return;
+
+    alerta.className = `alert alert-${tipo === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+    alerta.style.borderRadius = '16px';
+    alerta.style.boxShadow = '0 6px 20px rgba(0,0,0,0.06)';
+    alerta.innerHTML = `
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi ${tipo === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'} fs-5"></i>
+            <div>${mensagem}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    alerta.classList.remove('d-none');
+
+    setTimeout(() => {
+        alerta.classList.add('d-none');
+    }, 4000);
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function escapeJsString(text) {
+    if (!text) return '';
+    return String(text).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }

@@ -25,6 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputBusca = document.getElementById('filtro-busca');
     const btnLimparFiltros = document.getElementById('btn-limpar-filtros');
 
+    // Elementos do Modal de Reportar Questão
+    const modalReportar = document.getElementById('modal-reportar');
+    const modalReportarCod = document.getElementById('modal-reportar-cod');
+    const btnFecharModalReportar = document.getElementById('btn-fechar-modal-reportar');
+    const btnCancelarReporte = document.getElementById('btn-cancelar-reporte');
+    const btnEnviarReporte = document.getElementById('btn-enviar-reporte');
+    const selectMotivoReporte = document.getElementById('select-motivo-reporte');
+    const containerMotivoOutros = document.getElementById('container-motivo-outros');
+    const txtMotivoOutros = document.getElementById('txt-motivo-outros');
+    const alertModalReportar = document.getElementById('alert-modal-reportar');
+    let questaoCodParaReportar = null;
+
     let disciplinasCache = [];
     let temasCache = [];
     let anosCache = [];
@@ -58,6 +70,141 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         alertaFeedback.classList.remove('d-none');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Funções do Modal de Reportar
+    function abrirModalReportar(questaoCod) {
+        questaoCodParaReportar = questaoCod;
+        if (modalReportarCod) {
+            modalReportarCod.textContent = `#${questaoCod}`;
+        }
+        if (selectMotivoReporte) selectMotivoReporte.value = '';
+        if (containerMotivoOutros) containerMotivoOutros.style.display = 'none';
+        if (txtMotivoOutros) txtMotivoOutros.value = '';
+        if (alertModalReportar) {
+            alertModalReportar.style.display = 'none';
+            alertModalReportar.className = 'alert alert-danger p-2';
+            alertModalReportar.innerText = '';
+        }
+        if (btnEnviarReporte) {
+            btnEnviarReporte.disabled = false;
+            btnEnviarReporte.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar Reporte';
+        }
+        if (modalReportar) {
+            modalReportar.style.display = 'flex';
+        }
+    }
+
+    function fecharModalReportar() {
+        if (modalReportar) {
+            modalReportar.style.display = 'none';
+        }
+        questaoCodParaReportar = null;
+        if (selectMotivoReporte) selectMotivoReporte.value = '';
+        if (containerMotivoOutros) containerMotivoOutros.style.display = 'none';
+        if (txtMotivoOutros) txtMotivoOutros.value = '';
+        if (alertModalReportar) {
+            alertModalReportar.style.display = 'none';
+            alertModalReportar.innerText = '';
+        }
+    }
+
+    if (btnFecharModalReportar) btnFecharModalReportar.addEventListener('click', fecharModalReportar);
+    if (btnCancelarReporte) btnCancelarReporte.addEventListener('click', fecharModalReportar);
+
+    if (modalReportar) {
+        modalReportar.addEventListener('click', (e) => {
+            if (e.target === modalReportar) fecharModalReportar();
+        });
+    }
+
+    if (selectMotivoReporte) {
+        selectMotivoReporte.addEventListener('change', () => {
+            if (selectMotivoReporte.value === 'Outros') {
+                if (containerMotivoOutros) containerMotivoOutros.style.display = 'block';
+            } else {
+                if (containerMotivoOutros) containerMotivoOutros.style.display = 'none';
+            }
+            if (alertModalReportar) alertModalReportar.style.display = 'none';
+        });
+    }
+
+    if (btnEnviarReporte) {
+        btnEnviarReporte.addEventListener('click', async () => {
+            if (!questaoCodParaReportar) {
+                if (alertModalReportar) {
+                    alertModalReportar.innerText = 'Erro ao identificar o código desta questão.';
+                    alertModalReportar.style.display = 'block';
+                }
+                return;
+            }
+
+            const motivo = selectMotivoReporte ? selectMotivoReporte.value : '';
+            const descricaoDetalhada = txtMotivoOutros ? txtMotivoOutros.value.trim() : '';
+
+            if (!motivo) {
+                if (alertModalReportar) {
+                    alertModalReportar.className = 'alert alert-danger p-2';
+                    alertModalReportar.innerText = 'Por favor, selecione o motivo do reporte.';
+                    alertModalReportar.style.display = 'block';
+                }
+                return;
+            }
+
+            if (motivo === 'Outros' && !descricaoDetalhada) {
+                if (alertModalReportar) {
+                    alertModalReportar.className = 'alert alert-danger p-2';
+                    alertModalReportar.innerText = 'Por favor, descreva o problema encontrado no campo de texto.';
+                    alertModalReportar.style.display = 'block';
+                }
+                return;
+            }
+
+            btnEnviarReporte.disabled = true;
+            btnEnviarReporte.innerHTML = `<span class="spinner-border spinner-border-sm me-1" role="status"></span>Enviando...`;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/questoes/${questaoCodParaReportar}/reportar`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        motivo,
+                        descricao_detalhada: descricaoDetalhada
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro ao registrar reporte.');
+                }
+
+                if (alertModalReportar) {
+                    alertModalReportar.className = 'alert alert-success p-2';
+                    alertModalReportar.innerText = data.message || 'Reporte enviado com sucesso! Obrigado por colaborar.';
+                    alertModalReportar.style.display = 'block';
+                }
+
+                setTimeout(() => {
+                    fecharModalReportar();
+                    btnEnviarReporte.disabled = false;
+                    btnEnviarReporte.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar Reporte';
+                }, 1500);
+
+            } catch (err) {
+                console.error('Erro ao enviar reporte de questão:', err);
+                if (alertModalReportar) {
+                    alertModalReportar.className = 'alert alert-danger p-2';
+                    alertModalReportar.innerText = err.message || 'Falha na conexão ao enviar o reporte.';
+                    alertModalReportar.style.display = 'block';
+                }
+                btnEnviarReporte.disabled = false;
+                btnEnviarReporte.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar Reporte';
+            }
+        });
     }
 
     async function carregarFiltrosEAuxiliares() {
@@ -125,8 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
         paginaAtual = pagina;
         if (containerQuestoes) {
             containerQuestoes.innerHTML = `
-                <div class="text-center py-5 bg-white rounded shadow-sm border">
-                    <div class="spinner-border text-verde mb-3" role="status"></div>
+                <div class="text-center py-5 estado-vazio">
+                    <div class="spinner-border spinner-rosa mb-3" role="status"></div>
                     <p class="text-muted fw-semibold mb-0">Carregando questões do banco de dados...</p>
                 </div>
             `;
@@ -178,9 +325,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (questoes.length === 0) {
             containerQuestoes.innerHTML = `
-                <div class="text-center py-5 bg-white rounded shadow-sm border">
-                    <i class="bi bi-inbox fs-1 text-muted d-block mb-2"></i>
-                    <h5 class="fw-bold text-secondary mb-1">Nenhuma questão encontrada</h5>
+                <div class="text-center py-5 estado-vazio">
+                    <i class="bi bi-inbox fs-1 accent-rosa d-block mb-2"></i>
+                    <h5 class="fw-bold mb-1" style="color: #1f1f1f;">Nenhuma questão encontrada</h5>
                     <p class="text-muted small mb-0">Tente ajustar os filtros de busca para encontrar outras questões.</p>
                 </div>
             `;
@@ -233,16 +380,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const explicacaoVisivel = jaRespondida && q.explicacao;
 
             return `
-                <div class="card card-questao-procurar bg-white shadow-sm border mb-4" id="card-questao-${q.cod}">
+                <div class="card card-questao-procurar mb-4" id="card-questao-${q.cod}">
                     <div class="card-header questao-card-header p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div class="d-flex align-items-center flex-wrap gap-2">
                             ${badgeStatusHtml}
-                            <span class="badge bg-success me-1"><i class="bi bi-book me-1"></i>${escapeHtml(disciplinaNome)}</span>
-                            ${temaNome ? `<span class="badge bg-primary me-1"><i class="bi bi-tag me-1"></i>${escapeHtml(temaNome)}</span>` : ''}
-                            ${q.ano ? `<span class="badge bg-secondary me-1"><i class="bi bi-calendar me-1"></i>${q.ano}</span>` : ''}
-                            ${q.autor ? `<span class="badge bg-info text-dark"><i class="bi bi-building me-1"></i>${escapeHtml(q.autor)}</span>` : ''}
+                            <span class="badge-disciplina"><i class="bi bi-book me-1"></i>${escapeHtml(disciplinaNome)}</span>
+                            ${temaNome ? `<span class="badge-tema"><i class="bi bi-tag me-1"></i>${escapeHtml(temaNome)}</span>` : ''}
+                            ${q.ano ? `<span class="badge-ano"><i class="bi bi-calendar me-1"></i>${q.ano}</span>` : ''}
+                            ${q.autor ? `<span class="badge-autor"><i class="bi bi-building me-1"></i>${escapeHtml(q.autor)}</span>` : ''}
                         </div>
-                        <small class="text-muted fw-semibold">Código: #${q.cod}</small>
+                        <div class="d-flex align-items-center gap-2">
+                            <small class="text-muted fw-semibold">Código: #${q.cod}</small>
+                            <button type="button" class="btn-reportar-card btn-abrir-modal-reportar" data-questao-cod="${q.cod}" title="Reportar erro nesta questão">
+                                <i class="bi bi-flag-fill"></i>
+                                <span>Reportar</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body p-4">
                         <div class="questao-enunciado fs-6 text-dark mb-3">
@@ -259,11 +412,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 ${jaRespondida ? `<small class="text-muted"><i class="bi bi-info-circle me-1"></i>Questões respondidas não alteram suas estatísticas globais.</small>` : ''}
                             </div>
                             <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-verde px-4 py-2 font-weight-bold shadow-sm ${jaRespondida ? 'd-none' : ''}" id="btn-responder-${q.cod}" data-questao-cod="${q.cod}">
+                                <button type="button" class="btn btn-verde px-4 py-2 ${jaRespondida ? 'd-none' : ''}" id="btn-responder-${q.cod}" data-questao-cod="${q.cod}">
                                     <i class="bi bi-check2-circle me-1"></i>Responder
                                 </button>
                                 ${q.explicacao ? `
-                                    <button type="button" class="btn btn-outline-success px-3 py-2 font-weight-bold ${explicacaoVisivel ? '' : 'd-none'}" id="btn-explicacao-${q.cod}" data-questao-cod="${q.cod}">
+                                    <button type="button" class="btn btn-outline-verde px-3 py-2 ${explicacaoVisivel ? '' : 'd-none'}" id="btn-explicacao-${q.cod}" data-questao-cod="${q.cod}">
                                         <i class="bi bi-lightbulb me-1"></i>Ver Explicação
                                     </button>
                                 ` : ''}
@@ -271,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
 
                         <div class="box-explicacao d-none mt-3" id="box-explicacao-${q.cod}">
-                            <h6 class="fw-bold text-success mb-2"><i class="bi bi-journal-check me-2"></i>Explicação / Gabarito Comentado</h6>
+                            <h6 class="fw-bold mb-2" style="color: #538d24;"><i class="bi bi-journal-check me-2"></i>Explicação / Gabarito Comentado</h6>
                             <p class="mb-0 text-dark small">${escapeHtml(q.explicacao)}</p>
                         </div>
                     </div>
@@ -286,6 +439,14 @@ document.addEventListener('DOMContentLoaded', () => {
         questoes.forEach(q => {
             const cardEl = document.getElementById(`card-questao-${q.cod}`);
             if (!cardEl) return;
+
+            // Botão de Reportar desta questão
+            const btnReportar = cardEl.querySelector('.btn-abrir-modal-reportar');
+            if (btnReportar) {
+                btnReportar.addEventListener('click', () => {
+                    abrirModalReportar(q.cod);
+                });
+            }
 
             let alternativaSelecionadaCod = null;
             const jaRespondida = Boolean(q.ja_respondida);

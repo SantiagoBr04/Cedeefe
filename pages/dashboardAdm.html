@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedeefe - Dashboard</title>
+    <title>Dashboard Administrativo - Cedeefe</title>
+    <meta name="description" content="Painel de controle e gerenciamento geral da plataforma Cedeefe.">
 
+    <!-- Ícones do Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Ícones Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
+    <!-- CSS Externo -->
     <link rel="stylesheet" href="../estilos/sidebar.css">
     <link rel="stylesheet" href="../estilos/dashboardAdm.css">
     <!-- Guardião de Autenticação -->
@@ -19,90 +24,160 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="dashboard-body" data-admin-required="true">
+<body data-admin-required="true">
 
-    <!-- Sidebar -->
+    <!-- Sidebar Reutilizável -->
     <div id="sidebar-container"></div>
 
     <main class="content">
 
-        <!-- Cabeçalho -->
-        <section class="dashboard-header">
-
+        <!-- Cabeçalho Principal -->
+        <section class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
             <div>
-                <h1 id="admin-nome-greeting">Olá, Administrador</h1>
-                <p>Gerencie rapidamente o conteúdo da plataforma.</p>
+                <h2 class="mb-1 d-flex align-items-center flex-wrap gap-2">
+                    <i class="bi bi-speedometer2 accent-rosa me-2"></i><span id="admin-nome-greeting">Olá, Administrador</span>
+                </h2>
+                <p class="mb-0 text-muted">Acompanhe as métricas da plataforma, gerencie moderações e acesse as ferramentas do sistema.</p>
             </div>
 
-            <div class="dashboard-data">
-                <i class="bi bi-calendar3"></i>
+            <div class="dashboard-data-badge">
+                <i class="bi bi-calendar3 accent-rosa"></i>
                 <span id="dashboard-data-texto">--</span>
             </div>
-
         </section>
 
-        <!-- Grid Principal -->
-        <section class="dashboard-grid">
+        <!-- Cards de Estatísticas Rápidas do Sistema -->
+        <section class="row g-3 mb-4" id="stats-container">
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper rosa">
+                        <i class="bi bi-flag-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Reportes Pendentes</span>
+                        <h3 class="stat-value" id="stat-total-reportes">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper verde">
+                        <i class="bi bi-book-half"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Disciplinas Ativas</span>
+                        <h3 class="stat-value" id="stat-total-disciplinas">6</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper azul">
+                        <i class="bi bi-journal-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Últimas Atualizações</span>
+                        <h3 class="stat-value" id="stat-status-sistema">Em dia</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Atalhos Rápidos de Administração -->
+        <section class="atalhos-adm-section mb-4">
+            <h5 class="secao-subtitulo mb-3">
+                <i class="bi bi-lightning-charge-fill accent-rosa me-1"></i> Ações e Gerenciamento Rápido
+            </h5>
+            <div class="row g-3">
+                <div class="col-6 col-md-4 col-xl-2-4">
+                    <a href="listarUsuarios.html" class="atalho-card">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Gerenciar Usuários</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-xl-2-4">
+                    <a href="listarListas.html" class="atalho-card">
+                        <i class="bi bi-card-checklist"></i>
+                        <span>Gerenciar Listas</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-xl-2-4">
+                    <a href="questoesReportadas.html" class="atalho-card">
+                        <i class="bi bi-flag-fill"></i>
+                        <span>Questões Reportadas</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-xl-2-4">
+                    <a href="adicionarQuestao.html" class="atalho-card">
+                        <i class="bi bi-journal-plus"></i>
+                        <span>Nova Questão</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-xl-2-4">
+                    <a href="importarQuestoesPdf.html" class="atalho-card">
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                        <span>Importar PDF</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Principal: Reportes e Últimas Questões -->
+        <section class="row g-4 mb-4">
 
             <!-- Questões reportadas -->
-            <div class="dashboard-card">
+            <div class="col-12 col-lg-6">
+                <div class="dashboard-card h-100">
+                    <div class="card-topo">
+                        <h2>
+                            <i class="bi bi-exclamation-triangle-fill accent-rosa"></i>
+                            Questões Reportadas
+                        </h2>
+                        <span id="reportadas-badge" class="badge-reportes-topo">
+                            0 pendentes
+                        </span>
+                    </div>
 
-                <div class="card-topo">
-                    <h2>
-                        <i class="bi bi-exclamation-triangle-fill"></i>
-                        Questões reportadas
-                    </h2>
-
-                    <span id="reportadas-badge" class="badge rounded-pill text-bg-danger">
-                        0
-                    </span>
+                    <div id="reportadas-container" class="reportadas-lista-container">
+                        <!-- Conteúdo dinâmico -->
+                    </div>
                 </div>
-
-                <div id="reportadas-container">
-                    <!-- Questões reportadas serão carregadas dinamicamente aqui -->
-                </div>
-
             </div>
 
-            <!-- Últimas questões -->
-            <div class="dashboard-card">
+            <!-- Últimas questões cadastradas -->
+            <div class="col-12 col-lg-6">
+                <div class="dashboard-card h-100">
+                    <div class="card-topo">
+                        <h2>
+                            <i class="bi bi-journal-plus text-verde"></i>
+                            Últimas Questões
+                        </h2>
+                        <button id="btn-adicionar-questao" class="btn btn-verde btn-sm">
+                            <i class="bi bi-plus-lg me-1"></i> Adicionar
+                        </button>
+                    </div>
 
-                <div class="card-topo">
-
-                    <h2>
-                        <i class="bi bi-journal-plus"></i>
-                        Últimas questões
-                    </h2>
-
-                    <button id="btn-adicionar-questao" class="btn btn-verde btn-sm">
-                        <i class="bi bi-plus-lg"></i>
-                        Adicionar
-                    </button>
-
+                    <ul id="ultimas-questoes-container" class="lista-questoes">
+                        <!-- Conteúdo dinâmico -->
+                    </ul>
                 </div>
-
-                <ul id="ultimas-questoes-container" class="lista-questoes">
-                    <!-- Últimas questões serão carregadas dinamicamente aqui -->
-                </ul>
-
             </div>
 
         </section>
 
-        <!-- Gráfico -->
-        <section class="dashboard-card grafico-card">
-
+        <!-- Gráfico de Disciplinas Mais Estudadas -->
+        <section class="dashboard-card grafico-card mb-4">
             <div class="card-topo">
-
                 <h2>
-                    <i class="bi bi-bar-chart-fill"></i>
-                    Disciplinas mais estudadas
+                    <i class="bi bi-bar-chart-fill accent-rosa"></i>
+                    Disciplinas Mais Estudadas na Plataforma
                 </h2>
-
+                <small class="text-muted">Resoluções acumuladas por área do conhecimento</small>
             </div>
 
-            <canvas id="graficoDisciplinas"></canvas>
-
+            <div class="grafico-container">
+                <canvas id="graficoDisciplinas"></canvas>
+            </div>
         </section>
 
     </main>
@@ -111,8 +186,6 @@
     <script src="../scripts/loadSidebar.js"></script>
     <script src="../scripts/sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script de dinamização do Dashboard -->
     <script src="../scripts/dashboardAdm.js"></script>
 
 </body>

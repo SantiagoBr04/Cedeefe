@@ -93,14 +93,6 @@ fetch(sidebarPath)
                 });
             }
 
-            // Ação da opção Modo Claro/Escuro (Pronto para implementação futura de tema)
-            const dropdownItemTema = document.getElementById("dropdown-item-tema");
-            if (dropdownItemTema) {
-                dropdownItemTema.addEventListener("click", () => {
-                    console.log("Alternar modo claro/escuro acionado (preparado para funcionalidade futura).");
-                });
-            }
-
             // Busca as informações do usuário autenticado no backend
             fetch('http://localhost:3000/api/users/profile', {
                 headers: {
@@ -131,17 +123,26 @@ fetch(sidebarPath)
                             emailEl.textContent = dados.login || '';
                         }
 
-                        // Atualiza foto de perfil na navbar se existir
-                        if (dados.foto) {
-                            const btnUser = document.getElementById("btn-user");
-                            const btnUserAvatar = document.getElementById("btn-user-avatar");
-                            if (btnUser) {
-                                btnUser.classList.add("d-none");
-                            }
-                            if (btnUserAvatar) {
-                                btnUserAvatar.src = `http://localhost:3000${dados.foto}`;
-                                btnUserAvatar.classList.remove("d-none");
-                            }
+                        // Atualiza foto de perfil na navbar com tratamento de URL externa e fallback seguro
+                        const btnUser = document.getElementById("btn-user");
+                        const btnUserAvatar = document.getElementById("btn-user-avatar");
+
+                        if (dados.foto && btnUserAvatar) {
+                            const fotoUrl = dados.foto.startsWith("http") ? dados.foto : `http://localhost:3000${dados.foto}`;
+
+                            btnUserAvatar.onerror = () => {
+                                // Se a imagem falhar ao carregar, esconde o avatar <img> e mostra o ícone de perfil padrão
+                                btnUserAvatar.classList.add("d-none");
+                                if (btnUser) btnUser.classList.remove("d-none");
+                            };
+
+                            btnUserAvatar.src = fotoUrl;
+                            btnUserAvatar.classList.remove("d-none");
+                            if (btnUser) btnUser.classList.add("d-none");
+                        } else {
+                            // Se não tiver foto, garante a exibição do ícone de perfil padrão
+                            if (btnUserAvatar) btnUserAvatar.classList.add("d-none");
+                            if (btnUser) btnUser.classList.remove("d-none");
                         }
 
                         // Se for admin, exibe a seção de administração na sidebar

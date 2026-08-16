@@ -1,264 +1,548 @@
+/* ===================================================
+   VER FLASHCARDS DO BARALHO — Cedeefe
+   Diretrizes e Paleta Oficial (Seção 12 do gemini.md)
+   =================================================== */
+
+/* Animação de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================
+   FUNDO E LAYOUT BASE
+   =================================================== */
 body {
     background-color: #f9f9f9;
     font-family: 'Poppins', sans-serif !important;
+    min-height: 100vh;
+    color: #1f1f1f;
+    overflow-x: hidden;
 }
-
-/* ===========================
-   CONTEÚDO
-=========================== */
 
 .content {
     margin-top: 80px;
-    margin-left: 290px;
-    margin-right: 20px;
-    margin-bottom: 40px;
-    padding: 20px;
-    transition: all .3s ease;
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-.editor-container {
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
+/* Utilitários de Cores */
+.accent-rosa {
+    color: #c23672 !important;
 }
 
-/* ===========================
-   HEADER
-=========================== */
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
+.accent-verde {
+    color: #80C242 !important;
 }
 
-.header-title {
-    margin: 0;
+.spinner-rosa {
+    color: #c23672;
+    width: 3rem;
+    height: 3rem;
+}
+
+.btn-voltar-link {
+    color: #c23672;
+    text-decoration: none;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: #333;
-}
-
-.header-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-/* ===========================
-   BOTÕES CUSTOMIZADOS
-=========================== */
-
-.btn {
-    border-radius: 8px;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #f4d6dd;
     transition: all 0.2s ease;
 }
 
+.btn-voltar-link:hover {
+    background: #fce8f0;
+    color: #a0285b;
+    border-color: #c23672;
+}
+
+/* ===================================================
+   CABEÇALHO DA PÁGINA
+   =================================================== */
+.page-header {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 28px 32px;
+    animation: fadeInUp 0.45s ease both;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #1f1f1f;
+    font-size: 1.75rem;
+}
+
+.badge-total {
+    background-color: #c23672;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+}
+
+/* ===================================================
+   CARDS DE ESTATÍSTICAS RÁPIDAS
+   =================================================== */
+#stats-baralho-container {
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.08s;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.06);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(194, 54, 114, 0.12);
+}
+
+.stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.stat-icon-wrapper.rosa {
+    background: #fce8f0;
+    color: #c23672;
+}
+
+.stat-icon-wrapper.azul {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.stat-icon-wrapper.amarelo {
+    background: #fff8e6;
+    color: #d97706;
+}
+
+.stat-icon-wrapper.verde {
+    background: #eef7e5;
+    color: #538d24;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #7b7b7b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* ===================================================
+   PAINEL DE BUSCA E FILTROS
+   =================================================== */
+.filtros-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 6px 20px rgba(194, 54, 114, 0.05);
+    padding: 18px 24px;
+    animation: fadeInUp 0.5s ease both;
+    animation-delay: 0.12s;
+}
+
+.filtros-card .form-control,
+.filtros-card .form-select {
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    color: #1f1f1f;
+    transition: all 0.2s ease;
+}
+
+.filtros-card .form-control:focus,
+.filtros-card .form-select:focus {
+    border-color: #c23672;
+    box-shadow: 0 0 0 3px rgba(194, 54, 114, 0.10);
+}
+
+.filtros-card .input-group-text {
+    background: #fff7f9;
+    border: 1px solid #e9ecef;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    color: #c23672;
+}
+
+.filtros-card .input-group .form-control {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+}
+
+/* ===================================================
+   CARDS DE CARTÃO (FLASHCARD ITEM)
+   =================================================== */
+.cartao-card-wrapper {
+    animation: fadeInUp 0.45s ease both;
+}
+
+.cartao-item-card {
+    background: #ffffff;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 184, 197, 0.35);
+    box-shadow: 0 8px 24px rgba(30, 30, 30, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cartao-item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(194, 54, 114, 0.10);
+    border-color: #f4d6dd;
+}
+
+.cartao-item-header {
+    background: #fff7f9;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f4d6dd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.cartao-item-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cartao-secao-frente {
+    margin-bottom: 14px;
+}
+
+.cartao-label-frente {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #c23672;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cartao-texto-frente {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f1f1f;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.cartao-secao-verso {
+    background: #fff7f9;
+    border-left: 3px solid #c23672;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: auto;
+}
+
+.cartao-label-verso {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #538d24;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cartao-texto-verso {
+    font-size: 0.92rem;
+    color: #4b5563;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.cartao-item-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #f4d6dd;
+}
+
+.badge-srs-status {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-srs-novo {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #dbeafe;
+}
+
+.badge-srs-aprendendo {
+    background-color: #fff8e6;
+    color: #d97706;
+    border: 1px solid #fef3c7;
+}
+
+.badge-srs-revisado {
+    background-color: #eef7e5;
+    color: #538d24;
+    border: 1px solid #d4edc2;
+}
+
+.badge-srs-pendente {
+    background-color: #fce8f0;
+    color: #c23672;
+    border: 1px solid #f4d6dd;
+}
+
+.btn-icon-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f4d6dd;
+    background: #ffffff;
+    color: #7b7b7b;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-icon-action:hover {
+    background-color: #fce8f0;
+    color: #c23672;
+    border-color: #c23672;
+}
+
+.btn-icon-action.edit:hover {
+    background-color: #eef7e5;
+    color: #538d24;
+    border-color: #80C242;
+}
+
+/* ===================================================
+   BOTÕES
+   =================================================== */
 .btn-verde {
     background-color: #80C242;
-    color: white;
+    color: #ffffff !important;
     border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .btn-verde:hover {
     background-color: #69a730;
-    color: white;
+    color: #ffffff !important;
+    box-shadow: 0 6px 16px rgba(128, 194, 66, 0.25);
+    transform: translateY(-1px);
 }
 
-.btn-rosa {
-    background-color: #c23672;
-    color: white;
-    border: none;
-}
-
-.btn-rosa:hover {
-    background-color: #a0285b;
-    color: white;
-}
-
-/* ===========================
-   GRID DOS FLASHCARDS
-=========================== */
-
-.cartoes-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    justify-content: center;
-    gap: 20px;
-}
-
-/* ===========================
-   CARD
-=========================== */
-
-.flashcard-container {
-    width: 100%;
-    min-height: 180px;
-
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 15px;
-
-    padding: 20px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    cursor: pointer;
-    position: relative;
-
-    transition: all .25s ease-in-out;
-}
-
-/* HOVER COM DESTAQUE CLICÁVEL */
-.flashcard-container:hover {
-    transform: translateY(-4px);
-    border-color: #c23672;
-    box-shadow: 0 8px 20px rgba(194, 54, 114, 0.12);
-}
-
-.flashcard-header {
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.flashcard-header h4 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #2c3e50;
-}
-
-.edit-hint {
-    font-size: 0.8rem;
-    color: #c23672;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.flashcard-container:hover .edit-hint {
-    opacity: 1;
-}
-
-/* CORPO */
-
-.flashcard-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 8px;
-}
-
-.resposta-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #888;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.resposta-flashcard {
-    margin: 0;
-    color: #555;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* FOOTER / TEMPO DE REVISÃO */
-.flashcard-footer-info {
-    margin-top: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-}
-
-.badge-revisar {
-    background-color: #eef7e5;
-    color: #538d24;
-    padding: 4px 10px;
+.btn-outline-rosa {
+    background: transparent;
+    color: #c23672 !important;
+    border: 1px solid #f4d6dd;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 0.8rem;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 6px;
 }
 
-.badge-revisar.pendente {
+.btn-outline-rosa:hover {
+    background-color: #fce8f0;
+    color: #a0285b !important;
+    border-color: #c23672;
+}
+
+.btn-danger-custom {
+    background-color: #e11d48;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: all 0.25s ease;
+}
+
+.btn-danger-custom:hover {
+    background-color: #be123c;
+    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25);
+    transform: translateY(-1px);
+}
+
+/* ===================================================
+   ESTADO VAZIO
+   =================================================== */
+.estado-vazio {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 8px 24px rgba(194, 54, 114, 0.08);
+    padding: 60px 30px;
+    margin: 20px 0;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.estado-vazio-icone {
+    width: 80px;
+    height: 80px;
     background-color: #fce8f0;
     color: #c23672;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    margin-bottom: 20px;
 }
 
-.badge-revisar.futuro {
-    background-color: #e6f7ff;
-    color: #006699;
+.estado-vazio-titulo {
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 8px;
 }
 
-/* ===========================
-   NOTEBOOK
-=========================== */
+.estado-vazio-subtitulo {
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+}
 
-@media (max-width:1200px){
-    .content{
-        margin-left:90px;
-        margin-right:20px;
+/* ===================================================
+   MODAIS CUSTOMIZADOS
+   =================================================== */
+.modal-custom {
+    border-radius: 24px;
+    border: 1px solid #f4d6dd;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.modal-custom .modal-header {
+    background: #fff7f9;
+    border-bottom: 1px solid #f4d6dd;
+    padding: 20px 24px;
+}
+
+.modal-custom .modal-body {
+    padding: 24px;
+}
+
+.modal-custom .modal-footer {
+    border-top: 1px solid #f4d6dd;
+    padding: 16px 24px;
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+   =================================================== */
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+        padding: 24px;
     }
 }
 
-/* ===========================
-   TABLET
-=========================== */
-
-@media (max-width:991px){
-    .content{
-        margin-left:0;
-        margin-right:0;
-        padding:20px;
+@media (max-width: 991px) {
+    .content {
+        margin-top: 80px;
+        margin-left: 0;
+        width: 100%;
+        padding: 20px 16px;
     }
 
-    .header{
-        flex-direction:column;
-        align-items:flex-start;
+    .page-header {
+        padding: 20px;
     }
 
-    .header-actions{
-        width:100%;
+    .stat-card {
+        padding: 16px;
     }
 
-    .cartoes-wrapper{
-        grid-template-columns:1fr;
+    .filtros-card {
+        padding: 16px;
     }
 }
 
-/* ===========================
-   CELULAR
-=========================== */
-
-@media (max-width:576px){
-    .content{
-        padding:15px;
+@media (max-width: 576px) {
+    .page-header h2 {
+        font-size: 1.4rem;
     }
 
-    .header-title{
-        font-size:1.6rem;
+    .page-header .btn {
+        width: 100%;
     }
-
-    .header-actions{
-        display:grid;
-        grid-template-columns:1fr;
-        width:100%;
-    }
-
-    .header-actions .btn{
-        width:100%;
-    }
-}
+}

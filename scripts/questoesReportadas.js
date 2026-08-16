@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const API_BASE_URL = 'http://localhost:3000/api';
     const accordionContainer = document.getElementById('accordionQuestoes');
     const estadoVazioContainer = document.getElementById('estado-vazio-reportes');
+    const badgeTotalReportes = document.getElementById('badge-total-reportes');
+    const statQuestoesPendentes = document.getElementById('stat-questoes-pendentes');
+    const statTotalApontamentos = document.getElementById('stat-total-apontamentos');
+    const statStatusFila = document.getElementById('stat-status-fila');
 
     const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
 
@@ -70,18 +74,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             const dados = await response.json();
             editoresPorQuestao.clear();
 
+            const totalQuestoes = Array.isArray(dados) ? dados.length : 0;
+            const totalApontamentos = Array.isArray(dados) 
+                ? dados.reduce((acc, curr) => acc + (curr.total_reportes || curr.reportes?.length || 0), 0)
+                : 0;
+
+            // Atualiza estatísticas rápidas
+            if (badgeTotalReportes) badgeTotalReportes.textContent = `${totalQuestoes} ${totalQuestoes === 1 ? 'questão' : 'questões'}`;
+            if (statQuestoesPendentes) statQuestoesPendentes.textContent = totalQuestoes;
+            if (statTotalApontamentos) statTotalApontamentos.textContent = totalApontamentos;
+            if (statStatusFila) statStatusFila.textContent = totalQuestoes === 0 ? 'Fila Limpa' : 'Moderação Pendente';
+
             if (!Array.isArray(dados) || dados.length === 0) {
-                if (estadoVazioContainer) estadoVazioContainer.style.display = 'block';
+                if (estadoVazioContainer) estadoVazioContainer.classList.remove('d-none');
                 if (accordionContainer) {
-                    accordionContainer.style.display = 'none';
+                    accordionContainer.classList.add('d-none');
                     accordionContainer.innerHTML = '';
                 }
                 return;
             }
 
-            if (estadoVazioContainer) estadoVazioContainer.style.display = 'none';
+            if (estadoVazioContainer) estadoVazioContainer.classList.add('d-none');
             if (accordionContainer) {
-                accordionContainer.style.display = 'block';
+                accordionContainer.classList.remove('d-none');
                 accordionContainer.innerHTML = '';
             }
 
@@ -102,18 +117,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }) : '';
 
                     HTMLMotivos += `
-                        <div class="item-reporte-unico mb-2">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
+                        <div class="item-reporte-unico">
+                            <div class="d-flex justify-content-between align-items-center mb-1 flex-wrap gap-2">
                                 <span class="rep-autor">
                                     <i class="bi bi-person-circle me-1"></i>
                                     ${escapeHtml(rep.usuario ? rep.usuario.nome_completo : 'Usuário')}
                                     ${rep.usuario ? `(@${escapeHtml(rep.usuario.login)})` : ''}
                                 </span>
-                                <small class="text-muted">${dataStr}</small>
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i>${dataStr}</small>
                             </div>
-                            <div class="rep-motivo"><i class="bi bi-tag-fill me-1"></i>${escapeHtml(rep.motivo)}</div>
+                            <div class="rep-motivo"><i class="bi bi-tag-fill me-1 accent-rosa"></i>${escapeHtml(rep.motivo)}</div>
                             ${rep.descricao_detalhada ? `
-                                <p class="mt-2 mb-0 text-secondary" style="font-style: italic;">
+                                <p class="mt-2 mb-0 text-secondary" style="font-style: italic; font-size: 0.9rem;">
                                     "${escapeHtml(rep.descricao_detalhada)}"
                                 </p>
                             ` : ''}
@@ -128,11 +143,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     questao.alternativas.forEach((alt, i) => {
                         const letra = letras[i] || `${i + 1}`;
                         HTMLAlternativas += `
-                            <div class="col-md-12 mb-3 border p-2 rounded">
+                            <div class="col-md-12 mb-3 border p-3 rounded-3 bg-white">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
-                                    <label class="fw-bold mb-0">Alternativa ${letra}</label>
-                                    <label class="btn btn-sm btn-outline-primary mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
-                                        <i class="bi bi-upload"></i> Imagem p/ Alt ${letra}
+                                    <label class="fw-bold mb-0 text-dark">Alternativa ${letra}</label>
+                                    <label class="btn btn-sm btn-outline-rosa mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
+                                        <i class="bi bi-image me-1"></i> Imagem Alt ${letra}
                                         <input type="file" class="d-none input-file-alt-rep" data-qcod="${questao.cod}" data-altcod="${alt.cod}" accept="image/*">
                                     </label>
                                 </div>
@@ -152,6 +167,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 HTMLSelectCorreta += `</select>`;
 
+                // Prévia do texto limpo do enunciado
+                const previaTexto = questao.descricao ? questao.descricao.replace(/<[^>]*>?/gm, '').substring(0, 70) + '...' : 'Sem enunciado';
+
                 itemElement.innerHTML = `
                     <h2 class="accordion-header" id="${headingId}">
                         <button class="accordion-button collapsed d-flex align-items-center justify-content-between" type="button"
@@ -160,11 +178,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                             
                             <div class="titulo-questao">
                                 <strong>#${questao.cod}</strong>
-                                <span>${escapeHtml(questao.disciplina_nome)}${questao.tema_nome ? ' - ' + escapeHtml(questao.tema_nome) : ''}</span>
+                                <span class="badge-disciplina-pill">${escapeHtml(questao.disciplina_nome)}</span>
+                                <span class="previa-enunciado d-none d-md-inline">${escapeHtml(previaTexto)}</span>
                             </div>
 
                             <span class="badge-reportes ms-auto me-3">
-                                <i class="bi bi-flag-fill me-1"></i>${totalReportes} ${totalReportes > 1 ? 'reportes' : 'reporte'}
+                                <i class="bi bi-flag-fill"></i>${totalReportes} ${totalReportes > 1 ? 'reportes' : 'reporte'}
                             </span>
                         </button>
                     </h2>
@@ -183,9 +202,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                             <!-- Área de Edição -->
                             <div class="edicao-box">
-                                <h5>Editar Questão</h5>
+                                <h5><i class="bi bi-pencil-square accent-rosa"></i> Editar Questão</h5>
 
-                                <div class="row mb-3 p-3 bg-light rounded border mx-0">
+                                <div class="row mb-3 p-3 bg-light rounded-3 border mx-0">
                                     <div class="col-md-3 mb-2">
                                         <label class="fw-bold small text-muted mb-1">Disciplina</label>
                                         <select id="select-disciplina-${questao.cod}" class="form-select form-select-sm select-disciplina-rep" data-qcod="${questao.cod}">
@@ -210,43 +229,42 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <label class="fw-bold mb-1">Enunciado da Questão</label>
                                 <div id="editor-enunciado-reportada-${questao.cod}" class="mb-3"></div>
 
-                                <div class="mb-3 p-3 bg-light rounded border">
+                                <div class="mb-3 p-3 bg-light rounded-3 border">
                                     <label class="fw-bold mb-1 d-block">Upload de Imagem p/ a Questão #${questao.cod}</label>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <label class="btn btn-sm btn-outline-primary mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
+                                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                                        <label class="btn btn-sm btn-outline-rosa mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
                                             <i class="bi bi-upload"></i> Selecionar Imagem
                                             <input type="file" class="d-none input-file-geral-rep" data-qcod="${questao.cod}" accept="image/*">
                                         </label>
                                         <div class="status-upload-rep text-muted small">Nenhuma imagem enviada nesta sessão.</div>
                                     </div>
-                                    <div class="box-acoes-rep mt-2 d-none">
-                                        <div class="d-flex gap-2">
-                                            <button type="button" class="btn btn-sm btn-success btn-ins-enunciado-rep" data-qcod="${questao.cod}">
-                                                <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Enunciado
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-primary btn-ins-gabarito-rep" data-qcod="${questao.cod}">
-                                                <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Gabarito
-                                            </button>
-                                        </div>
+                                    <div class="box-acoes-rep d-none mt-2">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-ins-enunciado-rep me-2">
+                                            <i class="bi bi-plus-lg me-1"></i> Inserir no Enunciado
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-ins-gabarito-rep">
+                                            <i class="bi bi-plus-lg me-1"></i> Inserir na Explicação
+                                        </button>
                                     </div>
                                 </div>
 
-                                <div class="row mt-3 mb-2">
+                                <h6 class="fw-bold mt-4 mb-2">Alternativas</h6>
+                                <div class="row">
                                     ${HTMLAlternativas}
                                 </div>
 
-                                <label class="fw-bold">Resposta Correta</label>
+                                <label class="fw-bold mt-3 mb-1">Alternativa Correta (Gabarito)</label>
                                 ${HTMLSelectCorreta}
 
-                                <label class="fw-bold mb-1">Explicação da Resposta (Gabarito Comentado)</label>
-                                <div id="editor-explicacao-reportada-${questao.cod}" class="mb-4"></div>
+                                <label class="fw-bold mb-1">Explicação / Resolução Comentada</label>
+                                <div id="editor-explicacao-reportada-${questao.cod}" class="mb-3"></div>
 
-                                <div class="acoes d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-cinza btn-descartar-reporte" data-cod="${questao.cod}">
-                                        <i class="bi bi-x-circle-fill me-1"></i> Descartar Reportes
+                                <div class="acoes">
+                                    <button type="button" class="btn btn-outline-rosa btn-descartar-reporte" data-cod="${questao.cod}">
+                                        <i class="bi bi-x-circle me-1"></i> Descartar Reportes
                                     </button>
                                     <button type="button" class="btn btn-verde btn-salvar-questao" data-cod="${questao.cod}">
-                                        <i class="bi bi-floppy-fill me-1"></i> Salvar Alterações
+                                        <i class="bi bi-check-lg me-1"></i> Salvar e Resolver
                                     </button>
                                 </div>
                             </div>
@@ -257,41 +275,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 accordionContainer.appendChild(itemElement);
 
+                // Inicialização dos selects de disciplina e tema
                 const selectDisc = itemElement.querySelector(`#select-disciplina-${questao.cod}`);
                 const selectTema = itemElement.querySelector(`#select-tema-${questao.cod}`);
 
-                if (selectDisc && Array.isArray(disciplinasCache)) {
-                    selectDisc.innerHTML = disciplinasCache.map(d => 
-                        `<option value="${d.cod}" ${String(d.cod) === String(questao.disciplina_cod) ? 'selected' : ''}>${escapeHtml(d.descricao || d.nome || (`Disciplina #${d.cod}`))}</option>`
-                    ).join('');
-                }
-
-                function atualizarOpcoesTema(discCod, temaCodSelecionado) {
-                    if (!selectTema) return;
-                    const temasFiltrados = temasCache.filter(t => String(t.disciplina_cod) === String(discCod));
-                    let htmlTemas = '<option value="">(Sem Tema)</option>';
-                    temasFiltrados.forEach(t => {
-                        const sel = String(t.cod) === String(temaCodSelecionado) ? 'selected' : '';
-                        htmlTemas += `<option value="${t.cod}" ${sel}>${escapeHtml(t.descricao || t.nome || (`Tema #${t.cod}`))}</option>`;
-                    });
-                    selectTema.innerHTML = htmlTemas;
-                }
-
-                atualizarOpcoesTema(selectDisc ? selectDisc.value : questao.disciplina_cod, questao.tema_cod);
-
                 if (selectDisc) {
+                    selectDisc.innerHTML = '<option value="" disabled>Selecione a disciplina</option>';
+                    disciplinasCache.forEach(d => {
+                        const opt = document.createElement('option');
+                        opt.value = d.cod;
+                        opt.textContent = d.descricao;
+                        if (d.cod === questao.disciplina_cod) opt.selected = true;
+                        selectDisc.appendChild(opt);
+                    });
+
                     selectDisc.addEventListener('change', () => {
-                        atualizarOpcoesTema(selectDisc.value, null);
+                        atualizarSelectTemas(selectDisc.value, selectTema, null);
                     });
                 }
 
+                function atualizarSelectTemas(discCod, temaEl, temaSelecionadoCod) {
+                    if (!temaEl) return;
+                    temaEl.innerHTML = '<option value="">(Sem Tema)</option>';
+                    const temasFiltrados = temasCache.filter(t => String(t.disciplina_cod) === String(discCod));
+                    temasFiltrados.forEach(t => {
+                        const opt = document.createElement('option');
+                        opt.value = t.cod;
+                        opt.textContent = t.descricao;
+                        if (temaSelecionadoCod && String(t.cod) === String(temaSelecionadoCod)) {
+                            opt.selected = true;
+                        }
+                        temaEl.appendChild(opt);
+                    });
+                }
+
+                if (selectDisc && selectTema) {
+                    atualizarSelectTemas(questao.disciplina_cod, selectTema, questao.tema_cod);
+                }
+
+                // Inicialização dos editores ricos
                 const editorEnunciado = new EditorQuestao(`#editor-enunciado-reportada-${questao.cod}`, {
-                    placeholder: 'Edite o enunciado da questão...',
+                    placeholder: 'Digite o enunciado da questão...',
                     initialValue: questao.descricao || ''
                 });
 
                 const editorExplicacao = new EditorQuestao(`#editor-explicacao-reportada-${questao.cod}`, {
-                    placeholder: 'Edite a explicação...',
+                    placeholder: 'Explicação ou resolução detalhada...',
                     initialValue: questao.explicacao || ''
                 });
 
@@ -374,7 +403,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             statusUploadDiv.innerHTML = `
                                 <div class="d-flex align-items-center gap-2 mt-1">
                                     <img src="${srcCompleto}" class="rounded border shadow-sm" style="max-height: 80px; max-width: 150px; object-fit: contain;" alt="Preview">
-                                    <span class="text-success font-weight-bold"><i class="bi bi-check-circle-fill me-1"></i>Imagem enviada!</span>
+                                    <span class="text-verde fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Imagem enviada!</span>
                                 </div>
                             `;
                             boxAcoesDiv.classList.remove('d-none');
@@ -420,7 +449,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Erro ao carregar questões reportadas:', error);
             if (accordionContainer) {
                 accordionContainer.innerHTML = `
-                    <div class="alert alert-danger p-3">
+                    <div class="alert alert-danger p-4 rounded-4 shadow-sm text-center">
+                        <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
                         Ocorreu um erro ao carregar as questões reportadas. Por favor, recarregue a página.
                     </div>
                 `;
@@ -447,7 +477,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const ano = inputAno ? inputAno.value.trim() : null;
 
         if (!descricaoHtml || !edObj.enunciado.obterTexto()) {
-            alert('O enunciado da questão não pode ficar em branco.');
+            mostrarFeedback('O enunciado da questão não pode ficar em branco.', 'danger');
             return;
         }
 
@@ -462,7 +492,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         btnElement.disabled = true;
         const textoOriginal = btnElement.innerHTML;
-        btnElement.innerText = 'Salvando...';
+        btnElement.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Salvando...';
 
         try {
             const response = await fetch(`${API_BASE_URL}/admin/questoes-reportadas/${questaoCod}`, {
@@ -488,12 +518,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error(result.error || 'Erro ao salvar alterações na questão.');
             }
 
-            alert('Questão atualizada e reportes resolvidos com sucesso!');
+            mostrarFeedback('Questão atualizada e reportes resolvidos com sucesso!', 'success');
             await carregarQuestoesReportadas();
 
         } catch (error) {
             console.error('Erro ao salvar alterações da questão:', error);
-            alert(error.message || 'Erro ao salvar alterações.');
+            mostrarFeedback(error.message || 'Erro ao salvar alterações.', 'danger');
             btnElement.disabled = false;
             btnElement.innerHTML = textoOriginal;
         }
@@ -505,7 +535,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         btnElement.disabled = true;
-        btnElement.innerText = 'Descartando...';
+        btnElement.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Descartando...';
 
         try {
             const response = await fetch(`${API_BASE_URL}/admin/questoes-reportadas/${questaoCod}/descartar`, {
@@ -521,16 +551,37 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error(result.error || 'Erro ao descartar reportes.');
             }
 
+            mostrarFeedback(`Reportes da questão #${questaoCod} descartados.`, 'success');
             await carregarQuestoesReportadas();
 
         } catch (error) {
             console.error('Erro ao descartar reportes:', error);
-            alert(error.message || 'Erro ao descartar reportes.');
+            mostrarFeedback(error.message || 'Erro ao descartar reportes.', 'danger');
             btnElement.disabled = false;
-            btnElement.innerHTML = '<i class="bi bi-x-circle-fill me-1"></i> Descartar Reportes';
+            btnElement.innerHTML = '<i class="bi bi-x-circle me-1"></i> Descartar Reportes';
         }
     }
 
-    await carregarQuestoesReportadas();
+    function mostrarFeedback(mensagem, tipo = 'success') {
+        const alerta = document.getElementById('alerta-feedback');
+        if (!alerta) return;
 
+        alerta.className = `alert alert-${tipo === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+        alerta.style.borderRadius = '16px';
+        alerta.style.boxShadow = '0 6px 20px rgba(0,0,0,0.06)';
+        alerta.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi ${tipo === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'} fs-5"></i>
+                <div>${mensagem}</div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        alerta.classList.remove('d-none');
+
+        setTimeout(() => {
+            alerta.classList.add('d-none');
+        }, 4500);
+    }
+
+    await carregarQuestoesReportadas();
 });

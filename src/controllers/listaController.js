@@ -511,9 +511,14 @@ const listaController = {
         },
         include: [
           {
+            model: db.Disciplina,
+            as: 'disciplina',
+            attributes: ['cod', 'descricao']
+          },
+          {
             model: db.Atividade_questoes,
             as: 'registroDasQuestoes',
-            attributes: ['questao_cod']
+            attributes: ['questao_cod', 'alternativa_selecionada_cod']
           }
         ],
         order: [['data_criacao', 'DESC']]
@@ -521,12 +526,17 @@ const listaController = {
 
       // Mapeia os dados para evitar trafego de tabelas e retornos gigantes pro frontend
       const listasFormatadas = listas.map(lista => {
+        const questoes = lista.registroDasQuestoes || [];
+        const respondidas = questoes.filter(q => q.alternativa_selecionada_cod !== null).length;
         return {
           cod: lista.cod,
           nome: lista.nome,
+          descricao: lista.descricao,
+          disciplina: lista.disciplina ? lista.disciplina.descricao : 'Geral',
           status: lista.status,
           data_criacao: lista.data_criacao,
-          quantidade_questoes: lista.registroDasQuestoes ? lista.registroDasQuestoes.length : 0
+          quantidade_questoes: questoes.length,
+          questoes_respondidas: respondidas
         };
       });
 

@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
         },
         nome_completo: {
             type: DataTypes.STRING(100),
-            allowNull: false
+            allowNull: true
         },
         adm: {
             type: DataTypes.BOOLEAN,
@@ -28,6 +28,15 @@ export default (sequelize, DataTypes) => {
         motivo: { type: DataTypes.STRING(100) },
         escola: { type: DataTypes.STRING(50) },
         foto: { type: DataTypes.STRING(255), allowNull: true },
+        email_verificado: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        token_verificacao: { type: DataTypes.STRING(255), allowNull: true },
+        token_verificacao_expiracao: { type: DataTypes.DATE, allowNull: true },
+        token_recuperacao: { type: DataTypes.STRING(255), allowNull: true },
+        token_recuperacao_expiracao: { type: DataTypes.DATE, allowNull: true },
         genero_cod: {
             type: DataTypes.INTEGER,
             references: {

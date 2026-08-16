@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cedeefe - Dashboard</title>
+    <meta name="description" content="Painel principal do Cedeefe — acompanhe seu progresso de estudos para o processo seletivo do IFC.">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
@@ -22,63 +23,66 @@
 
     <main class="dashboard-main py-4">
         <div class="container-fluid px-4">
+
+            <!-- Banner de Saudação -->
+            <div class="welcome-banner mb-4">
+                <div class="welcome-text">
+                    <h2 id="welcome-greeting">Olá!</h2>
+                    <p id="welcome-date">Carregando...</p>
+                </div>
+                <i class="bi bi-mortarboard-fill welcome-icon d-none d-md-block"></i>
+            </div>
+
+            <!-- Cards de Estatísticas Rápidas -->
+            <div class="stats-row mb-4">
+                <div class="stat-card rosa">
+                    <div class="stat-icon rosa-bg">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <strong id="stat-questoes">0</strong>
+                        <small>Questões respondidas</small>
+                    </div>
+                </div>
+                <div class="stat-card verde">
+                    <div class="stat-icon verde-bg">
+                        <i class="bi bi-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <strong id="stat-taxa">0%</strong>
+                        <small>Taxa de acertos</small>
+                    </div>
+                </div>
+                <div class="stat-card rosa">
+                    <div class="stat-icon rosa-bg">
+                        <i class="bi bi-card-text"></i>
+                    </div>
+                    <div class="stat-info">
+                        <strong id="stat-flashcards">0</strong>
+                        <small>Flashcards revisados</small>
+                    </div>
+                </div>
+                <div class="stat-card verde">
+                    <div class="stat-icon verde-bg">
+                        <i class="bi bi-journal-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <strong id="stat-listas">0</strong>
+                        <small>Listas concluídas</small>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <!-- Coluna Esquerda: 2/3 -->
                 <div class="col-lg-8 left-col">
                     
-                    <!-- Carrossel de Notícias / Recursos -->
-                    <div id="newsCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-                        <div class="carousel-inner rounded shadow-sm">
-                            <div class="carousel-item active">
-                                <div class="news-banner d-flex align-items-center justify-content-between p-4" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; min-height: 200px; border-radius: 8px;">
-                                    <div>
-                                        <span class="badge bg-warning text-dark mb-2">Trilhas de Estudo</span>
-                                        <h3 class="fw-bold mb-2">Roadmaps para o Processo Seletivo IFC</h3>
-                                        <p class="mb-3">Acesse os roadmaps por disciplina e organize sua rotina de estudos de forma eficiente.</p>
-                                        <a href="roadmaps.html" class="btn btn-light btn-sm fw-bold">Explorar Roadmaps</a>
-                                    </div>
-                                    <i class="bi bi-map d-none d-md-block ms-3" style="font-size: 4.5rem; opacity: 0.85;"></i>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="news-banner d-flex align-items-center justify-content-between p-4" style="background: linear-gradient(135deg, #831843, #ec4899); color: white; min-height: 200px; border-radius: 8px;">
-                                    <div>
-                                        <span class="badge bg-light text-dark mb-2">Flashcards SRS</span>
-                                        <h3 class="fw-bold mb-2">Repetição Espaçada de Conteúdos</h3>
-                                        <p class="mb-3">Memorize conceitos essenciais com baralhos personalizados e inteligência de revisão.</p>
-                                        <a href="flashcards.html" class="btn btn-light btn-sm fw-bold">Revisar Agora</a>
-                                    </div>
-                                    <i class="bi bi-card-text d-none d-md-block ms-3" style="font-size: 4.5rem; opacity: 0.85;"></i>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="news-banner d-flex align-items-center justify-content-between p-4" style="background: linear-gradient(135deg, #064e3b, #10b981); color: white; min-height: 200px; border-radius: 8px;">
-                                    <div>
-                                        <span class="badge bg-warning text-dark mb-2">Simulados & Listas</span>
-                                        <h3 class="fw-bold mb-2">Treine com Questões Anteriores</h3>
-                                        <p class="mb-3">Resolva listas por matéria e avalie seu desempenho detalhado antes da prova oficial.</p>
-                                        <a href="listas.html" class="btn btn-light btn-sm fw-bold">Ir para Listas</a>
-                                    </div>
-                                    <i class="bi bi-journal-check d-none d-md-block ms-3" style="font-size: 4.5rem; opacity: 0.85;"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Anterior</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Próximo</span>
-                        </button>
-                    </div>
-
                     <!-- Gráficos de Acertos -->
-                    <div class="row mb-4 h-50">
+                    <div class="row mb-4">
                         <div class="col-md-6 mb-3 mb-md-0">
-                            <div class="card shadow-sm h-100">
+                            <div class="chart-card h-100">
                                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                                    <h5 class="card-title text-center">Acertos - Geral</h5>
+                                    <h5 class="card-title text-center">Acertos — Geral</h5>
                                     <div class="chart-container">
                                         <canvas id="geralChart"></canvas>
                                     </div>
@@ -86,9 +90,9 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card shadow-sm h-100">
+                            <div class="chart-card h-100">
                                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                                    <h5 class="card-title text-center">Acertos - Por Disciplina</h5>
+                                    <h5 class="card-title text-center">Acertos — Por Disciplina</h5>
                                     <div class="chart-container">
                                         <canvas id="disciplinaChart"></canvas>
                                     </div>
@@ -98,7 +102,7 @@
                     </div>
 
                     <!-- Mapa de Calor -->
-                    <div class="card shadow-sm mb-4">
+                    <div class="heatmap-card mb-4">
                         <div class="card-body">
                             <h5 class="card-title mb-3">Flashcards Resolvidos (Últimos 180 dias)</h5>
                             <div id="heatmap-container" class="heatmap-grid">
@@ -122,18 +126,18 @@
                 <div class="col-lg-4 right-col d-flex flex-column">
                     
                     <!-- Perfil do Usuário -->
-                    <div class="card shadow-sm mb-4 text-center profile-card">
+                    <div class="profile-card mb-4 text-center">
                         <div class="card-body">
                             <div class="profile-img-container mx-auto mb-3">
-                                <img src="https://ui-avatars.com/api/?name=User&background=random" id="profile-img" alt="Foto do perfil" class="rounded-circle img-fluid shadow-sm">
+                                <img src="https://ui-avatars.com/api/?name=User&background=random" id="profile-img" alt="Foto do perfil" class="rounded-circle img-fluid">
                             </div>
                             <h4 class="card-title mb-0" id="profile-name">Carregando...</h4>
-                            <p class="text-muted mt-1" id="profile-role">Aluno Cedeefe</p>
+                            <p class="text-muted mt-1" id="profile-role">Estudante</p>
                         </div>
                     </div>
 
                     <!-- Calendário -->
-                    <div class="card shadow-sm flex-grow-1 calendar-card">
+                    <div class="calendar-card flex-grow-1">
                         <div class="card-body d-flex flex-column">
                             <div class="calendar-header d-flex justify-content-between align-items-center mb-3">
                                 <button id="prev-month" class="btn btn-sm btn-outline-secondary">&lt;</button>
@@ -155,11 +159,11 @@
                             <div class="calendar-legend mt-auto pt-3 border-top">
                                 <h6>Legenda:</h6>
                                 <div class="d-flex align-items-center gap-2 mb-1">
-                                    <div class="legend-dot bg-danger rounded-circle" style="width: 10px; height: 10px;"></div>
+                                    <div class="legend-dot-simulado"></div>
                                     <small>Simulados Concluídos</small>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
-                                    <div class="legend-dot bg-primary rounded-circle" style="width: 10px; height: 10px;"></div>
+                                    <div class="legend-dot-lista"></div>
                                     <small>Listas Concluídas</small>
                                 </div>
                             </div>
