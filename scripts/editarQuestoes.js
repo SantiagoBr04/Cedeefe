@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mapa para guardar instâncias ativas do EditorQuestao por ID do card
     const editoresAtivos = new Map();
+    const sessoesAtivas = new Map();
 
     function formatarUrlImagem(url) {
         if (!url || typeof url !== 'string') return '';
@@ -181,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderizarQuestoes(questoes) {
         if (!containerQuestoes) return;
         editoresAtivos.clear();
+        sessoesAtivas.clear();
 
         if (!Array.isArray(questoes) || questoes.length === 0) {
             containerQuestoes.innerHTML = `
@@ -203,7 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const temaNome = q.tema ? (q.tema.descricao || q.tema.nome) : 'Sem Tema';
             const autorStr = q.autor ? q.autor : 'N/A';
             const anoStr = q.ano ? q.ano : 'N/A';
-            const imagemUrlFmt = q.imagem_url ? formatarUrlImagem(q.imagem_url) : '';
+            
+            let descricaoLeitura = q.descricao || '';
+            if (q.imagem_url && !descricaoLeitura.includes('<img')) {
+                const srcFmt = formatarUrlImagem(q.imagem_url);
+                descricaoLeitura = `<img src="${srcFmt}" class="img-questao" style="display:block; width:60%; max-width:100%; height:auto; margin:8px auto;" alt="" draggable="false"><br>` + descricaoLeitura;
+            }
 
             // Alternativas no Modo Leitura
             const alternativasHtml = Array.isArray(q.alternativas) ? q.alternativas.map((alt, i) => {
@@ -243,14 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Conteúdo: Modo Leitura -->
                     <div class="card-body p-4 modo-leitura" id="modo-leitura-${q.cod}">
                         <div class="mb-3 text-dark fs-6 questao-enunciado-preview">
-                            ${q.descricao || ''}
+                            ${descricaoLeitura}
                         </div>
-
-                        ${imagemUrlFmt ? `
-                            <div class="mb-3 text-center">
-                                <img src="${imagemUrlFmt}" alt="Imagem da questão" class="img-fluid rounded border shadow-sm style="max-height:260px;">
-                            </div>
-                        ` : ''}
 
                         <h6 class="fw-bold mb-2 text-secondary"><i class="bi bi-list-check me-1"></i>Alternativas:</h6>
                         <div class="mb-3">
@@ -294,21 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div id="editor-enunciado-container-${q.cod}" class="editor-container-wrap"></div>
                             </div>
 
-                            <!-- Gerenciamento de Imagem da Questão -->
-                            <div class="mb-3 p-3 bg-light rounded border">
-                                <label class="form-label fw-semibold text-secondary d-block">Imagem Ilustrativa</label>
-                                <div class="d-flex align-items-center flex-wrap gap-3">
-                                    <input type="file" class="form-control input-imagem-upload" id="edit-imagem-input-${q.cod}" accept="image/*" style="max-width:320px;">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-remover-imagem" id="btn-remover-img-${q.cod}">
-                                        <i class="bi bi-image-fill me-1"></i>Remover Imagem
-                                    </button>
-                                </div>
-                                <input type="hidden" id="edit-imagem-url-${q.cod}" value="${q.imagem_url || ''}">
-                                <div class="mt-2 text-center img-preview-box" id="img-preview-box-${q.cod}">
-                                    ${imagemUrlFmt ? `<img src="${imagemUrlFmt}" class="img-fluid rounded border mt-2" style="max-height:180px;">` : ''}
-                                </div>
-                            </div>
-
                             <!-- Alternativas -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -325,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <!-- Explicação / Resolução -->
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-secondary">Explicação / Resolução (Opcional)</label>
-                                <textarea class="form-control" id="edit-explicacao-${q.cod}" rows="3" placeholder="Digite uma explicação passo a passo da resposta...">${q.explicacao || ''}</textarea>
+                                <div id="editor-explicacao-container-${q.cod}" class="editor-container-wrap"></div>
                             </div>
 
                             <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
@@ -393,80 +379,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
         preencherSelectTemaEdicao(cod, q.disciplina_cod, q.tema_cod);
 
-        // Inicializa o EditorQuestao para a descrição caso ainda não tenha sido criado
-        const editorContainer = document.getElementById(`editor-enunciado-container-${cod}`);
-        if (editorContainer && !editoresAtivos.has(cod)) {
-            const editorInstancia = new window.EditorQuestao(editorContainer, {
+        let sessao = sessoesAtivas.get(cod);
+        if (!sessao) {
+            sessao = new SessaoImagensQuestao(cod);
+            sessoesAtivas.set(cod, sessao);
+        }
+
+        let editores = editoresAtivos.get(cod) || {};
+
+        // Inicializa o EditorQuestao para a descrição
+        const editorEnunciadoContainer = document.getElementById(`editor-enunciado-container-${cod}`);
+        if (editorEnunciadoContainer && !editores.enunciado) {
+            editores.enunciado = new window.EditorQuestao(editorEnunciadoContainer, {
                 initialValue: q.descricao || '',
-                placeholder: 'Digite o enunciado da questão...'
+                placeholder: 'Digite o enunciado da questão...',
+                permitirImagem: true,
+                sessaoImagens: sessao,
+                imagemLegadaUrl: q.imagem_url ? formatarUrlImagem(q.imagem_url) : null
             });
-            editoresAtivos.set(cod, editorInstancia);
+        }
+
+        // Inicializa o EditorQuestao para a explicação
+        const editorExplicacaoContainer = document.getElementById(`editor-explicacao-container-${cod}`);
+        if (editorExplicacaoContainer && !editores.explicacao) {
+            editores.explicacao = new window.EditorQuestao(editorExplicacaoContainer, {
+                initialValue: q.explicacao || '',
+                placeholder: 'Digite uma explicação passo a passo da resposta...',
+                permitirImagem: true,
+                sessaoImagens: sessao
+            });
         }
 
         // Renderiza lista de alternativas editáveis
-        renderizarAlternativasEdicao(cod, q.alternativas || []);
-
-        // Eventos de Upload de Imagem
-        const inputImg = document.getElementById(`edit-imagem-input-${cod}`);
-        const btnRemoverImg = document.getElementById(`btn-remover-img-${cod}`);
-        const imgHidden = document.getElementById(`edit-imagem-url-${cod}`);
-        const previewBox = document.getElementById(`img-preview-box-${cod}`);
-
-        if (inputImg) {
-            inputImg.onchange = async () => {
-                if (inputImg.files && inputImg.files[0]) {
-                    const formData = new FormData();
-                    formData.append('imagem', inputImg.files[0]);
-
-                    try {
-                        const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                            method: 'POST',
-                            headers: { Authorization: `Bearer ${token}` },
-                            body: formData
-                        });
-
-                        if (resp.ok) {
-                            const resData = await resp.json();
-                            imgHidden.value = resData.imagem_url;
-                            const fmtUrl = formatarUrlImagem(resData.imagem_url);
-                            if (previewBox) {
-                                previewBox.innerHTML = `<img src="${fmtUrl}" class="img-fluid rounded border mt-2" style="max-height:180px;">`;
-                            }
-                        } else {
-                            alert('Erro ao fazer upload da imagem.');
-                        }
-                    } catch (e) {
-                        console.error('Erro no upload da imagem:', e);
-                        alert('Erro de conexão ao enviar imagem.');
-                    }
-                }
-            };
-        }
-
-        if (btnRemoverImg) {
-            btnRemoverImg.onclick = () => {
-                if (imgHidden) imgHidden.value = '';
-                if (previewBox) previewBox.innerHTML = '';
-                if (inputImg) inputImg.value = '';
-            };
-        }
+        editores.alternativas = renderizarAlternativasEdicao(cod, q.alternativas || [], sessao);
+        
+        editoresAtivos.set(cod, editores);
 
         // Evento de Adicionar Nova Alternativa
         const btnAddAlt = document.querySelector(`.btn-add-alternativa[data-cod="${cod}"]`);
         if (btnAddAlt) {
-            btnAddAlt.onclick = () => {
-                adicionarNovaAlternativaEdicao(cod);
+            // Remove antigos listeners copiando e substituindo o elemento
+            const novoBtn = btnAddAlt.cloneNode(true);
+            btnAddAlt.parentNode.replaceChild(novoBtn, btnAddAlt);
+            novoBtn.onclick = () => {
+                adicionarNovaAlternativaEdicao(cod, sessao);
             };
         }
     }
 
-    function fecharEdicaoCard(cod) {
+    async function fecharEdicaoCard(cod) {
         const modoLeitura = document.getElementById(`modo-leitura-${cod}`);
         const modoEdicao = document.getElementById(`modo-edicao-${cod}`);
 
         if (modoLeitura && modoEdicao) {
             modoEdicao.classList.add('d-none');
             modoLeitura.classList.remove('d-none');
+        }
+
+        // Descarta as imagens subidas e não salvas
+        const sessao = sessoesAtivas.get(cod);
+        if (sessao) {
+            await sessao.descartarTudo();
+            sessoesAtivas.delete(cod);
+        }
+        
+        // Destrói os editores (limpando o innerHTML)
+        const editores = editoresAtivos.get(cod);
+        if (editores) {
+            const containerEnum = document.getElementById(`editor-enunciado-container-${cod}`);
+            if (containerEnum) containerEnum.innerHTML = '';
+            const containerExp = document.getElementById(`editor-explicacao-container-${cod}`);
+            if (containerExp) containerExp.innerHTML = '';
+            const containerAlt = document.getElementById(`container-alternativas-edicao-${cod}`);
+            if (containerAlt) containerAlt.innerHTML = '';
+            
+            editoresAtivos.delete(cod);
         }
     }
 
@@ -483,9 +470,9 @@ document.addEventListener('DOMContentLoaded', () => {
             temasFiltrados.map(t => `<option value="${t.cod}" ${String(t.cod) === String(temaCodSelecionado) ? 'selected' : ''}>${escapeHtml(t.descricao || t.nome)}</option>`).join('');
     }
 
-    function renderizarAlternativasEdicao(cod, alternativas) {
+    function renderizarAlternativasEdicao(cod, alternativas, sessao) {
         const container = document.getElementById(`container-alternativas-edicao-${cod}`);
-        if (!container) return;
+        if (!container) return [];
 
         let alts = Array.isArray(alternativas) && alternativas.length > 0 ? alternativas : [
             { texto: '', correta: true },
@@ -493,61 +480,116 @@ document.addEventListener('DOMContentLoaded', () => {
             { texto: '', correta: false },
             { texto: '', correta: false }
         ];
+        
+        container.innerHTML = '';
+        const editoresAlts = [];
 
-        container.innerHTML = alts.map((alt, idx) => {
+        alts.forEach((alt, idx) => {
             const letra = String.fromCharCode(65 + idx);
             const isCorreta = Boolean(alt.correta);
-            return `
-                <div class="alternativa-edit-row d-flex align-items-center gap-3 ${isCorreta ? 'is-correct' : ''}" id="alt-edit-row-${cod}-${idx}">
-                    <div class="form-check">
+            
+            const row = document.createElement('div');
+            row.className = `alternativa-edit-row d-flex flex-column mb-3 border p-2 rounded ${isCorreta ? 'border-success bg-light-subtle' : ''}`;
+            row.id = `alt-edit-row-${cod}-${idx}`;
+            
+            row.innerHTML = `
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="form-check form-radio-lg">
                         <input class="form-check-input radio-correta-${cod}" type="radio" name="radio-correta-${cod}" value="${idx}" ${isCorreta ? 'checked' : ''} id="radio-alt-${cod}-${idx}">
-                        <label class="form-check-label fw-bold" for="radio-alt-${cod}-${idx}">${letra}</label>
+                        <label class="form-check-label fw-bold" for="radio-alt-${cod}-${idx}">Alternativa ${letra}</label>
                     </div>
-                    <input type="text" class="form-control input-alt-texto-${cod}" value="${escapeHtml(alt.texto || '')}" placeholder="Texto da alternativa ${letra}..." required>
                     <button type="button" class="btn btn-sm btn-outline-danger btn-remove-alt" onclick="this.closest('.alternativa-edit-row').remove()">
-                        <i class="bi bi-x-lg"></i>
+                        <i class="bi bi-trash-fill"></i> Remover
                     </button>
                 </div>
+                <div id="editor-alt-container-${cod}-${idx}" class="flex-grow-1"></div>
             `;
-        }).join('');
+            container.appendChild(row);
+
+            const radio = row.querySelector(`input[type="radio"]`);
+            radio.addEventListener('change', () => {
+                container.querySelectorAll('.alternativa-edit-row').forEach(r => {
+                    if (r === row) r.classList.add('border-success', 'bg-light-subtle');
+                    else r.classList.remove('border-success', 'bg-light-subtle');
+                });
+            });
+
+            const editor = new window.EditorQuestao(`#editor-alt-container-${cod}-${idx}`, {
+                initialValue: alt.texto || '',
+                placeholder: `Texto da alternativa ${letra}...`,
+                compact: true,
+                permitirImagem: true,
+                sessaoImagens: sessao
+            });
+            
+            // Injetamos a instância do editor no próprio elemento DOM da linha para facilitar o resgate
+            row.editorInstancia = editor;
+            editoresAlts.push(editor);
+        });
+        
+        return editoresAlts;
     }
 
-    function adicionarNovaAlternativaEdicao(cod) {
+    function adicionarNovaAlternativaEdicao(cod, sessao) {
         const container = document.getElementById(`container-alternativas-edicao-${cod}`);
         if (!container) return;
 
         const count = container.querySelectorAll('.alternativa-edit-row').length;
         const idx = count;
-        const letra = String.fromCharCode(65 + idx);
+        const letra = String.fromCharCode(65 + count);
 
         const row = document.createElement('div');
-        row.className = 'alternativa-edit-row d-flex align-items-center gap-3';
+        row.className = 'alternativa-edit-row d-flex flex-column mb-3 border p-2 rounded';
         row.id = `alt-edit-row-${cod}-${idx}`;
         row.innerHTML = `
-            <div class="form-check">
-                <input class="form-check-input radio-correta-${cod}" type="radio" name="radio-correta-${cod}" value="${idx}" id="radio-alt-${cod}-${idx}">
-                <label class="form-check-label fw-bold" for="radio-alt-${cod}-${idx}">${letra}</label>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="form-check form-radio-lg">
+                    <input class="form-check-input radio-correta-${cod}" type="radio" name="radio-correta-${cod}" value="${idx}" id="radio-alt-${cod}-${idx}">
+                    <label class="form-check-label fw-bold" for="radio-alt-${cod}-${idx}">Alternativa ${letra}</label>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-remove-alt" onclick="this.closest('.alternativa-edit-row').remove()">
+                    <i class="bi bi-trash-fill"></i> Remover
+                </button>
             </div>
-            <input type="text" class="form-control input-alt-texto-${cod}" value="" placeholder="Texto da alternativa ${letra}..." required>
-            <button type="button" class="btn btn-sm btn-outline-danger btn-remove-alt" onclick="this.closest('.alternativa-edit-row').remove()">
-                <i class="bi bi-x-lg"></i>
-            </button>
+            <div id="editor-alt-container-${cod}-${idx}" class="flex-grow-1"></div>
         `;
         container.appendChild(row);
+
+        const radio = row.querySelector(`input[type="radio"]`);
+        radio.addEventListener('change', () => {
+            container.querySelectorAll('.alternativa-edit-row').forEach(r => {
+                if (r === row) r.classList.add('border-success', 'bg-light-subtle');
+                else r.classList.remove('border-success', 'bg-light-subtle');
+            });
+        });
+
+        const editor = new window.EditorQuestao(`#editor-alt-container-${cod}-${idx}`, {
+            initialValue: '',
+            placeholder: `Texto da alternativa ${letra}...`,
+            compact: true,
+            permitirImagem: true,
+            sessaoImagens: sessao
+        });
+        row.editorInstancia = editor;
+        
+        const editores = editoresAtivos.get(cod);
+        if (editores && editores.alternativas) {
+            editores.alternativas.push(editor);
+        }
     }
 
     async function salvarEdicaoCard(q) {
         const cod = q.cod;
+        const editores = editoresAtivos.get(cod);
+        const sessao = sessoesAtivas.get(cod);
 
-        const editorInstancia = editoresAtivos.get(cod);
-        const descricaoHtml = editorInstancia ? editorInstancia.obterHtml() : q.descricao;
+        const descricaoHtml = editores && editores.enunciado ? editores.enunciado.obterHtml() : '';
+        const explicacaoHtml = editores && editores.explicacao ? editores.explicacao.obterHtml() : '';
 
         const disciplina_cod = document.getElementById(`edit-disciplina-${cod}`)?.value;
         const tema_cod = document.getElementById(`edit-tema-${cod}`)?.value || null;
         const autor = document.getElementById(`edit-autor-${cod}`)?.value || null;
         const ano = document.getElementById(`edit-ano-${cod}`)?.value || null;
-        const explicacao = document.getElementById(`edit-explicacao-${cod}`)?.value || null;
-        const imagem_url = document.getElementById(`edit-imagem-url-${cod}`)?.value || null;
 
         if (!descricaoHtml || !descricaoHtml.trim()) {
             alert('O enunciado da questão não pode estar vazio.');
@@ -566,12 +608,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         rows.forEach((row) => {
             const radio = row.querySelector(`input[type="radio"]`);
-            const inputTexto = row.querySelector(`input[type="text"]`);
-            if (inputTexto && inputTexto.value.trim() !== '') {
-                alternativasPayload.push({
-                    texto: inputTexto.value.trim(),
-                    correta: Boolean(radio && radio.checked)
-                });
+            const editorAlt = row.editorInstancia;
+            if (editorAlt) {
+                const altHtml = editorAlt.obterHtml();
+                const altTexto = editorAlt.obterTexto();
+                if (altHtml.trim() !== '' || altTexto.trim() !== '') {
+                    alternativasPayload.push({
+                        texto: altHtml || altTexto,
+                        correta: Boolean(radio && radio.checked)
+                    });
+                }
             }
         });
 
@@ -586,18 +632,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // A URL da imagem passa a ser null, pois agora é tudo inline
         const payload = {
             descricao: descricaoHtml,
             disciplina_cod: parseInt(disciplina_cod),
             tema_cod: tema_cod ? parseInt(tema_cod) : null,
             autor,
             ano: ano ? parseInt(ano) : null,
-            explicacao,
-            imagem_url,
+            explicacao: explicacaoHtml,
+            imagem_url: null,
             alternativas: alternativasPayload
         };
 
         try {
+            const btnSalvar = document.querySelector(`.btn-salvar-edicao[data-cod="${cod}"]`);
+            if (btnSalvar) {
+                btnSalvar.disabled = true;
+                btnSalvar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Salvando...';
+            }
+
             const resp = await fetch(`${API_BASE_URL}/questoes/${cod}`, {
                 method: 'PUT',
                 headers: {
@@ -610,8 +663,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!resp.ok) {
                 const errData = await resp.json();
                 exibirAlerta(errData.error || 'Erro ao atualizar a questão.', 'alert-danger');
+                if (btnSalvar) {
+                    btnSalvar.disabled = false;
+                    btnSalvar.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i>Salvar Alterações';
+                }
                 return;
             }
+
+            if (sessao) {
+                await sessao.finalizar(descricaoHtml, explicacaoHtml, ...alternativasPayload.map(a => a.texto));
+                sessoesAtivas.delete(cod);
+            }
+            editoresAtivos.delete(cod);
 
             exibirAlerta(`Questão #${cod} atualizada com sucesso!`, 'alert-success');
             buscarQuestoes(paginaAtual);
@@ -619,6 +682,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error('Erro ao salvar edição da questão:', err);
             exibirAlerta('Erro de conexão ao salvar alterações da questão.', 'alert-danger');
+            const btnSalvar = document.querySelector(`.btn-salvar-edicao[data-cod="${cod}"]`);
+            if (btnSalvar) {
+                btnSalvar.disabled = false;
+                btnSalvar.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i>Salvar Alterações';
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import db from './models/index.js';
 import { fileURLToPath } from 'url';
+import imagemQuestaoService from './services/imagemQuestaoService.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -152,6 +153,18 @@ db.sequelize.sync({ force: RECONSTRUIR_BANCO })
     // Só liga o server se o banco de dados estiver sincronizado corretamente
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
+
+      // Inicia o serviço de limpeza de imagens pendentes no Cloudinary (a cada 12 horas)
+      const dozeHoras = 12 * 60 * 60 * 1000;
+      setInterval(() => {
+          console.log('[Limpeza Automática] Iniciando limpeza de imagens pendentes...');
+          imagemQuestaoService.limparPendentesAntigas().catch(err => console.error('[Limpeza Automática] Erro:', err));
+      }, dozeHoras);
+
+      // Executa a primeira limpeza 5 minutos após o boot
+      setTimeout(() => {
+          imagemQuestaoService.limparPendentesAntigas().catch(console.error);
+      }, 5 * 60 * 1000);
     });
   })
   .catch((err) => {

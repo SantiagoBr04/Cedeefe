@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const editoresPorQuestao = new Map();
+    const sessoesAtivas = new Map();
     let disciplinasCache = [];
     let temasCache = [];
 
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const dados = await response.json();
             editoresPorQuestao.clear();
+            sessoesAtivas.clear();
 
             const totalQuestoes = Array.isArray(dados) ? dados.length : 0;
             const totalApontamentos = Array.isArray(dados) 
@@ -106,6 +108,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const totalReportes = item.total_reportes || reportes.length;
                 const collapseId = `questao-collapse-${questao.cod}`;
                 const headingId = `heading-${questao.cod}`;
+
+                const sessao = new SessaoImagensQuestao(questao.cod);
+                sessoesAtivas.set(questao.cod, sessao);
 
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('accordion-item', 'questao-item');
@@ -146,10 +151,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <div class="col-md-12 mb-3 border p-3 rounded-3 bg-white">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
                                     <label class="fw-bold mb-0 text-dark">Alternativa ${letra}</label>
-                                    <label class="btn btn-sm btn-outline-rosa mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
-                                        <i class="bi bi-image me-1"></i> Imagem Alt ${letra}
-                                        <input type="file" class="d-none input-file-alt-rep" data-qcod="${questao.cod}" data-altcod="${alt.cod}" accept="image/*">
-                                    </label>
                                 </div>
                                 <div id="editor-alt-reportada-${questao.cod}-${alt.cod}"></div>
                             </div>
@@ -229,25 +230,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <label class="fw-bold mb-1">Enunciado da Questão</label>
                                 <div id="editor-enunciado-reportada-${questao.cod}" class="mb-3"></div>
 
-                                <div class="mb-3 p-3 bg-light rounded-3 border">
-                                    <label class="fw-bold mb-1 d-block">Upload de Imagem p/ a Questão #${questao.cod}</label>
-                                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                                        <label class="btn btn-sm btn-outline-rosa mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
-                                            <i class="bi bi-upload"></i> Selecionar Imagem
-                                            <input type="file" class="d-none input-file-geral-rep" data-qcod="${questao.cod}" accept="image/*">
-                                        </label>
-                                        <div class="status-upload-rep text-muted small">Nenhuma imagem enviada nesta sessão.</div>
-                                    </div>
-                                    <div class="box-acoes-rep d-none mt-2">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-ins-enunciado-rep me-2">
-                                            <i class="bi bi-plus-lg me-1"></i> Inserir no Enunciado
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-ins-gabarito-rep">
-                                            <i class="bi bi-plus-lg me-1"></i> Inserir na Explicação
-                                        </button>
-                                    </div>
-                                </div>
-
                                 <h6 class="fw-bold mt-4 mb-2">Alternativas</h6>
                                 <div class="row">
                                     ${HTMLAlternativas}
@@ -316,12 +298,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Inicialização dos editores ricos
                 const editorEnunciado = new EditorQuestao(`#editor-enunciado-reportada-${questao.cod}`, {
                     placeholder: 'Digite o enunciado da questão...',
-                    initialValue: questao.descricao || ''
+                    initialValue: questao.descricao || '',
+                    permitirImagem: true,
+                    sessaoImagens: sessao,
+                    imagemLegadaUrl: questao.imagem_url ? formatarUrlImagem(questao.imagem_url) : null
                 });
 
                 const editorExplicacao = new EditorQuestao(`#editor-explicacao-reportada-${questao.cod}`, {
                     placeholder: 'Explicação ou resolução detalhada...',
-                    initialValue: questao.explicacao || ''
+                    initialValue: questao.explicacao || '',
+                    permitirImagem: true,
+                    sessaoImagens: sessao
                 });
 
                 const editoresAltMap = new Map();
@@ -330,38 +317,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const edAlt = new EditorQuestao(`#editor-alt-reportada-${questao.cod}-${alt.cod}`, {
                             placeholder: `Texto da alternativa ${letras[i] || (i + 1)}...`,
                             compact: true,
-                            initialValue: alt.texto || ''
+                            initialValue: alt.texto || '',
+                            permitirImagem: true,
+                            sessaoImagens: sessao
                         });
                         editoresAltMap.set(alt.cod, edAlt);
-
-                        const fileAltInput = itemElement.querySelector(`.input-file-alt-rep[data-altcod="${alt.cod}"]`);
-                        if (fileAltInput) {
-                            fileAltInput.addEventListener('change', async (ev) => {
-                                ev.preventDefault();
-                                ev.stopPropagation();
-
-                                const file = ev.target.files[0];
-                                if (!file) return;
-
-                                const formData = new FormData();
-                                formData.append('imagem', file);
-
-                                try {
-                                    const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                                        method: 'POST',
-                                        headers: { Authorization: `Bearer ${token}` },
-                                        body: formData
-                                    });
-
-                                    const data = await resp.json();
-                                    if (!resp.ok) throw new Error(data.error || 'Erro no upload.');
-
-                                    edAlt.inserirTagImagem(data.imagem_url);
-                                } catch (err) {
-                                    alert(`Erro no upload da imagem: ${err.message}`);
-                                }
-                            });
-                        }
                     });
                 }
 
@@ -370,65 +330,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     explicacao: editorExplicacao,
                     alternativas: editoresAltMap
                 });
-
-                const fileGeralInput = itemElement.querySelector('.input-file-geral-rep');
-                const statusUploadDiv = itemElement.querySelector('.status-upload-rep');
-                const boxAcoesDiv = itemElement.querySelector('.box-acoes-rep');
-                let imgUrlEnviada = null;
-
-                if (fileGeralInput) {
-                    fileGeralInput.addEventListener('change', async (ev) => {
-                        ev.preventDefault();
-                        ev.stopPropagation();
-
-                        const file = ev.target.files[0];
-                        if (!file) return;
-
-                        const formData = new FormData();
-                        formData.append('imagem', file);
-
-                        try {
-                            statusUploadDiv.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Enviando...';
-                            const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                                method: 'POST',
-                                headers: { Authorization: `Bearer ${token}` },
-                                body: formData
-                            });
-
-                            const data = await resp.json();
-                            if (!resp.ok) throw new Error(data.error || 'Erro no upload.');
-
-                            imgUrlEnviada = data.imagem_url;
-                            const srcCompleto = formatarUrlImagem(imgUrlEnviada);
-                            statusUploadDiv.innerHTML = `
-                                <div class="d-flex align-items-center gap-2 mt-1">
-                                    <img src="${srcCompleto}" class="rounded border shadow-sm" style="max-height: 80px; max-width: 150px; object-fit: contain;" alt="Preview">
-                                    <span class="text-verde fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Imagem enviada!</span>
-                                </div>
-                            `;
-                            boxAcoesDiv.classList.remove('d-none');
-                        } catch (err) {
-                            statusUploadDiv.innerHTML = `<span class="text-danger">Erro no upload: ${err.message}</span>`;
-                        }
-                    });
-                }
-
-                const btnInsEnunciado = itemElement.querySelector('.btn-ins-enunciado-rep');
-                const btnInsGabarito = itemElement.querySelector('.btn-ins-gabarito-rep');
-
-                if (btnInsEnunciado) {
-                    btnInsEnunciado.addEventListener('click', (ev) => {
-                        ev.preventDefault();
-                        if (imgUrlEnviada) editorEnunciado.inserirTagImagem(imgUrlEnviada);
-                    });
-                }
-
-                if (btnInsGabarito) {
-                    btnInsGabarito.addEventListener('click', (ev) => {
-                        ev.preventDefault();
-                        if (imgUrlEnviada) editorExplicacao.inserirTagImagem(imgUrlEnviada);
-                    });
-                }
             });
 
             document.querySelectorAll('.btn-salvar-questao').forEach(btn => {
@@ -465,6 +366,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const inputAutor = document.getElementById(`input-autor-${questaoCod}`);
         const inputAno = document.getElementById(`input-ano-${questaoCod}`);
         const edObj = editoresPorQuestao.get(String(questaoCod));
+        const sessao = sessoesAtivas.get(parseInt(questaoCod));
 
         if (!edObj || !selectCorreta) return;
 
@@ -508,6 +410,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     tema_cod,
                     autor,
                     ano,
+                    imagem_url: null, // As imagens antigas agora estão inline
                     alternativas: alternativasPayload
                 })
             });
@@ -516,6 +419,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (!response.ok) {
                 throw new Error(result.error || 'Erro ao salvar alterações na questão.');
+            }
+
+            if (sessao) {
+                await sessao.finalizar(descricaoHtml, explicacaoHtml, ...alternativasPayload.map(a => a.texto));
             }
 
             mostrarFeedback('Questão atualizada e reportes resolvidos com sucesso!', 'success');
@@ -534,6 +441,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
+        const sessao = sessoesAtivas.get(parseInt(questaoCod));
+
         btnElement.disabled = true;
         btnElement.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Descartando...';
 
@@ -549,6 +458,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (!response.ok) {
                 throw new Error(result.error || 'Erro ao descartar reportes.');
+            }
+
+            if (sessao) {
+                await sessao.descartarTudo();
             }
 
             mostrarFeedback(`Reportes da questão #${questaoCod} descartados.`, 'success');

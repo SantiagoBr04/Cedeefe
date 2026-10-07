@@ -337,6 +337,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (texto === null || texto === undefined) return '';
       let html = String(texto);
 
+      // PROTEÇÃO DE TAGS HTML: remove as tags temporariamente para que os regexes de texto (como _) não quebrem URLs
+      const htmlTags = [];
+      html = html.replace(/<[^>]+>/g, (match) => {
+          htmlTags.push(match);
+          return `%%%HTMLTAG${htmlTags.length - 1}%%%`;
+      });
+
       // 1. Remove demarcadores de bloco/inline de LaTeX: $$...$$, \[...\], $...$, \(...\)
       html = html.replace(/\$\$(.*?)\$\$/gs, '$1');
       html = html.replace(/\\\[(.*?)\\\]/gs, '$1');
@@ -395,6 +402,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       // 8. Notações Markdown para Negrito e Itálico
       html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+      // RESTAURA AS TAGS HTML
+      html = html.replace(/%%%HTMLTAG(\d+)%%%/g, (match, p1) => {
+          return htmlTags[parseInt(p1)];
+      });
 
       // 9. Preserva quebras de linha
       html = html.replace(/\r?\n/g, '<br>');

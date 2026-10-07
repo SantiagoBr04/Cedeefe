@@ -5,7 +5,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import adminMiddleware from '../middlewares/adminMiddleware.js';
 
 import upload from '../config/multer.js';
-import { uploadImage } from '../config/cloudinary.js';
+import { uploadImage, uploadImagemQuestao } from '../config/cloudinary.js';
 // Cria o objeto router com a configuração padrão do expressa para receber requisições HTTP
 const router = new Router();
 
@@ -65,13 +65,21 @@ router.post(
   questaoController.confirmarImportacaoLote
 );
 
-// Rota para fazer upload de imagem individual de questão na tela de revisão
+// Rota para fazer upload de imagem individual de questão na tela de revisão/edição/adição
 router.post(
   '/upload-imagem',
   authMiddleware,
   adminMiddleware,
-  uploadImage.single('imagem'),
+  uploadImagemQuestao.single('imagem'),
   questaoController.uploadImagem
+);
+
+// Rota para descartar imagens enviadas em sessão que não foram salvas
+router.post(
+  '/imagens/descartar',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.descartarImagens
 );
 
 // Rota para adicionar uma nova questão

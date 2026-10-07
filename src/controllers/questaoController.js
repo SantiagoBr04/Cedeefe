@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import geminiPdfService from '../services/geminiPdfService.js';
 import { cloudinary } from '../config/cloudinary.js';
+import imagemQuestaoService from '../services/imagemQuestaoService.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rascunhosDir = path.resolve(__dirname, '..', '..', 'uploads', 'rascunhos');
@@ -100,7 +101,14 @@ const questaoController = {
 
       const questaoCompleta = await db.Questao.findByPk(novaQuestao.cod, {
         include: [{ model: db.Alternativa, as: 'alternativas' }]
-      })
+      });
+
+      // Consolida imagens
+      const htmlsParaConsolidar = [descricao, explicacao];
+      if (alternativas && Array.isArray(alternativas)) {
+          htmlsParaConsolidar.push(...alternativas.map(a => a.texto));
+      }
+      await imagemQuestaoService.consolidarImagensSalvas(htmlsParaConsolidar);
 
       res.status(201).json(questaoCompleta);
 
@@ -115,14 +123,16 @@ const questaoController = {
     try {
       const { cod } = req.params;
 
-      // Buscamos a questão primeiro para saber se ela tem imagem
-      const questao = await db.Questao.findByPk(cod);
+      // Buscamos a questão com suas alternativas para poder extrair imagens do HTML de todos os campos
+      const questao = await db.Questao.findByPk(cod, {
+        include: [{ model: db.Alternativa, as: 'alternativas' }]
+      });
 
       if (!questao) {
         return res.status(404).json({ error: 'Questão não encontrada.' });
       }
 
-      // Se tiver imagem, apagamos do Cloudinary ou localmente
+      // Se tiver imagem legado (antiga)
       if (questao.imagem_url) {
         if (questao.imagem_url.startsWith('http')) {
           const urlParts = questao.imagem_url.split('/');
@@ -131,29 +141,37 @@ const questaoController = {
           const publicId = `${folder}/${filename.split('.')[0]}`;
           try {
             await cloudinary.uploader.destroy(publicId);
-            console.log("Imagem no Cloudinary apagada com sucesso!");
+            console.log("Imagem legada no Cloudinary apagada com sucesso!");
           } catch (erro) {
-            console.error("Erro ao apagar imagem do Cloudinary:", erro);
+            console.error("Erro ao apagar imagem legada do Cloudinary:", erro);
           }
         } else {
-          // Monta o caminho completo: Pasta do projeto + uploads + nome da imagem
+          // Monta o caminho completo local
           const caminhoArquivo = path.resolve('uploads', questao.imagem_url);
-
-          // Função do Node que deleta arquivos
           fs.unlink(caminhoArquivo, (erro) => {
-            if (erro) {
-              console.error("Erro ao apagar imagem física:", erro);
-            } else {
-              console.log("Imagem física apagada com sucesso!");
-            }
+            if (erro) console.error("Erro ao apagar imagem física:", erro);
+            else console.log("Imagem física apagada com sucesso!");
           });
         }
+      }
+
+      // Busca por imagens Cloudinary inline (novos editores)
+      const conteudosHtml = [
+        questao.descricao,
+        questao.explicacao,
+        ...(questao.alternativas ? questao.alternativas.map(a => a.texto) : [])
+      ];
+      
+      const urlsInline = imagemQuestaoService.buscarImagensNoHtml(...conteudosHtml);
+      if (urlsInline.length > 0) {
+        await imagemQuestaoService.excluirImagensPorUrls(urlsInline);
+        console.log(`Excluídas ${urlsInline.length} imagens inline do Cloudinary.`);
       }
 
       // Agora apagamos do banco de dados
       await questao.destroy();
 
-      res.status(200).json({ message: `Questão ${cod} e sua imagem, caso tivesse, foram deletadas.` });
+      res.status(200).json({ message: `Questão ${cod} e suas imagens foram deletadas.` });
 
     } catch (error) {
       console.error('Erro ao deletar questão:', error);
@@ -370,6 +388,16 @@ const questaoController = {
         }
       }
 
+      // Consolidar imagens do lote
+      const htmlsParaConsolidar = questoes.reduce((acc, q) => {
+        acc.push(q.descricao, q.explicacao);
+        if (q.alternativas && Array.isArray(q.alternativas)) {
+          acc.push(...q.alternativas.map(a => a.texto));
+        }
+        return acc;
+      }, []);
+      await imagemQuestaoService.consolidarImagensSalvas(htmlsParaConsolidar);
+
       return res.status(201).json({
         message: 'Importação em lote concluída com sucesso.',
         questoesCriadas
@@ -382,7 +410,7 @@ const questaoController = {
     }
   },
 
-  // Faz upload de imagem individual para associar a uma questão na tela de revisão
+  // Faz upload de imagem individual para associar a uma questão na tela de revisão/edição/adição
   async uploadImagem(req, res) {
     try {
       if (!req.file) {
@@ -397,6 +425,21 @@ const questaoController = {
     } catch (error) {
       console.error('Erro ao realizar upload de imagem da questão:', error);
       return res.status(500).json({ error: 'Erro ao salvar a imagem no servidor.' });
+    }
+  },
+
+  // Descarta imagens enviadas durante a sessão de edição mas que não foram salvas
+  async descartarImagens(req, res) {
+    try {
+      const { urls } = req.body;
+      if (!urls || !Array.isArray(urls)) {
+        return res.status(400).json({ error: 'Lista de urls não fornecida ou inválida.' });
+      }
+      await imagemQuestaoService.descartarImagens(urls);
+      return res.status(200).json({ message: 'Imagens descartadas com sucesso.' });
+    } catch (err) {
+      console.error('Erro ao descartar imagens:', err);
+      return res.status(500).json({ error: 'Erro interno ao descartar imagens.' });
     }
   },
 
@@ -691,6 +734,13 @@ const questaoController = {
       }
 
       await t.commit();
+
+      // Consolida imagens
+      const htmlsParaConsolidar = [descricao, explicacao];
+      if (Array.isArray(alternativas)) {
+        htmlsParaConsolidar.push(...alternativas.map(a => a.texto));
+      }
+      await imagemQuestaoService.consolidarImagensSalvas(htmlsParaConsolidar);
 
       const questaoAtualizada = await db.Questao.findByPk(cod, {
         include: [

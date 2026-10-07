@@ -10,8 +10,8 @@
 }
 
 .editor-questao-container:focus-within {
-    border-color: #198754;
-    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15);
+    border-color: #c23672;
+    box-shadow: 0 0 0 0.25rem rgba(194, 54, 114, 0.15);
 }
 
 /* Barra de Ferramentas */
@@ -24,6 +24,8 @@
     background-color: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
     user-select: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 /* Botões da Barra de Ferramentas */
@@ -50,12 +52,12 @@
     border-color: #ced4da;
 }
 
-/* Estado Ativo dos Botões (Itálico, Negrito, Sublinhado, etc.) */
+/* Estado Ativo dos Botões */
 .editor-toolbar .btn-fmt.is-active,
 .editor-toolbar .btn-fmt.active {
-    background-color: #198754 !important;
+    background-color: #80C242 !important;
     color: #ffffff !important;
-    border-color: #146c43 !important;
+    border-color: #72af3a !important;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
@@ -73,7 +75,7 @@
 
 .editor-toolbar .select-fmt:focus {
     outline: none;
-    border-color: #198754;
+    border-color: #80C242;
 }
 
 /* Separador Vertical */
@@ -111,17 +113,13 @@
 
 /* Imagens dentro do Editor */
 .editor-contentarea img {
-    max-width: 100%;
-    height: auto;
     border-radius: 8px;
-    margin: 8px auto;
-    display: block;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
+    transition: outline 0.2s ease;
 }
 
 .editor-contentarea img:hover {
-    outline: 2px solid #198754;
+    outline: 2px solid #c23672;
 }
 
 /* Editor em Tamanho Compacto (ex: Alternativas) */
@@ -172,90 +170,73 @@
 }
 
 .editor-symbols-grid button:hover {
-    background-color: #198754;
+    background-color: #80C242;
     color: white;
 }
 
-/* Imagem Selecionada para Redimensionamento */
+/* Imagem Selecionada */
 .editor-contentarea img.img-selected {
-    outline: 3px solid #198754 !important;
-    box-shadow: 0 0 12px rgba(25, 135, 84, 0.4) !important;
-    cursor: pointer;
+    outline: 3px solid #c23672 !important;
+    box-shadow: 0 0 12px rgba(194, 54, 114, 0.4) !important;
+    cursor: grab;
+}
+.editor-contentarea img.img-selected:active {
+    cursor: grabbing;
 }
 
-/* Toolbar Flutuante de Redimensionamento de Imagem */
+/* Toolbar Flutuante */
 .editor-img-toolbar {
     position: absolute;
     z-index: 1050;
     display: flex;
     align-items: center;
-    gap: 4px;
     padding: 4px 8px;
     background-color: #ffffff;
-    border: 1px solid #198754 !important;
+    border: 1px solid #c23672 !important;
     border-radius: 6px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     user-select: none;
     font-size: 0.8rem;
 }
 
-.editor-img-toolbar .toolbar-label {
-    font-weight: 600;
-    color: #495057;
-    font-size: 0.8rem;
-    white-space: nowrap;
-}
-
-.editor-img-toolbar .btn-img-size {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #495057;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.15s ease-in-out;
-}
-
-.editor-img-toolbar .btn-img-size:hover {
-    background-color: #e9ecef;
-    color: #212529;
-    border-color: #ced4da;
-}
-
-.editor-img-toolbar .btn-img-size.is-active {
-    background-color: #198754 !important;
-    color: #ffffff !important;
-    border-color: #146c43 !important;
-}
-
+/* Botão de excluir na toolbar flutuante */
 .editor-img-toolbar .btn-img-delete {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     padding: 2px 6px;
-    font-size: 0.85rem;
-    background-color: #fff0f0;
-    border: 1px solid #fecaca;
-    border-radius: 4px;
-    cursor: pointer;
     transition: all 0.15s ease-in-out;
 }
 
 .editor-img-toolbar .btn-img-delete:hover {
     background-color: #dc3545;
     color: #ffffff !important;
-    border-color: #b02a37;
 }
 
-.editor-img-toolbar .separator-v {
-    width: 1px;
-    height: 18px;
-    background-color: #dee2e6;
-    margin: 0 4px;
+/* Loading Overlay para Upload */
+.editor-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+.spinner-border.text-pink {
+    color: #c23672;
 }
 
+/* Alça de redimensionamento */
+.editor-img-alca {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #c23672;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: ew-resize;
+    z-index: 1051;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}

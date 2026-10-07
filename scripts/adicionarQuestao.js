@@ -11,14 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    function formatarUrlImagem(url) {
-        if (!url || typeof url !== 'string') return '';
-        if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
-            return url;
-        }
-        return url.startsWith('/') ? url : '/' + url;
-    }
-
     const selectDisciplina = document.getElementById('disciplina-select');
     const selectTema = document.getElementById('tema-select');
     const containerAlternativas = document.getElementById('container-alternativas-add');
@@ -27,93 +19,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     let disciplinasCache = [];
     let temasCache = [];
 
+    // Instancia a sessão de imagens para controlar o upload/descarte nesta questão
+    const sessaoImagens = new SessaoImagensQuestao();
+
     // 1. Inicializa o Editor do Enunciado e da Explicação
     const editorEnunciado = new EditorQuestao('#container-editor-enunciado', {
         placeholder: 'Digite o enunciado completo da questão aqui... Use a barra acima para formatar.',
-        compact: false
+        compact: false,
+        permitirImagem: true,
+        sessaoImagens: sessaoImagens
     });
 
     const editorExplicacao = new EditorQuestao('#container-editor-explicacao', {
         placeholder: 'Explique o passo a passo da resolução da questão (aparecerá para o aluno após responder).',
-        compact: false
+        compact: false,
+        permitirImagem: true,
+        sessaoImagens: sessaoImagens
     });
 
     // Editores para cada alternativa (A, B, C, D, E)
     const editoresAlternativas = [];
-
-    // Lógica do Upload de Imagem e Gerador de Tag <img>
-    const inputImagemGeral = document.getElementById('input-imagem');
-    let imagemEnviadaUrl = null;
-
-    if (inputImagemGeral) {
-        inputImagemGeral.addEventListener('change', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const formData = new FormData();
-            formData.append('imagem', file);
-
-            try {
-                const parentBox = inputImagemGeral.closest('.bg-light');
-                let statusMsg = parentBox.querySelector('.status-upload');
-                if (!statusMsg) {
-                    statusMsg = document.createElement('div');
-                    statusMsg.className = 'status-upload mt-2 text-primary font-weight-bold';
-                    parentBox.appendChild(statusMsg);
-                }
-                statusMsg.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Enviando imagem ao servidor...';
-
-                const response = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                    method: 'POST',
-                    headers: { Authorization: `Bearer ${token}` },
-                    body: formData
-                });
-
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Erro no upload.');
-
-                imagemEnviadaUrl = data.imagem_url;
-                const previewSrc = formatarUrlImagem(imagemEnviadaUrl);
-
-                // Renderiza a tag pronta e botões simples para colocar a tag de imagem no enunciado ou explicação
-                statusMsg.className = 'status-upload mt-3 p-3 bg-white rounded border shadow-sm';
-                statusMsg.innerHTML = `
-                    <div class="d-flex align-items-center gap-3 flex-wrap">
-                        <img src="${previewSrc}" class="rounded border shadow-sm" style="max-height: 100px; max-width: 180px; object-fit: contain;" alt="Preview">
-                        <div>
-                            <p class="mb-1 font-weight-bold text-success"><i class="bi bi-check-circle-fill me-1"></i> Imagem enviada com sucesso!</p>
-                            <small class="text-muted d-block mb-2">URL: <code>${imagemEnviadaUrl}</code></small>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <button type="button" class="btn btn-sm btn-success btn-inserir-tag-enunciado">
-                                    <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Enunciado
-                                </button>
-                                <button type="button" class="btn btn-sm btn-primary btn-inserir-tag-gabarito">
-                                    <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Gabarito
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                statusMsg.querySelector('.btn-inserir-tag-enunciado').addEventListener('click', (ev) => {
-                    ev.preventDefault();
-                    editorEnunciado.inserirTagImagem(imagemEnviadaUrl);
-                });
-
-                statusMsg.querySelector('.btn-inserir-tag-gabarito').addEventListener('click', (ev) => {
-                    ev.preventDefault();
-                    editorExplicacao.inserirTagImagem(imagemEnviadaUrl);
-                });
-
-            } catch (err) {
-                console.error('Erro no upload de imagem:', err);
-                alert(`Erro ao fazer upload da imagem: ${err.message}`);
-            }
-        });
-    }
 
     // 2. Carrega Disciplinas e Temas da API
     async function carregarAuxiliares() {
@@ -182,10 +107,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 Alternativa ${letra} ${isCorretaPadrao ? '<span class="badge bg-success ms-1">Correta</span>' : ''}
                             </label>
                         </div>
-                        <label class="btn btn-sm btn-outline-primary mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
-                            <i class="bi bi-upload"></i> Imagem p/ Alt ${letra}
-                            <input type="file" class="d-none input-file-alt" data-altindex="${idx}" accept="image/*">
-                        </label>
                     </div>
                     <div id="editor-alt-container-${idx}"></div>
                 </div>
@@ -210,38 +131,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const editorAlt = new EditorQuestao(`#editor-alt-container-${idx}`, {
                 placeholder: `Texto ou imagem para a alternativa ${letra}...`,
-                compact: true
+                compact: true,
+                permitirImagem: true,
+                sessaoImagens: sessaoImagens
             });
 
             editoresAlternativas.push(editorAlt);
-
-            const fileAltInput = cardAlt.querySelector('.input-file-alt');
-            fileAltInput.addEventListener('change', async (ev) => {
-                ev.preventDefault();
-                ev.stopPropagation();
-
-                const file = ev.target.files[0];
-                if (!file) return;
-
-                const formData = new FormData();
-                formData.append('imagem', file);
-
-                try {
-                    const response = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                        method: 'POST',
-                        headers: { Authorization: `Bearer ${token}` },
-                        body: formData
-                    });
-
-                    const data = await response.json();
-                    if (!response.ok) throw new Error(data.error || 'Erro no upload.');
-
-                    editorAlt.inserirTagImagem(data.imagem_url);
-                } catch (err) {
-                    console.error('Erro no upload de imagem da alternativa:', err);
-                    alert(`Erro ao carregar imagem para alternativa: ${err.message}`);
-                }
-            });
         });
     }
 
@@ -295,7 +190,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (autor) formData.append('autor', autor);
         if (ano) formData.append('ano', ano);
         if (explicacaoHtml) formData.append('explicacao', explicacaoHtml);
-        if (imagemEnviadaUrl) formData.append('imagem_url', imagemEnviadaUrl);
 
         formData.append('alternativas', JSON.stringify(alternativasPayload));
 
@@ -315,6 +209,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const result = await response.json();
 
             if (response.ok) {
+                // Confirmar as imagens usando os HTMLs que enviamos
+                await sessaoImagens.finalizar(enunciadoHtml, explicacaoHtml, ...alternativasPayload.map(a => a.texto));
+
                 alert(`Sucesso! Questão adicionada com código #${result.cod}`);
                 formAddQuestao.reset();
                 editorEnunciado.definirHtml('');

@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let loteIdAtual = null;
 
     const editoresPorCard = new Map();
+    const sessoesAtivas = new Map();
 
     async function carregarAuxiliares() {
         try {
@@ -137,6 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             atualizarBannerStatus(payloadImportacao);
+            
+            // Limpa as sessões ativas (se houver descartes pendentes de outra revisão não salvos)
+            sessoesAtivas.forEach(sessao => sessao.descartarTudo());
+            sessoesAtivas.clear();
+            
             renderizarRevisaoQuestoes(questoesEmRevisao, payloadImportacao.disciplinaPadraoCod || '');
             renderizarModalRascunhos(rascunhosLista);
 
@@ -222,6 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         questoes.forEach((q, index) => {
+            const sessao = new SessaoImagensQuestao(`pdf-${index}`);
+            sessoesAtivas.set(index, sessao);
+
             const card = document.createElement('div');
             card.className = 'card card-questao-item mb-4';
             card.dataset.index = index;
@@ -261,10 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <input class="form-check-input mt-0 radio-correta cursor-pointer" type="radio" name="correta-q-${index}" value="${aIdx}" ${isCorreta ? 'checked' : ''} onchange="atualizarCorreta(${index}, ${aIdx})">
                                 <span class="font-weight-bold text-dark">${String.fromCharCode(65 + aIdx)})</span>
                             </div>
-                            <label class="btn btn-sm btn-outline-primary mb-0 d-inline-flex align-items-center gap-1 cursor-pointer">
-                                <i class="bi bi-upload"></i> Imagem p/ Alt ${String.fromCharCode(65 + aIdx)}
-                                <input type="file" class="d-none input-file-alt-pdf" data-qindex="${index}" data-altindex="${aIdx}" accept="image/*">
-                            </label>
                         </div>
                         <div id="editor-alt-pdf-${index}-${aIdx}"></div>
                     </div>
@@ -325,42 +330,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div id="editor-enunciado-pdf-${index}"></div>
                     </div>
 
-                    <div class="mb-3 p-3 bg-light rounded border">
-                        <label class="form-label font-weight-bold d-flex align-items-center justify-content-between mb-1">
-                            <span>Upload de Imagem da Questão (Opcional)</span>
-                            <small class="text-muted fw-normal"><i class="bi bi-image me-1"></i>Gere a tag de imagem</small>
-                        </label>
-                        <div class="container-imagem-questao">
-                            <div class="row g-2 align-items-center">
-                                <div class="col">
-                                    <input type="text" class="form-control input-imagem-url" placeholder="URL da imagem (ex: /imagens/figura1.png)" value="${escapeHtml(q.imagem_url || '')}">
-                                </div>
-                                <div class="col-auto d-flex gap-2">
-                                    <label class="btn btn-outline-primary btn-sm mb-0 d-flex align-items-center gap-1 cursor-pointer">
-                                        <i class="bi bi-upload"></i> Upload
-                                        <input type="file" class="d-none input-file-imagem" accept="image/*">
-                                    </label>
-                                    <button type="button" class="btn btn-outline-danger btn-sm btn-remover-imagem ${q.imagem_url ? '' : 'd-none'}" title="Remover Imagem">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="box-acoes-imagem mt-2 ${q.imagem_url ? '' : 'd-none'}">
-                                <div class="d-flex align-items-center gap-2 flex-wrap">
-                                    <button type="button" class="btn btn-sm btn-success btn-inserir-no-enunciado">
-                                        <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Enunciado
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-primary btn-inserir-no-gabarito">
-                                        <i class="bi bi-plus-circle me-1"></i> Inserir Tag no Gabarito
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="preview-imagem-container text-center mt-2 ${q.imagem_url ? '' : 'd-none'}">
-                                <img src="${formatarUrlImagem(q.imagem_url)}" class="preview-imagem-questao img-fluid shadow-sm" style="max-height: 120px; max-width: 200px; object-fit: contain;" alt="Preview da imagem">
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="mb-3">
                         <label class="form-label font-weight-bold">Alternativas</label>
                         <div class="container-alternativas-card">
@@ -379,12 +348,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const editorEnunciadoObj = new EditorQuestao(`#editor-enunciado-pdf-${index}`, {
                 placeholder: 'Edite o enunciado da questão...',
-                initialValue: processarFormatacaoTexto(q.enunciado || '')
+                initialValue: processarFormatacaoTexto(q.enunciado || ''),
+                permitirImagem: true,
+                sessaoImagens: sessao,
+                imagemLegadaUrl: q.imagem_url ? formatarUrlImagem(q.imagem_url) : null
             });
 
             const editorExplicacaoObj = new EditorQuestao(`#editor-explicacao-pdf-${index}`, {
                 placeholder: 'Edite a explicação/gabarito comentado...',
-                initialValue: processarFormatacaoTexto(q.explicacao || '')
+                initialValue: processarFormatacaoTexto(q.explicacao || ''),
+                permitirImagem: true,
+                sessaoImagens: sessao
             });
 
             const editoresAltList = [];
@@ -393,40 +367,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const edAltObj = new EditorQuestao(`#editor-alt-pdf-${index}-${aIdx}`, {
                     placeholder: `Texto da alternativa ${String.fromCharCode(65 + aIdx)}...`,
                     compact: true,
-                    initialValue: processarFormatacaoTexto(textoAlt)
+                    initialValue: processarFormatacaoTexto(textoAlt),
+                    permitirImagem: true,
+                    sessaoImagens: sessao
                 });
 
                 editoresAltList.push(edAltObj);
-
-                const fileAltInput = card.querySelector(`.input-file-alt-pdf[data-altindex="${aIdx}"]`);
-                if (fileAltInput) {
-                    fileAltInput.addEventListener('change', async (ev) => {
-                        ev.preventDefault();
-                        ev.stopPropagation();
-
-                        const file = ev.target.files[0];
-                        if (!file) return;
-
-                        const formData = new FormData();
-                        formData.append('imagem', file);
-
-                        try {
-                            const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                                method: 'POST',
-                                headers: { Authorization: `Bearer ${token}` },
-                                body: formData
-                            });
-
-                            const data = await resp.json();
-                            if (!resp.ok) throw new Error(data.error || 'Erro no upload.');
-
-                            edAltObj.inserirTagImagem(data.imagem_url);
-                        } catch (err) {
-                            console.error('Erro no upload de imagem da alternativa:', err);
-                            alert(`Erro ao fazer upload da imagem: ${err.message}`);
-                        }
-                    });
-                }
             });
 
             editoresPorCard.set(index, {
@@ -434,88 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 explicacao: editorExplicacaoObj,
                 alternativas: editoresAltList
             });
-
-            const inputImagemUrl = card.querySelector('.input-imagem-url');
-            const boxAcoesImg = card.querySelector('.box-acoes-imagem');
-            const previewContainer = card.querySelector('.preview-imagem-container');
-            const previewImg = card.querySelector('.preview-imagem-questao');
-            const btnRemoverImg = card.querySelector('.btn-remover-imagem');
-            const inputFileImg = card.querySelector('.input-file-imagem');
-            const btnInserirEnunciado = card.querySelector('.btn-inserir-no-enunciado');
-            const btnInserirGabarito = card.querySelector('.btn-inserir-no-gabarito');
-
-            const atualizarPreviewImg = (url) => {
-                if (url && url.trim()) {
-                    previewImg.src = formatarUrlImagem(url.trim());
-                    previewContainer.classList.remove('d-none');
-                    btnRemoverImg.classList.remove('d-none');
-                    boxAcoesImg.classList.remove('d-none');
-                } else {
-                    previewImg.src = '';
-                    previewContainer.classList.add('d-none');
-                    btnRemoverImg.classList.add('d-none');
-                    boxAcoesImg.classList.add('d-none');
-                }
-            };
-
-            if (inputImagemUrl) {
-                inputImagemUrl.addEventListener('input', (e) => atualizarPreviewImg(e.target.value));
-            }
-
-            if (btnRemoverImg) {
-                btnRemoverImg.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (inputImagemUrl) inputImagemUrl.value = '';
-                    if (inputFileImg) inputFileImg.value = '';
-                    atualizarPreviewImg('');
-                });
-            }
-
-            if (btnInserirEnunciado) {
-                btnInserirEnunciado.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const url = inputImagemUrl ? inputImagemUrl.value.trim() : '';
-                    if (url) editorEnunciadoObj.inserirTagImagem(url);
-                });
-            }
-
-            if (btnInserirGabarito) {
-                btnInserirGabarito.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const url = inputImagemUrl ? inputImagemUrl.value.trim() : '';
-                    if (url) editorExplicacaoObj.inserirTagImagem(url);
-                });
-            }
-
-            if (inputFileImg) {
-                inputFileImg.addEventListener('change', async (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    const file = e.target.files[0];
-                    if (!file) return;
-
-                    const formData = new FormData();
-                    formData.append('imagem', file);
-
-                    try {
-                        const resp = await fetch(`${API_BASE_URL}/questoes/upload-imagem`, {
-                            method: 'POST',
-                            headers: { Authorization: `Bearer ${token}` },
-                            body: formData
-                        });
-
-                        const data = await resp.json();
-                        if (!resp.ok) throw new Error(data.error || 'Falha ao enviar imagem.');
-
-                        if (inputImagemUrl) inputImagemUrl.value = data.imagem_url;
-                        atualizarPreviewImg(data.imagem_url);
-                    } catch (errUpload) {
-                        console.error('Erro no upload de imagem:', errUpload);
-                        alert(`Erro ao fazer upload da imagem: ${errUpload.message}`);
-                    }
-                });
-            }
 
             const btnToggleRevisada = card.querySelector('.btn-toggle-revisada');
             const badgeStatusRevisada = card.querySelector('.badge-status-revisada');
@@ -555,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         containerQuestoes.querySelectorAll('.btn-remover-card').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const idx = e.currentTarget.dataset.index;
+                const idx = parseInt(e.currentTarget.dataset.index, 10);
                 removerQuestao(idx);
             });
         });
@@ -577,9 +441,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function removerQuestao(index) {
         if (confirm('Tem certeza que deseja remover esta questão da importação?')) {
+            const sessao = sessoesAtivas.get(index);
+            if (sessao) {
+                sessao.descartarTudo();
+                sessoesAtivas.delete(index);
+            }
+
             const card = containerQuestoes.querySelector(`.card-questao-item[data-index="${index}"]`);
             if (card) card.remove();
-            editoresPorCard.delete(parseInt(index, 10));
+            editoresPorCard.delete(index);
 
             const restantes = containerQuestoes.querySelectorAll('.card-questao-item').length;
             badgeTotalQuestoes.textContent = `${restantes} Questão(ões)`;
@@ -603,6 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const questoesParaEnviar = [];
         let erroValidacao = null;
+        const indicesSessoesParaConfirmar = [];
 
         cards.forEach((card) => {
             if (erroValidacao) return;
@@ -618,7 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const temaCod = card.querySelector('.select-tema').value;
             const autor = card.querySelector('.input-autor').value.trim();
             const ano = card.querySelector('.input-ano').value;
-            const imagemUrl = card.querySelector('.input-imagem-url')?.value.trim();
 
             if (!enunciadoText && !enunciadoHtml) {
                 erroValidacao = `A questão ${idx + 1} está sem enunciado.`;
@@ -631,11 +501,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const radioCorreta = card.querySelector('.radio-correta:checked');
             const alternativas = [];
+            const alternativasTextosHtml = [];
 
             if (edObj && Array.isArray(edObj.alternativas)) {
                 edObj.alternativas.forEach((edAlt, aIdx) => {
+                    const altContent = edAlt.obterHtml() || edAlt.obterTexto();
+                    alternativasTextosHtml.push(altContent);
                     alternativas.push({
-                        texto: edAlt.obterHtml() || edAlt.obterTexto(),
+                        texto: altContent,
                         correta: radioCorreta ? (parseInt(radioCorreta.value, 10) === aIdx) : (aIdx === 0)
                     });
                 });
@@ -653,8 +526,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 autor: autor || null,
                 ano: ano ? parseInt(ano, 10) : null,
                 explicacao: explicacaoHtml || null,
-                imagem_url: imagemUrl || null,
+                imagem_url: null, // As imagens antigas agora estão inline
                 alternativas
+            });
+            
+            indicesSessoesParaConfirmar.push({
+                idx,
+                htmls: [enunciadoHtml, explicacaoHtml, ...alternativasTextosHtml]
             });
         });
 
@@ -684,6 +562,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 throw new Error(data.error || 'Erro ao salvar lote no banco de dados.');
+            }
+
+            // Confirma as imagens nas sessões ativas
+            for (const { idx, htmls } of indicesSessoesParaConfirmar) {
+                const sessao = sessoesAtivas.get(idx);
+                if (sessao) {
+                    await sessao.finalizar(...htmls);
+                    sessoesAtivas.delete(idx);
+                }
             }
 
             if (payloadImportacao) {
@@ -744,6 +631,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (texto === null || texto === undefined) return '';
         let html = String(texto);
 
+        const htmlTags = [];
+        html = html.replace(/<[^>]+>/g, (match) => {
+            htmlTags.push(match);
+            return `%%%HTMLTAG${htmlTags.length - 1}%%%`;
+        });
+
         html = html.replace(/\$\$(.*?)\$\$/gs, '$1');
         html = html.replace(/\\\[(.*?)\\\]/gs, '$1');
         html = html.replace(/\$(.*?)\$/g, '$1');
@@ -794,6 +687,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        html = html.replace(/%%%HTMLTAG(\d+)%%%/g, (match, p1) => {
+            return htmlTags[parseInt(p1)];
+        });
 
         return html;
     }

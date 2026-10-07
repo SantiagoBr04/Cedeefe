@@ -48,7 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
             return url;
         }
-        return url.startsWith('/') ? url : '/' + url;
+        const backendUrl = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL.replace('/api', '') : 'http://localhost:3000';
+        const pathClean = url.startsWith('/') ? url : '/' + url;
+        // As imagens locais estão sob o caminho /imagens (uploads directory no server.js)
+        return pathClean.startsWith('/imagens/') ? `${backendUrl}${pathClean}` : `${backendUrl}/imagens${pathClean}`;
     }
 
     function escapeHtml(str) {
@@ -73,7 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. Ajusta URLs relativas de tags <img> contidas no HTML do texto (ex: src="/uploads/...")
         html = html.replace(/<img\s+([^>]*?)src=["'](\/[^"']+)["']/gi, (match, prefix, path) => {
-            return `<img ${prefix}src="${path}"`;
+            const backendUrl = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL.replace('/api', '') : 'http://localhost:3000';
+            const novoPath = path.startsWith('/imagens/') ? `${backendUrl}${path}` : `${backendUrl}/imagens${path}`;
+            return `<img ${prefix}src="${novoPath}"`;
+        });
+
+        // PROTEÇÃO DE TAGS HTML: remove as tags temporariamente para que os regexes de texto (como _) não quebrem URLs
+        const htmlTags = [];
+        html = html.replace(/<[^>]+>/g, (match) => {
+            htmlTags.push(match);
+            return `%%%HTMLTAG${htmlTags.length - 1}%%%`;
         });
 
         // 2. Remove demarcadores de bloco/inline de LaTeX: $$...$$, \[...\], $...$, \(...\)
@@ -134,6 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 9. Notações Markdown para Negrito e Itálico
         html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        // RESTAURA AS TAGS HTML
+        html = html.replace(/%%%HTMLTAG(\d+)%%%/g, (match, p1) => {
+            return htmlTags[parseInt(p1)];
+        });
 
         // 10. Preserva quebras de linha (\n -> <br>)
         html = html.replace(/\r?\n/g, '<br>');
@@ -451,13 +468,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i class="bi bi-star-fill me-1"></i>Inédita
                    </span>`;
 
-            const imgHtml = q.imagem_url ? `
-                <div class="text-center my-3">
-                    <img src="${formatarUrlImagem(q.imagem_url)}" class="img-fluid rounded border shadow-sm" style="max-height: 300px;" alt="Imagem da questão">
-                </div>
-            ` : '';
-
             const explicacaoVisivel = jaRespondida && q.explicacao;
+
+            let descricaoFormatada = processarFormatacaoTexto(q.descricao);
+            if (q.imagem_url && !descricaoFormatada.includes('<img')) {
+                descricaoFormatada = `
+                    <div class="text-center mb-3">
+                        <img src="${formatarUrlImagem(q.imagem_url)}" class="img-fluid rounded border shadow-sm" style="max-height: 300px;" alt="Imagem da questão" draggable="false">
+                    </div>
+                ` + descricaoFormatada;
+            }
 
             return `
                 <div class="card card-questao-procurar mb-4" id="card-questao-${q.cod}">
@@ -479,9 +499,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="card-body p-4">
                         <div class="questao-enunciado fs-6 text-dark mb-3">
-                            ${processarFormatacaoTexto(q.descricao)}
+                            ${descricaoFormatada}
                         </div>
-                        ${imgHtml}
                         
                         <div class="alternativas-list mt-3">
                             ${alternativasHtml}
