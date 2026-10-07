@@ -80,7 +80,7 @@ class SessaoImagensQuestao {
             const token = localStorage.getItem('jwt_token');
             if (!token) return;
 
-            const API_URL = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL : 'http://localhost:3000/api';
+            const API_URL = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL : '/api';
             await fetch(`${API_URL}/questoes/imagens/descartar`, {
                 method: 'POST',
                 headers: {
@@ -108,7 +108,7 @@ class SessaoImagensQuestao {
                 // Usar sendBeacon para garantir que a requisição seja enviada quando a aba fechar
                 const blob = new Blob([JSON.stringify({ urls })], { type: 'application/json' });
                 // Enviar header Authorization via fetch keepalive (sendBeacon não suporta headers customizados)
-                const API_URL = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL : 'http://localhost:3000/api';
+                const API_URL = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL : '/api';
                 fetch(`${API_URL}/questoes/imagens/descartar`, {
                     method: 'POST',
                     headers: {

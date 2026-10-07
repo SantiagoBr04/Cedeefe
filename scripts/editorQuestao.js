@@ -238,7 +238,7 @@ class EditorQuestao {
             formData.append('imagem', file);
 
             const token = localStorage.getItem('jwt_token');
-            const API_URL = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'http://localhost:3000/api';
+            const API_URL = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL : '/api';
             const resposta = await fetch(`${API_URL}/questoes/upload-imagem`, {
                 method: 'POST',
                 headers: {

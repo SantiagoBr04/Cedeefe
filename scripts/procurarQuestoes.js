@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
             return url;
         }
-        const backendUrl = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL.replace('/api', '') : 'http://localhost:3000';
+        const backendUrl = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL.replace('/api', '') : '';
         const pathClean = url.startsWith('/') ? url : '/' + url;
         // As imagens locais estão sob o caminho /imagens (uploads directory no server.js)
         return pathClean.startsWith('/imagens/') ? `${backendUrl}${pathClean}` : `${backendUrl}/imagens${pathClean}`;
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. Ajusta URLs relativas de tags <img> contidas no HTML do texto (ex: src="/uploads/...")
         html = html.replace(/<img\s+([^>]*?)src=["'](\/[^"']+)["']/gi, (match, prefix, path) => {
-            const backendUrl = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL.replace('/api', '') : 'http://localhost:3000';
+            const backendUrl = typeof window.API_BASE_URL !== 'undefined' ? window.API_BASE_URL.replace('/api', '') : '';
             const novoPath = path.startsWith('/imagens/') ? `${backendUrl}${path}` : `${backendUrl}/imagens${path}`;
             return `<img ${prefix}src="${novoPath}"`;
         });
