@@ -7,7 +7,7 @@ import path from 'path';
 import crypto from 'crypto'; // Para geração de tokens randômicos seguros
 import brevoService from '../services/brevoService.js'; // Serviço Brevo para envio de e-mails
 import googleAuthService from '../services/googleAuthService.js'; // Serviço para verificação de tokens Google OAuth
-
+import { cloudinary } from '../config/cloudinary.js';
 // Cria o objeto userContoller
 const userController = {
 
@@ -331,24 +331,32 @@ const userController = {
         return res.status(404).json({ error: 'Usuário não encontrado.' });
       }
 
-      // Se o usuário já tiver uma foto salva anteriormente, remove do sistema de arquivos
+      // Se o usuário já tiver uma foto salva anteriormente, remove
       if (user.foto) {
         try {
-          const oldFileName = path.basename(user.foto);
-          const oldFilePath = path.join(process.cwd(), 'uploads', oldFileName);
-          await fs.unlink(oldFilePath);
-        } catch (unlinkError) {
-          console.error('Erro ao deletar foto de perfil antiga:', unlinkError);
+          if (user.foto.startsWith('http')) {
+            const urlParts = user.foto.split('/');
+            const filename = urlParts[urlParts.length - 1];
+            const folder = urlParts[urlParts.length - 2];
+            const publicId = `${folder}/${filename.split('.')[0]}`;
+            await cloudinary.uploader.destroy(publicId);
+          } else {
+            const oldFileName = path.basename(user.foto);
+            const oldFilePath = path.join(process.cwd(), 'uploads', oldFileName);
+            await fs.unlink(oldFilePath);
+          }
+        } catch (error) {
+          console.error('Erro ao deletar foto de perfil antiga:', error);
         }
       }
 
-      const caminhoRelativo = `/imagens/${req.file.filename}`;
-      user.foto = caminhoRelativo;
+      const fotoUrl = req.file.path;
+      user.foto = fotoUrl;
       await user.save();
 
       res.status(200).json({
         message: 'Foto de perfil atualizada com sucesso!',
-        foto: caminhoRelativo
+        foto: fotoUrl
       });
 
     } catch (error) {

@@ -2,10 +2,10 @@
 import { Router } from 'express';
 import questaoController from '../controllers/questaoController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import adminMiddleware from '../middlewares/adminMiddleware.js'; 
+import adminMiddleware from '../middlewares/adminMiddleware.js';
 
 import upload from '../config/multer.js';
-
+import { uploadImage } from '../config/cloudinary.js';
 // Cria o objeto router com a configuração padrão do expressa para receber requisições HTTP
 const router = new Router();
 
@@ -70,16 +70,16 @@ router.post(
   '/upload-imagem',
   authMiddleware,
   adminMiddleware,
-  upload.single('imagem'),
+  uploadImage.single('imagem'),
   questaoController.uploadImagem
 );
 
 // Rota para adicionar uma nova questão
 router.post(
-  '/', 
-  authMiddleware, 
-  adminMiddleware, 
-  upload.single('imagem'), // Middleware do multer entra aqui
+  '/',
+  authMiddleware,
+  adminMiddleware,
+  uploadImage.single('imagem'), // Middleware do multer entra aqui
   questaoController.addQuestao
 );
 
@@ -103,9 +103,9 @@ router.put(
 
 // Rota para deletar uma questão
 router.delete(
-  '/:cod', 
-  authMiddleware, 
-  adminMiddleware, 
+  '/:cod',
+  authMiddleware,
+  adminMiddleware,
   questaoController.deleteQuestao
 );
 

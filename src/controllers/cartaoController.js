@@ -6,7 +6,7 @@ const cartaoController = {
   async criar(req, res) {
     try {
       const { frente, verso, baralho_id, tipo } = req.body;
-      const imagem_url = req.file ? `/imagens/${req.file.filename}` : null;
+      const imagem_url = req.file ? req.file.path : null;
       const usuario_cod = req.userId;
 
       if (!frente || !verso || !baralho_id) {
@@ -78,14 +78,14 @@ const cartaoController = {
       let { fator_facilidade, intervalo_dias, data_ultima_revisao } = cartao;
 
       if (!data_ultima_revisao) {
-          // Primeira vez sendo feito
-          data_ultima_revisao = hoje;
+        // Primeira vez sendo feito
+        data_ultima_revisao = hoje;
       }
 
       // Calcula a quantidade real de dias que se passaram (se fez no dia é zero ou fração e não entra em loop logico abaixo)
       const tempoDecorridoMS = hoje.getTime() - new Date(data_ultima_revisao).getTime();
       let diasEmAtraso = Math.floor(tempoDecorridoMS / (1000 * 60 * 60 * 24)); // Converter ms pra dias reais
-      
+
       // Se não houver dia decorrido, conta como 1 dia (para que o algoritmo funcione na primeira vez)
       if (diasEmAtraso < 1) diasEmAtraso = 1;
 
@@ -116,31 +116,31 @@ const cartaoController = {
       cartao.intervalo_dias = intervalo_dias;
       cartao.data_ultima_revisao = hoje;
       cartao.data_proxima_revisao = previsaoProximaRevisao;
-      
+
       await cartao.save();
 
       // Registro Historico Revisão Gamificacao Dia Atual (ano/mes/dia sem horas)
       const dataApenasHojeStr = hoje.toISOString().split('T')[0];
 
       const historicoData = await HistoricoRevisaoFlashcard.findOne({
-          where: { usuario_cod, data_revisao: dataApenasHojeStr }
+        where: { usuario_cod, data_revisao: dataApenasHojeStr }
       });
 
-      if(historicoData) {
-          historicoData.cartoes_resolvidos += 1;
-          await historicoData.save();
+      if (historicoData) {
+        historicoData.cartoes_resolvidos += 1;
+        await historicoData.save();
       } else {
-          await HistoricoRevisaoFlashcard.create({
-              usuario_cod,
-              data_revisao: dataApenasHojeStr,
-              cartoes_resolvidos: 1
-          });
+        await HistoricoRevisaoFlashcard.create({
+          usuario_cod,
+          data_revisao: dataApenasHojeStr,
+          cartoes_resolvidos: 1
+        });
       }
 
-      return res.json({ 
-          message: 'Cartão revisado', 
-          proxima_revisao: previsaoProximaRevisao,
-          intervalo_dias: intervalo_dias
+      return res.json({
+        message: 'Cartão revisado',
+        proxima_revisao: previsaoProximaRevisao,
+        intervalo_dias: intervalo_dias
       });
 
     } catch (error) {
@@ -169,7 +169,7 @@ const cartaoController = {
 
       // Se enviou imagem, atualiza o src
       if (req.file) {
-        cartao.imagem_url = `/imagens/${req.file.filename}`;
+        cartao.imagem_url = req.file.path;
       }
 
       await cartao.save();

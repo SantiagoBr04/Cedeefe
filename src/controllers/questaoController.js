@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import geminiPdfService from '../services/geminiPdfService.js';
-
+import { cloudinary } from '../config/cloudinary.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rascunhosDir = path.resolve(__dirname, '..', '..', 'uploads', 'rascunhos');
@@ -30,22 +30,22 @@ function gerarESalvarRascunho(payload) {
 
 // Cria o objeto controller que vai ser exportado
 const questaoController = {
-  
+
   // Cria o metodo addQuestão, assincrono e recebe a requisião e a resposta
   addQuestao: async (req, res) => {
     const t = await db.sequelize.transaction();
-    
-  // Lógica da Imagem: Verifica se o Multer processou algum arquivo
-    let nomeArquivoImagem = null;
+
+    // Lógica da Imagem: Verifica se o Multer processou algum arquivo
+    let urlImagem = null;
     if (req.file) {
-      nomeArquivoImagem = req.file.filename; // Pega o nome gerado pelo Multer
+      urlImagem = req.file.path; // Pega a URL gerada pelo Cloudinary
     }
 
     try {
       // Recebe todos os dados da questão do corpo da requisição
       const {
         descricao,
-        alternativas: alternativasString,     
+        alternativas: alternativasString,
         disciplina_cod,
         explicacao,
         autor,
@@ -60,8 +60,8 @@ const questaoController = {
       try {
         // Se vier como string (pelo FormData), faz o parse. 
         // Se por acaso vier como objeto, usa direto.
-        alternativas = typeof alternativasString === 'string' 
-          ? JSON.parse(alternativasString) 
+        alternativas = typeof alternativasString === 'string'
+          ? JSON.parse(alternativasString)
           : alternativasString;
       } catch (e) {
         await t.rollback();
@@ -81,9 +81,9 @@ const questaoController = {
         autor: autor || null,
         ano: ano || null,
         tema_cod: tema_cod || null,
-        // Aqui usamos o nome do arquivo capturado lá em cima no passo 1
+        // Aqui usamos a url gerada pelo Cloudinary capturada lá em cima no passo 1
         // Se não tiver imagem, mantemos null ou usamos o que veio no body (caso seja um link externo)
-        imagem_url: nomeArquivoImagem || req.body.imagem_url || null 
+        imagem_url: urlImagem || req.body.imagem_url || null
       }, { transaction: t }); // Passamos a transação 't'
 
       const alternativasFormatadas = alternativas.map(item => {
@@ -122,21 +122,32 @@ const questaoController = {
         return res.status(404).json({ error: 'Questão não encontrada.' });
       }
 
-      // Se tiver imagem, apagamos o arquivo físico
+      // Se tiver imagem, apagamos do Cloudinary ou localmente
       if (questao.imagem_url) {
-        // Monta o caminho completo: Pasta do projeto + uploads + nome da imagem
-        const caminhoArquivo = path.resolve('uploads', questao.imagem_url);
-        
-        // Função do Node que deleta arquivos
-        fs.unlink(caminhoArquivo, (erro) => {
+        if (questao.imagem_url.startsWith('http')) {
+          const urlParts = questao.imagem_url.split('/');
+          const filename = urlParts[urlParts.length - 1];
+          const folder = urlParts[urlParts.length - 2];
+          const publicId = `${folder}/${filename.split('.')[0]}`;
+          try {
+            await cloudinary.uploader.destroy(publicId);
+            console.log("Imagem no Cloudinary apagada com sucesso!");
+          } catch (erro) {
+            console.error("Erro ao apagar imagem do Cloudinary:", erro);
+          }
+        } else {
+          // Monta o caminho completo: Pasta do projeto + uploads + nome da imagem
+          const caminhoArquivo = path.resolve('uploads', questao.imagem_url);
+
+          // Função do Node que deleta arquivos
+          fs.unlink(caminhoArquivo, (erro) => {
             if (erro) {
-                // Se der erro ao apagar a imagem (ex: arquivo já não existia), 
-                // apenas logamos o aviso, mas não paramos o processo.
-                console.error("Erro ao apagar imagem física:", erro);
+              console.error("Erro ao apagar imagem física:", erro);
             } else {
-                console.log("Imagem física apagada com sucesso!");
+              console.log("Imagem física apagada com sucesso!");
             }
-        });
+          });
+        }
       }
 
       // Agora apagamos do banco de dados
@@ -144,7 +155,7 @@ const questaoController = {
 
       res.status(200).json({ message: `Questão ${cod} e sua imagem, caso tivesse, foram deletadas.` });
 
-    } catch (error) { 
+    } catch (error) {
       console.error('Erro ao deletar questão:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
     }
@@ -378,7 +389,7 @@ const questaoController = {
         return res.status(400).json({ error: 'Nenhum arquivo de imagem foi enviado.' });
       }
 
-      const imagem_url = `/imagens/${req.file.filename}`;
+      const imagem_url = req.file.path;
       return res.status(200).json({
         message: 'Imagem enviada com sucesso.',
         imagem_url

@@ -10,7 +10,7 @@ router.use(authMiddleware); // Protege as rotas
 router.post('/', baralhoController.criar);
 router.get('/', baralhoController.listar);
 // Reutiliza upload, limitando a 1 arquivo do campo "arquivo_importacao"
-router.post('/importar', upload.single('arquivo_importacao'), baralhoController.importar); 
+router.post('/importar', upload.single('arquivo_importacao'), baralhoController.importar);
 router.put('/:id', baralhoController.editar);
 router.delete('/:id', baralhoController.deletar);
 
