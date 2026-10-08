@@ -499,4 +499,63 @@ max-width: 100%;
 .btn-danger-custom:hover {
   background-color: #b70322;
   transform: translateY(-1px);
+}
+
+/* ==========================
+   NOTEBOOK
+========================== */
+@media (max-width:1200px){
+    .content{
+        margin-left:180px;
+        width: 75%;
+    }
+}
+
+/* ==========================
+   TABLET
+========================== */
+@media (max-width:991px){
+    .content{
+        margin-left:0;
+        width: 90%;
+        margin-top: 100px;
+    }
+}
+
+/* ==========================
+   CELULAR
+========================== */
+@media (max-width:576px){
+    .content{
+        width: 95%;
+        padding: 15px;
+        margin-top: 80px;
+    }
+    
+    .cabecalho-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-reportar {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .contQuest {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .botoes-finalizacao-container {
+        flex-direction: column;
+    }
+    
+    .grid-estatisticas {
+        flex-direction: column;
+    }
+    
+    .botao {
+        width: 100%;
+    }
 }

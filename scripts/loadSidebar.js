@@ -23,7 +23,7 @@ fetch(sidebarPath)
             links.forEach(a => {
                 const href = a.getAttribute('href');
                 if (href && href.startsWith('../index.html')) {
-                    a.setAttribute('href', 'index.html');
+                    a.setAttribute('href', '/');
                 } else if (href && href !== '#' && !href.startsWith('http') && !href.startsWith('pages/')) {
                     a.setAttribute('href', `pages/${href}`);
                 }
@@ -35,7 +35,7 @@ fetch(sidebarPath)
             const links = container.querySelectorAll('a');
             links.forEach(a => {
                 const href = a.getAttribute('href');
-                if (href && (href === 'index.html' || href === '../index.html' || href.endsWith('index.html'))) {
+                if (href && (href === '/' || href === 'index.html' || href === '../index.html' || href.endsWith('index.html'))) {
                     a.setAttribute('href', dashboardUrl);
                 }
             });

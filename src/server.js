@@ -119,6 +119,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'index.html'));
 });
 
+// Redireciona acessos a /index.html para a página inicial (raiz)
+app.get('/index.html', (req, res) => {
+  res.redirect('/');
+});
+
 // Define a porta do servidor
 const PORT = process.env.PORT || 3000;
 

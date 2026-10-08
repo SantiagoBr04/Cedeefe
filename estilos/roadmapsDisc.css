@@ -273,6 +273,11 @@ body {
         margin-right: 40px;
     }
 
+    .roadmap-progress-box {
+        margin-left: 90px;
+        margin-right: 40px;
+    }
+
     .timeline {
         margin-left: 90px;
         margin-right: 40px;
@@ -298,6 +303,10 @@ body {
     .header h1,
     .header h2 {
         margin-left: 0;
+    }
+
+    .roadmap-progress-box {
+        margin: -20px 20px 30px 20px;
     }
 
     .timeline {
@@ -353,7 +362,12 @@ body {
     }
 
 
-    /* TIMELINE */
+    /* TIMELINE & PROGRESS BAR */
+
+    .roadmap-progress-box {
+        margin: -10px 15px 30px 15px;
+        padding: 15px;
+    }
 
     .timeline {
         margin: 0 15px 50px 15px;
@@ -439,6 +453,12 @@ body {
 
     .icone2 {
         font-size: 45px;
+    }
+
+    .roadmap-progress-box {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 12px;
     }
 
     .timeline {

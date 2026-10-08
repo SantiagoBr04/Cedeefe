@@ -28,7 +28,6 @@ form .item {
 
 .titulo-form {
   margin-bottom: 20px;
-  margin-left: 75px;
   text-align: center;
   font-family: Comfortaa;
   font-size: 25px;
@@ -43,8 +42,8 @@ form .item {
   border: none;
   font-size: 16px;
   cursor: pointer;
-  margin: 20px auto 0px 80px; 
-  display: inline-block;
+  margin: 20px auto 0px auto; 
+  display: block;
   transition: all 0.2s ease-in-out;
 }
 
@@ -71,13 +70,13 @@ textarea.descricao {
 /* LAYOUT ROW*/
  #itensformulario {
   width: 100%;
-  margin-left: 50px;
+  margin: 0 auto;
 }
 
 
 /* BLOB E GATINHO */
 .blob-verde {
-  position: absolute;
+  position: fixed;
   bottom: -70px;
   right: -550px;
   z-index: -1;
@@ -153,6 +152,19 @@ textarea.descricao {
 
     }
 
+    #itensformulario {
+        margin-left: 0;
+    }
+
+    .titulo-form {
+        margin-left: 0;
+    }
+
+    .botao {
+        margin: 20px auto 0px auto;
+        display: block;
+    }
+
     .gatinho{
 
         display:none;
@@ -161,12 +173,7 @@ textarea.descricao {
 
     .blob-verde{
 
-        width:650px;
-
-        right:-320px;
-        bottom:-150px;
-
-        opacity:.12;
+        display:none;
 
     }
 
@@ -206,14 +213,4 @@ textarea.descricao {
 
     }
 
-    .blob-verde{
-
-        width:520px;
-
-        right:-250px;
-        bottom:-170px;
-
-        opacity:.08;
-
-    }
 }
