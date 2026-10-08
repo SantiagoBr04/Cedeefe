@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #f8f9fa;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --accent-color: #4f46e5;
+    --accent-hover: #4338ca;
+    --card-bg: #ffffff;
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+}
+
+.content {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Header do Blog */
+.blog-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 6rem 0 2rem 0; /* Aumentado o topo para afastar do menu superior */
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+}
+
+.blog-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    word-break: break-word;
+}
+
+.blog-header .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Post Principal */
+.blog-post {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* Cards de Métodos */
+.method-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.method-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.method-card h2 {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    word-break: break-word;
+}
+
+.method-card h2 i {
+    font-size: 1.75rem;
+}
+
+.method-card p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Listas customizadas */
+.steps-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.steps-list li {
+    background: #fdfdfd;
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem 1.5rem;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.steps-list li strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Grid para SQ3R e Active Recall */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.grid-item {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.grid-item h3 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.grid-item p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .content {
+        padding: 1rem;
+    }
+    
+    .blog-header h1 {
+        font-size: 2rem;
+    }
+    
+    .method-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .blog-header .subtitle {
+        font-size: 1rem;
+    }
+
+    .method-card h2 {
+        font-size: 1.3rem;
+    }
+}

@@ -68,11 +68,14 @@ window.handleGoogleCredentialResponse = async (response) => {
             // Armazenar o token de sessão JWT do Cedeefe
             localStorage.setItem('jwt_token', data.token);
 
-            if (data.precisaCompletarPerfil) {
-                window.location.href = 'completarPerfil.html';
-            } else {
-                window.location.href = 'dashboard.html';
-            }
+            // Atraso de 500ms para permitir que a biblioteca do Google feche o popup tranquilamente antes de descarregar a aba principal
+            setTimeout(() => {
+                if (data.precisaCompletarPerfil) {
+                    window.location.href = 'completarPerfil.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            }, 500);
         } else {
             alert(data.error || 'Falha ao autenticar com a conta do Google.');
         }

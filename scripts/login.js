@@ -89,14 +89,18 @@ window.handleGoogleCredentialResponse = async (response) => {
             // Armazenar o token de sessão JWT do Cedeefe
             localStorage.setItem('jwt_token', data.token);
 
-            // Redirecionar para a página tentada anteriormente ou para o dashboard
-            const redirectUrl = sessionStorage.getItem('redirect_after_login');
-            if (redirectUrl) {
-                sessionStorage.removeItem('redirect_after_login');
-                window.location.href = redirectUrl;
-            } else {
-                window.location.href = 'dashboard.html';
-            }
+            // Atraso de 500ms para permitir que a biblioteca do Google feche o popup tranquilamente antes de descarregar a aba principal
+            setTimeout(() => {
+                const redirectUrl = sessionStorage.getItem('redirect_after_login');
+                if (data.precisaCompletarPerfil) {
+                    window.location.href = 'completarPerfil.html';
+                } else if (redirectUrl) {
+                    sessionStorage.removeItem('redirect_after_login');
+                    window.location.href = redirectUrl;
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            }, 500);
         } else {
             alert(data.error || 'Falha ao autenticar com a conta do Google.');
         }

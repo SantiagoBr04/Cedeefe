@@ -40,9 +40,10 @@ import roadmapRoutes from './routes/roadmapRoutes.js';
 // Define o app como o express
 const app = express();
 
-// Proteção de Cabeçalhos HTTP com Helmet (desativa restrição de recurso cruzado para servir imagens e estatcos)
+// Proteção de Cabeçalhos HTTP com Helmet
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }, // Permite o funcionamento do popup do Google Sign-In
   contentSecurityPolicy: false // Permite manter Scripts e Estilos inline da aplicação frontend local
 }));
 
