@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import geminiPdfService from '../services/geminiPdfService.js';
+import taxonomiaService from '../services/taxonomiaService.js';
 import { cloudinary } from '../config/cloudinary.js';
 import imagemQuestaoService from '../services/imagemQuestaoService.js';
 const __filename = fileURLToPath(import.meta.url);
@@ -52,18 +53,22 @@ const questaoController = {
         autor,
         ano,
         imagem_url,
-        tema_cod
+        tema_cod,
+        subtemas_cods
       } = req.body;
 
       // Conversão das Alternativas 
       // Como o FormData envia objetos como string, precisamos converter de volta
       let alternativas;
+      let subtemasIds = [];
       try {
         // Se vier como string (pelo FormData), faz o parse. 
         // Se por acaso vier como objeto, usa direto.
         alternativas = typeof alternativasString === 'string'
           ? JSON.parse(alternativasString)
           : alternativasString;
+
+        subtemasIds = typeof subtemas_cods === 'string' && subtemas_cods ? JSON.parse(subtemas_cods) : (subtemas_cods || []);
       } catch (e) {
         await t.rollback();
         return res.status(400).json({ error: "Formato das alternativas inválido." });
@@ -97,16 +102,23 @@ const questaoController = {
 
       await db.Alternativa.bulkCreate(alternativasFormatadas, { transaction: t });
 
+      if (subtemasIds && Array.isArray(subtemasIds) && subtemasIds.length > 0) {
+        await novaQuestao.setSubtemas(subtemasIds, { transaction: t });
+      }
+
       await t.commit(); // Confirma as alterações no banco
 
       const questaoCompleta = await db.Questao.findByPk(novaQuestao.cod, {
-        include: [{ model: db.Alternativa, as: 'alternativas' }]
+        include: [
+          { model: db.Alternativa, as: 'alternativas' },
+          { model: db.Subtema, as: 'subtemas' }
+        ]
       });
 
       // Consolida imagens
       const htmlsParaConsolidar = [descricao, explicacao];
       if (alternativas && Array.isArray(alternativas)) {
-          htmlsParaConsolidar.push(...alternativas.map(a => a.texto));
+        htmlsParaConsolidar.push(...alternativas.map(a => a.texto));
       }
       await imagemQuestaoService.consolidarImagensSalvas(htmlsParaConsolidar);
 
@@ -161,7 +173,7 @@ const questaoController = {
         questao.explicacao,
         ...(questao.alternativas ? questao.alternativas.map(a => a.texto) : [])
       ];
-      
+
       const urlsInline = imagemQuestaoService.buscarImagensNoHtml(...conteudosHtml);
       if (urlsInline.length > 0) {
         await imagemQuestaoService.excluirImagensPorUrls(urlsInline);
@@ -176,6 +188,60 @@ const questaoController = {
     } catch (error) {
       console.error('Erro ao deletar questão:', error);
       res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
+  },
+
+  // Método para obter o prompt dinâmico baseado na taxonomia atual
+  obterPromptImportacao: async (req, res) => {
+    try {
+      const arvoreTaxonomia = await taxonomiaService.obterArvore();
+      const prompt = geminiPdfService.montarPrompt(arvoreTaxonomia);
+      return res.status(200).json({ prompt });
+    } catch (error) {
+      console.error('Erro ao gerar prompt:', error);
+      return res.status(500).json({ error: 'Erro ao gerar o prompt de importação.' });
+    }
+  },
+
+  // Método para processar o JSON colado pelo usuário
+  importarJson: async (req, res) => {
+    try {
+      const { jsonText, autor, ano } = req.body;
+      if (!jsonText) {
+        return res.status(400).json({ error: 'O texto JSON é obrigatório.' });
+      }
+
+      // Extrai e limpa o JSON
+      const listaBruta = geminiPdfService.extrairJson(jsonText);
+      
+      // Normaliza questões
+      const questoesNormalizadas = geminiPdfService.normalizarQuestoes(listaBruta, { autorDefault: autor, anoDefault: ano });
+
+      // Resolve taxonomia
+      const arvoreTaxonomia = await taxonomiaService.obterArvore();
+      for (const q of questoesNormalizadas) {
+        const sugestoesCodigos = taxonomiaService.resolverSugestoes(q, arvoreTaxonomia);
+        q.disciplina_cod = sugestoesCodigos.disciplina_cod;
+        q.tema_cod = sugestoesCodigos.tema_cod;
+        q.subtemas_cods = sugestoesCodigos.subtemas_cods;
+      }
+
+      // Gera lote
+      const loteId = gerarESalvarRascunho({
+        questoes: questoesNormalizadas,
+        autor: autor || 'IFC',
+        ano: ano || new Date().getFullYear(),
+        disciplinaPadraoCod: req.body.disciplina_padrao_cod || ''
+      });
+
+      return res.status(200).json({
+        sucesso: true,
+        loteId,
+        questoes: questoesNormalizadas
+      });
+    } catch (error) {
+      console.error('Erro ao processar JSON manual:', error);
+      return res.status(400).json({ error: error.message || 'Erro ao processar o JSON fornecido.' });
     }
   },
 
@@ -357,6 +423,10 @@ const questaoController = {
           imagem_url: q.imagem_url || null
         }, { transaction: t });
 
+        if (q.subtemas_cods && Array.isArray(q.subtemas_cods) && q.subtemas_cods.length > 0) {
+          await novaQuestao.setSubtemas(q.subtemas_cods, { transaction: t });
+        }
+
         if (Array.isArray(q.alternativas) && q.alternativas.length > 0) {
           const alternativasFormatadas = q.alternativas.map(alt => ({
             questao_cod: novaQuestao.cod,
@@ -498,7 +568,7 @@ const questaoController = {
   // Método para listar questões com filtros dinâmicos por disciplina, tema, ano, autor, texto e status de resposta
   listarQuestoes: async (req, res) => {
     try {
-      const { disciplina_cod, tema_cod, ano, autor, busca, status_resposta, pagina = 1, limite = 10 } = req.query;
+      const { disciplina_cod, tema_cod, subtema_cod, ano, autor, busca, status_resposta, pagina = 1, limite = 10 } = req.query;
       const usuario_cod = req.userId;
 
       const whereClause = {};
@@ -559,17 +629,24 @@ const questaoController = {
 
       const offset = (parseInt(pagina) - 1) * parseInt(limite);
 
+      const queryInclude = [
+        { model: db.Disciplina, as: 'disciplina' },
+        { model: db.Tema, as: 'tema' },
+        { model: db.Alternativa, as: 'alternativas' },
+        { model: db.Subtema, as: 'subtemas', required: !!subtema_cod }
+      ];
+
+      if (subtema_cod) {
+        queryInclude[3].where = { cod: subtema_cod };
+      }
+
       const { count, rows } = await db.Questao.findAndCountAll({
         where: whereClause,
         distinct: true,
         limit: parseInt(limite),
         offset: offset,
         order: [['cod', 'DESC']],
-        include: [
-          { model: db.Disciplina, as: 'disciplina' },
-          { model: db.Tema, as: 'tema' },
-          { model: db.Alternativa, as: 'alternativas' }
-        ]
+        include: queryInclude
       });
 
       // Mapeia o atributo 'descricao' para 'nome' e injeta dados da resposta prévia do usuário
@@ -677,7 +754,8 @@ const questaoController = {
         ano,
         explicacao,
         imagem_url,
-        alternativas
+        alternativas,
+        subtemas_cods
       } = req.body;
 
       const questao = await db.Questao.findByPk(cod, { transaction: t });
@@ -731,6 +809,11 @@ const questaoController = {
         }));
 
         await db.Alternativa.bulkCreate(novasAlternativas, { transaction: t });
+      }
+
+      if (subtemas_cods !== undefined) {
+        const subtemasIds = Array.isArray(subtemas_cods) ? subtemas_cods : (subtemas_cods ? JSON.parse(subtemas_cods) : []);
+        await questao.setSubtemas(subtemasIds, { transaction: t });
       }
 
       await t.commit();

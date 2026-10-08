@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardLoading = document.getElementById('card-loading');
     const alertaFeedback = document.getElementById('alerta-feedback');
     const selectDisciplinaPadrao = document.getElementById('disciplina-padrao');
+    const cardManual = document.getElementById('card-manual');
+    const btnCopiarPrompt = document.getElementById('btn-copiar-prompt');
+    const formImportarJson = document.getElementById('form-importar-json');
+    const jsonInput = document.getElementById('json-input');
 
     let disciplinasCache = [];
 
@@ -97,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Exibe o card animado de carregamento na página
         cardUpload.classList.add('d-none');
+        if (cardManual) cardManual.classList.add('d-none');
         cardLoading.classList.remove('d-none');
         alertaFeedback.classList.add('d-none');
 
@@ -136,9 +141,105 @@ document.addEventListener('DOMContentLoaded', () => {
 
             cardLoading.classList.add('d-none');
             cardUpload.classList.remove('d-none');
+            if (cardManual) cardManual.classList.remove('d-none');
             exibirAlerta(error.message, 'alert-danger');
         }
     });
+
+    // Manipula a cópia do Prompt com Taxonomia Dinâmica
+    if (btnCopiarPrompt) {
+        btnCopiarPrompt.addEventListener('click', async () => {
+            const btnOriginalText = btnCopiarPrompt.innerHTML;
+            btnCopiarPrompt.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Gerando prompt...';
+            btnCopiarPrompt.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/questoes/importar-prompt`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error('Não foi possível gerar o prompt com a taxonomia do banco.');
+
+                const { prompt } = await response.json();
+
+                await navigator.clipboard.writeText(prompt);
+                
+                btnCopiarPrompt.innerHTML = '<i class="bi bi-check-lg me-2"></i>Copiado com sucesso!';
+                btnCopiarPrompt.classList.replace('btn-outline-primary', 'btn-success');
+                
+                setTimeout(() => {
+                    btnCopiarPrompt.innerHTML = btnOriginalText;
+                    btnCopiarPrompt.classList.replace('btn-success', 'btn-outline-primary');
+                    btnCopiarPrompt.disabled = false;
+                }, 3000);
+            } catch (error) {
+                console.error(error);
+                exibirAlerta('Erro ao copiar prompt: ' + error.message, 'alert-danger');
+                btnCopiarPrompt.innerHTML = btnOriginalText;
+                btnCopiarPrompt.disabled = false;
+            }
+        });
+    }
+
+    // Manipula o envio manual de JSON
+    if (formImportarJson) {
+        formImportarJson.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const jsonText = jsonInput.value;
+            const autorGlobal = document.getElementById('autor-global').value;
+            const anoGlobal = document.getElementById('ano-global').value;
+            const disciplinaPadraoCod = selectDisciplinaPadrao.value;
+
+            if (!jsonText) {
+                exibirAlerta('Cole o resultado JSON fornecido pelo Gemini.', 'alert-danger');
+                return;
+            }
+
+            // Exibe loading
+            cardUpload.classList.add('d-none');
+            if (cardManual) cardManual.classList.add('d-none');
+            cardLoading.classList.remove('d-none');
+            alertaFeedback.classList.add('d-none');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/questoes/importar-json`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        jsonText,
+                        autor: autorGlobal,
+                        ano: anoGlobal,
+                        disciplina_padrao_cod: disciplinaPadraoCod
+                    })
+                });
+
+                const dados = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(dados.error || 'Falha ao processar o JSON.');
+                }
+
+                exibirConclusaoAnalise({
+                    questoes: dados.questoes,
+                    autor: autorGlobal,
+                    ano: anoGlobal,
+                    disciplinaPadraoCod
+                }, dados.loteId);
+
+            } catch (error) {
+                console.error('Erro na importação manual:', error);
+
+                cardLoading.classList.add('d-none');
+                cardUpload.classList.remove('d-none');
+                if (cardManual) cardManual.classList.remove('d-none');
+                exibirAlerta(error.message, 'alert-danger');
+            }
+        });
+    }
 
     function exibirAlerta(msg, tipo) {
         alertaFeedback.className = `alert ${tipo}`;

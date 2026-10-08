@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formFiltros = document.getElementById('form-filtros');
     const selectDisciplina = document.getElementById('filtro-disciplina');
     const selectTema = document.getElementById('filtro-tema');
+    const selectSubtema = document.getElementById('filtro-subtema');
     const selectAno = document.getElementById('filtro-ano');
     const selectAutor = document.getElementById('filtro-autor');
     const inputBusca = document.getElementById('filtro-busca');
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let disciplinasCache = [];
     let temasCache = [];
+    let subtemasCache = [];
     let anosCache = [];
     let autoresCache = [];
     let questaoCodParaExcluir = null;
@@ -73,14 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function carregarFiltrosEAuxiliares() {
         try {
-            const [respDisc, respTemas, respFiltros] = await Promise.all([
+            const [respDisc, respTemas, respSubtemas, respFiltros] = await Promise.all([
                 fetch(`${API_BASE_URL}/disciplinas`, { headers: { Authorization: `Bearer ${token}` } }),
                 fetch(`${API_BASE_URL}/temas`, { headers: { Authorization: `Bearer ${token}` } }),
+                fetch(`${API_BASE_URL}/subtemas`, { headers: { Authorization: `Bearer ${token}` } }),
                 fetch(`${API_BASE_URL}/questoes/filtros`, { headers: { Authorization: `Bearer ${token}` } })
             ]);
 
             if (respDisc.ok) disciplinasCache = await respDisc.json();
             if (respTemas.ok) temasCache = await respTemas.json();
+            if (respSubtemas.ok) subtemasCache = await respSubtemas.json();
             if (respFiltros.ok) {
                 const filtrosData = await respFiltros.json();
                 anosCache = filtrosData.anos || [];
@@ -124,11 +128,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         selectTema.innerHTML = '<option value="">Todos os temas</option>' +
             temasFiltrados.map(t => `<option value="${t.cod}">${escapeHtml(t.descricao || t.nome)}</option>`).join('');
+            
+        atualizarSelectSubtemas();
+    }
+
+    function atualizarSelectSubtemas(temaCod = '') {
+        if (!selectSubtema) return;
+        
+        if (!temaCod) {
+            selectSubtema.innerHTML = '<option value="">Todos os subtemas</option>';
+            selectSubtema.disabled = true;
+            return;
+        }
+
+        let subtemasFiltrados = subtemasCache.filter(s => String(s.tema_cod) === String(temaCod));
+        
+        selectSubtema.innerHTML = '<option value="">Todos os subtemas</option>' +
+            subtemasFiltrados.map(s => `<option value="${s.cod}">${escapeHtml(s.descricao)}</option>`).join('');
+        
+        selectSubtema.disabled = subtemasFiltrados.length === 0;
     }
 
     if (selectDisciplina) {
         selectDisciplina.addEventListener('change', (e) => {
             atualizarSelectTemas(e.target.value);
+        });
+    }
+
+    if (selectTema) {
+        selectTema.addEventListener('change', (e) => {
+            atualizarSelectSubtemas(e.target.value);
         });
     }
 
@@ -149,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (selectDisciplina && selectDisciplina.value) params.append('disciplina_cod', selectDisciplina.value);
         if (selectTema && selectTema.value) params.append('tema_cod', selectTema.value);
+        if (selectSubtema && selectSubtema.value) params.append('subtema_cod', selectSubtema.value);
         if (selectAno && selectAno.value) params.append('ano', selectAno.value);
         if (selectAutor && selectAutor.value) params.append('autor', selectAutor.value);
         if (inputBusca && inputBusca.value.trim()) params.append('busca', inputBusca.value.trim());
@@ -233,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="badge bg-dark fs-6">Questão #${q.cod}</span>
                             <span class="badge bg-primary">${escapeHtml(discNome)}</span>
                             <span class="badge bg-info text-dark">${escapeHtml(temaNome)}</span>
+                            ${(q.subtemas && q.subtemas.length > 0) ? q.subtemas.map(s => `<span class="badge bg-light text-dark border"><i class="bi bi-arrow-return-right me-1"></i>${escapeHtml(s.descricao)}</span>`).join('') : ''}
                             <span class="badge bg-light text-dark border">
                                 <i class="bi bi-building me-1"></i>${escapeHtml(autorStr)} ${anoStr !== 'N/A' ? `(${anoStr})` : ''}
                             </span>
@@ -270,23 +301,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-body p-4 modo-edicao d-none" id="modo-edicao-${q.cod}">
                         <form id="form-editar-questao-${q.cod}">
                             <div class="row g-3 mb-3">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label fw-semibold text-secondary">Disciplina *</label>
                                     <select class="form-select select-edicao-disciplina" data-cod="${q.cod}" id="edit-disciplina-${q.cod}" required>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label fw-semibold text-secondary">Tema</label>
-                                    <select class="form-select select-edicao-tema" id="edit-tema-${q.cod}">
+                                    <select class="form-select select-edicao-tema" data-cod="${q.cod}" id="edit-tema-${q.cod}">
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="form-label fw-semibold text-secondary">Autor / Prova</label>
                                     <input type="text" class="form-control" id="edit-autor-${q.cod}" value="${escapeHtml(q.autor || '')}" placeholder="Ex: IFC, IFRJ, Federal...">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="form-label fw-semibold text-secondary">Ano</label>
                                     <input type="number" class="form-control" id="edit-ano-${q.cod}" value="${q.ano || ''}" placeholder="Ex: 2024">
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <label class="form-label fw-semibold text-secondary d-block">Subtemas</label>
+                                    <div id="container-subtemas-edicao-${q.cod}" class="bg-light p-2 rounded border">
+                                        <!-- Checkboxes dos subtemas injetados aqui via JS -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -367,17 +404,27 @@ document.addEventListener('DOMContentLoaded', () => {
         modoLeitura.classList.add('d-none');
         modoEdicao.classList.remove('d-none');
 
+        const subtemasIdsSelecionados = (q.subtemas || []).map(s => s.cod);
+
         // Preenche select de disciplinas
         const selectDisc = document.getElementById(`edit-disciplina-${cod}`);
         if (selectDisc) {
-            selectDisc.innerHTML = disciplinasCache.map(d => `<option value="${d.cod}" ${String(d.cod) === String(q.disciplina_cod) ? 'selected' : ''}>${escapeHtml(d.descricao || d.nome)}</option>`).join('');
+            selectDisc.innerHTML = '<option value="">-- Selecione --</option>' + disciplinasCache.map(d => `<option value="${d.cod}" ${String(d.cod) === String(q.disciplina_cod) ? 'selected' : ''}>${escapeHtml(d.descricao || d.nome)}</option>`).join('');
 
             selectDisc.addEventListener('change', () => {
-                preencherSelectTemaEdicao(cod, selectDisc.value, q.tema_cod);
+                preencherSelectTemaEdicao(cod, selectDisc.value, null);
+            });
+        }
+        
+        const selectTemaEdit = document.getElementById(`edit-tema-${cod}`);
+        if (selectTemaEdit) {
+            selectTemaEdit.addEventListener('change', (e) => {
+                preencherSubtemasEdicao(cod, e.target.value, []);
             });
         }
 
         preencherSelectTemaEdicao(cod, q.disciplina_cod, q.tema_cod);
+        preencherSubtemasEdicao(cod, q.tema_cod, subtemasIdsSelecionados);
 
         let sessao = sessoesAtivas.get(cod);
         if (!sessao) {
@@ -468,6 +515,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         selectTemaEdit.innerHTML = '<option value="">Sem Tema Específico</option>' +
             temasFiltrados.map(t => `<option value="${t.cod}" ${String(t.cod) === String(temaCodSelecionado) ? 'selected' : ''}>${escapeHtml(t.descricao || t.nome)}</option>`).join('');
+            
+        preencherSubtemasEdicao(cod, temaCodSelecionado, []);
+    }
+
+    function preencherSubtemasEdicao(cod, temaCod, subtemasAtuaisIds) {
+        const containerSubtemas = document.getElementById(`container-subtemas-edicao-${cod}`);
+        if (!containerSubtemas) return;
+
+        if (!temaCod) {
+            containerSubtemas.innerHTML = '<div class="text-muted small mt-2">Nenhum subtema ou selecione um tema.</div>';
+            return;
+        }
+
+        const subtemasFiltrados = subtemasCache.filter(s => String(s.tema_cod) === String(temaCod));
+
+        if (subtemasFiltrados.length === 0) {
+            containerSubtemas.innerHTML = '<div class="text-muted small mt-2">Nenhum subtema para o tema selecionado.</div>';
+        } else {
+            containerSubtemas.innerHTML = subtemasFiltrados.map(s => {
+                const checked = subtemasAtuaisIds.includes(s.cod) ? 'checked' : '';
+                return `
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input check-subtema-edit-${cod}" type="checkbox" value="${s.cod}" id="subt-edit-${cod}-${s.cod}" ${checked}>
+                        <label class="form-check-label" for="subt-edit-${cod}-${s.cod}">
+                            ${escapeHtml(s.descricao)}
+                        </label>
+                    </div>
+                `;
+            }).join('');
+        }
     }
 
     function renderizarAlternativasEdicao(cod, alternativas, sessao) {
@@ -588,6 +665,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const disciplina_cod = document.getElementById(`edit-disciplina-${cod}`)?.value;
         const tema_cod = document.getElementById(`edit-tema-${cod}`)?.value || null;
+        
+        const checksSubtemas = document.querySelectorAll(`.check-subtema-edit-${cod}:checked`);
+        const subtemas_cods = Array.from(checksSubtemas).map(cb => parseInt(cb.value, 10));
+
         const autor = document.getElementById(`edit-autor-${cod}`)?.value || null;
         const ano = document.getElementById(`edit-ano-${cod}`)?.value || null;
 
@@ -637,6 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
             descricao: descricaoHtml,
             disciplina_cod: parseInt(disciplina_cod),
             tema_cod: tema_cod ? parseInt(tema_cod) : null,
+            subtemas_cods,
             autor,
             ano: ano ? parseInt(ano) : null,
             explicacao: explicacaoHtml,

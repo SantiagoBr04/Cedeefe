@@ -5,7 +5,10 @@ async function carregarDisciplinas() {
 
   try {
     // Faz a chamada fetch para a nova API. Como é um GET, não precisa de muitas opções.
-    const resposta = await fetch('/api/disciplinas');
+    const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
+    const resposta = await fetch('/api/disciplinas', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
 
     // Se a resposta da API não for bem-sucedida, lança um erro.
     if (!resposta.ok) {
@@ -42,6 +45,34 @@ async function carregarDisciplinas() {
       selectElement.appendChild(option);
     });
 
+    const temaSelect = document.getElementById('tema-select');
+    selectElement.addEventListener('change', async (e) => {
+      const discCod = e.target.value;
+      temaSelect.innerHTML = '<option value="">Carregando temas...</option>';
+
+      if (!discCod) {
+        temaSelect.innerHTML = '<option value="">Selecione uma disciplina primeiro</option>';
+        return;
+      }
+
+      try {
+        const token = typeof obterToken === 'function' ? obterToken() : (localStorage.getItem('jwt_token') || sessionStorage.getItem('jwt_token'));
+        const tResp = await fetch('/api/temas', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (tResp.ok) {
+          const temas = await tResp.json();
+          const temasFiltrados = temas.filter(t => String(t.disciplina_cod) === String(discCod));
+          temaSelect.innerHTML = '<option value="">Qualquer tema (opcional)</option>' + 
+            temasFiltrados.map(t => `<option value="${t.cod}">${t.descricao || t.nome}</option>`).join('');
+        } else {
+          temaSelect.innerHTML = '<option value="">Erro ao carregar temas</option>';
+        }
+      } catch(err) {
+        temaSelect.innerHTML = '<option value="">Erro ao carregar temas</option>';
+      }
+    });
+
   } catch (error) {
     console.error('Erro:', error);
     // Se der erro, mostra uma mensagem de falha no próprio dropdown.
@@ -60,6 +91,7 @@ document.querySelector('.criarLista').addEventListener('submit', async function(
   const descricao = document.querySelector('.descricao').value;
   const quantidade = document.querySelector('.nQuest').value;
   const disciplinaCod = document.querySelector('#disciplina-select').value; 
+  const temaCod = document.querySelector('#tema-select')?.value; 
 
   if (!quantidade || disciplinaCod === '') {
     alert('Por favor, preencha a quantidade de questões e a disciplina.');
@@ -70,6 +102,7 @@ document.querySelector('.criarLista').addEventListener('submit', async function(
     nome: nome, 
     descricao: descricao, 
     disciplina_cod: disciplinaCod,
+    tema_cod: temaCod ? parseInt(temaCod) : null,
     quantidade: parseInt(quantidade), 
     disciplinas: [disciplinaCod]     
   };

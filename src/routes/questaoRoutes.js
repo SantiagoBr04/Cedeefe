@@ -45,6 +45,22 @@ router.get(
   questaoController.obterRascunho
 );
 
+// Rota para obter o prompt dinâmico baseado na taxonomia atual para importação externa
+router.get(
+  '/importar-prompt',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.obterPromptImportacao
+);
+
+// Rota para analisar JSON colado manualmente pelo usuário
+router.post(
+  '/importar-json',
+  authMiddleware,
+  adminMiddleware,
+  questaoController.importarJson
+);
+
 // Rota para analisar PDFs de prova e gabarito via Gemini
 router.post(
   '/importar-pdf-analise',

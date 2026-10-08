@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let disciplinasCache = [];
     let temasCache = [];
+    let subtemasCache = [];
     let rascunhosLista = [];
     let payloadImportacao = null;
     let questoesEmRevisao = [];
@@ -39,13 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function carregarAuxiliares() {
         try {
-            const [respDisc, respTemas] = await Promise.all([
+            const [respDisc, respTemas, respSubtemas] = await Promise.all([
                 fetch(`${API_BASE_URL}/disciplinas`, { headers: { Authorization: `Bearer ${token}` } }),
-                fetch(`${API_BASE_URL}/temas`, { headers: { Authorization: `Bearer ${token}` } })
+                fetch(`${API_BASE_URL}/temas`, { headers: { Authorization: `Bearer ${token}` } }),
+                fetch(`${API_BASE_URL}/subtemas`, { headers: { Authorization: `Bearer ${token}` } })
             ]);
 
             if (respDisc.ok) disciplinasCache = await respDisc.json();
             if (respTemas.ok) temasCache = await respTemas.json();
+            if (respSubtemas.ok) subtemasCache = await respSubtemas.json();
         } catch (err) {
             console.error('Erro ao carregar disciplinas ou temas:', err);
         }
@@ -235,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'card card-questao-item mb-4';
             card.dataset.index = index;
 
-            let disciplinaSelecionada = disciplinaPadraoCod;
+            let disciplinaSelecionada = q.disciplina_cod || disciplinaPadraoCod;
             const sugestaoStr = typeof q.disciplina_sugerida === 'string'
                 ? q.disciplina_sugerida
                 : (q.disciplina_sugerida && typeof q.disciplina_sugerida === 'object' ? (q.disciplina_sugerida.nome || q.disciplina_sugerida.descricao || '') : '');
@@ -248,6 +251,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 `<option value="${d.cod}" ${String(d.cod) === String(disciplinaSelecionada) ? 'selected' : ''}>${escapeHtml(d.descricao || d.nome || `Disciplina #${d.cod}`)}</option>`
             ).join('');
 
+            const listSubtemas = Array.isArray(subtemasCache) ? subtemasCache : [];
+
+            // A taxonomiaService já resolve isso no backend e preenche q.tema_cod e q.subtemas_cods
+            let temaSelecionado = q.tema_cod || null;
+            let subtemasSelecionados = q.subtemas_cods || [];
+
+            // Fallback caso o backend não tenha conseguido resolver (ex: rascunho antigo)
+            if (!temaSelecionado && q.tema_maior_sugerido && disciplinaSelecionada) {
+                const sugestaoTemaStr = q.tema_maior_sugerido;
+                const temaMatch = listTemas.find(t => String(t.disciplina_cod) === String(disciplinaSelecionada) && t.descricao.toLowerCase().includes(sugestaoTemaStr.toLowerCase()));
+                if (temaMatch) temaSelecionado = temaMatch.cod;
+            }
+
+            if (temaSelecionado && subtemasSelecionados.length === 0 && Array.isArray(q.subtemas_sugeridos) && q.subtemas_sugeridos.length > 0) {
+                q.subtemas_sugeridos.forEach(subStr => {
+                    if(typeof subStr === 'string') {
+                        const subMatch = listSubtemas.find(s => String(s.tema_cod) === String(temaSelecionado) && s.descricao.toLowerCase().includes(subStr.toLowerCase()));
+                        if (subMatch) subtemasSelecionados.push(subMatch.cod);
+                    }
+                });
+            }
+
             const getOptionsTema = (discCod, temaAtualCod) => {
                 const temasFiltrados = discCod
                     ? listTemas.filter(t => String(t.disciplina_cod) === String(discCod))
@@ -257,7 +282,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 ).join('');
             };
 
-            const optionsTema = getOptionsTema(disciplinaSelecionada, q.tema_cod);
+            const optionsTema = getOptionsTema(disciplinaSelecionada, temaSelecionado);
+
+            const getHtmlSubtemas = (temaCod, subtemasAtualIds) => {
+                const subtemasFiltrados = temaCod 
+                    ? listSubtemas.filter(s => String(s.tema_cod) === String(temaCod)) 
+                    : [];
+                if (subtemasFiltrados.length === 0) return '<div class="text-muted small mt-2">Selecione um tema com subtemas.</div>';
+                
+                return subtemasFiltrados.map(s => {
+                    const checked = subtemasAtualIds.includes(s.cod) ? 'checked' : '';
+                    return `
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input check-subtema" type="checkbox" value="${s.cod}" id="subt-${index}-${s.cod}" ${checked}>
+                            <label class="form-check-label" for="subt-${index}-${s.cod}">
+                                ${escapeHtml(s.descricao)}
+                            </label>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            const htmlSubtemas = getHtmlSubtemas(temaSelecionado, subtemasSelecionados);
 
             const alternativasLista = Array.isArray(q.alternativas) ? q.alternativas : [];
             const alternativasHtml = alternativasLista.map((alt, aIdx) => {
@@ -303,11 +349,17 @@ document.addEventListener('DOMContentLoaded', () => {
                                 ${optionsDisc}
                             </select>
                         </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label class="form-label font-weight-bold">Tema (Opcional)</label>
                             <select class="form-select select-tema">
                                 ${optionsTema}
                             </select>
+                        </div>
+                        <div class="col-12 col-md-12 mt-3 mt-md-0">
+                            <label class="form-label font-weight-bold d-block">Subtemas</label>
+                            <div class="container-subtemas bg-light p-2 rounded border">
+                                ${htmlSubtemas}
+                            </div>
                         </div>
                     </div>
 
@@ -403,6 +455,9 @@ document.addEventListener('DOMContentLoaded', () => {
         containerQuestoes.querySelectorAll('.card-questao-item').forEach(card => {
             const selectDisc = card.querySelector('.select-disciplina');
             const selectTema = card.querySelector('.select-tema');
+            const containerSubtemas = card.querySelector('.container-subtemas');
+            const cardIndex = card.dataset.index;
+
             if (selectDisc && selectTema) {
                 selectDisc.addEventListener('change', (e) => {
                     const newDiscCod = e.target.value;
@@ -413,6 +468,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectTema.innerHTML = '<option value="">-- Nenhum tema específico --</option>' + temasFiltrados.map(t =>
                         `<option value="${t.cod}">${escapeHtml(t.descricao || t.nome || `Tema #${t.cod}`)}</option>`
                     ).join('');
+                    if (containerSubtemas) {
+                        containerSubtemas.innerHTML = '<div class="text-muted small mt-2">Selecione um tema com subtemas.</div>';
+                    }
+                });
+
+                selectTema.addEventListener('change', (e) => {
+                    const newTemaCod = e.target.value;
+                    if (containerSubtemas) {
+                        const listSubtemas = Array.isArray(subtemasCache) ? subtemasCache : [];
+                        const subtemasFiltrados = newTemaCod 
+                            ? listSubtemas.filter(s => String(s.tema_cod) === String(newTemaCod)) 
+                            : [];
+                        
+                        if (subtemasFiltrados.length === 0) {
+                            containerSubtemas.innerHTML = '<div class="text-muted small mt-2">Selecione um tema com subtemas.</div>';
+                        } else {
+                            containerSubtemas.innerHTML = subtemasFiltrados.map(s => `
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input check-subtema" type="checkbox" value="${s.cod}" id="subt-${cardIndex}-${s.cod}">
+                                    <label class="form-check-label" for="subt-${cardIndex}-${s.cod}">
+                                        ${escapeHtml(s.descricao)}
+                                    </label>
+                                </div>
+                            `).join('');
+                        }
+                    }
                 });
             }
         });
@@ -487,6 +568,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const disciplinaCod = card.querySelector('.select-disciplina').value;
             const temaCod = card.querySelector('.select-tema').value;
+            
+            const checksSubtemas = card.querySelectorAll('.check-subtema:checked');
+            const subtemasCods = Array.from(checksSubtemas).map(cb => parseInt(cb.value, 10));
+
             const autor = card.querySelector('.input-autor').value.trim();
             const ano = card.querySelector('.input-ano').value;
 
@@ -523,6 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 descricao: enunciadoHtml,
                 disciplina_cod: parseInt(disciplinaCod, 10),
                 tema_cod: temaCod ? parseInt(temaCod, 10) : null,
+                subtemas_cods: subtemasCods,
                 autor: autor || null,
                 ano: ano ? parseInt(ano, 10) : null,
                 explicacao: explicacaoHtml || null,
@@ -606,7 +692,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (/história|historia|geografia|filosofia|sociologia|humanas|ciências humanas|ciencias humanas/i.test(sugClean)) {
             categoriaAlvo = 'ciências humanas';
         } else if (/português|portugues|língua portuguesa|lingua portuguesa|gramática|gramatica|literatura|redação|redacao/i.test(sugClean)) {
-            categoriaAlvo = 'português';
+            categoriaAlvo = 'língua portuguesa';
         } else if (/matemática|matematica|geometria|álgebra|algebra|raciocínio/i.test(sugClean)) {
             categoriaAlvo = 'matemática';
         }

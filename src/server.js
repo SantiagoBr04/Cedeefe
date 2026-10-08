@@ -36,6 +36,7 @@ import baralhoRoutes from './routes/baralhoRoutes.js';
 import cartaoRoutes from './routes/cartaoRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import roadmapRoutes from './routes/roadmapRoutes.js';
+import subtemaRoutes from './routes/subtemaRoutes.js';
 
 // Define o app como o express
 const app = express();
@@ -106,6 +107,7 @@ app.use('/api/baralhos', baralhoRoutes);
 app.use('/api/cartoes', cartaoRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/roadmaps', roadmapRoutes);
+app.use('/api/subtemas', subtemaRoutes);
 
 // Servir APENAS diretórios públicos específicos (bloqueia o acesso direto ao .env, src, node_modules, etc.)
 app.use('/imagens', express.static(path.resolve(__dirname, '..', 'uploads')));
@@ -142,6 +144,7 @@ db.sequelize.sync({ force: RECONSTRUIR_BANCO })
       await db.sequelize.query('ALTER TABLE "questoes" ALTER COLUMN "descricao" TYPE TEXT;');
       await db.sequelize.query('ALTER TABLE "questoes" ALTER COLUMN "explicacao" TYPE TEXT;');
       await db.sequelize.query('ALTER TABLE "alternativas" ALTER COLUMN "texto" TYPE TEXT;');
+      await db.sequelize.query('ALTER TABLE "tema" ALTER COLUMN "descricao" TYPE VARCHAR(255);');
 
       // Garante a existência das novas colunas e flexibilidade de cadastro na tabela usuario
       await db.sequelize.query('ALTER TABLE "usuario" ALTER COLUMN "nome_completo" DROP NOT NULL;');

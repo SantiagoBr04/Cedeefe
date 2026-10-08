@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formFiltros = document.getElementById('form-filtros');
     const selectDisciplina = document.getElementById('filtro-disciplina');
     const selectTema = document.getElementById('filtro-tema');
+    const selectSubtema = document.getElementById('filtro-subtema');
     const selectAno = document.getElementById('filtro-ano');
     const selectAutor = document.getElementById('filtro-autor');
     const selectStatus = document.getElementById('filtro-status');
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let disciplinasCache = [];
     let temasCache = [];
+    let subtemasCache = [];
     let anosCache = [];
     let autoresCache = [];
     let paginaAtual = 1;
@@ -306,14 +308,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function carregarFiltrosEAuxiliares() {
         try {
-            const [respDisc, respTemas, respFiltros] = await Promise.all([
+            const [respDisc, respTemas, respSubtemas, respFiltros] = await Promise.all([
                 fetch(`${API_BASE_URL}/disciplinas`, { headers: { Authorization: `Bearer ${token}` } }),
                 fetch(`${API_BASE_URL}/temas`, { headers: { Authorization: `Bearer ${token}` } }),
+                fetch(`${API_BASE_URL}/subtemas`, { headers: { Authorization: `Bearer ${token}` } }),
                 fetch(`${API_BASE_URL}/questoes/filtros`, { headers: { Authorization: `Bearer ${token}` } })
             ]);
 
             if (respDisc.ok) disciplinasCache = await respDisc.json();
             if (respTemas.ok) temasCache = await respTemas.json();
+            if (respSubtemas.ok) subtemasCache = await respSubtemas.json();
             if (respFiltros.ok) {
                 const filtrosData = await respFiltros.json();
                 anosCache = filtrosData.anos || [];
@@ -357,11 +361,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         selectTema.innerHTML = '<option value="">Todos os temas</option>' +
             temasFiltrados.map(t => `<option value="${t.cod}">${escapeHtml(t.descricao || t.nome)}</option>`).join('');
+            
+        atualizarSelectSubtemas(); // Reseta os subtemas
+    }
+
+    function atualizarSelectSubtemas(temaCod = '') {
+        if (!selectSubtema) return;
+        
+        if (!temaCod) {
+            selectSubtema.innerHTML = '<option value="">Todos os subtemas</option>';
+            selectSubtema.disabled = true;
+            return;
+        }
+
+        let subtemasFiltrados = subtemasCache.filter(s => String(s.tema_cod) === String(temaCod));
+        
+        selectSubtema.innerHTML = '<option value="">Todos os subtemas</option>' +
+            subtemasFiltrados.map(s => `<option value="${s.cod}">${escapeHtml(s.descricao)}</option>`).join('');
+        
+        selectSubtema.disabled = subtemasFiltrados.length === 0;
     }
 
     if (selectDisciplina) {
         selectDisciplina.addEventListener('change', (e) => {
             atualizarSelectTemas(e.target.value);
+        });
+    }
+
+    if (selectTema) {
+        selectTema.addEventListener('change', (e) => {
+            atualizarSelectSubtemas(e.target.value);
         });
     }
 
@@ -382,6 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (selectDisciplina && selectDisciplina.value) params.append('disciplina_cod', selectDisciplina.value);
         if (selectTema && selectTema.value) params.append('tema_cod', selectTema.value);
+        if (selectSubtema && selectSubtema.value) params.append('subtema_cod', selectSubtema.value);
         if (selectAno && selectAno.value) params.append('ano', selectAno.value);
         if (selectAutor && selectAutor.value) params.append('autor', selectAutor.value);
         if (selectStatus && selectStatus.value) params.append('status_resposta', selectStatus.value);
@@ -485,6 +515,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 ` + descricaoFormatada;
             }
+            
+            const subtemasHtml = q.subtemas && q.subtemas.length > 0 
+                ? q.subtemas.map(s => `<span class="badge bg-light text-dark border me-1 mb-1"><i class="bi bi-arrow-return-right me-1"></i>${escapeHtml(s.descricao)}</span>`).join('')
+                : '';
 
             return `
                 <div class="card card-questao-procurar mb-4" id="card-questao-${q.cod}">
@@ -504,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                         </div>
                     </div>
+                    ${subtemasHtml ? `<div class="px-4 py-2 bg-light border-bottom d-flex flex-wrap gap-1 align-items-center"><small class="text-muted fw-bold me-2">Subtemas:</small>${subtemasHtml}</div>` : ''}
                     <div class="card-body p-4">
                         <div class="questao-enunciado fs-6 text-dark mb-3">
                             ${descricaoFormatada}
@@ -742,12 +777,17 @@ document.addEventListener('DOMContentLoaded', () => {
         btnLimparFiltros.addEventListener('click', () => {
             if (selectDisciplina) selectDisciplina.value = '';
             if (selectTema) selectTema.value = '';
+            if (selectSubtema) {
+                selectSubtema.value = '';
+                selectSubtema.disabled = true;
+            }
             if (selectAno) selectAno.value = '';
             if (selectAutor) selectAutor.value = '';
             if (selectStatus) selectStatus.value = '';
             if (inputBusca) inputBusca.value = '';
 
             atualizarSelectTemas();
+            atualizarSelectSubtemas();
             buscarQuestoes(1);
         });
     }

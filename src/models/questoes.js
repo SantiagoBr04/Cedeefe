@@ -63,6 +63,13 @@ export default (sequelize, DataTypes) => {
             foreignKey: 'questao_cod',
             as: 'reportes'
         });
+
+        Questao.belongsToMany(models.Subtema, {
+            through: models.QuestaoSubtema,
+            foreignKey: 'questao_cod',
+            otherKey: 'subtema_cod',
+            as: 'subtemas'
+        });
     }
 
     return Questao

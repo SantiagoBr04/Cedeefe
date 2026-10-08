@@ -25,7 +25,7 @@ async function resetDatabase() {
         }
 
         console.log("Inserindo disciplinas padrão...");
-        const disciplinas = ['Português', 'Matemática', 'Ciências da Natureza', 'Ciências Humanas'];
+        const disciplinas = ['Língua Portuguesa', 'Matemática', 'Ciências da Natureza', 'Ciências Humanas'];
         for (const desc of disciplinas) {
             await db.Disciplina.findOrCreate({ where: { descricao: desc } });
         }

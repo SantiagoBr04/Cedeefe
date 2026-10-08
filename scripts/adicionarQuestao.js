@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let disciplinasCache = [];
     let temasCache = [];
+    let subtemasCache = [];
 
     // Instancia a sessão de imagens para controlar o upload/descarte nesta questão
     const sessaoImagens = new SessaoImagensQuestao();
@@ -43,13 +44,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Carrega Disciplinas e Temas da API
     async function carregarAuxiliares() {
         try {
-            const [respDisc, respTemas] = await Promise.all([
+            const [respDisc, respTemas, respSubtemas] = await Promise.all([
                 fetch(`${API_BASE_URL}/disciplinas`, { headers: { Authorization: `Bearer ${token}` } }),
-                fetch(`${API_BASE_URL}/temas`, { headers: { Authorization: `Bearer ${token}` } })
+                fetch(`${API_BASE_URL}/temas`, { headers: { Authorization: `Bearer ${token}` } }),
+                fetch(`${API_BASE_URL}/subtemas`, { headers: { Authorization: `Bearer ${token}` } })
             ]);
 
             if (respDisc.ok) disciplinasCache = await respDisc.json();
             if (respTemas.ok) temasCache = await respTemas.json();
+            if (respSubtemas.ok) subtemasCache = await respSubtemas.json();
 
             renderizarSelectDisciplinas();
         } catch (err) {
@@ -81,7 +84,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             selectTema.innerHTML = '<option value="">-- Nenhum tema específico --</option>' + temasFiltrados.map(t =>
                 `<option value="${t.cod}">${t.descricao || t.nome || `Tema #${t.cod}`}</option>`
             ).join('');
+            
+            const containerSubtemas = document.getElementById('container-subtemas-add');
+            if (containerSubtemas) {
+                containerSubtemas.innerHTML = '<div class="text-muted small mt-2">Selecione um tema com subtemas.</div>';
+            }
         });
+    }
+    
+    if (selectTema) {
+        selectTema.addEventListener('change', (e) => {
+            const temaCod = e.target.value;
+            const containerSubtemas = document.getElementById('container-subtemas-add');
+            if (containerSubtemas) {
+                const subtemasFiltrados = temaCod ? subtemasCache.filter(s => String(s.tema_cod) === String(temaCod)) : [];
+                if (subtemasFiltrados.length === 0) {
+                    containerSubtemas.innerHTML = '<div class="text-muted small mt-2">Nenhum subtema ou selecione um tema.</div>';
+                } else {
+                    containerSubtemas.innerHTML = subtemasFiltrados.map(s => `
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input check-subtema" type="checkbox" value="${s.cod}" id="subt-add-${s.cod}">
+                            <label class="form-check-label" for="subt-add-${s.cod}">
+                                ${escapeHtml(s.descricao)}
+                            </label>
+                        </div>
+                    `).join('');
+                }
+            }
+        });
+    }
+
+    // Helper for encoding HTML
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 
     // 3. Renderiza as 5 Alternativas (A, B, C, D, E)
@@ -156,6 +197,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const disciplinaCod = selectDisciplina.value;
         const temaCod = selectTema ? selectTema.value : null;
+        
+        const checksSubtemas = document.querySelectorAll('.check-subtema:checked');
+        const subtemasCods = Array.from(checksSubtemas).map(cb => parseInt(cb.value, 10));
+
         const autor = document.getElementById('autor-input').value.trim();
         const ano = document.getElementById('ano-input').value;
 
@@ -187,6 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.append('descricao', enunciadoHtml);
         formData.append('disciplina_cod', disciplinaCod);
         if (temaCod) formData.append('tema_cod', temaCod);
+        if (subtemasCods.length > 0) formData.append('subtemas_cods', JSON.stringify(subtemasCods));
         if (autor) formData.append('autor', autor);
         if (ano) formData.append('ano', ano);
         if (explicacaoHtml) formData.append('explicacao', explicacaoHtml);

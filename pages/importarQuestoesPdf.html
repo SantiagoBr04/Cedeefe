@@ -26,9 +26,8 @@
 
     <div class="content">
         <div class="header-importacao mb-4">
-            <h2><i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>Importar Questões de Prova (PDF)</h2>
-            <p class="text-muted">Envie o PDF da prova e o PDF do gabarito oficial. A IA analisará o documento, extrairá
-                enunciados, alternativas e marcará as respostas corretas para sua revisão antes de salvar.</p>
+            <h2><i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>Importar Questões de Prova</h2>
+            <p class="text-muted">Você pode enviar os PDFs diretamente para análise automática ou usar a plataforma do Gemini no seu navegador e colar o resultado estruturado aqui.</p>
         </div>
 
         <!-- Alerta de Notificação -->
@@ -36,8 +35,7 @@
 
         <!-- Seção 1: Formulário de Upload e Metadados Globais -->
         <div class="card card-custom p-4 mb-4" id="card-upload">
-            <h4 class="card-title mb-3"><i class="bi bi-upload me-2 text-verde"></i>1. Seleção dos Arquivos e Metadados
-            </h4>
+            <h4 class="card-title mb-3"><i class="bi bi-robot me-2 text-verde"></i>Opção A: Análise Automática de PDF</h4>
 
             <form id="form-upload-pdf">
                 <div class="row g-3 mb-3">
@@ -75,13 +73,47 @@
                 </div>
 
                 <button type="submit" class="btn btn-verde btn-lg w-100 mb-2" id="btn-analisar">
-                    <i class="bi bi-cpu-fill me-2"></i>Analisar PDFs com IA Gemini
+                    <i class="bi bi-cpu-fill me-2"></i>Analisar PDFs Automaticamente
                 </button>
-
-                <a href="revisarImportacaoPdf.html" class="btn btn-outline-primary btn-md w-100" id="btn-ir-revisao">
-                    <i class="bi bi-card-checklist me-2"></i>Ir para Página de Revisão / Ver Rascunhos
-                </a>
             </form>
+        </div>
+
+        <!-- Opção B: Importação Manual via Chat -->
+        <div class="card card-custom p-4 mb-4" id="card-manual">
+            <h4 class="card-title mb-3"><i class="bi bi-chat-square-text me-2 text-primary"></i>Opção B: Importação Manual via Chat do Gemini</h4>
+            <p class="text-muted mb-4">Use esta opção caso os arquivos sejam grandes demais ou a API apresente instabilidade. O prompt gerado abaixo já inclui a taxonomia de disciplinas e temas atualizada do seu banco de dados.</p>
+            
+            <div class="row g-4">
+                <div class="col-12 col-lg-5">
+                    <div class="p-3 border rounded bg-light">
+                        <h5>1. Copiar Instruções</h5>
+                        <p class="small text-muted mb-2">Clique no botão para copiar as instruções atualizadas com a taxonomia do banco.</p>
+                        <button class="btn btn-outline-primary w-100 mb-3" id="btn-copiar-prompt">
+                            <i class="bi bi-clipboard me-2"></i>Copiar Prompt para o Chat
+                        </button>
+                        <p class="small mb-0">Após copiar, acesse o <a href="https://gemini.google.com/" target="_blank" class="fw-bold">Google Gemini</a>, cole o prompt e anexe os PDFs da prova e gabarito lá.</p>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-lg-7">
+                    <div class="p-3 border rounded bg-light">
+                        <h5>2. Colar Resultado</h5>
+                        <p class="small text-muted mb-2">Cole o bloco de código JSON devolvido pelo Gemini aqui.</p>
+                        <form id="form-importar-json">
+                            <textarea class="form-control mb-3 font-monospace small" id="json-input" rows="6" placeholder="```json\n{\n  &quot;questoes&quot;: [...]\n}\n```" required></textarea>
+                            <button type="submit" class="btn btn-primary w-100" id="btn-processar-json">
+                                <i class="bi bi-braces me-2"></i>Processar e Gerar Rascunho
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mb-5">
+            <a href="revisarImportacaoPdf.html" class="btn btn-outline-secondary btn-lg" id="btn-ir-revisao">
+                <i class="bi bi-card-checklist me-2"></i>Ver Rascunhos Salvos / Ir para Revisão
+            </a>
         </div>
 
         <!-- Seção 2: Loading Status -->

@@ -9,7 +9,7 @@ async function runSeeders() {
         
         console.log("Inserindo disciplinas padrões...");
         const disciplinas = [
-            'Português', 
+            'Língua Portuguesa', 
             'Matemática', 
             'Ciências da Natureza', 
             'Ciências Humanas'

@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-    const Tema = sequelize.define('Tema', {
+    const Subtema = sequelize.define('Subtema', {
         cod: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -10,31 +10,32 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
             allowNull: false      
         },
-        disciplina_cod: {
+        tema_cod: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'disciplina',
+                model: 'tema',
                 key: 'cod'
             },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE'
         }
     }, {
-        tableName: 'tema'
+        tableName: 'subtema'
     });
 
-    Tema.associate = (models) => {
-        Tema.belongsTo(models.Disciplina, {
-            foreignKey: 'disciplina_cod',
-            targetKey: 'cod',
-            as: 'disciplina'
-        })
-        Tema.hasMany(models.Subtema, {
+    Subtema.associate = (models) => {
+        Subtema.belongsTo(models.Tema, {
             foreignKey: 'tema_cod',
-            as: 'subtemas'
-        })
+            as: 'tema'
+        });
+        Subtema.belongsToMany(models.Questao, { 
+            through: models.QuestaoSubtema,
+            foreignKey: 'subtema_cod',
+            otherKey: 'questao_cod',
+            as: 'questoes' 
+        });
     }
 
-    return Tema
+    return Subtema;
 }

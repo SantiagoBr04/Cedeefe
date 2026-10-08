@@ -13,6 +13,7 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
 
 - **Instalar Dependências:** `npm install`
 - **Popular o Banco de Dados:** `npm run seed` (executa `node src/seeders/run.js` para popular disciplinas e questões base)
+- **Popular Taxonomia (Temas e Subtemas):** `npm run seed:taxonomia` (lê a taxonomia e insere as categorias sem sobrescrever dados)
 - **Iniciar Backend (Desenvolvimento):** `npm run dev` (utiliza `nodemon src/server.js`)
 - **URL Base do Backend:** `http://localhost:3000`
 - **Testes Automatizados:** Não há suíte ou comando de testes automatizados configurado no `package.json`.
@@ -53,9 +54,11 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
   - `/api/disciplinas` (`disciplinaRoutes.js`)
   - `/api/estatisticas` (`estatisticasRoutes.js`)
   - `/api/temas` (`temaRoutes.js`)
+  - `/api/subtemas` (`subtemaRoutes.js`)
   - `/api/baralhos` (`baralhoRoutes.js`)
   - `/api/cartoes` (`cartaoRoutes.js`)
   - `/api/admin` (`adminRoutes.js`)
+  - `/api/roadmaps` (`roadmapRoutes.js`)
 - **Arquivos Estáticos:** A rota `/imagens` serve estaticamente o diretório `uploads/` (usado para imagens de cartões, fotos de perfil de usuário e ilustrações de questões).
 - **Models:** Factories do Sequelize localizadas em `src/models/`, carregadas centralizadamente por `src/models/index.js` e associadas via método `associate` de cada model.
 
@@ -158,9 +161,11 @@ O **Cedeefe** é uma plataforma de estudos voltada para auxiliar estudantes na p
 - **Gerenciamento Administrativo (`/api/admin`):**
   - Rotas protegidas por `authMiddleware` + `adminMiddleware`.
   - Permite listar e excluir usuários (`GET/DELETE /api/admin/usuarios`), gerenciar listas da plataforma (`GET/DELETE /api/admin/listas`), visualizar o `dashboardAdm.html` e gerenciar questões reportadas (`questoesReportadas.html`).
-- **Gestão de Temas (`/api/temas`):**
-  - Criação, edição e exclusão de temas restritas a administradores (`POST/PUT/DELETE /api/temas`).
-  - Leitura aberta para usuários autenticados por disciplina (`GET /api/temas/disciplina/:disciplina_cod`).
+- **Gestão de Temas e Subtemas (`/api/temas` e `/api/subtemas`):**
+  - O sistema possui uma taxonomia estruturada em 3 níveis: **Disciplina -> Tema -> Subtemas**.
+  - As questões são associadas a no máximo 1 Tema (tabela `questoes.tema_cod`) e múltiplos Subtemas via relação N:N (`questao_subtema`).
+  - Criação, edição e exclusão restritas a administradores.
+  - Leitura aberta para usuários autenticados por disciplina (`GET /api/temas/disciplina/:disciplina_cod`) e por tema (`GET /api/subtemas?tema_cod=X`).
 
 ---
 

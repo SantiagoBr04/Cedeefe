@@ -9,7 +9,7 @@ const listaController = {
     const t = await db.sequelize.transaction();
     try {
       // Receber os criterios
-      const { quantidade, disciplinas, nome, descricao, disciplina_cod } = req.body;
+      const { quantidade, disciplinas, nome, descricao, disciplina_cod, tema_cod } = req.body;
       const usuario_cod = req.userId;
 
       if (!quantidade || !disciplinas) {
@@ -35,6 +35,7 @@ const listaController = {
         attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod', 'autor', 'ano'],
         where: {
           disciplina_cod: disciplinas,
+          ...(tema_cod ? { tema_cod } : {}),
           ...(idsUsados.length > 0 ? { cod: { [Op.notIn]: idsUsados } } : {})
         },
         order: db.sequelize.random(),
@@ -59,6 +60,7 @@ const listaController = {
           attributes: ['cod', 'descricao', 'imagem_url', 'explicacao', 'tema_cod', 'disciplina_cod', 'autor', 'ano'],
           where: {
             disciplina_cod: disciplinas,
+            ...(tema_cod ? { tema_cod } : {}),
             ...(idsExcluirParaReciclagem.length > 0 ? { cod: { [Op.notIn]: idsExcluirParaReciclagem } } : {})
           },
           order: db.sequelize.random(),

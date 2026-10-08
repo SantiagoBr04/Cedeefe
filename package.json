@@ -8,6 +8,7 @@
     "dev": "nodemon --ignore uploads/ --ignore 'uploads/*' --ignore 'uploads/**/*' src/server.js",
     "seed": "node src/seeders/run.js",
     "seed:partiuif": "node src/seeders/partiuIF.js",
+    "seed:taxonomia": "node src/seeders/taxonomiaPdf.js",
     "db:reset": "node src/seeders/reset.js"
   },
   "keywords": [],
