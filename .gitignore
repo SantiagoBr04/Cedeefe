@@ -6,5 +6,7 @@ node_modules/
 # Ignora o conteúdo de uploads mas mantém as pastas no Git
 uploads/*
 !uploads/.gitkeep
+!uploads/rascunhos/
 uploads/rascunhos/*
 !uploads/rascunhos/.gitkeep
+!uploads/rascunhos/*.json

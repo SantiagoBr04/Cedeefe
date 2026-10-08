@@ -1,0 +1,1248 @@
+{
+  "loteId": "1791489044829_652",
+  "revisada": false,
+  "dataCriacao": "2026-10-08T19:50:44.829Z",
+  "questoes": [
+    {
+      "numero": 1,
+      "enunciado": "Leia atentamente a tira abaixo:\n\n<i>Chico Bento em Bom Português\n- Intão, fessora... quar são minhas nota?\n- Como?\n- Quar são minhas nota?\n- Quais são as minhas notas, Chico!\n- I eu qui vô sabe? Ocê também feiz prova?\n- Isso é lá português que se fale? Já pro castigo!\n- Mais...\n- E amanhã quero você o fino no português!</i>\n\n<i>(Fonte: SOUSA, M. Chico Bento. 1995. Disponível em: http://sopadeletrasunip.blogspot.com/2012/10/pluralidade-cultural-pluralidade.html. Acesso em: 11 jun. 2019.)</i>\n\nConsiderando o texto e as variações de uso da linguagem, assinale a alternativa que apresenta a interpretação mais adequada:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Estilística e Variação Linguística",
+      "subtemas_sugeridos": [
+        "Variação Linguística (Nível Coloquial vs. Norma Culta, Gírias)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: A interpretação mais adequada da tirinha com foco na variação linguística apresentada.\n2. Conhecimentos necessários: Variação linguística (variedade caipira/rural vs. norma culta) e preconceito linguístico.\n3. Interpretação das informações e construção da resposta: Chico Bento emprega uma variedade linguística típica do meio rural (\"quar são minhas nota\"). Em vez de acolher a comunicação e ensinar adequação de contextos, a professora pune o menino (\"Isso é lá português que se fale? Já pro castigo!\"), configurando preconceito linguístico.\n4. Resolução: A alternativa D reflete com exatidão a atitude punitiva e preconceituosa da professora frente à variante regional/rural falada por Chico Bento.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "A professora demonstrou respeito à variante linguística usada por Chico Bento, mas colocou-o de castigo, porque o garoto se negou a aprender outra variante que ela tentou, pacientemente, ensinar-lhe.",
+          "correta": false
+        },
+        {
+          "texto": "A professora de Chico Bento reclamou com ele, colocando-o de castigo porque ele foi inconveniente ao cobrar as suas notas.",
+          "correta": false
+        },
+        {
+          "texto": "Chico Bento foi castigado pela professora porque discordou das notas recebidas.",
+          "correta": false
+        },
+        {
+          "texto": "A professora demonstra uma postura preconceituosa em relação à fala de Chico Bento, que utiliza uma linguagem característica de regiões rurais.",
+          "correta": true
+        },
+        {
+          "texto": "Chico saiu feliz da escola, porque recebeu suas notas e ainda aprendeu o \"bom português\" ensinado pela professora.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 3,
+      "subtemas_cods": [
+        10
+      ]
+    },
+    {
+      "numero": 2,
+      "enunciado": "Normalmente fazendo uso do humor, para realizar uma crítica ou provocar reflexão acerca de algum tema da atualidade, as charges utilizam tanto a linguagem verbal quanto a não verbal na transmissão da mensagem. Considere a ilustração a seguir e assinale a alternativa que melhor caracterize sua crítica central:\n\n[Ilustração: Um homem sendo elevado/carregado pelo ar ao segurar a corda presa a um botijão de gás que flutua como se fosse um balão sobre a cidade.]\n\n<i>(Fonte: https://www.tribunaribeirao.com.br/site/charge-18-de-maio-de-2019/. Acesso em 13 jun. 2019.)</i>",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Identificação de Gêneros Textuais (Fábulas, Crônicas, Notícias, Poemas, Tirinhas)",
+        "Interpretação Direta e Inferência"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a crítica central expressa pela linguagem não verbal na charge.\n2. Conhecimentos necessários: Interpretação de charges, linguagem visual e metáforas cotidianas.\n3. Interpretação das informações e construção da resposta: O botijão de gás flutuando alto no ar, levando o homem assustado com ele, metaforiza o preço do gás de cozinha que \"subiu nas alturas\".\n4. Resolução: A crítica gira em torno do aumento exorbitante e do alto custo do gás de cozinha (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "O desemprego e suas consequências.",
+          "correta": false
+        },
+        {
+          "texto": "O estresse da vida moderna nas grandes metrópoles.",
+          "correta": false
+        },
+        {
+          "texto": "A proibição quanto a soltar balões juninos.",
+          "correta": false
+        },
+        {
+          "texto": "O alto preço do gás de cozinha na atualidade.",
+          "correta": true
+        },
+        {
+          "texto": "A criatividade do brasileiro para se locomover nas grandes cidades.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        2,
+        1
+      ]
+    },
+    {
+      "numero": 3,
+      "enunciado": "Leia o texto a seguir:\n\n<b>Apagão atinge 47,4 milhões de pessoas na Argentina e no Uruguai</b>\n\nUm apagão deixou sem luz na manhã de hoje (16) a Argentina e o Uruguai. De acordo com a empresa de distribuição de energia uruguaia, UTE (Administração Nacional de Usinas e Transmissões Elétricas), o apagão teve início pouco depois das 7h.\n\"Às 7h06 um defeito na rede argentina afetou o sistema interligado, deixando todo o território nacional sem serviço, assim como várias províncias do país vizinho\", informou a empresa por meio do Twitter.\nA UTE disse ainda que está levantando as causas, que já existem cidades do litoral uruguaio com o serviço de energia restabelecido e que segue trabalhando para o restabelecimento total do serviço.\nA empresa argentina Edesur informou que houve uma \"falha maciça no sistema de interconexão elétrica\". O apagão afetou a capital, Buenos Aires, e diversas províncias do país. A empresa disse que a energia já começou a retornar em Buenos Aires, mas que o processo de normalização do serviço \"exigirá várias horas.\"\n\"Nosso centro de controle iniciou as demandas de padronização e lentamente começa a restaurar o serviço de energia para a rede\", disse a empresa. Entramos nos primeiros 34 mil clientes.\nA Argentina e o Uruguai compartilham um sistema interconectado de energia elétrica, centralizado na Usina Binacional de Salto Grande, localizada a cerca de 450 quilômetros ao norte de Buenos Aires. O apagão afetou cerca de 47,4 milhões de habitantes, 44 milhões na Argentina e 3,4 milhões no Uruguai.\n\n<i>(Fonte: NASCIMENTO, L. Apagão atinge 47,4 milhões de pessoas na Argentina e no Uruguai. 16 de junho de 2019. Disponível em: http://agenciabrasil.ebc.com.br/internacional/noticia/2019-06/apagao-atinge-474-milhoes-de-pessoas-na-argentina-e-no-uruguai. Acesso em: 18 jun. 2019.)</i>\n\nLevando-se em conta as características do texto, como linguagem, suporte da publicação, público-alvo e assunto tratado, é possível caracterizá-lo como pertencente ao gênero textual:\n(A) Crônica, uma vez que um assunto do cotidiano é tratado.\n(B) Notícia, já que informa sobre um acontecimento real com linguagem clara e objetiva.\n(C) Conto, pois a linguagem é formal e o texto possui um narrador-observador.\n(D) Resenha, pois apresenta uma síntese da situação acompanhada de um posicionamento crítico de seu autor.\n(E) Artigo de opinião, porque prevalece o caráter argumentativo no trecho.",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Identificação de Gêneros Textuais (Fábulas, Crônicas, Notícias, Poemas, Tirinhas)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Classificação do gênero textual do texto apresentado.\n2. Conhecimentos necessários: Gêneros jornalísticos (notícia, reportagem, crônica, artigo de opinião).\n3. Interpretação das informações e construção da resposta: O texto tem como finalidade informar fatos recentes e de interesse público (um apagão internacional), de forma impessoal, direta, clara e objetiva, contendo lide e depoimentos oficiais.\n4. Resolução: Portanto, trata-se do gênero Notícia (alternativa B).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Crônica, uma vez que um assunto do cotidiano é tratado.",
+          "correta": false
+        },
+        {
+          "texto": "Notícia, já que informa sobre um acontecimento real com linguagem clara e objetiva.",
+          "correta": true
+        },
+        {
+          "texto": "Conto, pois a linguagem é formal e o texto possui um narrador-observador.",
+          "correta": false
+        },
+        {
+          "texto": "Resenha, pois apresenta uma síntese da situação acompanhada de um posicionamento crítico de seu autor.",
+          "correta": false
+        },
+        {
+          "texto": "Artigo de opinião, porque prevalece o caráter argumentativo no trecho.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        2
+      ]
+    },
+    {
+      "numero": 4,
+      "enunciado": "Leia a tirinha a seguir:\n\n<i>As 100 fotos que não abalaram o Instagram</i>\n- Primeiro dia de aula do filho\n- Tatuagem que todo mundo já tem (símbolo do infinito)\n- Ídolos minúsculos\n\n<i>(Por André Dahmer. Fonte: https://deposito-de-tirinhas.tumblr.com/. Acesso em: 19 ago. 2019.)</i>\n\nConsiderando o 1º quadrinho da tirinha, o termo <b>Instagram</b>, na organização sintática da oração, funciona como:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Morfologia e Sintaxe (Gramática Aplicada)",
+      "subtemas_sugeridos": [
+        "Função Sintática e Sujeito"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: A função sintática da palavra \"Instagram\" na oração do primeiro quadro.\n2. Conhecimentos necessários: Termos integrantes da oração (objeto direto / complemento verbal).\n3. Interpretação das informações e construção da resposta: Na oração \"As 100 fotos que não abalaram o Instagram\", o verbo \"abalaram\" é transitivo direto (quem abala, abala algo ou alguém). O termo \"o Instagram\" completa o sentido do verbo transitivo direto sem preposição obrigatória.\n4. Resolução: Trata-se, portanto, de um objeto direto, que é uma das formas de complemento verbal (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "verbo",
+          "correta": false
+        },
+        {
+          "texto": "adjunto adnominal",
+          "correta": false
+        },
+        {
+          "texto": "complemento nominal",
+          "correta": false
+        },
+        {
+          "texto": "complemento verbal",
+          "correta": true
+        },
+        {
+          "texto": "sujeito",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 2,
+      "subtemas_cods": [
+        8
+      ]
+    },
+    {
+      "numero": 5,
+      "enunciado": "Leia o texto a seguir e responda a questão.\n\n<b>A bola</b>\n\nO pai deu uma bola de presente ao filho. Lembrando o prazer que sentira ao ganhar sua primeira bola do pai. Uma número 5, oficial de couro. Agora não era mais de couro, era de plástico. Mas era uma bola. O garoto agradeceu, desembrulhou a bola e disse \"Legal!\". Ou o que os garotos dizem hoje em dia quando não gostam do presente ou não querem magoar o velho. Depois começou a girar a bola, à procura de alguma coisa.\nComo é que liga? - Perguntou.\nComo, como é que liga? Não se liga.\nO garoto procurou dentro do papel de embrulho.\nNão tem manual de instrução?\nO pai começou a desanimar e pensar que os tempos são outros. Que os tempos são decididamente outros.\nNão precisa manual de instrução.\nO que é que ela faz?\nEla não faz nada, você é que faz coisas com ela.\nO quê?\nControla, chuta...\nAh, então é uma bola.\nClaro que é uma bola.\nUma bola, bola. Uma bola mesmo. Você pensou que fosse o quê?\nNada, não.\nO garoto agradeceu, disse \"legal\" de novo, e dali a pouco o pai o encontrou na frente da tevê, com a bola do seu lado, manejando os controles do videogame. Algo chamado Monster Ball, em que times de monstrinhos disputavam a posse de uma bola em forma de blip eletrônico na tela ao mesmo tempo em que tentavam se destruir mutuamente. O garoto era bom no jogo. Tinha coordenação e raciocínio. Estava ganhando da máquina.\nO pai pegou a bola nova e ensinou algumas embaixadinhas. Conseguiu equilibrar a bola no peito do pé, como antigamente, e chamou o garoto.\nFilho, olha.\nO garoto disse \"Legal\" mas não desviou os olhos da tela. O pai segurou a bola com as mãos e a cheirou, tentando recapturar mentalmente o cheiro de couro. A bola cheirava a nada. Talvez um manual de instrução fosse uma boa ideia, pensou. Mas em inglês, para a garotada se interessar.\n\n<i>(Fonte: Veríssimo, L. F. A bola. Comédias da vida privada; edição especial para as escolas. Porto Alegre: L&PM, 1996.)</i>\n\nNa crônica \"A bola\", o menino verbaliza a expressão \"Legal!\" ao desembrulhar o presente. Sobre o uso dessa expressão no texto, podemos afirmar que ela:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Interpretação Direta e Inferência",
+        "Ambiguidade e Efeitos de Sentido (Humor e Ironia)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: O sentido e a intenção da expressão \"Legal!\" dita pelo garoto ao desembrulhar o presente.\n2. Conhecimentos necessários: Inferência e leitura interpretativa do texto literário.\n3. Interpretação das informações e construção da resposta: O narrador esclarece logo após a fala: \"Ou o que os garotos dizem hoje em dia quando não gostam do presente ou não querem magoar o velho\", e depois o garoto a abandona de lado para jogar videogame.\n4. Resolução: Portanto, expressa desinteresse ou descaso pelo presente que recebeu do pai (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "sugere o desinteresse do filho por brinquedos eletrônicos.",
+          "correta": false
+        },
+        {
+          "texto": "expressa o interesse do filho em aprender a usar a bola.",
+          "correta": false
+        },
+        {
+          "texto": "revela a indignação do filho em receber o presente do pai.",
+          "correta": false
+        },
+        {
+          "texto": "demonstra o entusiasmo do filho ao receber o presente dado pelo pai.",
+          "correta": false
+        },
+        {
+          "texto": "manifesta o descaso do filho pelo presente que seu pai lhe deu.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        1,
+        3
+      ]
+    },
+    {
+      "numero": 6,
+      "enunciado": "Leia o texto para responder as questões.\n\n<b>Adolescentes que passam menos tempo na frente de telas são mais felizes</b>\n\nSe você conhece algum adolescente é bem provável que tenha ficado incomodado com a frequência em que ele checa o celular. Agora, se você é um adolescente, é bem provável que tenha ficado incomodado com a frequência em que pessoas mais velhas reclamam do seu uso do celular. Agora a ciência revelou que um dos lados está certo. Má notícia para os mais jovens. Seus pais têm toda razão: aquele iPhone te deixa infeliz.\n[...] Entre os anos de 1991 e 2016, cientistas da Universidade de Michigan entrevistaram 1,1 milhão de alunos que estavam no nono ano do ensino fundamental, no primeiro e no terceiro ano do ensino médio.\n[...]\nOs resultados mostravam que, quanto mais tempo os jovens passavam na frente de uma tela, mais infelizes eles eram. Os adolescentes mais infelizes eram aqueles que usavam aparelhos eletrônicos por mais de 20 horas semanais. E os mais felizes, na outra ponta, eram aqueles que estavam acima da média nas interações ao vivo e abaixo da média no uso de redes sociais.\nMas não adianta jogar o celular dos adolescentes pela janela. O estudo concluiu que o uso moderado é o melhor caminho. Os jovens que passaram pouco tempo na frente das telas entre 1 e 5 horas semanais eram mais felizes do que aqueles sem qualquer tipo de contato com meios digitais. \"A razão pode ser porque eles acabam excluídos do contexto social de um colégio. Atualmente, é muito difícil manter uma amizade sem mandar mensagens, ou estar nas redes sociais\", afirma Twenge. [...]\n\n<i>(Fonte: GERMANO, F. Adolescentes que passam menos tempo na frente de telas são mais felizes. Revista Superinteressante. 19 de fev. de 2018. Disponível em: https://super.abril.com.br/comportamento/adolescentes-que-passam-menos-tempo--na-frente-de-telas-sao-mais-felizes/. Acesso: 18 jun. 2019.)</i>\n\nA notícia é um gênero textual presente no nosso dia a dia. Podemos afirmar que a função principal da notícia \"Adolescentes que passam menos tempo na frente de telas são mais felizes\" é:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Identificação de Gêneros Textuais (Fábulas, Crônicas, Notícias, Poemas, Tirinhas)",
+        "Interpretação Direta e Inferência"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a função principal do texto jornalístico apresentado.\n2. Conhecimentos necessários: Objetivo comunicativo da notícia.\n3. Interpretação das informações e construção da resposta: O texto tem como finalidade informar ao leitor a descoberta de uma pesquisa científica sobre a relação entre o tempo de tela e a felicidade dos jovens.\n4. Resolução: A principal finalidade é a informativa, relatando dados sobre a pesquisa realizada (alternativa A).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "informar sobre a pesquisa, que envolveu jovens e o uso de telas.",
+          "correta": true
+        },
+        {
+          "texto": "narrar o cotidiano de jovens que usam as telas exageradamente.",
+          "correta": false
+        },
+        {
+          "texto": "convencer os leitores dos riscos do uso exagerado das telas.",
+          "correta": false
+        },
+        {
+          "texto": "publicar todos os resultados da pesquisa da Universidade de Michigan.",
+          "correta": false
+        },
+        {
+          "texto": "argumentar que a felicidade pode ser garantida pelo uso de telas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        2,
+        1
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Leia o texto para responder as questões.\n\n<b>Adolescentes que passam menos tempo na frente de telas são mais felizes</b>\n\nSe você conhece algum adolescente é bem provável que tenha ficado incomodado com a frequência em que ele checa o celular. Agora, se você é um adolescente, é bem provável que tenha ficado incomodado com a frequência em que pessoas mais velhas reclamam do seu uso do celular. Agora a ciência revelou que um dos lados está certo. Má notícia para os mais jovens. Seus pais têm toda razão: aquele iPhone te deixa infeliz.\n[...] Entre os anos de 1991 e 2016, cientistas da Universidade de Michigan entrevistaram 1,1 milhão de alunos que estavam no nono ano do ensino fundamental, no primeiro e no terceiro ano do ensino médio.\n[...]\nOs resultados mostravam que, quanto mais tempo os jovens passavam na frente de uma tela, mais infelizes eles eram. Os adolescentes mais infelizes eram aqueles que usavam aparelhos eletrônicos por mais de 20 horas semanais. E os mais felizes, na outra ponta, eram aqueles que estavam acima da média nas interações ao vivo e abaixo da média no uso de redes sociais.\nMas não adianta jogar o celular dos adolescentes pela janela. O estudo concluiu que o uso moderado é o melhor caminho. Os jovens que passaram pouco tempo na frente das telas entre 1 e 5 horas semanais eram mais felizes do que aqueles sem qualquer tipo de contato com meios digitais. \"A razão pode ser porque eles acabam excluídos do contexto social de um colégio. Atualmente, é muito difícil manter uma amizade sem mandar mensagens, ou estar nas redes sociais\", afirma Twenge. [...]\n\n<i>(Fonte: GERMANO, F. Adolescentes que passam menos tempo na frente de telas são mais felizes. Revista Superinteressante. 19 de fev. de 2018. Disponível em: https://super.abril.com.br/comportamento/adolescentes-que-passam-menos-tempo--na-frente-de-telas-sao-mais-felizes/. Acesso: 18 jun. 2019.)</i>\n\nEm relação à notícia \"Adolescentes que passam menos tempo na frente de telas são mais felizes\", marque a alternativa CORRETA:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Estilística e Variação Linguística",
+      "subtemas_sugeridos": [
+        "Figuras de Linguagem (Metáfora, Personificação, Antítese, etc.)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a afirmação gramatical/estilística correta a respeito de trechos do texto.\n2. Conhecimentos necessários: Sentido conotativo (figurado), concordância verbal, graus de comparação e semântica modal/conjunções.\n3. Interpretação das informações e construção da resposta: Em \"jogar o celular dos adolescentes pela janela\", a expressão não se refere literalmente ao ato mecânico de atirar o aparelho pela janela, mas sim à atitude radical de banir/eliminar abruptamente o uso do celular na rotina dos filhos, configurando sentido figurado.\n4. Resolução: Portanto, a alternativa C está correta.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Na frase \"[...] é muito difícil manter uma amizade sem mandar mensagens, ou estar nas redes sociais\", a conjunção em destaque tem sentido de exclusão.",
+          "correta": false
+        },
+        {
+          "texto": "Caso o sujeito da sentença \"Seus pais têm toda razão\" fosse para o singular, manteríamos a forma verbal \"têm\".",
+          "correta": false
+        },
+        {
+          "texto": "Na frase \"Mas não adianta jogar o celular dos adolescentes pela janela\", a expressão em destaque tem sentido figurado.",
+          "correta": true
+        },
+        {
+          "texto": "Na frase \"A razão pode ser porque eles acabam excluídos do contexto social de um colégio\", a locução verbal em destaque confere um caráter de certeza à informação.",
+          "correta": false
+        },
+        {
+          "texto": "Na frase \"Os jovens que passaram pouco tempo na frente das telas eram mais felizes do que aqueles sem qualquer tipo de contato com meios digitais\", temos um comparativo de inferioridade.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 3,
+      "subtemas_cods": [
+        9
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "Leia o trecho a seguir de \"Harry Potter e a Pedra Filosofal\":\n\nO Sr. e a Sra. Dursley, da rua dos Alfeneiros, nº 4, se orgulhavam de dizer que eram perfeitamente normais, muito bem, obrigado. Eram as últimas pessoas no mundo que se esperaria que se metessem em alguma coisa estranha ou misteriosa, <u>porque</u> simplesmente não compactuavam com esse tipo de bobagem.\nO Sr. Dursley era diretor de uma firma chamada Grunnings, que fazia perfurações. Era um homem alto e corpulento quase sem pescoço, <u>embora</u> tivesse enormes bigodes. [...]\nOs Dursley tinham tudo que queriam, <u>mas</u> tinham também um segredo, e seu maior receio era que alguém o descobrisse.\n\n<i>(Fonte: ROWLING, J. K. Harry Potter e a pedra filosofal. Rio de Janeiro: Rocco, 2000, p. 7.)</i>\n\nConjunções são palavras que ligam orações ou termos. No trecho lido, há três conjunções sublinhadas. Com relação ao valor semântico, isto é, o sentido que essas conjunções expressam nos períodos, é correto afirmar que os itens sublinhados transmitem, respectivamente, as ideias de:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Morfologia e Sintaxe (Gramática Aplicada)",
+      "subtemas_sugeridos": [
+        "Conjunções e Valor Semântico (Causa, oposição, adição, etc.)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Os valores semânticos das conjunções sublinhadas (\"porque\", \"embora\" e \"mas\") na respectiva ordem.\n2. Conhecimentos necessários: Semântica das conjunções coordenativas e subordinativas.\n3. Interpretação das informações e construção da resposta: \n- \"porque simplesmente não compactuavam...\": valor explicativo (ou causal);\n- \"embora tivesse enormes bigodes\": valor concessivo;\n- \"mas tinham também um segredo\": embora \"mas\" costume ser adversativo, a correlação com \"também\" expressa valor aditivo (\"não só tinham tudo, como também tinham um segredo\"). A banca classificou como adição.\n4. Resolução: A sequência correspondente nas opções é explicação, concessão e adição (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "proporção, tempo e consequência.",
+          "correta": false
+        },
+        {
+          "texto": "soma, alternância e explicação.",
+          "correta": false
+        },
+        {
+          "texto": "conformidade, finalidade e condição.",
+          "correta": false
+        },
+        {
+          "texto": "explicação, concessão e adição.",
+          "correta": true
+        },
+        {
+          "texto": "conclusão, comparação e motivo.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 2,
+      "subtemas_cods": [
+        5
+      ]
+    },
+    {
+      "numero": 9,
+      "enunciado": "O valor do diâmetro de uma circunferência é de 2 cm. Se este mesmo diâmetro sofrer um acréscimo de 2 cm, podemos afirmar que a área da circunferência terá um aumento percentual de:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Geometria e Medidas",
+      "subtemas_sugeridos": [
+        "Área e Perímetro de Figuras Planas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: O aumento percentual da área de um círculo cujo diâmetro aumenta de 2 cm para 4 cm.\n2. Conhecimentos necessários: Área do círculo (A = π · r<sup>2</sup>) e cálculo de porcentagem de acréscimo.\n3. Interpretação das informações e construção da resposta:\n- Inicialmente: Diâmetro = 2 cm, logo raio r<sub>1</sub> = 1 cm. Área A<sub>1</sub> = π · 1<sup>2</sup> = π.\n- Após acréscimo de 2 cm: Diâmetro = 2 + 2 = 4 cm, logo raio r<sub>2</sub> = 2 cm. Área A<sub>2</sub> = π · 2<sup>2</sup> = 4π.\n4. Resolução: O aumento absoluto na área é de 4π - π = 3π. O aumento percentual é (3π / π) · 100% = 300% (alternativa B).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "400%",
+          "correta": false
+        },
+        {
+          "texto": "300%",
+          "correta": true
+        },
+        {
+          "texto": "50%",
+          "correta": false
+        },
+        {
+          "texto": "100%",
+          "correta": false
+        },
+        {
+          "texto": "200%",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 7,
+      "subtemas_cods": [
+        20
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "Um aluno dividiu um certo líquido de volume 4<sup>10</sup> ml em frascos com capacidade de 2<sup>10</sup> ml. Sabendo-se que cada frasco custou R$ 2,00, então, o valor gasto por ele foi de:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Aritmética e Matemática Básica",
+      "subtemas_sugeridos": [
+        "Operações Básicas e Expressões Numéricas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: O valor total gasto na compra dos frascos necessários para armazenar o volume de líquido dado.\n2. Conhecimentos necessários: Propriedades da potenciação e operações básicas.\n3. Interpretação das informações e construção da resposta:\n- Volume total = 4<sup>10</sup> = (2<sup>2</sup>)<sup>10</sup> = 2<sup>20</sup> ml.\n- Capacidade de cada frasco = 2<sup>10</sup> ml.\n- Número de frascos = 2<sup>20</sup> / 2<sup>10</sup> = 2<sup>20 - 10</sup> = 2<sup>10</sup> = 1024 frascos.\n4. Resolução: Cada frasco custa R$ 2,00, portanto o gasto foi de 1024 · 2 = R$ 2.048,00 (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "R$ 4.040,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 3.664,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 1.024,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 4,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 2.048,00",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 4,
+      "subtemas_cods": [
+        12
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "Um estudante foi desafiado a percorrer o trajeto demarcado pelo triângulo equilátero ABC.\n\n[Figura geométrica: Triângulo equilátero ABC com lados medindo 10 cm, indicando ângulos externos de 120° nos vértices B e C]\n\nSabendo que o lado do triângulo ABC mede 10 cm e considerando que o deslocamento do estudante seguirá o sentido anti-horário, ou seja, de A para B, de B para C e de C para A, responda:\nComo descrevemos os movimentos realizados por ele?",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Geometria e Medidas",
+      "subtemas_sugeridos": [
+        "Área e Perímetro de Figuras Planas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: A sequência correta de comandos de deslocamento e giro para percorrer o contorno do triângulo equilátero.\n2. Conhecimentos necessários: Ângulos internos e externos de polígonos regulares.\n3. Interpretação das informações e construção da resposta: O ângulo interno de um triângulo equilátero é 60°. Para mudar de direção ao longo da trajetória fechada no sentido anti-horário em cada vértice, o giro necessário é correspondente ao suplemento, ou seja, o ângulo externo: 180° - 60° = 120° para a esquerda.\n4. Resolução: O estudante parte de A para B (andar 10 cm para frente), gira 120° para a esquerda em B, anda 10 cm até C, gira 120° para a esquerda em C, e anda 10 cm até A (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Girar para esquerda 60° - Andar para frente 10 cm - Girar para esquerda 60° - Andar para frente 10 cm - Girar para esquerda 60° - Andar para frente 10 cm",
+          "correta": false
+        },
+        {
+          "texto": "Andar para frente 10 cm - Girar para esquerda 60° - Andar para frente 10 cm - Girar para esquerda 60° - Andar para frente 10 cm",
+          "correta": false
+        },
+        {
+          "texto": "Girar para esquerda 60° - Andar para frente 10 cm - Girar para direita 120° - Andar para frente 10 cm - Girar para direita 120°",
+          "correta": false
+        },
+        {
+          "texto": "Girar para esquerda 120° - Andar para frente 10 cm - Girar para esquerda 120° - Andar para frente 10 cm - Andar para frente 10 cm",
+          "correta": false
+        },
+        {
+          "texto": "Andar para frente 10 cm - Girar para esquerda 120° - Andar para frente 10 cm - Girar para esquerda 120° - Andar para frente 10 cm",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 7,
+      "subtemas_cods": [
+        20
+      ]
+    },
+    {
+      "numero": 12,
+      "enunciado": "O índice (I) de massa corporal de uma pessoa adulta é expresso pela relação: I = m / h<sup>2</sup> em que m é a massa do corpo expressa em quilogramas, e h é a altura da pessoa, em metros. O índice (I) possibilita categorizar uma pessoa adulta segundo a tabela a seguir:\n\n<b>Categorização da condição da saúde de uma pessoa adulta (homem e mulher) de acordo com o índice de massa corporal</b>\n\n- Abaixo do peso: Mulheres < 19,1 | Homens < 20,7\n- No peso normal: Mulheres 19,1 - 25,8 | Homens 20,7 - 26,4\n- Marginalmente acima do peso: Mulheres 25,8 - 27,3 | Homens 26,4 - 27,8\n- Acima do peso ideal: Mulheres 27,3 - 32,3 | Homens 27,8 - 31,1\n- Obeso: Mulheres > 32,3 | Homens > 31,1\n<i>(Fonte: Ministério da Saúde.)</i>\n\nCom base nas informações mencionadas anteriormente, uma mulher - cuja massa é de 72 quilogramas e cuja altura é de 1,6 metros - é considerada:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Aritmética e Matemática Básica",
+      "subtemas_sugeridos": [
+        "Operações Básicas e Expressões Numéricas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Categorizar a condição de saúde de uma mulher com massa de 72 kg e altura de 1,6 m conforme a tabela do IMC.\n2. Conhecimentos necessários: Cálculo de IMC (m / h<sup>2</sup>) e leitura de tabelas.\n3. Interpretação das informações e construção da resposta:\n- I = 72 / (1,6)<sup>2</sup> = 72 / 2,56 = 28,125 kg/m<sup>2</sup>.\n- Consultando a tabela para mulheres: a faixa de 27,3 a 32,3 corresponde a \"Acima do peso ideal\".\n4. Resolução: Como 28,125 está entre 27,3 e 32,3, ela é considerada \"acima do peso ideal\" (alternativa A).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "acima do peso ideal",
+          "correta": true
+        },
+        {
+          "texto": "obesa",
+          "correta": false
+        },
+        {
+          "texto": "marginalmente acima do peso",
+          "correta": false
+        },
+        {
+          "texto": "no peso normal",
+          "correta": false
+        },
+        {
+          "texto": "abaixo do peso",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 4,
+      "subtemas_cods": [
+        12
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "Julgue as afirmativas abaixo:\n\nI. O produto das raízes da equação x<sup>2</sup> - 4x + 3 = 0 é igual a 3.\nII. A equação x<sup>2</sup> - 4x + 4 = 0 possui duas raízes reais e iguais.\nIII. A equação x<sup>2</sup> - 9 = 0 possui duas raízes negativas.\nIV. A soma das raízes da equação x<sup>2</sup> - 5x + 6 = 0 é igual a -5.\n\nAssinale a alternativa que apresenta as afirmativas CORRETAS:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Álgebra",
+      "subtemas_sugeridos": [
+        "Equações do 2º Grau (Báscara, Soma e Produto)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Verificar a veracidade das afirmações sobre raízes de equações do 2º grau.\n2. Conhecimentos necessários: Relações de Girard (soma e produto das raízes) e discriminante (Δ).\n3. Interpretação das informações e construção da resposta:\n- I: P = c/a = 3/1 = 3 (Verdadeira).\n- II: Δ = (-4)<sup>2</sup> - 4(1)(4) = 16 - 16 = 0; portanto, possui duas raízes reais e iguais (x = 2) (Verdadeira).\n- III: x<sup>2</sup> = 9 => x = ±3; possui uma raiz positiva (3) e uma negativa (-3) (Falsa).\n- IV: S = -b/a = -(-5)/1 = 5, e não -5 (Falsa).\n4. Resolução: Estão corretas apenas as afirmativas I e II (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Apenas III e IV são verdadeiras",
+          "correta": false
+        },
+        {
+          "texto": "Apenas I e IV são verdadeiras",
+          "correta": false
+        },
+        {
+          "texto": "Apenas I, II e III são verdadeiras",
+          "correta": false
+        },
+        {
+          "texto": "Apenas I, II e IV são verdadeiras",
+          "correta": false
+        },
+        {
+          "texto": "Apenas I e II são verdadeiras",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 6,
+      "subtemas_cods": [
+        19
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "Um boleto bancário no valor de R$ 120,00 tem vencimento para a data 09/08/2019. A empresa emissária do documento lançou a seguinte promoção na tentativa de evitar a inadimplência, e distribuiu aos seus clientes:\n\n<b>ESTÁ COM PROBLEMAS PARA PAGAR SEUS BOLETOS?\nTEMOS UMA SOLUÇÃO</b>\n- Pagamento feito 1 dia antes do vencimento - desconto de 5%\n- Pagamento feito 2 dias antes do vencimento - desconto de 10%\n- Pagamento feito 3 dias antes do vencimento - desconto de 15%\n\nSe o cliente decidir realizar o pagamento deste boleto na data 07/08/2019, de quanto será o valor do desconto?",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Matemática Financeira e Estatística",
+      "subtemas_sugeridos": [
+        "Porcentagem e Descontos"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: O valor do desconto concedido ao pagar o boleto no dia 07/08/2019.\n2. Conhecimentos necessários: Cálculo de porcentagem.\n3. Interpretação das informações e construção da resposta: \n- Vencimento: 09/08/2019.\n- Data de pagamento: 07/08/2019, ou seja, exatamente 2 dias antes do vencimento.\n- Conforme a tabela, pagamento realizado 2 dias antes garante 10% de desconto.\n4. Resolução: Desconto = 10% de R$ 120,00 = 0,10 · 120 = R$ 12,00 (alternativa B).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "R$ 22,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 12,00",
+          "correta": true
+        },
+        {
+          "texto": "R$ 18,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 20,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 6,00",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 5,
+      "subtemas_cods": [
+        15
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "Em um comunicado geral, no início do período letivo, a professora de Matemática informou que faria 5 (cinco) avaliações escritas durante o semestre e que a nota final da disciplina seria composta pela média aritmética dessas avaliações. Assim, a aprovação se daria pela média igual ou superior a 7,0 (sete) pontos. João, aluno desta turma, recebeu as notas das 4 (quatro) primeiras avaliações e organizou-as em uma sequência, da seguinte forma:\n\n- Primeira avaliação: 5,8\n- Segunda avaliação: 6,5\n- Terceira avaliação: 7,0\n- Quarta avaliação: 8,2\n\nQual deverá ser a nota mínima de João, na quinta avaliação, para que ele obtenha aprovação no semestre?",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Matemática Financeira e Estatística",
+      "subtemas_sugeridos": [
+        "Média Aritmética"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: A nota mínima necessária na 5ª prova para que a média aritmética de 5 notas seja pelo menos 7,0.\n2. Conhecimentos necessários: Média aritmética simples.\n3. Interpretação das informações e construção da resposta:\n- A soma das 5 notas deve ser: 5 · 7,0 = 35,0.\n- A soma das 4 primeiras notas é: 5,8 + 6,5 + 7,0 + 8,2 = 27,5.\n4. Resolução: Nota mínima necessária na 5ª prova = 35,0 - 27,5 = 7,5 (alternativa A).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "7,5",
+          "correta": true
+        },
+        {
+          "texto": "8,0",
+          "correta": false
+        },
+        {
+          "texto": "7,0",
+          "correta": false
+        },
+        {
+          "texto": "6,0",
+          "correta": false
+        },
+        {
+          "texto": "6,5",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 5,
+      "subtemas_cods": [
+        17
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "A área de um terreno quadrado é igual a 100 m<sup>2</sup>. Nessas condições, o perímetro desse terreno é igual a:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Geometria e Medidas",
+      "subtemas_sugeridos": [
+        "Área e Perímetro de Figuras Planas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: O perímetro de um terreno quadrado cuja área é de 100 m<sup>2</sup>.\n2. Conhecimentos necessários: Propriedades do quadrado (área = L<sup>2</sup>; perímetro = 4L).\n3. Interpretação das informações e construção da resposta:\n- Lado do terreno: L = √100 = 10 m.\n4. Resolução: Perímetro = 4 · 10 = 40 m (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "50",
+          "correta": false
+        },
+        {
+          "texto": "10",
+          "correta": false
+        },
+        {
+          "texto": "20",
+          "correta": false
+        },
+        {
+          "texto": "25",
+          "correta": false
+        },
+        {
+          "texto": "40",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 7,
+      "subtemas_cods": [
+        20
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "Analise as afirmativas:\n\nI. A velocidade média de um móvel que percorre 80 m em 5 s é de 16 m/s.\nII. 72 km/h equivalem a 20 m/s.\nIII. 1,0 newton equivale a 10 metros.\n\nAssinale a alternativa que apresenta a(s) afirmativa(s) CORRETA(S):",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Física",
+      "subtemas_sugeridos": [
+        "Cinemática (Cálculo de Velocidade Média e Tempo)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Determinar a veracidade das três afirmações sobre grandezas físicas e cinemática.\n2. Conhecimentos necessários: Velocidade média (v = Δs/Δt), conversão de unidades (km/h para m/s) e grandezas físicas fundamentais.\n3. Interpretação das informações e construção da resposta:\n- I: v = 80 m / 5 s = 16 m/s (Correta).\n- II: 72 / 3,6 = 20 m/s (Correta).\n- III: Newton é unidade de força no SI, enquanto metro é unidade de comprimento; não possuem relação direta de equivalência (Incorreta).\n4. Resolução: Apenas as afirmativas I e II estão corretas (alternativa B).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "I e III, apenas",
+          "correta": false
+        },
+        {
+          "texto": "I e II, apenas",
+          "correta": true
+        },
+        {
+          "texto": "II e III, apenas",
+          "correta": false
+        },
+        {
+          "texto": "II, apenas",
+          "correta": false
+        },
+        {
+          "texto": "I, II e III",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 8,
+      "subtemas_cods": [
+        24
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "No dia 21 de maio do ano de 2018, os caminhoneiros iniciaram no Brasil uma greve, chamada Greve do Diesel, que durou até o dia 30 de maio. Entre as principais consequências da greve dos caminhoneiros estavam o desabastecimento de produtos alimentícios nos supermercados e a falta de combustível nos postos, pois os caminhões que geralmente realizam estas atividades estavam parados. Com isso, quando era divulgado que algum posto estava com novos estoques de combustível, o que se observava era a formação de enormes filas de motoristas na esperança de poderem reabastecer seus veículos. No entanto, como os estoques não eram grandes, a maioria deles não conseguia abastecer, e o que se via era um grande número de pessoas fazendo uso das Leis de Newton ao empurrarem seus automóveis, sem combustível, nas ruas ao redor desses postos.\n\nEm relação às aplicações das Leis de Newton, quando empurramos um carro sem combustível, considerando uma situação em que a rua seja plana, analise as afirmações abaixo e marque V para alternativas verdadeiras e F para as alternativas falsas.\n\n( ) Ao empurrar o carro, a força que fazemos sobre o carro é maior que a força que o carro faz sobre nós.\n( ) A força resultante que atua sobre o carro é igual ao produto da massa do carro pela aceleração que ele adquire.\n( ) Quando o carro inicia o movimento, a força resultante sobre ele é zero.\n\nA sequência que contém a ordem CORRETA das respostas é:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Física",
+      "subtemas_sugeridos": [
+        "Dinâmica (As Três Leis de Newton, Trabalho e Potência)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Julgar a veracidade de três afirmações a respeito das Leis de Newton aplicadas a empurrar um carro.\n2. Conhecimentos necessários: Segunda Lei de Newton (F = m · a) e Terceira Lei de Newton (Ação e Reação).\n3. Interpretação das informações e construção da resposta:\n- (1) Pela Terceira Lei de Newton (Ação e Reação), as forças trocadas entre a pessoa e o carro têm intensidades rigorosamente iguais (Falsa).\n- (2) Pela Segunda Lei de Newton (Princípio Fundamental da Dinâmica), F<sub>res</sub> = m · a (Verdadeira).\n- (3) Para iniciar o movimento a partir do repouso, o carro adquire aceleração, logo a força resultante não é nula (Falsa).\n4. Resolução: A sequência correta é F, V, F (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "V, V, F",
+          "correta": false
+        },
+        {
+          "texto": "V, V, V",
+          "correta": false
+        },
+        {
+          "texto": "F, F, V",
+          "correta": false
+        },
+        {
+          "texto": "V, F, F",
+          "correta": false
+        },
+        {
+          "texto": "F, V, F",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 8,
+      "subtemas_cods": [
+        25
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Leia atentamente os textos 1 e 2:\n\nTexto 1:\n\"Em 1869, um professor da Universidade de São Petersburgo, o russo Dmitri Mendeleev (1834-1907), concebeu um diagrama em que ordenava cerca de 60 elementos químicos então conhecidos em função de sua respectiva massa. Essa foi a primeira versão do que viria a ser conhecida como a moderna tabela periódica, hoje composta de 118 elementos, dispostos em 18 grupos (colunas) e 7 períodos (linhas).\"\n<i>(Fonte: Disponível em: https://revistapesquisa.fapesp.br/2019/03/14/a-encruzilhada-da-tabela-periodica/. Acesso em 19 jun. 2019.)</i>\n\nTexto 2:\n\"Você já ouviu falar do ununênio? Ununênio, ou mesmo Eka-Frâncio, é como se chama, provisoriamente, aquele que será o elemento de número atômico 119 da tabela periódica. Ele se localizará na família dos metais alcalinos, se assemelhando ao lítio, sódio, potássio, rubídio, césio, e frâncio, sendo responsável por iniciar o oitavo período da tabela de Henry Moseley e representado pelo símbolo Uue.\"\n<i>(Fonte: Disponível em: http://www.petquimica.ufc.br/ununenio-um-elemento-ainda-nao-sintetizado/. Acesso em 19 jun. 2019.)</i>\n\nOs textos 1 e 2 referem-se à disposição dos elementos químicos inseridos nos últimos anos na atual Tabela Periódica e mencionam que estes encontram-se, respectivamente, nos 7º e 8º períodos. Indique a alternativa abaixo que melhor define os períodos na Tabela Periódica:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Química",
+      "subtemas_sugeridos": [
+        "Estrutura Atômica e Tabela Periódica"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: A definição correta do significado dos períodos (linhas horizontais) na Tabela Periódica.\n2. Conhecimentos necessários: Estrutura da Tabela Periódica e distribuição eletrônica dos elementos.\n3. Interpretação das informações e construção da resposta: O número do período ao qual um átomo pertence corresponde ao número de níveis (camadas eletrônicas) ocupados por elétrons nesse átomo no estado fundamental.\n4. Resolução: Os períodos representam a quantidade de camadas eletrônicas (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Quantidade de elétrons na última camada.",
+          "correta": false
+        },
+        {
+          "texto": "Quantidade de prótons na última camada.",
+          "correta": false
+        },
+        {
+          "texto": "Quantidade de elétrons na camada de valência.",
+          "correta": false
+        },
+        {
+          "texto": "Quantidade de camadas eletrônicas.",
+          "correta": true
+        },
+        {
+          "texto": "Quantidade de prótons na camada de valência.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 9,
+      "subtemas_cods": [
+        28
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "Pedro, Paulo, Tiago, João e Marcos fizeram uma viagem com destino a Blumenau - SC. Todos iniciaram a viagem às 7h30min do mesmo dia. A tabela a seguir apresenta a cidade de origem de cada um, a distância entre Blumenau e a cidade de origem e a velocidade média da viagem.\n\n- Pedro | Origem: Santa Rosa do Sul - SC | Distância: 380 km | Velocidade Média: 95 km/h\n- Paulo | Origem: Rio do Sul - SC | Distância: 100 km | Velocidade Média: 50 km/h\n- Tiago | Origem: Concórdia - SC | Distância: 390 km | Velocidade Média: 65 km/h\n- João | Origem: Videira - SC | Distância: 280 km | Velocidade Média: 40 km/h\n- Marcos | Origem: São Bento do Sul - SC | Distância: 120 km | Velocidade Média: 40 km/h\n\nAssinale a alternativa que contém APENAS os indivíduos que concluíram a viagem antes do meio-dia.",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Física",
+      "subtemas_sugeridos": [
+        "Cinemática (Cálculo de Velocidade Média e Tempo)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Quais viajantes chegaram a Blumenau antes do meio-dia (12h00min), tendo saído às 7h30min (tempo máximo de viagem menor que 4h30min = 4,5 h).\n2. Conhecimentos necessários: Cálculo do tempo de percurso na cinemática (t = d / v).\n3. Interpretação das informações e construção da resposta:\n- Pedro: 380 / 95 = 4 h -> Chegada às 11h30min (antes do meio-dia).\n- Paulo: 100 / 50 = 2 h -> Chegada às 9h30min (antes do meio-dia).\n- Tiago: 390 / 65 = 6 h -> Chegada às 13h30min (após o meio-dia).\n- João: 280 / 40 = 7 h -> Chegada às 14h30min (após o meio-dia).\n- Marcos: 120 / 40 = 3 h -> Chegada às 10h30min (antes do meio-dia).\n4. Resolução: Os que concluíram antes do meio-dia foram Pedro, Paulo e Marcos (alternativa A).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Pedro, Paulo e Marcos.",
+          "correta": true
+        },
+        {
+          "texto": "Paulo, João e Marcos.",
+          "correta": false
+        },
+        {
+          "texto": "Paulo, Tiago e João.",
+          "correta": false
+        },
+        {
+          "texto": "Tiago, João e Marcos.",
+          "correta": false
+        },
+        {
+          "texto": "Pedro, Paulo e Tiago.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 8,
+      "subtemas_cods": [
+        24
+      ]
+    },
+    {
+      "numero": 21,
+      "enunciado": "Um piloto de Fórmula 1, durante a largada de uma corrida, ao observar as luzes de sinalização se apagarem, acelera seu carro até atingir a velocidade de 150 km/h. No entanto, ao avistar uma curva, observa que é necessário reduzir sua velocidade para 80 km/h a fim de contorná-la com segurança.\n\nCom relação aos dados apresentados na situação acima, analise as afirmações abaixo:\n\nI. A energia cinética do carro de Fórmula 1 aumenta desde a largada até ele atingir 150 km/h.\nII. Quando o piloto diminui sua velocidade de 150 km/h para 80 km/h, a fim de contornar a curva com segurança, a energia cinética do carro é mantida constante.\nIII. As velocidades do carro de Fórmula 1 citadas no enunciado da questão são apresentadas no Sistema Internacional de Unidades.\nIV. O que permite ao piloto contornar a curva com seu carro é a existência da força de atrito entre os pneus e o asfalto.\n\nAssinale a alternativa que contém a sequência CORRETA de informações em relação ao enunciado da questão.",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Física",
+      "subtemas_sugeridos": [
+        "Dinâmica (As Três Leis de Newton, Trabalho e Potência)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Verificar as afirmativas corretas sobre energia cinética, unidades do SI e dinâmica curvilínea.\n2. Conhecimentos necessários: Energia cinética (E<sub>c</sub> = m · v<sup>2</sup> / 2), unidades do Sistema Internacional (m/s para velocidade) e força centrípeta/atrito.\n3. Interpretação das informações e construção da resposta:\n- I: Como a velocidade aumenta de 0 a 150 km/h, a energia cinética aumenta (Correta).\n- II: Ao reduzir a velocidade para 80 km/h, a energia cinética diminui, não permanece constante (Incorreta).\n- III: No SI, a unidade de velocidade é metro por segundo (m/s), e não km/h (Incorreta).\n- IV: A força de atrito lateral entre os pneus e o asfalto atua como resultante centrípeta, permitindo contornar a curva (Correta).\n4. Resolução: As afirmativas I e IV estão corretas (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "II, III e IV estão corretas.",
+          "correta": false
+        },
+        {
+          "texto": "I, III e IV estão corretas.",
+          "correta": false
+        },
+        {
+          "texto": "II e III estão corretas.",
+          "correta": false
+        },
+        {
+          "texto": "I e IV estão corretas.",
+          "correta": true
+        },
+        {
+          "texto": "I e III estão corretas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 8,
+      "subtemas_cods": [
+        25
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "Sobre a classificação dos seres vivos, é CORRETO afirmar que:\n(A) Bactérias e fungos fazem parte de um mesmo reino.\n(B) O ornitorrinco apresenta bico e bota ovos, por isso é considerado ave.\n(C) Morcego, pinguim e avestruzes fazem parte de uma mesma classe dentro do Reino Animalia.\n(D) Cachorros e gatos pertencem ao mesmo filo, porém a espécies diferentes.\n(E) O Reino Plantae (Reino Vegetal) engloba somente árvores de porte terrestre.",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Biologia",
+      "subtemas_sugeridos": [
+        "Classificação dos Seres Vivos (Reinos)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Assinalar a proposição correta sobre taxonomia e classificação biológica.\n2. Conhecimentos necessários: Categorias taxonômicas (Reino, Filo, Classe, Ordem, Família, Gênero, Espécie) e características dos seres vivos.\n3. Interpretação das informações e construção da resposta:\n- A: Bactérias pertencem ao Reino Monera e fungos ao Reino Fungi (Incorreta).\n- B: O ornitorrinco é um mamífero monotremado (Incorreta).\n- C: Morcego é da classe Mammalia, enquanto pinguim e avestruz são da classe Aves (Incorreta).\n- D: Ambos pertencem ao mesmo filo (Chordata) e à mesma classe (Mammalia), mas a famílias e espécies diferentes (<i>Canis lupus familiaris</i> e <i>Felis catus</i>) (Correta).\n- E: O Reino Plantae engloba briófitas, pteridófitas, gimnospermas e angiospermas, de diversos portes e ambientes aquáticos e terrestres (Incorreta).\n4. Resolução: Portanto, a alternativa correta é a D.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Bactérias e fungos fazem parte de um mesmo reino.",
+          "correta": false
+        },
+        {
+          "texto": "O ornitorrinco apresenta bico e bota ovos, por isso é considerado ave.",
+          "correta": false
+        },
+        {
+          "texto": "Morcego, pinguim e avestruzes fazem parte de uma mesma classe dentro do Reino Animalia.",
+          "correta": false
+        },
+        {
+          "texto": "Cachorros e gatos pertencem ao mesmo filo, porém a espécies diferentes.",
+          "correta": true
+        },
+        {
+          "texto": "O Reino Plantae (Reino Vegetal) engloba somente árvores de porte terrestre.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 10,
+      "subtemas_cods": [
+        33
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "Em 15 de novembro de 1889, foi instaurada a República no Brasil, sistema que perdura até os dias atuais. Esse sistema é dividido em diferentes períodos históricos, dentre os quais: República Oligárquica, Era Vargas e Ditadura Militar.\n\nRelacione as afirmativas com os seus respectivos períodos históricos.\n1. República Oligárquica\n2. Era Vargas\n3. Ditadura Militar\n\n( ) Período marcado por fraudes eleitorais, voto de cabresto, coronelismo e hegemonia política de São Paulo e Minas Gerais.\n( ) Época marcada pelos atos institucionais. O AI-5 proibiu as manifestações contra o governo.\n( ) Nesse período, o voto foi estendido para as mulheres.\n( ) Ocorreu a revolta denominada Intentona Comunista, liderada pela Aliança Nacional Libertadora (ANL).\n( ) Criação das leis trabalhistas, da Companhia Vale do Rio Doce e da Companhia Siderúrgica Nacional.\n( ) Nesse período, foram realizadas construções consideradas faraônicas, como a ponte Rio-Niterói, Usina Hidrelétrica de Itaipu e Rodovia Transamazônica.\n( ) Período conhecido pela Política do Café com Leite.\n\nAssinale a sequência CORRETA de preenchimento dos parênteses de cima para baixo, é:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História do Brasil",
+      "subtemas_sugeridos": [
+        "República Velha e Movimentos Sociais (Contestado, Canudos)",
+        "Era Vargas e Conquistas Trabalhistas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Associar eventos e características da história republicana brasileira aos períodos: República Oligárquica (1), Era Vargas (2) ou Ditadura Militar (3).\n2. Conhecimentos necessários: Fatos históricos da República Velha, Era Vargas e Ditadura Militar.\n3. Interpretação das informações e construção da resposta:\n- Voto de cabresto e coronelismo -> (1) República Oligárquica;\n- AI-5 e atos institucionais -> (3) Ditadura Militar;\n- Voto feminino (Código Eleitoral de 1932/Constituição de 1934) -> (2) Era Vargas;\n- Intentona Comunista (1935) -> (2) Era Vargas;\n- Leis trabalhistas, Vale e CSN -> (2) Era Vargas;\n- Obras faraônicas (Ponte Rio-Niterói, Itaipu, Transamazônica) -> (3) Ditadura Militar;\n- Política do Café com Leite -> (1) República Oligárquica.\n4. Resolução: A sequência de cima para baixo é 1 - 3 - 2 - 2 - 2 - 3 - 1 (alternativa B).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "1 - 3 - 2 - 1 - 2 - 3 - 1",
+          "correta": false
+        },
+        {
+          "texto": "1 - 3 - 2 - 2 - 2 - 3 - 1",
+          "correta": true
+        },
+        {
+          "texto": "2 - 3 - 2 - 3 - 2 - 3 - 3",
+          "correta": false
+        },
+        {
+          "texto": "3 - 3 - 2 - 1 - 2 - 3 - 1",
+          "correta": false
+        },
+        {
+          "texto": "1 - 3 - 2 - 2 - 3 - 3 - 2",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 11,
+      "subtemas_cods": [
+        35,
+        36
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "Leia o texto e observe a imagem abaixo:\n\nOs 15 primeiros anos do Governo Vargas (1930-1945), assim como os quase quatro seguintes (1951-1954) foram profundamente marcantes para o Brasil. Para entender esses governos, contamos com trabalhos de fôlego de vários pesquisadores que detalharam fatos marcantes como a guerra civil de São Paulo (1932), as revoltas da Aliança Nacional Libertadora (1935), a tentativa dos integralistas de tomar o poder (1938) e a entrada do país na Segunda Guerra Mundial (1942), dentre outros temas, tais como o incremento da indústria nacional, a oficialização do samba, a extensão do direito de voto às mulheres e a invenção do trabalhismo.\n<i>(Fonte: MOURELLE, T. C. Disponível em: https://www.cafehistoria.com.br/as-varias-faces-de-vargas/. Acesso em: 25 jun. 2019.)</i>\n\n[Caricatura: Cinco fases de Getúlio Vargas desenhadas em fila, da esquerda para a direita: 1º de militar com botas e quepe; 2º de fraque presidencial com faixa; 3º de terno segurando a constituição/decreto; 4º de roupas campeiras gaúchas no exílio de São Borja; 5º de robe/pijama segurando um revólver]\n<i>(Fonte: Disponível em: https://educador.brasilescola.uol.com.br/estrategias-ensino/uma-revisao-sobre-era-vargas.htm. Acesso em 25 jun. 2019.)</i>\n\nA partir do texto e da imagem, julgue as afirmativas a seguir quantos às várias versões da ilustração de Getúlio Vargas, considerando a sequência da esquerda para a direita:\n\nI. O primeiro Vargas pode ser associado ao momento em que ele tomou o poder pelo movimento de 1930, que depôs o presidente Washington Luís e pôs fim à política do café com leite.\nII. O segundo Vargas pode ser associado ao momento em que ele foi eleito indiretamente pela Constituição de 1934, a qual trouxe direitos trabalhistas, algo inédito na história brasileira.\nIII. O terceiro Vargas pode ser associado ao momento em que ele, inspirado pela Revolução Russa de 1917, decretou um regime autoritário conhecido como Estado Novo.\nIV. O quarto Vargas pode ser associado ao período em que ele se afastou da política nacional em decorrência de sua deposição após a derrota do Brasil na II Guerra Mundial.\nV. O quinto Vargas pode ser associado ao momento em que ele foi eleito democraticamente e terminou seu mandato e sua vida com o suicídio.\n\nAgora, assinale a alternativa que contém as afirmativas CORRETAS:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História do Brasil",
+      "subtemas_sugeridos": [
+        "Era Vargas e Conquistas Trabalhistas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar quais afirmativas sobre as cinco caricaturas de Getúlio Vargas estão corretas.\n2. Conhecimentos necessários: Fases da Era Vargas (Governo Provisório, Governo Constitucional, Estado Novo, Exílio em São Borja, Governo Democrático e suicídio).\n3. Interpretação das informações e construção da resposta:\n- I: Correta. Vargas chega ao poder na Revolução de 1930 vestido em trajes militares.\n- II: Correta. Traje formal presidencial de posse em 1934 após a promulgação da nova carta.\n- III: Incorreta. O Estado Novo (1937) foi um regime de inspiração fascista/corporativista, de caráter anticomunista ferrenho, e não inspirado na Revolução Russa.\n- IV: Incorreta. O Brasil fez parte dos Aliados que venceram a Segunda Guerra Mundial, não tendo sido derrotado.\n- V: Correta. De pijama segurando a arma, retrata o mandato de 1951-1954 que culminou em seu suicídio no Palácio do Catete.\n4. Resolução: As afirmativas verdadeiras são I, II e V (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "I, III e V, apenas.",
+          "correta": false
+        },
+        {
+          "texto": "II, IV e V, apenas.",
+          "correta": false
+        },
+        {
+          "texto": "I e II, apenas.",
+          "correta": false
+        },
+        {
+          "texto": "I, II e V, apenas.",
+          "correta": true
+        },
+        {
+          "texto": "III e IV, apenas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 11,
+      "subtemas_cods": [
+        36
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "Disputando áreas de influência em várias regiões do mundo, soviéticos e estadunidenses geraram um período de graves tensões políticas, que ficou conhecido como Guerra Fria. Entre os principais alvos dos governos dos Estados Unidos e da União Soviética, nesse período, estavam os países subdesenvolvidos, como eram então chamadas as nações mais pobres da América latina, da Ásia e da África. O período foi marcado por guerras em algumas regiões do planeta, alianças militares supranacionais, corrida militar nuclear armamentista e corrida espacial.\n<i>(Fonte: COTRIM, G. História global. São Paulo: Saraiva, 2016, p.148.)</i>\n\nSobre a guerra fria, analise as seguintes afirmativas:\n\nI. A Guerra da Coreia (1950-1953) determinou a seguinte divisão: Coreia do Norte socialista e Coreia do Sul capitalista.\nII. Os Estados Unidos foram os primeiros a produzir e utilizar armas nucleares. A corrida nuclear foi denominada de \"equilíbrio pelo terror\".\nIII. A corrida espacial foi marcada pelo pioneirismo soviético. A União Soviética foi o primeiro país a lançar um satélite artificial denominado Sputnick.\nIV. No período da Guerra Fria surgiu a Internet, que, no início, era restrita aos militares estadunidenses.\nV. Durante a Guerra Fria ocorreu a Guerra do Vietnã. Os Estados Unidos, contando com o apoio do Vietnã do Sul, em 1975, conseguiram unificar o país por meio do socialismo, criando a República Democrática do Vietnã.\n\nAssinale a alternativa CORRETA referente as afirmativas anteriores.",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História Geral",
+      "subtemas_sugeridos": [
+        "Guerra Fria"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Julgar as afirmativas sobre a Guerra Fria.\n2. Conhecimentos necessários: Conflitos e acontecimentos da Guerra Fria (Guerra da Coreia, armas nucleares, corrida espacial, ARPANET/internet e Guerra do Vietnã).\n3. Interpretação das informações e construção da resposta:\n- I: Correta. A Guerra da Coreia consolidou a divisão no paralelo 38°.\n- II: Correta. EUA lançaram as bombas em 1945 e inauguraram a era do \"equilíbrio pelo terror\".\n- III: Correta. A URSS foi pioneira com o lançamento do satélite Sputnik (1957).\n- IV: Correta. A ARPANET foi criada com fins militares e de pesquisa nos EUA.\n- V: Incorreta. Os Estados Unidos foram derrotados e retiraram suas tropas; quem unificou o país sob regime socialista foi o Vietnã do Norte comunista.\n4. Resolução: As afirmativas I, II, III e IV estão corretas (alternativa D).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Apenas as afirmativas II, III e V estão corretas.",
+          "correta": false
+        },
+        {
+          "texto": "Todas as afirmativas estão corretas.",
+          "correta": false
+        },
+        {
+          "texto": "Apenas a afirmativa IV está errada.",
+          "correta": false
+        },
+        {
+          "texto": "Apenas as afirmativas I, II, III e IV estão corretas.",
+          "correta": true
+        },
+        {
+          "texto": "Todas as afirmativas estão erradas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 12,
+      "subtemas_cods": [
+        40
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Em 2019, a morte de Leonardo da Vinci completa 500 anos. Leia abaixo o texto sobre este homem que viveu no período histórico conhecido com Renascimento:\n\nNascido em 1452, filho bastardo de uma camponesa e de um tabelião bem de vida, Da Vinci ajudou a formatar o método científico e enveredou pelas mais diversas ciências: da botânica à engenharia militar, da cartografia à ótica, da anatomia à geologia. Deixou mais de 7.000 papéis com desenhos, projetos, esboços, perguntas (\"o que é a alma?\") e listas de tarefas (\"descrever as causas da risada\"), hoje preservados em bibliotecas europeias e na coleção privada de Bill Gates. [...] Ele mudou a forma como as narrativas são estruturadas, como as madonas são pintadas, como a luz e a cor são usadas nas composições, e pintou os quadros mais famosos do mundo: \"Mona Lisa\" e \"A última ceia\". [...] Leitor de Euclides e Arquimedes e estudioso do latim, Da Vinci desenhava plantas e máquinas voadoras e esboçou um projeto para desviar o curso do Rio Arno de Florença a Pisa.\n<i>(Fonte: Disponível em: https://oglobo.globo.com/cultura/por-que-leonardo-da-vinci-ainda-nos-impressiona-500-anos-apos-sua-morte. Acesso em: 25 jun. 2019.)</i>\n\nAssinale as alternativas abaixo e assinale aquela que contém as características do renascimento cultural italiano, presentes no breve texto sobre Da Vinci:\n(A) Empenho em descobertas científicas, observação da natureza e seus fenômenos, elaboração de pinturas realistas com temas religiosos.\n(B) Exclusivismo italiano, sobretudo em Florença, criação de novas formas de pintar utilizando luz e cor, admiração dos filósofos e estudiosos orientais.\n(C) Busca por aperfeiçoamento em diversas áreas do conhecimento, valorização de pinturas realistas com temas exclusivamente não religiosos.\n(D) Sobreposição dos valores da ciência e da razão aos valores religiosos, desprezo pela cultura clássica greco-romana, valorização de pinturas realistas.\n(E) Valorização dos princípios do humanismo, busca de explicações racionais para o funcionamento do mundo e pinturas com temas exclusivamente religiosos.",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História Geral",
+      "subtemas_sugeridos": [
+        "Idade Moderna e Renascimento"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Assinalar a alternativa com características do Renascimento cultural presentes no excerto.\n2. Conhecimentos necessários: Renascimento artístico e científico, humanismo e temas da pintura renascentista.\n3. Interpretação das informações e construção da resposta: A questão foi oficialmente anulada pela banca examinadora do IFC no gabarito definitivo, em razão de imprecisões na redação das alternativas e no enunciado (\"Assinale as alternativas abaixo e assinale aquela...\").\n4. Resolução: Questão oficialmente ANULADA pela comissão do processo seletivo.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Empenho em descobertas científicas, observação da natureza e seus fenômenos, elaboração de pinturas realistas com temas religiosos.",
+          "correta": true
+        },
+        {
+          "texto": "Exclusivismo italiano, sobretudo em Florença, criação de novas formas de pintar utilizando luz e cor, admiração dos filósofos e estudiosos orientais.",
+          "correta": false
+        },
+        {
+          "texto": "Busca por aperfeiçoamento em diversas áreas do conhecimento, valorização de pinturas realistas com temas exclusivamente não religiosos.",
+          "correta": false
+        },
+        {
+          "texto": "Sobreposição dos valores da ciência e da razão aos valores religiosos, desprezo pela cultura clássica greco-romana, valorização de pinturas realistas.",
+          "correta": false
+        },
+        {
+          "texto": "Valorização dos princípios do humanismo, busca de explicações racionais para o funcionamento do mundo e pinturas com temas exclusivamente religiosos.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 12,
+      "subtemas_cods": [
+        41
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Observe o mapa abaixo, leia o enunciado e responda a questão.\n\n[Mapa: Placas Tectônicas no Mundo, indicando limites convergentes (área de choque de placas) e divergentes (área de separação de placas)]\n<i>(Fonte: Atlas geográfico escolar. 3. ed. Rio de Janeiro: IBGE, 2006. p. 12.)</i>\n\nAs placas tectônicas são imensos blocos rochosos de tamanhos e formas diversas e milhares de quilômetros de extensão que deslizam sobre o magma e constituem a litosfera. Ao se movimentar, esses blocos geram dois tipos principais de tectonismo: a colisão de placas tectônicas e o afastamento de placas tectônicas. Se tratando de colisão de placas tectônicas, o tipo de relevo que se constitui é:\n(A) cadeias montanhosas\n(B) dorsais oceânicas\n(C) depressões\n(D) planaltos\n(E) planícies",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia Mundial e Meio Ambiente",
+      "subtemas_sugeridos": [
+        "Cartografia e Placas Tectônicas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: A feição de relevo resultante do choque/colisão de placas tectônicas (limites convergentes).\n2. Conhecimentos necessários: Tectônica de placas, orogênese e dobramentos modernos.\n3. Interpretação das informações e construção da resposta: O choque entre placas tectônicas provoca o enrugamento/soerguimento da crosta terrestre (orogênese), formando grandes cadeias montanhosas, como a Cordilheira dos Andes e o Himalaia.\n4. Resolução: Portanto, o relevo formado pela colisão são as cadeias montanhosas (alternativa A).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "cadeias montanhosas",
+          "correta": true
+        },
+        {
+          "texto": "dorsais oceânicas",
+          "correta": false
+        },
+        {
+          "texto": "depressões",
+          "correta": false
+        },
+        {
+          "texto": "planaltos",
+          "correta": false
+        },
+        {
+          "texto": "planícies",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 14,
+      "subtemas_cods": [
+        48
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "A imagem a seguir representa uma bacia hidrográfica:\n\n[Ilustração de bacia hidrográfica identificando divisores de água, nascente, alto curso, afluentes, subafluentes, ilha fluvial, médio curso, meandro, baixo curso, rio principal e foz em delta]\n<i>(Fonte: LUCCI, E. A.; BRANCO, A. L.; MENDONÇA, C. Território e sociedade no mundo globalizado. São Paulo: Saraiva, 2016.)</i>\n\nSobre bacias hidrográficas, analise os itens a seguir, indicando (V) para Verdadeiro ou (F) para Falso.\n\n( ) Uma bacia hidrográfica é formada por um rio principal que recebe as águas de seus afluentes e subafluentes, que, por sua vez, são formados pela captação das águas das chuvas e pelas nascentes.\n( ) A área da bacia hidrográfica é delimitada pelo relevo, e os pontos mais altos são denominados divisores de águas.\n( ) A foz em delta ocorre quando o rio acumula sedimentos no leito, formando ilhas fluviais no final do seu curso, e as águas correm ramificadas.\n( ) A dinâmica de escoamento e a infiltração de água não estão associadas ao tipo de ocupação do solo.\n( ) A maior parte das grandes bacias hidrográficas tem suas águas levadas pelos rios principais para os mares e oceanos.\n\nA sequência CORRETA de preenchimento dos parênteses, de cima para baixo, é:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia do Brasil e Santa Catarina",
+      "subtemas_sugeridos": [
+        "Climatologia e Massas de Ar"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Julgar a veracidade dos conceitos sobre bacias hidrográficas.\n2. Conhecimentos necessários: Hidrografia, relevo, divisores de águas, foz em delta e uso do solo.\n3. Interpretação das informações e construção da resposta:\n- (1) Verdadeiro: Definição padrão de bacia hidrográfica.\n- (2) Verdadeiro: As cristas e pontos mais altos do relevo formam os divisores de águas.\n- (3) Verdadeiro: A foz em delta se caracteriza por ramificações e ilhas de sedimentos.\n- (4) Falso: A ocupação do solo (vegetação vs. asfalto/impermeabilização) altera diretamente a taxa de infiltração e o escoamento superficial.\n- (5) Verdadeiro: A maioria das grandes bacias tem drenagem exorreica (deságua em mares/oceanos).\n4. Resolução: A sequência correta é V - V - V - F - V (alternativa C).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "F - V - V - F - V",
+          "correta": false
+        },
+        {
+          "texto": "V - F - F - V - F",
+          "correta": false
+        },
+        {
+          "texto": "V - V - V - F - V",
+          "correta": true
+        },
+        {
+          "texto": "F - F - F - F - F",
+          "correta": false
+        },
+        {
+          "texto": "V - V - V - V - V",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 13,
+      "subtemas_cods": [
+        43
+      ]
+    },
+    {
+      "numero": 29,
+      "enunciado": "Observe a imagem da malha urbana de alguns municípios da Grande Florianópolis. A imagem apresenta uma vista aérea de quatro municípios: Biguaçu, São José, Palhoça e a parte continental de Florianópolis.\n\n<i>(Fonte: Disponível em: https://www.google.com.br/maps/@-27.5827388,-48.6293861,19966a,35y,270h/data=!3m1!1e3. Adaptado. Acesso em: 12 ago. 2019.)</i>\n\nQuando dois ou mais municípios passam a formar uma única malha urbana, na qual não se percebe facilmente os limites territoriais entre eles, no contexto da Geografia Urbana, acontece um fenômeno chamado de:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia do Brasil e Santa Catarina",
+      "subtemas_sugeridos": [
+        "Urbanização e Problemas Urbanos (Conurbação, Migrações)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar o conceito geográfico urbano para a união física e contínua de malhas urbanas de municípios vizinhos.\n2. Conhecimentos necessários: Conceitos de urbanização (conurbação, metropolização, hierarquia urbana).\n3. Interpretação das informações e construção da resposta: Conurbação é o termo técnico que designa o crescimento horizontal e o encontro espacial de duas ou mais cidades vizinhas, formando uma única malha contínua.\n4. Resolução: O fenômeno descrito é a conurbação (alternativa C).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "hierarquia urbana",
+          "correta": false
+        },
+        {
+          "texto": "integração",
+          "correta": false
+        },
+        {
+          "texto": "conurbação",
+          "correta": true
+        },
+        {
+          "texto": "metrópole",
+          "correta": false
+        },
+        {
+          "texto": "urbanismo",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 13,
+      "subtemas_cods": [
+        44
+      ]
+    },
+    {
+      "numero": 30,
+      "enunciado": "Durante o verão, principalmente nos meses de dezembro e janeiro, milhares de pessoas se deslocam para as diversas praias em todo o litoral brasileiro. Trata-se de férias escolares e quando muitos trabalhadores procuram também desfrutar de suas férias anuais. O elevado número de turistas também acaba atraindo para as cidades litorâneas diversos trabalhadores em busca de trabalho temporário. O nome dado a esse fenômeno é:",
+      "autor": "IFC",
+      "ano": 2020,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia do Brasil e Santa Catarina",
+      "subtemas_sugeridos": [
+        "Urbanização e Problemas Urbanos (Conurbação, Migrações)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar o tipo de migração periódica associada a épocas específicas do ano (estações/férias).\n2. Conhecimentos necessários: Tipologia dos fluxos migratórios (pendular, sazonal/transumância, êxodo).\n3. Interpretação das informações e construção da resposta: A migração sazonal (ou transumância) é aquela que se repete periodicamente em determinadas épocas ou estações do ano, como a ida de veranistas e de trabalhadores temporários para o litoral no verão.\n4. Resolução: O nome dado a esse movimento temporário por estação é migração sazonal (alternativa E).",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "migração pendular",
+          "correta": false
+        },
+        {
+          "texto": "êxodo urbano",
+          "correta": false
+        },
+        {
+          "texto": "êxodo rural",
+          "correta": false
+        },
+        {
+          "texto": "nomadismo",
+          "correta": false
+        },
+        {
+          "texto": "migração sazonal",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 13,
+      "subtemas_cods": [
+        44
+      ]
+    }
+  ],
+  "autor": "IFC",
+  "ano": "2020",
+  "disciplinaPadraoCod": ""
+}

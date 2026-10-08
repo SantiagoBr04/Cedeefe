@@ -1,0 +1,1167 @@
+{
+  "loteId": "1791490212751_788",
+  "revisada": false,
+  "dataCriacao": "2026-10-08T20:10:12.751Z",
+  "questoes": [
+    {
+      "numero": 1,
+      "enunciado": "Leia o Texto I.\n\n<b>TEXTO I</b>\n<b>TDAH: O QUE O TIKTOK NÃO CONTA</b>\n[...] Nos EUA, vídeos com a hashtag \"#adhd\" (sigla em inglês do transtorno) somaram 35 bilhões de visualizações nos últimos três anos no TikTok. A plataforma virou palco para milhares de pessoas com Transtorno de Déficit de Atenção com Hiperatividade, TDAH, que compartilham ali suas experiências de vida e as técnicas que desenvolveram para vencer as dificuldades impostas pelo transtorno na escola, no trabalho e dentro e casa. [...]\nMas a ascensão do TDAH no TikTok e em outras redes tem um lado indigesto: não faltam vídeos que prometem um diagnóstico em poucos minutos, supostas curas ou que apresentam testes sem validade científica. Em 2022, uma pesquisa canadense analisou os 100 vídeos mais populares sobre o transtorno na plataforma e concluiu que metade continha informações falsas. [...]\n<i>Fonte adaptada: BATTAGLIA, Rafael. TDAH: o que o TikTok não conta. Superinteressante. Publicado em 16 ago 2024. Atualizado em 19 ago 2024. Disponível em: https://super.abril.com.br/saude/tdah-o-que-o-tiktok-nao-conta/. Acesso: 16 set 2024.</i>\n\nAs expressões destacadas no Texto I são locuções adverbiais e têm função de acrescentar informações de circunstância. As informações que essas expressões oferecem são, respectivamente, de:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Morfologia e Sintaxe (Gramática Aplicada)",
+      "subtemas_sugeridos": [
+        "Classes de Palavras (Substantivos, Adjetivos, Pronomes, Advérbios)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar o valor circunstancial expresso pelas locuções adverbiais destacadas no texto (\"Nos EUA\" e \"nos últimos três anos\").\n2. Conhecimentos necessários: Sintaxe e morfologia da Língua Portuguesa, especificamente classificação semântica de adjuntos e locuções adverbiais.\n3. Interpretação das informações e construção da resposta: A expressão \"Nos EUA\" indica a circunstância espacial (lugar) onde o fato ocorreu. A expressão \"nos últimos três anos\" indica a circunstância temporal (tempo) em que se acumularam as visualizações.\n4. Resolução: Portanto, as circunstâncias são, respectivamente, de lugar e tempo, correspondendo à alternativa C.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "modo e frequência.",
+          "correta": false
+        },
+        {
+          "texto": "lugar e intensidade.",
+          "correta": false
+        },
+        {
+          "texto": "lugar e tempo.",
+          "correta": true
+        },
+        {
+          "texto": "tempo e lugar.",
+          "correta": false
+        },
+        {
+          "texto": "dúvida e tempo.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 2,
+      "subtemas_cods": [
+        6
+      ]
+    },
+    {
+      "numero": 2,
+      "enunciado": "Leia o Texto II.\n\n<b>TEXTO II</b>\n<b>Eu sei, mas não devia</b>\n<i>(Marina Colasanti)</i>\nA gente se acostuma a morar em apartamentos de fundos e a não ter outra vista que não as janelas ao redor. E, porque não tem vista, logo se acostuma a não olhar para fora. E, porque não olha para fora, logo se acostuma a não abrir de todo as cortinas. E, porque não abre as cortinas, logo se acostuma a acender mais cedo a luz. E, à medida que se acostuma, esquece o sol, esquece o ar, esquece a amplidão.\nA gente se acostuma a acordar de manhã sobressaltado porque está na hora. A tomar o café correndo porque está atrasado. A ler o jornal no ônibus porque não pode perder o tempo da viagem. A comer sanduíche porque não dá para almoçar. A sair do trabalho porque já é noite. A cochilar no ônibus porque está cansado. A deitar cedo e dormir pesado sem ter vivido o dia.\nA gente se acostuma a abrir o jornal e a ler sobre a guerra. E, aceitando a guerra, aceita os mortos e que haja números para os mortos. E, aceitando os números, aceita não acreditar nas negociações de paz. E, não acreditando nas negociações de paz, aceita ler todo dia da guerra, dos números, da longa duração. [...]\nA gente se acostuma para não se ralar na aspereza, para preservar a pele. Se acostuma para evitar feridas, sangramentos, para esquivar-se de faca e baioneta, para poupar o peito. A gente se acostuma para poupar a vida. Que aos poucos se gasta, e que, gasta de tanto acostumar, se perde de si mesma.\n<i>Fonte: COLASANTI, Marina. Eu sei, mas não devia. Rio de Janeiro: Rocco, 1996.</i>\n\nSobre o Texto II, é correto afirmar que:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Identificação de Gêneros Textuais (Fábulas, Crônicas, Notícias, Poemas, Tirinhas)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar o gênero textual e a temática central do Texto II de Marina Colasanti.\n2. Conhecimentos necessários: Gêneros textuais (crônica, conto, poema, artigo de opinião) e suas características estruturais e temáticas.\n3. Interpretação das informações e construção da resposta: O texto em prosa reflete de forma poética e reflexiva sobre o cotidiano, a rotina alienante e a perda de sensibilidade frente às pressões da vida contemporânea. Trata-se de uma crônica lírico-reflexiva típica da autora.\n4. Resolução: A definição exata é a de uma crônica que aborda as angústias da vida moderna, validando a alternativa A.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "o texto é uma CRÔNICA, que aborda as angústias da vida moderna.",
+          "correta": true
+        },
+        {
+          "texto": "o texto é um CONTO, que tem como enredo uma mulher que vive presa em um apartamento.",
+          "correta": false
+        },
+        {
+          "texto": "o texto é um POEMA, que repete a expressão \"A gente se acostuma\" para produzir rimas e sonoridade.",
+          "correta": false
+        },
+        {
+          "texto": "o texto é uma NOVELA, na qual os personagens lutam para não se acostumar com o sofrimento diário.",
+          "correta": false
+        },
+        {
+          "texto": "o texto é um ARTIGO DE OPINIÃO, no qual a autora defende seu ponto de vista, a partir de argumentos que exemplificam a vida moderna.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        2
+      ]
+    },
+    {
+      "numero": 3,
+      "enunciado": "Leia o Texto III.\n\n<b>TEXTO III</b>\n<b>Engano</b>\nPor que será que ele não liga? Disse que precisava falar comigo um lance, que ia combinar de a gente se ver, de comer uma pizza, pegar um cineminha ou algo do tipo. Vai ver está preso no trânsito caótico de sexta-feira, dentro de um túnel onde o telefone não pega. Tenho sorte de ter encontrado um cara sensível, ainda mais nos dias de hoje, quando se pode confiar em tão poucas pessoas. Inesquecível aquele dia em que nos encontramos por acaso num shopping e de cara rolou um clima ao entrarmos quase juntos na escada rolante e gargalhamos enquanto nos atrapalhávamos na subida do primeiro degrau. Naquela mesma tarde tomamos um café e nos conhecemos melhor trocando contatos e até inventamos um programinha para dali a uns dias. [...]\n<i>Fonte adaptada: LEE, Rita. Dropz. São Paulo: Globo Livros, 2017, p. 117.</i>\n\nSobre as expressões destacadas no Texto III, é correto afirmar que:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Estilística e Variação Linguística",
+      "subtemas_sugeridos": [
+        "Variação Linguística (Nível Coloquial vs. Norma Culta, Gírias)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Classificar o registro e nível de linguagem das expressões destacadas (\"um lance\", \"a gente\", \"pegar um cineminha\", \"Vai ver\", \"cara\", \"de cara\", \"rolou um clima\", \"programinha\").\n2. Conhecimentos necessários: Níveis e variações linguísticas (coloquial/informal versus norma culta/padrão).\n3. Interpretação das informações e construção da resposta: Expressões como \"rolou um clima\", \"de cara\" e \"um lance\" são marcas claras da linguagem informal/coloquial, comuns na conversação diária entre pessoas próximas.\n4. Resolução: Portanto, elas pertencem ao nível coloquial da linguagem, próprio de momentos informais, o que torna correta a alternativa A.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "pertencem ao nível coloquial da linguagem, empregado em situações de informalidade.",
+          "correta": true
+        },
+        {
+          "texto": "pertencem ao nível formal da linguagem, empregado em situações solenes.",
+          "correta": false
+        },
+        {
+          "texto": "são expressões adaptadas de outros idiomas, o que as caracteriza como estrangeirismos.",
+          "correta": false
+        },
+        {
+          "texto": "são expressões normalmente associadas a falantes oriundos da zona rural.",
+          "correta": false
+        },
+        {
+          "texto": "pertencem à norma culta da língua portuguesa, empregada pela maioria dos falantes, nas situações cotidianas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 3,
+      "subtemas_cods": [
+        10
+      ]
+    },
+    {
+      "numero": 4,
+      "enunciado": "Leia o Texto IV.\n\n<b>TEXTO IV</b>\nAté a metade do século XVIII, o português era língua pouco conhecida da maioria da população do Brasil, basicamente (1) ________ por indígenas, negros ou mestiços. Falava-se a língua geral, de base tupi. Essa língua era também o principal instrumento dos jesuítas para catequizar indígenas nas aldeias, missões e escolas. Assim, os portugueses que se transferiam para a América (2) ________, no mínimo, tornar-se bilingues para se comunicar com a população local. Essa situação começou a mudar quando, no ano de 1757, o Marquês de Pombal, ministro do Rei de Portugal, tomou uma série de medidas radicais para restringir a influência da Igreja e controlar a atuação dos missionários da Companhia de Jesus. Expulsou os jesuítas da Colônia, confiscou todos os seus bens e (3) ________ a utilização das línguas gerais, impondo o uso e o ensino obrigatório do português no Brasil.\n<i>Fonte: MUSEU DA LÍNGUA PORTUGUESA. Os povos indígenas e o português do Brasil. 31 ago 2022. Disponível em: https://www.museudalinguaportuguesa.org.br/os-povos-indigenas-e-o-portugues-do-brasil/ Acesso: 26 mar 2025.</i>\n\nAssinale a alternativa que contém as palavras que preenchem adequadamente as lacunas numeradas no Texto IV.",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Morfologia e Sintaxe (Gramática Aplicada)",
+      "subtemas_sugeridos": [
+        "Tempo, Modo e Flexão Verbal",
+        "Função Sintática e Sujeito"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Preencher as três lacunas observando regras de concordância nominal e verbal.\n2. Conhecimentos necessários: Concordância nominal (gênero e número) e concordância verbal (pessoa e tempo verbal).\n3. Interpretação das informações e construção da resposta: Em (1), o particípio refere-se a \"população\" (substantivo feminino singular), exigindo \"formada\". Em (2), o sujeito é \"os portugueses que se transferiam para a América\" (plural), exigindo \"precisavam\". Em (3), o sujeito é \"o Marquês de Pombal\" (3ª pessoa do singular), exigindo \"proibiu\".\n4. Resolução: A sequência correta é \"formada; precisavam; proibiu\", correspondente à alternativa E.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "(1) formada; (2) precisavam; (3) proibiram.",
+          "correta": false
+        },
+        {
+          "texto": "(1) formado; (2) precisava; (3) proibiu.",
+          "correta": false
+        },
+        {
+          "texto": "(1) formado; (2) precisava; (3) proibiram.",
+          "correta": false
+        },
+        {
+          "texto": "(1) formados; (2) precisavam; (3) proibiu.",
+          "correta": false
+        },
+        {
+          "texto": "(1) formada; (2) precisavam; (3) proibiu.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 2,
+      "subtemas_cods": [
+        7,
+        8
+      ]
+    },
+    {
+      "numero": 5,
+      "enunciado": "Leia o Texto V.\n\n<b>TEXTO V</b>\nO Sistema Nacional de Transplantes, que integra o SUS, é o maior programa público do gênero do mundo. Em 2023, foram feitos 29,2 mil transplantes no Brasil, sendo que quase 9 em 10 foram bancados pela rede pública. As filas são organizadas por estado e os receptores são cadastrados em ordem cronológica, mas prioridades podem ser estabelecidas em função da gravidade do caso ou da proximidade geográfica entre doador e receptor. As filas são fiscalizadas pelo Sistema Nacional de Transplantes e valem inclusive para os pacientes que fizerem a cirurgia na rede particular.\n<i>Fonte: ESTEVES, Bernardo. O complexo: parte final_a tecnologia e o dilema. Piauí. Disponível em: https://piaui.folha.uol.com.br/materia/o-complexo-parte-final_a-tecnologia-e-o-dilema/. Acesso: 26 mar 2025.</i>\n\nDe acordo com o Texto V, é correto afirmar que:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Interpretação Direta e Inferência"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a afirmação correta e estritamente amparada pelas informações do Texto V.\n2. Conhecimentos necessários: Interpretação e compreensão textual.\n3. Interpretação das informações e construção da resposta: O final do texto afirma explicitamente: \"As filas são fiscalizadas pelo Sistema Nacional de Transplantes e valem inclusive para os pacientes que fizerem a cirurgia na rede particular\". Isso demonstra que a fila é unificada.\n4. Resolução: Portanto, a alternativa correta é a D.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "o SUS é o maior sistema de saúde privado do mundo.",
+          "correta": false
+        },
+        {
+          "texto": "em 2023, foram feitos 29,2 mil transplantes pelo SUS.",
+          "correta": false
+        },
+        {
+          "texto": "as pessoas que precisam de doação de órgãos entram em uma fila onde as mais idosas têm prioridade.",
+          "correta": false
+        },
+        {
+          "texto": "a fila para receber doação de órgãos é a mesma, não importando se o transplante será realizado pelo SUS ou na rede particular.",
+          "correta": true
+        },
+        {
+          "texto": "Em nenhum caso será permitida a doação de órgãos entre pacientes que estejam em diferentes estados do Brasil.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        1
+      ]
+    },
+    {
+      "numero": 6,
+      "enunciado": "Leia o Texto VI.\n\n<b>TEXTO VI</b>\n<b>Voo</b>\n<i>(Cecília Meireles)</i>\nAlheias e nossas as palavras voam. / Bando de borboletas multicores, as palavras voam. / Bando azul de andorinhas, bando de gaivotas brancas, as palavras voam. / Viam as palavras como águias imensas. / Como escuros morcegos, como negros abutres, as palavras voam. / Oh! Alto e baixo em círculos e retas acima de nós, em redor de nós as palavras voam. / E às vezes pousam.\n<i>Fonte: QUEIRÓS, Bartolomeu Campos de (org.). As palavras voam: coletânea de poemas de Cecília Meireles. São Paulo: Global, 2013.</i>\n\nNo Texto VI, há forte presença de figuras de linguagem, recursos que alteram o sentido literal das palavras. A partir da análise do texto, assinale a alternativa CORRETA.",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Estilística e Variação Linguística",
+      "subtemas_sugeridos": [
+        "Figuras de Linguagem (Metáfora, Personificação, Antítese, etc.)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Avaliar as afirmações sobre o emprego de figuras de linguagem no poema de Cecília Meireles.\n2. Conhecimentos necessários: Figuras de linguagem de pensamento, de palavras e sintaxe (antítese, metáfora, comparação).\n3. Interpretação das informações e construção da resposta: As palavras \"alto\" e \"baixo\" têm sentidos opostos e são colocadas lado a lado, caracterizando conceitualmente a antítese (aproximação de ideias antagônicas).\n4. Resolução: Assim, a afirmativa correta é a E.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "O título do poema \"Voo\" não apresenta possibilidade de sentido figurado, uma vez que se refere a borboletas, andorinhas e gaivotas, palavras presentes nos versos do Texto VI.",
+          "correta": false
+        },
+        {
+          "texto": "No trecho \"Bando de borboletas multicores\", ocorre uma personificação.",
+          "correta": false
+        },
+        {
+          "texto": "No verso \"Viam as palavras como águias imensas\", não ocorre comparação.",
+          "correta": false
+        },
+        {
+          "texto": "No verso \"Como escuros morcegos, como negros abutres, as palavras voam\", os termos empregados devem ser entendidos em seu sentido literal e não como figuras de linguagem.",
+          "correta": false
+        },
+        {
+          "texto": "Em \"Alto e baixo\", há uma oposição de termos, o que exemplifica uma antítese.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 3,
+      "subtemas_cods": [
+        9
+      ]
+    },
+    {
+      "numero": 7,
+      "enunciado": "Observe a Imagem I e leia o Texto VII.\n\n<b>IMAGEM I</b>\n[Cartaz publicitário da Hortifruti com a imagem de um pepino usando uma panela na cabeça e os dizeres: \"PEPINO MALUQUINHO - O MAIS LEVADO DA HORTIFRUTI. Aqui a natureza é a estrela\"]\n<i>Disponível em: https://vendamuitomais.com.br/2010/01/13/quem-disse-que-hortifruti-tem-que-ser-chato/. Acesso: 24 abr 2025.</i>\n\n<b>TEXTO VII</b>\nEra uma vez um menino maluquinho. Ele tinha o olho maior que a barriga, tinha fogo no rabo, tinha vento nos pés, umas pernas enormes (que davam para abraçar o mundo) e macaquinhos no sótão (embora nem soubesse o que significava macaquinho no sótão). Ele era um menino impossível! Ele era muito sabido, ele sabia de tudo, a única coisa que ele não sabia era como ficar quieto.\n<i>Fonte: PINTO, Ziraldo. O menino maluquinho. São Paulo: Melhoramentos, 1980.</i>\n\nCom base na Imagem I e no Texto VII, analise as proposições a seguir.\nI. As palavras \"levado\", na Imagem I, e \"sabido\", no Texto VII, exercem função de substantivo, uma vez que servem como sinônimos de \"travesso\" e de \"inteligente\", respectivamente.\nII. Para compreender plenamente a Imagem I, é preciso conhecer o personagem descrito no Texto VII.\nIII. No trecho \"tinha vento nos pés\", existe a figura de linguagem metáfora.\nIV. A palavra \"maluquinho\" está empregada como adjetivo e, por estar no diminutivo, tem acentuado valor pejorativo tanto na Imagem I quanto no Texto VII.\n\nAssinale a alternativa CORRETA.",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Língua Portuguesa",
+      "tema_sugerido": "Compreensão e Análise Textual",
+      "subtemas_sugeridos": [
+        "Intertextualidade e Paródia",
+        "Figuras de Linguagem (Metáfora, Personificação, Antítese, etc.)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Julgar a veracidade das quatro afirmações gramaticais e semânticas sobre a peça publicitária e o trecho literário.\n2. Conhecimentos necessários: Intertextualidade, classes gramaticais (substantivo vs. adjetivo), figuras de linguagem (metáfora) e valor semântico dos sufixos diminutivos.\n3. Interpretação das informações e construção da resposta:\n- I é falsa: \"levado\" e \"sabido\" funcionam como adjetivos qualificadores.\n- II é verdadeira: a campanha da Hortifruti baseia-se na paródia/intertextualidade com o personagem de Ziraldo (panela na cabeça e epíteto \"maluquinho\").\n- III é verdadeira: \"vento nos pés\" é uma metáfora para indicar agilidade e velocidade.\n- IV é falsa: \"maluquinho\" possui conotação afetiva e carinhosa, não pejorativa.\n4. Resolução: Estão corretos unicamente os itens II e III, tornando a alternativa C a resposta certa.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Apenas os itens I e Il estão corretos.",
+          "correta": false
+        },
+        {
+          "texto": "Apenas os itens I e III estão corretos.",
+          "correta": false
+        },
+        {
+          "texto": "Apenas os itens II e III estão corretos.",
+          "correta": true
+        },
+        {
+          "texto": "Apenas os itens II, III e IV estão corretos.",
+          "correta": false
+        },
+        {
+          "texto": "Todos os itens estão corretos.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 1,
+      "tema_cod": 1,
+      "subtemas_cods": [
+        4
+      ]
+    },
+    {
+      "numero": 8,
+      "enunciado": "Observe a Imagem II.\n\n<b>IMAGEM II</b>\n[Gráfico de colunas com o título \"Distribuição do tempo nas atividades diárias\": Sono: 33%, Estudo: 25%, Lazer: 20%, Alimentação: 12%, Outros: 10%]\n\nO gráfico de colunas apresentado na Imagem II mostra a distribuição de tempo nas atividades diárias de um adolescente. Quantas horas o adolescente dedica ao estudo em um dia?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Matemática Financeira e Estatística",
+      "subtemas_sugeridos": [
+        "Leitura de Gráficos e Tabelas",
+        "Porcentagem e Descontos"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Calcular o total de horas diárias dedicadas ao estudo a partir do percentual do gráfico.\n2. Conhecimentos necessários: Porcentagem e cálculo de fração do tempo (1 dia = 24 horas).\n3. Interpretação das informações e construção da resposta: O gráfico indica que a coluna de \"Estudo\" equivale a 25% do tempo diário. Sabendo que o dia possui 24 horas, calculamos: 25% de 24 horas = 0,25 · 24.\n4. Resolução: 24 · 0,25 = 6 horas. Logo, a resposta correta é a D.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "2 horas",
+          "correta": false
+        },
+        {
+          "texto": "4 horas",
+          "correta": false
+        },
+        {
+          "texto": "5 horas",
+          "correta": false
+        },
+        {
+          "texto": "6 horas",
+          "correta": true
+        },
+        {
+          "texto": "8 horas",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 5,
+      "subtemas_cods": [
+        16,
+        15
+      ]
+    },
+    {
+      "numero": 9,
+      "enunciado": "Na cidade onde Manoela mora, os dias de feira são sempre nas terças e quartas-feiras, quando a maioria dos supermercados fazem promoções de frutas e verduras. Ela sempre se organiza e vai toda semana fazer a feira nesses dias. Numa terça-feira, ela comprou 3 kg de tomates e 2 pés de alface, pagando R$ 27,00. Como ela recebeu visitas, retornou ao mesmo supermercado no dia seguinte para reabastecer e aproveitar os preços dos dias de feira. Comprou 2 kg de tomates e 3 pés de alface, pagando R$ 25,50. Quanto custaria, nesses dias de feira, a compra de 1 kg de tomates e 1 pé de alface, nesse supermercado?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Álgebra",
+      "subtemas_sugeridos": [
+        "Equações do 1º Grau e Problemas Algébricos"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Determinar o custo somado de 1 kg de tomate mais 1 pé de alface (t + a).\n2. Conhecimentos necessários: Sistemas lineares de equações do 1º grau.\n3. Interpretação das informações e construção da resposta: Monta-se o sistema:\n(1) 3t + 2a = 27,00\n(2) 2t + 3a = 25,50\nSomando membro a membro as equações (1) e (2):\n5t + 5a = 52,50\n4. Resolução: Dividindo ambos os membros por 5, obtemos:\nt + a = 52,50 / 5 = 10,50. Logo, o custo é R$ 10,50, correspondendo à alternativa D.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "R$ 11,25",
+          "correta": false
+        },
+        {
+          "texto": "R$ 11,00",
+          "correta": false
+        },
+        {
+          "texto": "R$ 10,75",
+          "correta": false
+        },
+        {
+          "texto": "R$ 10,50",
+          "correta": true
+        },
+        {
+          "texto": "R$ 10,25",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 6,
+      "subtemas_cods": [
+        18
+      ]
+    },
+    {
+      "numero": 10,
+      "enunciado": "Considerando que um dia equivale a 24 horas, 1 hora a 60 minutos e 1 minuto a 60 segundos. Então 2,9 dias equivalem a:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Geometria e Medidas",
+      "subtemas_sugeridos": [
+        "Conversão de Unidades (Tempo, Volume, Comprimento)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Converter 2,9 dias na notação composta de dias, horas e minutos.\n2. Conhecimentos necessários: Conversão de unidades de tempo e operações com números decimais.\n3. Interpretação das informações e construção da resposta: 2,9 dias é igual a 2 dias inteiros mais 0,9 dia. Convertendo 0,9 dia em horas: 0,9 · 24 h = 21,6 horas. 21,6 horas são 21 horas inteiras mais 0,6 hora. Convertendo 0,6 hora em minutos: 0,6 · 60 min = 36 minutos.\n4. Resolução: Portanto, 2,9 dias equivalem a 2 dias, 21 horas e 36 minutos, o que confere com a alternativa E.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "2 dias, 22 horas e 35 minutos.",
+          "correta": false
+        },
+        {
+          "texto": "2 dias, 21 horas e 25 minutos.",
+          "correta": false
+        },
+        {
+          "texto": "2 dias, 10 horas e 15 minutos.",
+          "correta": false
+        },
+        {
+          "texto": "2 dias, 20 horas e 30 minutos.",
+          "correta": false
+        },
+        {
+          "texto": "2 dias, 21 horas e 36 minutos.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 7,
+      "subtemas_cods": [
+        22
+      ]
+    },
+    {
+      "numero": 11,
+      "enunciado": "A Serra do Rio do Rastro é um dos destinos turísticos mais visitados de Santa Catarina. Nos últimos anos, a região tem investido no turismo sustentável, incentivando o controle do número de visitantes e o consumo consciente de recursos naturais. Uma pousada da região oferece kits de lanche artesanal, preparados por produtores locais, com alimentos orgânicos. Cada kit contém:\n- 4/3 de um pão caseiro;\n- 2/3 de um queijo serrano;\n- 5/6 de um bolo de milho;\n- 1 jarra de suco natural.\n\nDurante um fim de semana, 18 kits foram vendidos a visitantes. Para planejar a produção da próxima semana, os responsáveis calcularam a quantidade consumida de cada item. Quantas unidades de cada alimento foram consumidas nesse fim de semana?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Aritmética e Matemática Básica",
+      "subtemas_sugeridos": [
+        "Frações, Razão e Proporção",
+        "Operações Básicas e Expressões Numéricas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Determinar o consumo total de pães, queijos e bolos após a venda de 18 kits.\n2. Conhecimentos necessários: Multiplicação de número inteiro por fração.\n3. Interpretação das informações e construção da resposta:\n- Pães: 18 · (4/3) = (18 / 3) · 4 = 6 · 4 = 24 pães.\n- Queijos: 18 · (2/3) = (18 / 3) · 2 = 6 · 2 = 12 queijos.\n- Bolos: 18 · (5/6) = (18 / 6) · 5 = 3 · 5 = 15 bolos.\n4. Resolução: Consumiram-se 24 pães, 12 queijos e 15 bolos, correspondendo à alternativa A.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "24 pães, 12 queijos e 15 bolos",
+          "correta": true
+        },
+        {
+          "texto": "20 pães, 13 queijos e 16 bolos",
+          "correta": false
+        },
+        {
+          "texto": "24 pães, 12 queijos e 14 bolos",
+          "correta": false
+        },
+        {
+          "texto": "24 pães, 14 queijos e 15 bolos",
+          "correta": false
+        },
+        {
+          "texto": "20 pães, 12 queijos e 15 bolos",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 4,
+      "subtemas_cods": [
+        13,
+        12
+      ]
+    },
+    {
+      "numero": 12,
+      "enunciado": "Uma loja de eletrodomésticos está realizando uma promoção que oferece um desconto para pagamento à vista. Ana deseja comprar uma televisão, cujo preço de etiqueta é R$ 2.400,00. Porém, ela tem a opção de pagar à vista, com o desconto de 15% sobre o preço da etiqueta, ou parcelar em 8 vezes de R$ 300,00. Considerando somente essas opções de pagamento, do ponto de vista financeiro, podemos afirmar que:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Matemática Financeira e Estatística",
+      "subtemas_sugeridos": [
+        "Porcentagem e Descontos"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Comparar financeiramente o pagamento à vista com o parcelado e apontar a afirmativa correta.\n2. Conhecimentos necessários: Cálculo percentual de desconto comercial.\n3. Interpretação das informações e construção da resposta: O valor parcelado é 8 · 300,00 = R$ 2.400,00 (sem desconto). O valor à vista tem 15% de desconto: 15% de 2.400 = 0,15 · 2.400 = R$ 360,00 de desconto. Valor à vista = 2.400 - 360 = R$ 2.040,00.\n4. Resolução: Pagar à vista é mais vantajoso, pois o total a ser pago será de R$ 2.040,00, tornando correta a alternativa E.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "comprar à vista é a opção mais vantajosa, pois o valor final será de R$ 2.400,00.",
+          "correta": false
+        },
+        {
+          "texto": "não é possível determinar a melhor opção de pagamento.",
+          "correta": false
+        },
+        {
+          "texto": "ambas as opções resultam no mesmo valor final, independentemente da escolha de Ana.",
+          "correta": false
+        },
+        {
+          "texto": "Ana deve optar por parcelar, pois o valor final será o mesmo da etiqueta.",
+          "correta": false
+        },
+        {
+          "texto": "comprar à vista é a opção mais vantajosa, pois o valor final será de R$ 2.040,00.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 5,
+      "subtemas_cods": [
+        15
+      ]
+    },
+    {
+      "numero": 13,
+      "enunciado": "Leia o Texto VIII e observe a Imagem III.\n\n<b>TEXTO VIII</b>\n<b>Contêineres - uma nova alternativa para a construção civil</b>\nNo Brasil, existem cerca de cinco mil contêineres abandonados nos portos. Nesse contexto, para mitigar os problemas oriundos do descarte indevido dos contêineres, surgem novas formas de reuso desse material incluindo o uso arquitetônico. [...] O Contêiner Dry é o tipo mais utilizado em todo mundo, pode ser deixado a céu aberto sem que sua estrutura seja comprometida e atende as exigências habitacionais. Dentre suas desvantagens, estão a boa condutividade térmica e o péssimo isolamento acústico. Para evitar esses impasses na construção civil, é necessário o seu revestimento.\n<i>Fonte adaptada: ALVES, José V. P.; FERREIRA, Rosemary S.; CAVALCANTE, Roberta P. Containers - uma nova alternativa para a construção civil. Estudo direcionado para projetos residenciais. Revista Principia. João Pessoa, 2019.</i>\n\n<b>IMAGEM III</b>\n[Esquema de um contêiner retangular com largura de 2,4 m e comprimento de 12 m]\n\nNo dia 12 de dezembro de 2024, foi realizada a cerimônia oficial de entrega das novas salas do Centro de Referência em Pesca e Navegação do IFSC Câmpus Itajaí. A construção foi feita a partir de contêineres que foram reformados e adaptados. A Imagem III apresenta as dimensões internas de um Contêiner Dry 40 pés, cujo formato é um paralelepipedo retângulo, após a aplicação do revestimento citado no Texto VIII. Na construção de uma sala de aula, serão utilizados dois contêineres Dry 40 pés, unidos lado a lado em seu comprimento, sem sobreposição. Suponha que, para acomodar confortavelmente um estudante, levando em conta a área para circulação entre as carteiras, sejam necessários 1,2 m<sup>2</sup> e que o espaço destinado ao professor totalize uma superfície retangular com 1,5 m de comprimento e largura igual à largura total da sala. Com base na descrição, qual a quantidade máxima de alunos que poderiam ser confortavelmente acomodados na sala de aula formada por esses contêineres?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Geometria e Medidas",
+      "subtemas_sugeridos": [
+        "Área e Perímetro de Figuras Planas"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Determinar o número máximo de alunos acomodados no espaço restante da sala.\n2. Conhecimentos necessários: Cálculo de área de figuras planas (retângulos) e divisão de áreas.\n3. Interpretação das informações e construção da resposta:\n- Cada contêiner mede 12 m de comprimento por 2,4 m de largura. Ao uni-los lado a lado ao longo do comprimento, a nova sala passa a ter 12 m de comprimento e largura de 2 · 2,4 = 4,8 m.\n- Área total da sala = 12 · 4,8 = 57,6 m<sup>2</sup>.\n- O espaço do professor possui 1,5 m de comprimento e largura igual à total da sala (4,8 m): Área do professor = 1,5 · 4,8 = 7,2 m<sup>2</sup>.\n- Área restante para os estudantes = 57,6 - 7,2 = 50,4 m<sup>2</sup>.\n- Capacidade máxima de alunos = 50,4 / 1,2 = 42 alunos.\n4. Resolução: A sala comporta confortavelmente até 42 alunos, correspondendo à alternativa C.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "36 alunos",
+          "correta": false
+        },
+        {
+          "texto": "39 alunos",
+          "correta": false
+        },
+        {
+          "texto": "42 alunos",
+          "correta": true
+        },
+        {
+          "texto": "45 alunos",
+          "correta": false
+        },
+        {
+          "texto": "48 alunos",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 7,
+      "subtemas_cods": [
+        20
+      ]
+    },
+    {
+      "numero": 14,
+      "enunciado": "A estiagem é um problema recorrente em Santa Catarina, afetando tanto o abastecimento de água quanto a produção agrícola. No verão de 2024, diversas cidades do Oeste e do Sul do estado entraram em situação de emergência hídrica. De acordo com a CASAN (Companhia Catarinense de Águas e Saneamento), o consumo médio de água por habitante está acima do ideal e a empresa tem promovido campanhas de conscientização para o uso racional da água, incentivando mudanças simples na rotina doméstica. Um dos principais focos das campanhas é o tempo de banho. Um chuveiro elétrico convencional consome, em média, 9 litros de água por minuto. Uma pessoa que toma dois banhos de 15 minutos por dia acaba contribuindo significativamente para o desperdício de água, especialmente em tempos de escassez. Considere que uma pessoa mantenha essa rotina ao longo de 30 dias e que o valor cobrado pela CASAN por metro cúbico (m<sup>3</sup>) de água consumido é de R$ 6,50. Lembrando que 1 m<sup>3</sup> corresponde a 1.000 L, o custo relacionado ao consumo de água nesses banhos será de:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Matemática",
+      "tema_sugerido": "Geometria e Medidas",
+      "subtemas_sugeridos": [
+        "Conversão de Unidades (Tempo, Volume, Comprimento)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Calcular o custo monetário da água consumida em banhos durante 30 dias.\n2. Conhecimentos necessários: Operações aritméticas básicas, conversão de unidades de volume (litros para metros cúbicos) e proporcionalidade.\n3. Interpretação das informações e construção da resposta:\n- Tempo total diário de banho = 2 · 15 = 30 minutos/dia.\n- Em 30 dias, tempo total = 30 · 30 = 900 minutos.\n- Consumo em litros = 900 min · 9 L/min = 8.100 litros.\n- Conversão para metros cúbicos: 8.100 L / 1.000 = 8,1 m<sup>3</sup>.\n- Custo financeiro = 8,1 m<sup>3</sup> · R$ 6,50/m<sup>3</sup> = R$ 52,65.\n4. Resolução: O custo total é de R$ 52,65, confirmando a alternativa B.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "R$ 48,75.",
+          "correta": false
+        },
+        {
+          "texto": "R$ 52,65.",
+          "correta": true
+        },
+        {
+          "texto": "R$ 58,50.",
+          "correta": false
+        },
+        {
+          "texto": "R$ 65,00.",
+          "correta": false
+        },
+        {
+          "texto": "R$ 78,00.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 2,
+      "tema_cod": 7,
+      "subtemas_cods": [
+        22
+      ]
+    },
+    {
+      "numero": 15,
+      "enunciado": "Leia o Texto IX.\n\n<b>GEOGRAFIA E HISTÓRIA</b>\n\n<b>TEXTO IX</b>\nAs lições do golpe fracassado de 1923 fizeram com que os nazistas mudassem sua estratégia para a conquista do poder. [...]. As divisões políticas dos liberais democratas e da própria esquerda ajudaram a ascensão dos nazistas, que, no começo de 1933, obtiveram a maioria dos votos para formar o novo governo alemão. Paradoxalmente, como previa o próprio plano de Hitler, a democracia foi derrotada \"por dentro\", com a maioria dos cidadãos alemães elegendo um partido que defendia abertamente um Estado totalitário, racista e ditatorial.\n<i>Fonte: NAPOLITANO, Marcos. História contemporânea 2: do entreguerras à nova ordem mundial. São Paulo: Contexto, 2020.</i>\n\nO Texto IX aborda o regime nazista na Alemanha. Em relação às características do regime nazista, assinale a alternativa CORRETA.",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História Geral",
+      "subtemas_sugeridos": [
+        "Guerras Mundiais e Governos Totalitários (Nazismo, Fascismo)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a afirmativa historicamente correta sobre as características do regime nazista na Alemanha.\n2. Conhecimentos necessários: Totalitarismo, ascensão e práticas do regime nazista no período entreguerras.\n3. Interpretação das informações e construção da resposta: Após chegar ao poder em 1933, Adolf Hitler implementou um Estado totalitário unipartidário: extinguiu os outros partidos, estabeleceu aparelhos repressivos como a Gestapo (polícia secreta) e criou campos de concentração para prender opositores, comunistas, sindicalistas e minorias.\n4. Resolução: Portanto, a alternativa correta é a A.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "A ditadura nazista eliminou os partidos políticos existentes, criou uma polícia secreta do Estado e prendeu opositores em campos de concentração.",
+          "correta": true
+        },
+        {
+          "texto": "O nazismo conquistou o apoio de toda a sociedade alemã por meio da propaganda racista e de purificação racial, não havendo oposições ao regime autoritário estabelecido.",
+          "correta": false
+        },
+        {
+          "texto": "O regime nazista não buscou envolver toda a sociedade alemã em seus programas, mas apenas os adultos, que, por sua vez, eram induzidos a se filiar ao partido nazista.",
+          "correta": false
+        },
+        {
+          "texto": "O nazismo era um regime político de esquerda, porque no seu partido aparecia o nome \"socialista\".",
+          "correta": false
+        },
+        {
+          "texto": "A ditadura nazista descartava o armamentismo e o militarismo, uma vez que seu principal objetivo era consolidar a ditadura na Alemanha.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 12,
+      "subtemas_cods": [
+        39
+      ]
+    },
+    {
+      "numero": 16,
+      "enunciado": "Observe a imagem e leia o Texto X.\n\n[Imagem de uma mulher executiva subindo um degrau mais íngreme/alto em direção a um patamar onde homens brancos de terno estão posicionados]\n\n<b>TEXTO X</b>\n<b>Artigo: Desigualdade de gênero e a saúde mental das mulheres</b>\nAprovada por maioria esmagadora na Câmara dos Deputados e agora em tramitação no Senado, nova lei promete tornar mais rígida a punição para discriminação de gênero no mercado de trabalho. Simone Tebet, ministra do Planejamento e Orçamento, comemora a medida como um avanço civilizatório. A lei prevê o aumento da fiscalização das empresas e pesadas multas para quem praticar salários diferentes entre homens e mulheres com currículos semelhantes atuando na mesma função.\n<i>Fonte: https://www.correiobraziliense.com.br/opiniao/2024/03/6813111-artigo-desigualdade-de-genero-e-a-saude-mental-das-mulheres.html Acesso: 20 mar 2025.</i>\n\nSegundo o Texto X, a reportagem sugere que as relações entre homens e mulheres no mundo do trabalho, antes da promulgação da lei, eram caracterizadas pela(o):",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia Mundial e Meio Ambiente",
+      "subtemas_sugeridos": [
+        "Demografia (Pirâmides Etárias e Crescimento Populacional)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a característica das relações trabalhistas entre homens e mulheres antes da lei mencionada no texto.\n2. Conhecimentos necessários: Compreensão textual e noções de desigualdades sociais/de gênero no mercado de trabalho.\n3. Interpretação das informações e construção da resposta: Ao destacar a necessidade de uma lei rígida contra a discriminação salarial por gênero e tratar a superação dessa disparidade como um avanço civilizatório, o texto evidencia que a realidade anterior era marcada pela desigualdade.\n4. Resolução: Portanto, a resposta correta é desigualdade, alternativa E.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "igualdade.",
+          "correta": false
+        },
+        {
+          "texto": "competição justa.",
+          "correta": false
+        },
+        {
+          "texto": "avanço civilizatório.",
+          "correta": false
+        },
+        {
+          "texto": "inclusão.",
+          "correta": false
+        },
+        {
+          "texto": "desigualdade.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 14,
+      "subtemas_cods": [
+        47
+      ]
+    },
+    {
+      "numero": 17,
+      "enunciado": "Leia o Texto XI.\n\n<b>TEXTO XI</b>\nEm seu livro Enciclopédia Brasileira da Diáspora Africana, Nei Lopes define a expressão \"Resistência Escrava\" da seguinte forma:\nDurante todo o tempo em que perdurou a escravidão negra nas Américas, a ordem escravista encontrou oposição por parte dos cativos, e as formas mais frequentes de demonstrá-la se constituíram em fugas, revoltas, aquilombamentos, sabotagens, suicídios, abortamentos, o amansa-senhor e o assassinato puro e simples. Mas, assim como o controle dos senhores não se exerce apenas pela força, a resistência escrava se deu também pelo emprego de estratégias pacíficas, expressas em pequenos atos de desobediência, manipulação pessoal e afirmação cultural, bem como atitudes dissimuladas. Mesmo alguns levantes coletivos foram planejados menos com o fim de destruir o escravismo do que para criar ambiente propício à negociação e ao atendimento de reivindicações específicas, como melhor tratamento, alimentação, entre outras.\n<i>Fonte: LOPES, Nei. Enciclopédia Brasileira da Diáspora Africana. São Paulo: Selo Negro, 2004.</i>\n\nO Texto XI apresenta a definição de Nei Lopes sobre a \"Resistência Escrava\". Com base nesse texto e na história da escravidão no Brasil, é correto afirmar que a resistência escrava:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História do Brasil",
+      "subtemas_sugeridos": [
+        "Brasil Colônia (Sistema Escravista, Exploração, Ciclos Econômicos)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a alternativa correta a respeito da resistência dos povos escravizados conforme a análise histórica e o texto de Nei Lopes.\n2. Conhecimentos necessários: História do Brasil colonial e imperial, sistema escravista e formas de agência e resistência negra.\n3. Interpretação das informações e construção da resposta: O texto enfatiza que a resistência ocorreu \"durante todo o tempo em que perdurou a escravidão negra\" e combinava múltiplas práticas (desde revoltas, fugas e quilombos até estratégias pacíficas e culturais).\n4. Resolução: Conclui-se que ela foi contínua/permanente e expressa por práticas plurais, confirmando a alternativa C.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "aconteceu apenas no período que antecedeu a Lei Áurea de 1888.",
+          "correta": false
+        },
+        {
+          "texto": "utilizou somente estratégias de ação baseadas no uso da violência.",
+          "correta": false
+        },
+        {
+          "texto": "foi permanente e realizou-se através de práticas diversas de oposição ao sistema escravista.",
+          "correta": true
+        },
+        {
+          "texto": "foi pouco efetiva e não trouxe nenhum resultado prático para a população escravizada.",
+          "correta": false
+        },
+        {
+          "texto": "acabou reforçando a ordem escravista e não contribuiu para o processo de abolição da escravidão.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 11,
+      "subtemas_cods": [
+        34
+      ]
+    },
+    {
+      "numero": 18,
+      "enunciado": "Observe a Imagem IV.\n\n<b>IMAGEM IV</b>\n[Tirinha da Mafalda em quatro quadros: no 1º, Mafalda e Susanita veem um homem em situação de rua; no 2º, Mafalda diz: \"Quando eu vejo um pobre fico com o coração apertado!\" e Susanita responde: \"Eu também\"; no 3º, Mafalda propõe: \"Deviam dar casa, trabalho, proteção e bem-estar aos pobres!\"; no 4º, Susanita retruca: \"Pra que tudo isso? Era só esconde-los!\"]\n<i>Fonte: \"As 13 melhores tirinhas de Mafalda\", Zine. Disponível em: https://www.zinecultural.com/blog/melhores-tirinhas-da-mafalda. Acesso: 3 de abril 2025.</i>\n\nO autor argentino Quino, \"pai\" de Mafalda, é um excelente crítico dos problemas da sociedade contemporânea. Qual a crítica apresentada pela Imagem IV?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia do Brasil e Santa Catarina",
+      "subtemas_sugeridos": [
+        "Urbanização e Problemas Urbanos (Conurbação, Migrações)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Analisar o sentido crítico da fala da personagem Susanita no desfecho da tirinha de Quino.\n2. Conhecimentos necessários: Interpretação crítica de linguagem visual/textual e questões de exclusão e desigualdade socioespacial.\n3. Interpretação das informações e construção da resposta: Susanita sintetiza a visão individualista e higienista de setores da sociedade que não buscam a garantia de direitos e justiça social, mas tão somente a invisibilização da pobreza para não se incomodarem esteticamente ou moralmente.\n4. Resolução: Portanto, a crítica foca no descompromisso com a justiça social em prol de uma mera higienização visual, o que corresponde à alternativa D.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Que o maior problema da sociedade contemporânea é a pobreza, porque os governos não sabem escondê-la bem à vista dos moradores mais ricos.",
+          "correta": false
+        },
+        {
+          "texto": "Que as pessoas ficam com o coração apertado sempre que está frio.",
+          "correta": false
+        },
+        {
+          "texto": "Que a pobreza não é um problema que deve ser enfrentado e solucionado, já que basta esconder as pessoas pobres.",
+          "correta": false
+        },
+        {
+          "texto": "Que certas pessoas não têm a sensibilidade de pensar na justiça social, apenas não querem ser incomodadas pela vista de pessoas pobres.",
+          "correta": true
+        },
+        {
+          "texto": "Que a melhor política pública de combate à pobreza é fazer as pessoas pobres desapareceram da vista dos moradores da cidade.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 13,
+      "subtemas_cods": [
+        44
+      ]
+    },
+    {
+      "numero": 19,
+      "enunciado": "Leia o Texto XII.\n\n<b>TEXTO XII</b>\nEm seu livro Necropolítica, Achille Mbembe faz o seguinte comentário sobre a condição da pessoa escravizada na América Colonial:\nComo instrumento de trabalho, o escravo tem um preço. Como propriedade, tem um valor. Seu trabalho responde a uma necessidade e é utilizado. O escravo, por conseguinte, é mantido vivo, mas em \"estado de injúria\", em um mundo espectral de horrores, crueldade e profanidade intensos. O curso violento da vida de escravo se manifesta pela disposição de seu capataz em se comportar de forma cruel e descontrolada ou no espetáculo de sofrimentos imposto ao corpo do escravo. Violência, aqui, torna-se um componente de etiqueta, como dar chicotadas para tirar a vida do escravo: um capricho ou um ato de pura destruição visando incutir o terror. A vida do escravo, em muitos aspectos, é uma morte em vida.\n<i>Fonte: MBEMBE, Achille. Necropolítica. São Paulo: n-1 Edições, 2018.</i>\n\nCom base no comentário de Mbembe, presente no Texto XII, sobre a história da escravidão no Brasil, é correto afirmar que:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "História do Brasil",
+      "subtemas_sugeridos": [
+        "Brasil Colônia (Sistema Escravista, Exploração, Ciclos Econômicos)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Interpretar o conceito e a descrição da condição escravizada apresentada por Achille Mbembe.\n2. Conhecimentos necessários: Análise historiográfica da escravidão colonial e dos mecanismos de desumanização e violência institucional.\n3. Interpretação das informações e construção da resposta: Mbembe destaca que a violência física e o terror constante serviam como sustentáculo da dominação, rebaixando a pessoa escravizada a uma mercadoria desumanizada e mantida em \"morte em vida\".\n4. Resolução: Isso corresponde com exatidão ao que descreve a alternativa B.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "a escravidão africana no Brasil foi mais branda que em outros lugares do mundo, como, por exemplo, nos Estados Unidos.",
+          "correta": false
+        },
+        {
+          "texto": "o principal instrumento do sistema escravista era a violência física e psicológica, que buscava permanentemente desumanizar a pessoa escravizada por meio do terror.",
+          "correta": true
+        },
+        {
+          "texto": "a violência era utilizada apenas contra indivíduos escravizados que não obedeciam aos seus senhores.",
+          "correta": false
+        },
+        {
+          "texto": "apesar da violência ser utilizada para manter o sistema escravista, a formação histórica da sociedade brasileira pode ser caracterizada como uma democracia racial.",
+          "correta": false
+        },
+        {
+          "texto": "a violência do sistema escravista se manifestava somente nos momentos de fúria dos capatazes, que agiam contra a vontade dos proprietários de pessoas escravizadas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 11,
+      "subtemas_cods": [
+        34
+      ]
+    },
+    {
+      "numero": 20,
+      "enunciado": "Leia o Texto XIII.\n\n<b>TEXTO XIII</b>\n<b>Aumento da dengue está associado às mudanças climáticas e ao desmatamento</b>\n<i>Em 15/03/2024</i>\nAs constantes ondas de calor causadas pelas mudanças climáticas associadas à urbanização incompleta e à grande circulação de pessoas em determinadas áreas estão influenciando na expansão da dengue para o interior do país. Isso é o que revela o estudo Mudanças climáticas, anomalias térmicas e a recente progressão da dengue no Brasil, publicado no portal Scientific Reports da Nature. O texto é de autoria do pesquisador Christovam Barcellos, do Observatório de Clima e Saúde, do Instituto de Comunicação e Informação Científica e Tecnológica em Saúde (Icict/Fiocruz).\nNo artigo, Barcellos ressalta que a dengue vem se espalhando para as regiões Sul e Centro-Oeste, onde a doença não era tão comum. Isso está ocorrendo por conta do aumento na ocorrência de eventos climáticos extremos, como secas e inundações. Além disso, outro fator decisivo seria a degradação ambiental, especialmente no Cerrado, que vem sofrendo com o desmatamento, queimadas e conversão de florestas em pasto. [...]\n<i>Disponível em: https://portal.fiocruz.br/noticia/2024/03/aumento-da-dengue-esta-associado-mudancas-climaticas-e-ao-desmatamento. Acesso: 15 mar 2024.</i>\n\nCom base no Texto XIII, do pesquisador da Fiocruz, analise as afirmações abaixo sobre o aumento dos casos de dengue no Brasil atual.\nI. A expansão da dengue é um fenômeno restrito à região Nordeste do Brasil.\nII. As mudanças climáticas, a urbanização caótica e a degradação ambiental são fatores decisivos para explicar o aumento dos casos de dengue.\nIII. As pesquisas científicas não conseguem apontar que as mudanças climáticas estão influenciando o aumento dos casos de dengue.\n\nAssinale a alternativa CORRETA.",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Biologia",
+      "subtemas_sugeridos": [
+        "Saúde Pública e Doenças (Vírus, Bactérias, Vacinas, Métodos Contraceptivos)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Analisar as três afirmações com base no texto da Fiocruz sobre a propagação da dengue.\n2. Conhecimentos necessários: Interpretação de texto científico e fatores ecológico-sanitários da transmissão de arboviroses.\n3. Interpretação das informações e construção da resposta:\n- I é falsa, pois o texto aponta expansão para o interior e regiões Sul e Centro-Oeste.\n- II é verdadeira, pois reproduz as conclusões centrais da pesquisa publicada na Nature.\n- III é falsa, pois a própria pesquisa científica estabelece a correlação direta entre o clima e a propagação.\n4. Resolução: Portanto, apenas o item II está correto, o que define a alternativa C.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Todos os itens estão corretos.",
+          "correta": false
+        },
+        {
+          "texto": "Nenhum dos itens está correto.",
+          "correta": false
+        },
+        {
+          "texto": "Apenas o item II está correto.",
+          "correta": true
+        },
+        {
+          "texto": "Apenas os itens I e Il estão corretos.",
+          "correta": false
+        },
+        {
+          "texto": "Apenas os itens II e III estão corretos.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 10,
+      "subtemas_cods": [
+        30
+      ]
+    },
+    {
+      "numero": 21,
+      "enunciado": "Leia o Texto XIV.\n\n<b>TEXTO XIV</b>\nSurpreendente, superlativa, megadiversa. Esses são alguns dos adjetivos associados à biodiversidade brasileira, que concentra mais de 13% da biota do planeta. Dos seis biomas do Brasil (Amazônia, Caatinga, Cerrado, Mata Atlântica, Pampa e Pantanal), dois são considerados hotspots - áreas com grande riqueza e endemismos, consideradas prioritárias para a conservação em nível mundial: o Cerrado e a Mata Atlântica.\n<i>Fonte: MARIUZZO, Patricia. Fauna brasileira: surpreendente, superlativa, em risco! Fauna tem um papel fundamental na manutenção e na regeneração das áreas verdes. Ciência e Cultura, São Paulo, v. 75, n. 4, p. [não informado], out./dez. 2023.</i>\n\nO Texto XIV trata acerca dos biomas brasileiros. Esses biomas se diferenciam por meio da diversidade ecológica que apresentam, mas também por abrigar uma pluralidade econômica e social. Em termos ambientais, nem todos os biomas recebem o mesmo nível de proteção e cuidado. Qual das alternativas abaixo apresentam uma afirmação CORRETA sobre os biomas do Brasil?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências Humanas",
+      "tema_sugerido": "Geografia do Brasil e Santa Catarina",
+      "subtemas_sugeridos": [
+        "Biomas Brasileiros e Domínios Morfoclimáticos"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar a afirmativa geograficamente e ecologicamente correta sobre os biomas brasileiros.\n2. Conhecimentos necessários: Características dos biomas brasileiros, bacias hidrográficas e impactos ambientais antrópicos.\n3. Interpretação das informações e construção da resposta: O Cerrado abriga importantes nascentes que alimentam grandes bacias hidrográficas brasileiras (daí ser chamado de \"berço das águas\") e é uma das fronteiras agrícolas com intensas taxas de desmatamento devido ao agronegócio.\n4. Resolução: As demais alternativas contêm erros conceituais graves de localização e preservação, tornando a alternativa A correta.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "O Cerrado, considerado o berço das águas do Brasil, sofre com o desmatamento acelerado devido à expansão agrícola.",
+          "correta": true
+        },
+        {
+          "texto": "A Mata Atlântica é o bioma mais extenso do Brasil, percorrendo diversas latitudes, e ainda mantém mais de 70% da sua cobertura original.",
+          "correta": false
+        },
+        {
+          "texto": "A Caatinga é um bioma florestal úmido brasileiro, predominante na região Sudeste, caracterizado por sua grande diversidade de coníferas.",
+          "correta": false
+        },
+        {
+          "texto": "A Amazônia, de todos os biomas, é o único que não sofre pressão referente as atividades humanas devido à sua imensidão e dificuldade de acesso.",
+          "correta": false
+        },
+        {
+          "texto": "O Pampa, presente apenas no estado do Paraná, é o bioma mais preservado do país, por conta de sua vegetação rasteira que dificulta a expansão agropecuária.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 4,
+      "tema_cod": 13,
+      "subtemas_cods": [
+        42
+      ]
+    },
+    {
+      "numero": 22,
+      "enunciado": "Leia o Texto XV.\n\n<b>CIÊNCIAS</b>\n\n<b>TEXTO XV</b>\nFogões solares usam refletores parabólicos para concentrar a luz solar em um único ponto, onde está localizada a panela de cozimento. Eles podem atingir altas temperaturas rapidamente devido à concentração intensa de calor, tornando-os adequados para cozinhar pratos que requerem altas temperaturas.\n<i>Disponível em: https://www.portalsolar.com.br/fogao-solar Acesso: 2 abr 25.</i>\n\nA mãe de Maria e João prepara a comida e a aquece usando um fogão solar, que aproveita a energia do sol para gerar calor conforme explicado no Texto XV. Depois, ela coloca o lanche na caixa térmica para manter a comida quente durante a diversão no parque. Quando a mãe de Maria e João coloca o lanche quente na caixa térmica:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Física",
+      "subtemas_sugeridos": [
+        "Termodinâmica (Propagação de Calor, Temperatura e Escalas)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Explicar o princípio físico de funcionamento da caixa térmica ao guardar um alimento aquecido.\n2. Conhecimentos necessários: Calorimetria, isolamento térmico e formas de transferência de calor.\n3. Interpretação das informações e construção da resposta: Uma caixa térmica é composta por materiais isolantes térmicos que minimizam as trocas de calor por condução, convecção e irradiação com o meio externo, conservando a energia térmica interna do alimento por mais tempo.\n4. Resolução: Portanto, ela atua conservando a energia térmica, sem gerar calor por si própria, correspondendo à alternativa B.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "o calor se transforma em energia solar e retorna para o sol.",
+          "correta": false
+        },
+        {
+          "texto": "a caixa térmica ajuda a conservar a temperatura, mantendo a energia térmica dentro dela.",
+          "correta": true
+        },
+        {
+          "texto": "a caixa térmica permite que o calor se espalhe rapidamente, esfriando o lanche.",
+          "correta": false
+        },
+        {
+          "texto": "o calor faz com que a caixa térmica se torne uma máquina térmica, gerando energia elétrica.",
+          "correta": false
+        },
+        {
+          "texto": "a caixa térmica gera calor, aquecendo o lanche.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 8,
+      "subtemas_cods": [
+        26
+      ]
+    },
+    {
+      "numero": 23,
+      "enunciado": "Observe a Imagem V.\n\n<b>IMAGEM V</b>\n[Esquema ilustrativo da Fotossíntese mostrando a entrada de Gás carbônico, Luz e Água e a saída de Glicose, Gás oxigênio e Água]\n<i>Fonte adaptada: AMABIS, J. M. e MARTHO, G. R. Biologia. São Paulo, Moderna, 3 ed., v. 1, 2010.</i>\n\nA Imagem V apresenta um esquema simplificado da fotossíntese, um importante processo do metabolismo de diferentes organismos que influenciam a vida no planeta Terra. Sobre a fotossíntese é correto afirmar que:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Biologia",
+      "subtemas_sugeridos": [
+        "Ecologia (Fotossíntese, Cadeias Alimentares, Impactos Ambientais)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Assinalar a alternativa correta sobre o processo bioquímico e ecológico da fotossíntese.\n2. Conhecimentos necessários: Bioquímica celular vegetal e fluxo de energia em ecossistemas.\n3. Interpretação das informações e construção da resposta: Organismos autótrofos fotossintetizantes utilizam energia luminosa para fixar gás carbônico e água na síntese de matéria orgânica (glicose), base energética de produtores nas teias e cadeias alimentares.\n4. Resolução: Isso valida diretamente a alternativa C.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "as principais espécies que realizam fotossíntese pertencem ao grupo dos animais chamados de herbívoros.",
+          "correta": false
+        },
+        {
+          "texto": "uma vez que o processo libera CO2 para a atmosfera, a fotossíntese contribui para a intensificação do aquecimento global.",
+          "correta": false
+        },
+        {
+          "texto": "a fotossíntese possibilita a conversão de gás carbônico e água em glicose, o que é importante para cadeias alimentares.",
+          "correta": true
+        },
+        {
+          "texto": "para as plantas, o gás oxigênio produzido durante o processo de fotossíntese pode ser considerado apenas um resíduo, que não tem mais utilização nenhuma em seu metabolismo.",
+          "correta": false
+        },
+        {
+          "texto": "a água aparece apenas como um produto da reação metabólica chamada fotossíntese, não aparecendo entre os seus reagentes.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 10,
+      "subtemas_cods": [
+        31
+      ]
+    },
+    {
+      "numero": 24,
+      "enunciado": "Leia o Texto XVI.\n\n<b>TEXTO XVI</b>\nA história da descoberta da penicilina, o primeiro antibiótico para tratar infecções causadas por bactérias, é bastante conhecida. Seu descobridor, o cientista Alexander Fleming (1881-1955), em um momento de preguiça ou relaxamento, saiu de férias e largou algumas placas de Petri inoculadas com culturas de bactérias na bancada do laboratório. Quando retornou ao trabalho após algumas semanas, encontrou as culturas de bactérias cheias de mofo, um tipo de fungo, assim como acontece nas nossas casas quando largamos pão ou alguma fruta por muito tempo fora da geladeira.\nA maioria das pessoas joga o alimento fora quando isso acontece, mas Fleming foi sagaz e olhou com calma essas culturas mofadas. Ele percebeu que, nas placas onde o mofo cresceu, as bactérias foram inibidas, isto é, não mais se multiplicavam. Fleming concluiu que alguma substância produzida pelo fungo agia contra as bactérias: era a penicilina. Essa descoberta aconteceu em 1928, 14 anos antes de a penicilina ser usada com sucesso para tratar infecção humana.\n<i>Fonte: https://cienciahoje.org.br/artigo/o-melao-mofado-e-a-revolucao-da-penicilina/ Acesso: 18 fev 2025.</i>\n\nPode-se afirmar que a penicilina mencionada no Texto XVI:",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Biologia",
+      "subtemas_sugeridos": [
+        "Classificação dos Seres Vivos (Reinos)",
+        "Organização Celular (Diferenças Célula Animal/Vegetal, Organelas)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar as características biológicas dos organismos envolvidos na ação da penicilina (fungo e bactéria).\n2. Conhecimentos necessários: Reinos dos seres vivos (Fungi e Monera) e citologia básica.\n3. Interpretação das informações e construção da resposta: A penicilina é sintetizada por um fungo (organismo eucarionte e heterótrofo) e atua inibindo o crescimento de bactérias, que são microrganismos procariontes e obrigatoriamente unicelulares.\n4. Resolução: Portanto, a alternativa E é a única biologicamente correta.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "é produzida por um ser procarionte.",
+          "correta": false
+        },
+        {
+          "texto": "é produzida por um ser que faz fotossíntese.",
+          "correta": false
+        },
+        {
+          "texto": "é produzida por um ser que faz parte do reino animal.",
+          "correta": false
+        },
+        {
+          "texto": "inibe o crescimento de bactérias, que são seres eucariontes.",
+          "correta": false
+        },
+        {
+          "texto": "inibe o crescimento de bactérias, que são seres unicelulares.",
+          "correta": true
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 10,
+      "subtemas_cods": [
+        33,
+        32
+      ]
+    },
+    {
+      "numero": 25,
+      "enunciado": "Os vírus são parasitas intracelulares obrigatórios, acelulares e estudados em nível molecular. Em geral, apresentam uma cápsula proteica envolvendo seu material genético. Podem ser considerados seres vivos por apresentarem capacidade de replicação e sofrer mutações. Os vírus causam diversos tipos de doenças. Qual das alternativas abaixo apresenta, exclusivamente, doenças causadas por vírus?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Biologia",
+      "subtemas_sugeridos": [
+        "Saúde Pública e Doenças (Vírus, Bactérias, Vacinas, Métodos Contraceptivos)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Assinalar o grupo composto exclusivamente por viroses.\n2. Conhecimentos necessários: Etiologia das principais doenças humanas (viroses, bacterioses, protozooses e helmintíases).\n3. Interpretação das informações e construção da resposta:\n- Sarampo, dengue, febre amarela e covid-19 são todas provocadas por vírus.\n- Nas outras opções figuram protozooses (Chagas, balantidiose), helmintíases (esquistossomose, ascaridíase), bacterioses (tétano, difteria, coqueluche) ou infestações/micoses (sarna, micose).\n4. Resolução: Apenas a alternativa C contém exclusivamente viroses.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Doença de Chagas; Difteria; Coqueluche; Rubéola.",
+          "correta": false
+        },
+        {
+          "texto": "Esquistossomose; Herpes; Ascaridíase; Hepatite.",
+          "correta": false
+        },
+        {
+          "texto": "Sarampo; Dengue; Febre amarela; Covid-19.",
+          "correta": true
+        },
+        {
+          "texto": "Meningite; Sarna; Caxumba; Raiva.",
+          "correta": false
+        },
+        {
+          "texto": "Balantidiose; Tétano; Pneumonia; Micose.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 10,
+      "subtemas_cods": [
+        30
+      ]
+    },
+    {
+      "numero": 26,
+      "enunciado": "Leia o Texto XVII.\n\n<b>TEXTO XVII</b>\n<b>Desafios biológicos para a supervelocidade do Flash</b>\nNas histórias em quadrinhos, seriados e filmes, a fonte de poder do Flash vem da chamada 'força de aceleração', uma espécie de energia cósmica que alimenta os poderes de diversos super-heróis da DC Comics (principalmente os velocistas).\nAo contrário do Flash, não temos no mundo real uma fonte que nos forneça energia rápida e em quantidade suficiente para corrermos em velocidades inimagináveis e não cansarmos.\nNossa fonte de energia é o ATP (sigla para adenosina trifosfato), uma molécula que armazena e fornece energia química para ser usada nas mais diversas reações que ocorrem em nosso organismo. É considerada uma 'moeda' energética, porque é essa molécula que nosso corpo precisa gastar para realizar qualquer ação [...]. Para que tivéssemos energia suficiente para usar a supervelocidade (sem recorrermos à energia ficcional da força de aceleração), precisaríamos de uma quantidade inimaginável de ATP. E considerando que a formação dessas moléculas depende da nossa alimentação, precisaríamos de uma dieta de milhões de calorias diárias.\n<i>Fonte: https://cienciahoje.org.br/artigo/desafios-biologicos-para-a-supervelocidade-do-flash/ Acesso: 13 fev 2025.</i>\n\nO processo responsável pela produção do ATP (energia), mencionado no Texto XVII, é conhecido como respiração celular e pode ser resumido pelo esquema abaixo. A este respeito, assinale a afirmativa CORRETA.\n\nglicose + oxigênio → gás carbônico + água + energia",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Biologia",
+      "subtemas_sugeridos": [
+        "Organização Celular (Diferenças Célula Animal/Vegetal, Organelas)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Assinalar a afirmativa correta sobre a respiração celular aeróbia e o papel da glicose na geração de ATP.\n2. Conhecimentos necessários: Bioenergética celular, respiração celular e metabolismo de carboidratos.\n3. Interpretação das informações e construção da resposta: Conforme a reação expressa na questão, a glicose atua como o principal substrato energético inicial que, na presença de oxigênio, é oxidado para formar ATP. Um gasto colossal de energia exigiria, portanto, um suprimento gigantesco de glicose proveniente da alimentação.\n4. Resolução: Logo, a alternativa B é a correta.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "Para produzir ATP suficiente para usar a supervelocidade, bastaria ingerir bastante vitaminas, já que elas são usadas na respiração celular.",
+          "correta": false
+        },
+        {
+          "texto": "Uma supervelocidade exigiria a ingestão de uma quantidade enorme de glicose pela alimentação, já que ela é utilizada na respiração celular.",
+          "correta": true
+        },
+        {
+          "texto": "Para produzir tanto ATP, nossas células precisariam ter muito DNA, já que ele é a organela responsável pela respiração celular.",
+          "correta": false
+        },
+        {
+          "texto": "A produção de tanto ATP faria com que nossa respiração ficasse ofegante para obter bastante gás carbônico, já que ele é consumido na respiração celular.",
+          "correta": false
+        },
+        {
+          "texto": "Com uma alimentação adequada, poderíamos produzir muitas dessas moedas energéticas, mesmo que prendendo a respiração.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 10,
+      "subtemas_cods": [
+        32
+      ]
+    },
+    {
+      "numero": 27,
+      "enunciado": "Observe a Imagem VI.\n\n<b>IMAGEM VI</b>\n[Tirinha do Armandinho em três quadros: no 1º, o amigo diz: \"Alguns carros usam gasolina, álcool, eletricidade e até hidrogênio!\"; no 2º, Armandinho responde empurrando um carrinho de rolimã: \"O meu não polui e nunca precisa abastecer! Ele usa a gravidade!\"; no 3º, ele conclui: \"Só precisamos levar pra cima do morro!\"]\n<i>Fonte: Tiras Armandinho. Disponível em: https://www.tumblr.com/tirasarmandinho/140234463904/tirinha-original Acesso: 03 abr 2025.</i>\n\nO personagem da tirinha na Imagem VI cita algumas fontes de energia, como gasolina, álcool e hidrogênio, que podem gerar a energia mecânica responsável por mover seu carro. A respeito das fontes, tipos e transformações de energia, assinale a afirmativa CORRETA.",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Física",
+      "subtemas_sugeridos": [
+        "Dinâmica (As Três Leis de Newton, Trabalho e Potência)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Assinalar a declaração cientificamente correta acerca das transformações e fontes de energia.\n2. Conhecimentos necessários: Princípio da conservação de energia e transformações termomecânicas em motores de combustão.\n3. Interpretação das informações e construção da resposta: Em motores a combustão interna, a queima do combustível rompe ligações químicas, convertendo a energia química potencial em energia térmica e, subsequentemente, em trabalho/energia mecânica para movimentar o automóvel.\n4. Resolução: Portanto, a afirmativa D é plenamente correta.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "O carvão mineral e o petróleo são fontes de energia renováveis, pois podem ser produzidos rapidamente.",
+          "correta": false
+        },
+        {
+          "texto": "A única forma de energia existente é a elétrica; todas as outras são variações dela.",
+          "correta": false
+        },
+        {
+          "texto": "Usinas eólicas funcionam mesmo sem vento, pois geram energia espontaneamente.",
+          "correta": false
+        },
+        {
+          "texto": "A queima da gasolina no motor de um carro transforma energia química em energia mecânica, fazendo o veículo se movimentar.",
+          "correta": true
+        },
+        {
+          "texto": "Uma usina hidrelétrica gera energia diretamente da água parada, sem precisar do movimento da correnteza ou das turbinas.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 8,
+      "subtemas_cods": [
+        25
+      ]
+    },
+    {
+      "numero": 28,
+      "enunciado": "Leia o Texto XVIII.\n\n<b>TEXTO XVIII</b>\n<b>Por que colocar vinagre na água para cozinhar um ovo impede que a casca quebre?</b>\nAo acrescentar uma colher (de sopa) de vinagre na água em que se vai ferver um ovo acontece uma reação entre o sal presente na casca do ovo (o carbonato de cálcio, CaCO<sub>3</sub>) e o ácido acético (C<sub>2</sub>H<sub>4</sub>O<sub>2</sub>) do vinagre, tornando a casca menos rígida. \"Ela é parcialmente diluída e fica mais fina, o que aumenta sua elasticidade e impede que o ovo se quebre\", diz o químico Edgard Salvador, professor do Curso Anglo.\nQuando você fizer essa experiência em casa, vai ver também pequenas bolhinhas de gás formando-se na superfície do ovo: é o gás carbônico, CO<sub>2</sub>, o outro produto da reação. Ao cozinhar o ovo sem vinagre, as chances de a casca se romper são maiores. \"Durante a fervura, o aquecimento da superfície não é uniforme. Uma parte se dilata mais que a outra, por isso a casca acaba se quebrando\", afirma o farmacêutico João Usberco, também do Anglo.\nO vinagre ainda tem outra utilidade: basta adicionar alguns mililitros antes de colocar a água para ferver e a camada preta que mancha as panelas de alumínio não se forma. Isso acontece porque a água fica ácida com o vinagre impedindo que os sais se acumulem nas laterais da panela.\n<i>Fonte adaptada: Superinteressante. Disponível em: https://super.abril.com.br/ciencia/por-que-colocar-vinagre-na-agua-para-cozinhar-um-ovo-impede-que-a-casca-quebre/. Acesso: 30 mar 2025.</i>\n\nNo Texto XVIII, podemos observar uma série de transformações, que podem ser físicas ou químicas. As transformações (ou reações) químicas são aquelas que podem ser representadas por uma equação química. Qual das transformações abaixo pode ser representada por uma equação química?",
+      "autor": "IFC",
+      "ano": 2025,
+      "disciplina_sugerida": "Ciências da Natureza",
+      "tema_sugerido": "Química",
+      "subtemas_sugeridos": [
+        "Transformações e Reações Químicas (Físicas vs. Químicas)"
+      ],
+      "explicacao": "🤖 [Visão da Inteligência Artificial (IA)]\n1. O que a pergunta pede: Identificar o fenômeno que constitui uma transformação química passível de representação por equação química.\n2. Conhecimentos necessários: Diferenciação entre fenômenos físicos (mudanças de estado, dilatação mecânica, fratura) e químicos (formação de novas substâncias com quebra/formação de ligações).\n3. Interpretação das informações e construção da resposta: A liberação de bolhas de gás carbônico (CO<sub>2</sub>) provém da reação química entre o carbonato de cálcio (CaCO<sub>3</sub>) e o ácido acético (CH<sub>3</sub>COOH), que gera acetato de cálcio, água e CO<sub>2</sub>.\n4. Resolução: As demais opções constituem processos puramente físicos, validando a alternativa B.",
+      "imagem_url": null,
+      "alternativas": [
+        {
+          "texto": "A diluição do vinagre na água para o cozimento do ovo.",
+          "correta": false
+        },
+        {
+          "texto": "A formação de bolhas de gás carbônico na superfície da casca do ovo.",
+          "correta": true
+        },
+        {
+          "texto": "A fervura da água para o cozimento do ovo.",
+          "correta": false
+        },
+        {
+          "texto": "A quebra da casca do ovo.",
+          "correta": false
+        },
+        {
+          "texto": "A dilatação da casca do ovo durante o aquecimento.",
+          "correta": false
+        }
+      ],
+      "aviso_gabarito": false,
+      "disciplina_cod": 3,
+      "tema_cod": 9,
+      "subtemas_cods": [
+        27
+      ]
+    }
+  ],
+  "autor": "IFC",
+  "ano": "2025",
+  "disciplinaPadraoCod": ""
+}
