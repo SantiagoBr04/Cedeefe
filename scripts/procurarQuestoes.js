@@ -452,10 +452,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
+                const btnRiscarHtml = (!jaRespondida) ? `
+                    <button type="button" class="btn-riscar-alt ms-2" title="Riscar alternativa" data-questao-cod="${q.cod}" data-alternativa-cod="${alt.cod}">
+                        <i class="bi bi-eye-slash"></i>
+                    </button>
+                ` : '';
+
                 return `
                     <div class="${classeAlt}" data-questao-cod="${q.cod}" data-alternativa-cod="${alt.cod}" id="alt-${q.cod}-${alt.cod}">
                         <div class="badge-letra">${letra}</div>
-                        <div class="flex-grow-1">${processarFormatacaoTexto(alt.texto)}</div>
+                        <div class="flex-grow-1 content-alt">${processarFormatacaoTexto(alt.texto)}</div>
+                        ${btnRiscarHtml}
                     </div>
                 `;
             }).join('');
@@ -554,9 +561,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 const itensAlt = cardEl.querySelectorAll('.alternativa-item-interativa');
                 itensAlt.forEach(item => {
                     item.addEventListener('click', () => {
+                        if (item.classList.contains('riscada')) return;
                         itensAlt.forEach(i => i.classList.remove('selecionada'));
                         item.classList.add('selecionada');
                         alternativaSelecionadaCod = item.getAttribute('data-alternativa-cod');
+                    });
+                });
+
+                const botoesRiscar = cardEl.querySelectorAll('.btn-riscar-alt');
+                botoesRiscar.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const altCod = btn.getAttribute('data-alternativa-cod');
+                        const qCod = btn.getAttribute('data-questao-cod');
+                        const altEl = document.getElementById(`alt-${qCod}-${altCod}`);
+                        if (altEl) {
+                            altEl.classList.toggle('riscada');
+                            const icon = btn.querySelector('i');
+                            if (altEl.classList.contains('riscada')) {
+                                icon.className = 'bi bi-eye';
+                                btn.title = "Desfazer risco";
+                                altEl.classList.remove('selecionada');
+                                if (alternativaSelecionadaCod === altCod) alternativaSelecionadaCod = null;
+                            } else {
+                                icon.className = 'bi bi-eye-slash';
+                                btn.title = "Riscar alternativa";
+                            }
+                        }
                     });
                 });
 

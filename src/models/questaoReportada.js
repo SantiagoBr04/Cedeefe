@@ -32,7 +32,8 @@ export default (sequelize, DataTypes) => {
         },
         descricao_detalhada: {
             type: DataTypes.TEXT,
-            allowNull: true
+            allowNull: true,
+            validate: { len: [0, 2000] }
         },
         status: {
             type: DataTypes.STRING(20),

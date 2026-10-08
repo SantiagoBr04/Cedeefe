@@ -8,11 +8,13 @@ export default (sequelize, DataTypes) => {
         },
         frente: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
+            validate: { len: [0, 2000] }
         },
         verso: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
+            validate: { len: [0, 2000] }
         },
         imagem_url: {
             type: DataTypes.STRING,

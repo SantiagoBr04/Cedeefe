@@ -53,7 +53,7 @@
 
                 <div class="mb-3">
                     <label for="nomeCompleto" class="form-label">Nome completo</label>
-                    <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required>
+                    <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required maxlength="100">
                 </div>
 
                 <div class="mb-3">
@@ -71,7 +71,7 @@
 
                 <div class="mb-3">
                     <label for="escola" class="form-label">Escola</label>
-                    <input type="text" class="form-control" id="escola" name="escola">
+                    <input type="text" class="form-control" id="escola" name="escola" maxlength="50">
                 </div>
 
                 <div class="mb-3">
@@ -81,7 +81,7 @@
 
                 <div class="mb-3">
                     <label for="motivacao" class="form-label">Motivação</label>
-                    <textarea class="form-control" id="motivacao" name="motivacao" rows="3" maxlength="180"></textarea>
+                    <textarea class="form-control" id="motivacao" name="motivacao" rows="3" maxlength="100"></textarea>
                 </div>
             </section>
 
@@ -98,7 +98,7 @@
                     <h3>Excluir conta</h3>
                     <p>Essa ação remove seus dados e não pode ser desfeita.</p>
                     <label for="senhaExclusao" class="form-label">Senha atual para confirmar</label>
-                    <input type="password" class="form-control mb-3" id="senhaExclusao" name="senhaExclusao">
+                    <input type="password" class="form-control mb-3" id="senhaExclusao" name="senhaExclusao" maxlength="100">
                     <button type="button" class="btn btn-danger w-100" id="excluirContaBtn">Excluir conta</button>
                 </div>
             </section>
@@ -120,17 +120,17 @@
                         <form id="formSenha">
                             <div class="mb-3">
                                 <label for="senhaAtual" class="form-label">Senha atual</label>
-                                <input type="password" class="form-control" id="senhaAtual" name="senhaAtual" required>
+                                <input type="password" class="form-control" id="senhaAtual" name="senhaAtual" required maxlength="100">
                             </div>
 
                             <div class="mb-3">
                                 <label for="novaSenha" class="form-label">Nova senha</label>
-                                <input type="password" class="form-control" id="novaSenha" name="novaSenha" required>
+                                <input type="password" class="form-control" id="novaSenha" name="novaSenha" required maxlength="100">
                             </div>
 
                             <div class="mb-3">
                                 <label for="confirmarSenha" class="form-label">Confirmar nova senha</label>
-                                <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required>
+                                <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required maxlength="100">
                             </div>
                         </form>
                     </div>

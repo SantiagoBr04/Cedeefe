@@ -381,6 +381,35 @@ a #btn-user {
     padding: 0;
     margin: 0;
     width: 100%;
+    
+    /* Animação fluida */
+    display: block !important;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.sidebar .dropdown-menu.show {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Animação da seta do dropdown */
+.sidebar .dropdown-toggle::after {
+    transition: transform 0.3s ease-in-out;
+    margin-left: auto;
+}
+
+.sidebar .dropdown-toggle.show::after {
+    transform: rotate(180deg);
+}
+
+/* Ocultar seta quando a sidebar estiver fechada */
+.sidebar:not(.expandido) .dropdown-toggle::after {
+    display: none;
 }
 
 /* Oculta os submenus quando a sidebar está colapsada */

@@ -416,6 +416,42 @@ body {
     opacity: 0.9;
 }
 
+/* Botão de Riscar Alternativa e Estado Riscada */
+.btn-riscar-alt {
+    background: transparent;
+    border: none;
+    color: #adb5bd;
+    font-size: 1.1rem;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-riscar-alt:hover {
+    color: #6c757d;
+    background-color: #f1f3f5;
+}
+
+.alternativa-item-interativa.riscada {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+    opacity: 0.6;
+}
+
+.alternativa-item-interativa.riscada .content-alt {
+    text-decoration: line-through;
+    color: #868e96;
+}
+
+.alternativa-item-interativa.riscada .badge-letra {
+    background-color: #e9ecef;
+    color: #adb5bd;
+}
+
 /* ========================
    CAIXA DE EXPLICAÇÃO
 ======================== */

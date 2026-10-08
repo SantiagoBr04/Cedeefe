@@ -18,7 +18,8 @@ export default (sequelize, DataTypes) => {
         },
         texto: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
+            validate: { len: [0, 2000] }
         },
         correta: {
             type: DataTypes.BOOLEAN,

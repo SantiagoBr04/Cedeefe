@@ -8,11 +8,15 @@ export default (sequelize, DataTypes) => {
         },
         descricao: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
+            validate: { len: [0, 5000] }
         },
         autor: {type: DataTypes.STRING(40)},
         ano: {type: DataTypes.INTEGER},
-        explicacao: {type: DataTypes.TEXT},
+        explicacao: {
+            type: DataTypes.TEXT,
+            validate: { len: [0, 5000] }
+        },
         imagem_url: {type: DataTypes.STRING(255)},
         disciplina_cod: {
             type: DataTypes.INTEGER,

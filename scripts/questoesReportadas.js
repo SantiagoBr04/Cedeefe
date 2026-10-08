@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                             <div class="rep-motivo"><i class="bi bi-tag-fill me-1 accent-rosa"></i>${escapeHtml(rep.motivo)}</div>
                             ${rep.descricao_detalhada ? `
-                                <p class="mt-2 mb-0 text-secondary" style="font-style: italic; font-size: 0.9rem;">
+                                <p class="mt-2 mb-0 text-secondary" style="font-style: italic; font-size: 0.9rem; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap;">
                                     "${escapeHtml(rep.descricao_detalhada)}"
                                 </p>
                             ` : ''}
